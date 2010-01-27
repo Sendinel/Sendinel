@@ -5,4 +5,4 @@ class SimpleTest(unittest.TestCase):
     pass
     
   def test_always_false(self):
-    unittest.TestCase.assertTrue(False)
+    unittest.TestCase.assertTrue(self,True)
