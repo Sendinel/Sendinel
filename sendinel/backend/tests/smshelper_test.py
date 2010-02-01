@@ -1,6 +1,6 @@
 import unittest
 import sys, os
-sys.path.insert(0, os.path.abspath('../'))
+sys.path.insert(0, os.path.abspath('../../'))
 from sendinel.backend.smshelper import *
 
 class SmshelperTest(unittest.TestCase):

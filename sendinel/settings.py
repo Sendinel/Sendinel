@@ -81,4 +81,5 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'sendinel.web',
+    'sendinel.backend'
 )
