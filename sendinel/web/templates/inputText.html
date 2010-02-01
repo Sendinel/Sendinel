@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <h3>What text should be send</h3>
+    <p>
+        <form action="/chooseCommunication">
+            <INPUT type="text" name="message">
+            <INPUT type="submit" value="Send">
+        </form>
+    </p>
+{% endblock %}
