@@ -1,7 +1,10 @@
+from os.path import abspath, dirname
 # Django settings for sendinel project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+PROJECT_PATH = dirname(abspath(__file__))
+
 
 ADMINS = (
     ('sendinel', 'contact@sendinel.org'),
@@ -21,7 +24,7 @@ DATABASE_PORT = ''             # Set to empty string for default. Not used with 
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Europe/Berlin'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -35,7 +38,7 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = 'F:/Documents/sendinel/sendinel/media'
+MEDIA_ROOT = PROJECT_PATH + '/media'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -65,7 +68,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'sendinel.urls'
 
-TEMPLATE_DIRS = ("F:/Documents/sendinel/sendinel/web/templates"
+TEMPLATE_DIRS = (PROJECT_PATH + "/web/templates"
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
