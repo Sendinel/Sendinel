@@ -17,6 +17,7 @@ except ImportError:
 try:
     # make sure the current source is first on sys.path
     sys.path.insert(0, '..')
+    sys.path.insert(0, '../..')
     import sendinel
 except ImportError:
     print ('Cannot find Sendinel to test: %s' % sys.exc_info()[1])
