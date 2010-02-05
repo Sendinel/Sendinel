@@ -1,11 +1,22 @@
 from math import floor
+from string import Template
 
-def generate_sms(specific_content, text):
-    if len(specific_content) == 0:
-        sms = generate_message_sms(text)
+
+def generate_sms(sms_parts):
+    parts_length = get_parts_length
+    if len(sms_parts) == 1:
+    a_template = Template("$")
     elif len(specific_content) == 4:
+    a_template = Template("Dear $name, please remember your appointment" + \
+            " at the $hospital at %$date with doctor %doctor") 
         sms = generate_appointment_sms(specific_content, text)
     return sms
+    
+def get_parts_length(sms_parts):
+    sum = 0
+    for key,value in sms_parts:
+        sum += len(value)
+    return sum
 
 def generate_message_sms(text):
     return text[0:160]
