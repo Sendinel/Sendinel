@@ -35,10 +35,10 @@ class ModelsTest(TestCase):
         appointment = self.event.sendable
         self.assertEquals(type(appointment), HospitalAppointment, 'Sendable polymorphic type is wrong')
 
-    def test_sendable_polymorphic_method(self):
+    def test_sendable_get_data_for_sending(self):
         appointment = self.event.sendable
         appointment.way_of_communication="sms"
         data = OutputData()
         appointment.get_data_for_sms = lambda: data
-        self.assertEquals(appointment.get_data_for_sending(), object)
+        self.assertEquals(appointment.get_data_for_sending(), data)
 
