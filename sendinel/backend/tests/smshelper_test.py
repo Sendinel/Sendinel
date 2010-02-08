@@ -6,15 +6,21 @@ from string import Template
 
 class SmshelperTest(unittest.TestCase):
     def test_generate_sms_appointment(self):
-        text = generate_sms({'date': "13.2.98, 3:39", 'doctor': "ms daily", \
-                            'hospital': "hodpiel hospital", 'name': "mr joijj"},\
+        text = generate_sms({'date': "13.2.98, 3:39", 'doctor': "ms daily-binnessy-dayteewart", \
+                            'hospital': "hodpiel hospital at the " +\
+                            "lake with the frog and the tree",\
+                            'name': "mr jameson-bitterall-wertifial"},\
                              Template("Dear $name, please remember your appointment" + \
                                 " at the $hospital at $date with doctor $doctor"))  
-        should_text = "Dear mr joijj, please remember your appointment" + \
-                " at the hodpiel hospital at 13.2.98, 3:39 with doctor ms daily"
-        self.assertEquals (text, should_text)
+        should_text = "Dear mr jameson-bitterall-wertif, please remember " +\
+                        "your appointment at the hodpiel hospital at the " + \
+                        "lak at 13.2.98, 3:39 with doctor ms daily-binnessy-dayteewar"
         self.assertTrue(len(text) <= 160)
+        self.assertEquals (text, should_text)
         
+    
+
+
     def test_generate_sms_message(self):
         text = generate_sms({'free_text':"Hello Mrs. Joirie, your medication is there. " \
                                 + "Please remember to pay 2 $."}, Template("$free_text"))
@@ -57,5 +63,4 @@ class SmshelperTest(unittest.TestCase):
         self.assertTrue(len(text) <= 160)
         self.assertEquals(should_text, text)
         
-if __name__ == '__main__':
-    unittest.main()
+   
