@@ -26,7 +26,7 @@ def replace_dollar_signs(contents):
     return contents
 
 def reduce_contents(contents, signs_left):
-    #DO NOT SHORTEN DATA FIELD
+    #DATA FIELDS CAN STILL BE SHORTENED
 	cut_length =int(ceil(float(signs_left)/len(contents)))
 	for value in contents.itervalue():
 		value = value[0:cut_length]
