@@ -1,7 +1,5 @@
-import unittest
-import sys, os
-sys.path.insert(0, os.path.abspath('../../'))
 from sendinel.backend.smshelper import *
+import unittest
 
 class SmshelperTest(unittest.TestCase):
     def test_correct_sms_content(self):
@@ -23,6 +21,3 @@ class SmshelperTest(unittest.TestCase):
                 " at the hodpielitzkicitziktidiiiiii at 13.2.98, 3:39 with doctor abcdefghijklmnopqrstuvwxyza"
         self.assertTrue(len(text) <= 160)
         self.assertEquals(should_text, text)
-        
-if __name__ == '__main__':
-    unittest.main()
