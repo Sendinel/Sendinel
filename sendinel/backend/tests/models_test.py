@@ -5,8 +5,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import pre_save
 from django.core import serializers
 
-data = open("backend/fixtures/contenttype.yaml").read()
-deserialized = serializers.deserialize("yaml", data)
+data = open("backend/fixtures/contenttype.json").read()
+deserialized = serializers.deserialize("json", data)
 object_dict = dict([[object.object.model, object.object.id] for object in deserialized if isinstance(object.object, ContentType)])
 
 counter = 1000
