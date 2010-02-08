@@ -9,8 +9,7 @@ def generate_sms(contents, template):
     contents = replace_dollar_signs(contents)
     sms = template.substitute(contents)
     if len(sms) > 160:
-        content_length = get_content_length(content)
-        template_length = len(sms)-content_length
+        template_length = len(sms)-get_content_length(content)
         new_contents = reduce_contents(contents, 160 - template_length)
         sms = template.substitute(new_contents)
     return sms
@@ -27,6 +26,7 @@ def replace_dollar_signs(contents):
     return contents
 
 def reduce_contents(contents, signs_left):
+    #DO NOT SHORTEN DATA FIELD
 	cut_length =int(ceil(float(signs_left)/len(contents)))
 	for value in contents.itervalue():
 		value = value[0:cut_length]
