@@ -21,7 +21,3 @@ class SmshelperTest(unittest.TestCase):
                 " at the hodpielitzkicitziktidiiiiii at 13.2.98, 3:39 with doctor abcdefghijklmnopqrstuvwxyza"
         self.assertTrue(len(text) <= 160)
         self.assertEquals(should_text, text)
-        
-if __name__ == '__main__':
-    
-    unittest.main()
