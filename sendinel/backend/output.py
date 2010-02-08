@@ -9,6 +9,8 @@ class OutputData:
     Define an interface for OutputData.
     """
     data = None
+    def __str__(self):
+        return str(self.data)
 
 class BluetoothOutputData(OutputData):
     """
@@ -29,3 +31,8 @@ class VoiceOutputData(OutputData):
     phone_number = None
     
     
+def send(data_object):
+    """
+    Take an OutputData and send this to the specified Output
+    """
+    pass

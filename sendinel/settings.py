@@ -1,7 +1,7 @@
 from os.path import abspath, dirname
 # Django settings for sendinel project.
 
-DEBUG = True
+DEBUG = True        #for scheduling set to false
 TEMPLATE_DEBUG = DEBUG
 PROJECT_PATH = dirname(abspath(__file__))
 
