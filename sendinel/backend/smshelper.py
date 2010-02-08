@@ -1,13 +1,42 @@
-from math import floor
+from math import floor, ceil
 from string import Template
 
 
-def generate_sms(sms_parts):
+    
+def generate_sms(template,contents):
+    #template aus self wenn in klasse
+    contents = replace_dollar_signs(contents)
+    sms = template.substitute(contents)
+    if len(sms) > 160:
+        content_length = get_content_length(content)
+        new_contents = reduce_contents(contents, 160 -(len(sms)-content_length))
+        sms = template.substitute(new_contents)
+    return sms
+    
+def get_content_length(contents):
+    length = 0
+    for k,v in contents:
+        length += len(v)
+    return length
+
+def replace_dollar_signs(contents):
+	for k,v in contents:
+		v.replace("$","$$")
+	return contents
+
+def reduce_contents(contents, signs_left):
+	cut_length =int(ceil(float(signs_left)/len(contents)))
+	for k,v in contents:
+		v = v[0:cut_length]
+	return contents
+
+
+def generate_sms_2(sms_parts):
     parts_length = get_parts_length
     if len(sms_parts) == 1:
-    a_template = Template("$")
+        a_template = Template("$")
     elif len(specific_content) == 4:
-    a_template = Template("Dear $name, please remember your appointment" + \
+        a_template = Template("Dear $name, please remember your appointment" + \
             " at the $hospital at %$date with doctor %doctor") 
         sms = generate_appointment_sms(specific_content, text)
     return sms
