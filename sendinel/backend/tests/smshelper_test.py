@@ -2,21 +2,22 @@ import unittest
 import sys, os
 sys.path.insert(0, os.path.abspath('../../'))
 from sendinel.backend.smshelper import *
+from string import Template
 
 class SmshelperTest(unittest.TestCase):
     def test_generate_sms_appointment(self):
         text = generate_sms({'date': "13.2.98, 3:39", 'doctor': "ms daily", \
-                            'hospital': "hodpiel hospital", 'name': "mr joijj"},
-                            "Dear %s, please remember your appointment" + \
-                " at the %s at %s with doctor %s")
+                            'hospital': "hodpiel hospital", 'name': "mr joijj"},\
+                             Template("Dear $name, please remember your appointment" + \
+                                " at the $hospital at $date with doctor $doctor"))  
         should_text = "Dear mr joijj, please remember your appointment" + \
                 " at the hodpiel hospital at 13.2.98, 3:39 with doctor ms daily"
         self.assertEquals (text, should_text)
         self.assertTrue(len(text) <= 160)
         
     def test_generate_sms_message(self):
-        text = generate_sms({},"Hello Mrs. Joirie, your medication is there")
-        should_text = "Hello Mrs. Joirie, your medication is there"
+        text = generate_sms({'free_text':"Hello Mrs. Joirie, your medication is there. Please remember to pay 2 $."}, Template("$free_text"))
+        should_text = "Hello Mrs. Joirie, your medication is there. Please remember to pay 2 $."
         self.assertEquals (text, should_text)
         self.assertTrue(len(text) <= 160)
         
