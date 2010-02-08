@@ -16,7 +16,8 @@ class SmshelperTest(unittest.TestCase):
         self.assertTrue(len(text) <= 160)
         
     def test_generate_sms_message(self):
-        text = generate_sms({'free_text':"Hello Mrs. Joirie, your medication is there. Please remember to pay 2 $."}, Template("$free_text"))
+        text = generate_sms({'free_text':"Hello Mrs. Joirie, your medication is there. " \
+                                + "Please remember to pay 2 $."}, Template("$free_text"))
         should_text = "Hello Mrs. Joirie, your medication is there. Please remember to pay 2 $."
         self.assertEquals (text, should_text)
         self.assertTrue(len(text) <= 160)
