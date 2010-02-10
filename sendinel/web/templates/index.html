@@ -5,6 +5,9 @@
 <!-- change this to the title you want to appear in browser title bar -->
 {% comment %}For DateTime picker from Django admin.{% endcomment %}
 {% if form.media %}
+    {% comment %}
+        TODO use ADMIN_MEDIA_PREFIX
+    {% endcomment %}
     <script type="text/javascript" src="/admin_media/js/core.js"></script>
     <script type="text/javascript" src="/admin/jsi18n/"></script>
     <link rel="stylesheet" href="{{ MEDIA_URL }}css/datetimepicker.css" type="text/css" media="screen" charset="utf-8" />
