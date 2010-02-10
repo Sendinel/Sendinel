@@ -1,12 +1,12 @@
+from django.test import TestCase
+
 from sendinel.backend.models import *
 from sendinel.backend.output import *
 import sendinel.backend.tests.contenttype_helper
-from django.test import TestCase
 
 
 class ModelsTest(TestCase):
-    """
-    """
+
     fixtures = ['backend']
 
     def setUp(self):
@@ -22,4 +22,30 @@ class ModelsTest(TestCase):
         data = OutputData()
         appointment.get_data_for_sms = lambda: data
         self.assertEquals(appointment.get_data_for_sending(), data)
+        
+
+      
+
+class SMSTest(TestCase):
+    
+    fixtures = ['backend']
+    
+    def test_hospital_appointment_get_data_for_sms(self):
+        data = HospitalAppointment.objects.get( pk = 2).get_data_for_sms()
+        self.assertions_for_sms_output_object(data)
+        
+    def test_text_message_get_data_for_sms(self):
+        data = TextMessage.objects.get(pk = 1).get_data_for_sms()
+        self.assertions_for_sms_output_object(data)
+        
+    def assertions_for_sms_output_object(self, data):
+        self.assertEquals(type(data), SMSOutputData)
+        self.assertEquals(data.phone_number, "12345")
+        self.assertEquals(type(data.data), unicode)
+
+
+
+        
+        
+
 

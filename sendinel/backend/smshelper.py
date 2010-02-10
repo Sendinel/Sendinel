@@ -4,8 +4,20 @@ from string import Template
 
     
 def generate_sms(contents, template):
-    """creates an sms text from a given template that is not longer than 160 characters"""
-    #template aus self wenn in klasse
+    """
+        Return an sms text as string from a given template that is not 
+        longer than 160 characters. Substitute all placeholders in template
+        with their corresponding entry in contents.
+
+        @param contents: Dictionary with specific information
+        @param template: Template for the SMS with placeholders
+
+        >>> generate_sms({'date': "10.2.09",
+                      'hospital': "Your Hospital"},
+                     Template("go $date to $hospital"))
+        ("go 10.2.09 to Your Hospital")
+    """
+
     contents = replace_dollar_signs(contents)
     sms = template.substitute(contents)
     if len(sms) > 160:

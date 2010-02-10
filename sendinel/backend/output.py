@@ -1,10 +1,9 @@
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-import smshelper
 
 
-class OutputData:
+class OutputData(object):
     """
     Define an interface for OutputData.
     """
