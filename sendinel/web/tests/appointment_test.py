@@ -32,11 +32,37 @@ class AppointmentViewTest(TestCase):
         self.assertRedirects(response, reverse('index'))
         self.assertEquals(HospitalAppointment.objects.count(),
                             number_of_appointments + 1)
-        appointment = HospitalAppointment.objects
+        appointment = HospitalAppointment.objects \
             .order_by("id").reverse()[:1][0]
         self.assertEquals(appointment.hospital.id, 1)
         self.assertEquals(appointment.doctor.id, 1)
         self.assertEquals(appointment.recipient.name, 'Shiko Taga')
         self.assertEquals(appointment.date, datetime(2012,8,12,19,02,42))
         self.assertEquals(appointment.way_of_communication, "sms")
-        
+    
+    def test_create_appointment_submit_validations(self):
+        number_of_appointments = HospitalAppointment.objects.count()
+        response = self.client.post("/create_appointment/", 
+                    {'date_0': 'abc',
+                    'date_1': 'def',
+                    'doctor': '',
+                    'hospital': '',
+                    'recipient_name': '',
+                    'way_of_communication': 'xyz'  })
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'hospital',
+                            'This field is required.')
+        self.assertFormError(response, 'form', 'doctor',
+                            'This field is required.')
+        self.assertFormError(response, 'form', 'recipient_name',
+                            'This field is required.')
+        self.assertFormError(response, 'form', 'date',
+                            'Enter a valid date/time.')
+        self.assertFormError(response, 'form', 'way_of_communication',
+                            'Select a valid choice. xyz' \
+                            + ' is not one of the available choices.')
+
+
+
+
+

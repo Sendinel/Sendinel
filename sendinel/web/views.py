@@ -11,8 +11,8 @@ def index(request):
                               context_instance=RequestContext(request))
 
 def create_appointment(request):
-    if request.method == "POST":
-        form = HospitalAppointmentForm(request.POST)
+    form = HospitalAppointmentForm(request.POST)
+    if request.method == "POST" and form.is_valid():
         appointment = form.save(commit=False)
         patient = Patient(name = form.cleaned_data['recipient_name'])
         patient.save()
@@ -20,12 +20,11 @@ def create_appointment(request):
         appointment.save()
         return HttpResponseRedirect(reverse('index'))
     else:
-        form = HospitalAppointmentForm()
         return render_to_response('create_appointment.html',
                                 locals(),
                                 context_instance=RequestContext(request))
 
-        
+
 
 def input_text(request):
     return render_to_response('input_text.html',

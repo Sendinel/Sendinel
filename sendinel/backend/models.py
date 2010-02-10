@@ -28,8 +28,6 @@ class Patient(User):
     Represent a patient.
     """
     phone_number = models.CharField(max_length=20)
-    pass
-
 
 
 class Hospital(models.Model):
@@ -52,13 +50,14 @@ class Sendable(models.Model):
         ('bluetooth','Bluetooth'),
         ('voice','Voice Call'),
     )
-    way_of_communication = models.CharField(max_length=9, choices=WAYS_OF_COMMUNICATION)
+    way_of_communication = models.CharField(max_length=9,
+                                choices=WAYS_OF_COMMUNICATION)
 
     recipient_type = models.ForeignKey(ContentType)
     recipient_id = models.PositiveIntegerField()
     recipient = generic.GenericForeignKey('recipient_type', 'recipient_id')
     
-    def get_data_for_bluetooth():
+    def get_data_for_bluetooth(self):
         """
         Prepare OutputData for bluetooth.
         Return BluetoothOutputData for sending.
@@ -72,7 +71,7 @@ class Sendable(models.Model):
         """
         pass
     
-    def get_data_for_voice():
+    def get_data_for_voice(self):
         """
         Prepare OutputData for voice.
         Return VoiceOutputData for sending.
@@ -97,7 +96,7 @@ class HospitalAppointment(Sendable):
     template = Template("Dear $name, please remember your appointment" + \
                          " at the $hospital at $date with doctor $doctor")
     
-    def get_data_for_bluetooth():
+    def get_data_for_bluetooth(self):
         """
         Prepare OutputData for bluetooth.
         Return BluetoothOutputData for sending.
@@ -112,15 +111,18 @@ class HospitalAppointment(Sendable):
         Return SMSOutputData for sending.
         """
         data = SMSOutputData()
-        contents = {'date':str(self.date), 'name': self.recipient.name, \
-                    'doctor': self.doctor.name, 'hospital': self.hospital.name}
+        contents = {'date':str(self.date),
+                    'name': self.recipient.name,
+                    'doctor': self.doctor.name,
+                    'hospital': self.hospital.name}
                     
-        data.data = smshelper.generate_sms(contents, HospitalAppointment.template)
+        data.data = smshelper.generate_sms(contents,
+                        HospitalAppointment.template)
         data.phone_number = self.recipient.phone_number
         
         return data
 
-    def get_data_for_voice():
+    def get_data_for_voice(self):
         """
         Prepare OutputData for voice.
         Return VoiceOutputData for sending.
@@ -146,7 +148,7 @@ class TextMessage(Sendable):
         """
         
         data = SMSOutputData()            
-        data.data = smshelper.generate_sms({'text': self.text},\
+        data.data = smshelper.generate_sms({'text': self.text},
                                             TextMessage.template)
         data.phone_number = self.recipient.phone_number
         
@@ -163,11 +165,13 @@ class ScheduledEvent(models.Model):
 
     send_time = models.DateTimeField()
 
-    STATES= (
+    STATES = (
         ('new','new'),
         ('sent','sent'),
         ('failed','failed'),
     )
-    state = models.CharField(max_length = 1, choices = STATES, default = 'new')
+    state = models.CharField(max_length = 1,
+                             choices = STATES,
+                             default = 'new')
     
 
