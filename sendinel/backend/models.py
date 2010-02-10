@@ -14,6 +14,9 @@ class User(models.Model):
         abstract = True
     name = models.CharField(max_length=255)
     
+    def __str__(self):
+        return self.name
+    
 class Doctor(User):
     """
     Represent a doctor.
@@ -35,6 +38,8 @@ class Hospital(models.Model):
     """
     name = models.CharField(max_length=255)
     
+    def __str__(self):
+        return self.name
 
 
 
