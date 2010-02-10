@@ -69,4 +69,8 @@ class AuthTest(unittest.TestCase):
         self.assertTrue(self.ah.to_check["012345678"]["has_called"])
         self.assertFalse(self.ah.to_check["087654321"]["has_called"])
          
-        
+    def test_delete_old_numbers(self):
+        self.ah.clean_up_to_check()
+        self.ah.to_check["0123456"] = {"has_called":"False", "time":(time()-200)}
+        self.ah.delete_old_numbers()
+        self.assertEquals(len(self.ah.to_check), 0)

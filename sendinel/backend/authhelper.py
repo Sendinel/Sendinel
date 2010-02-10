@@ -12,6 +12,14 @@ class AuthHelper:
     
     def clean_up_to_check(self):
         self.to_check = {}
+        
+    def delete_old_numbers(self):
+        to_delete = []
+        for key in self.to_check:
+            if self.to_check[key]["time"]<(time()-180):
+                to_delete.append(key)
+        for entry in to_delete:
+            del(self.to_check[entry])
 
     def authenticate(self, number):
         try:
@@ -25,6 +33,7 @@ class AuthHelper:
             self.to_check[number] = {"has_called" : False, "time" : time()}
     
     def check_log(self, number):
+        self.delete_old_numbers
         self.parse_log(self.log_path)
     
         if self.to_check.has_key(number):
