@@ -1,4 +1,5 @@
 import re
+from time import time
 
 from sendinel.backend.helper import NotObservedNumberException
 
@@ -6,11 +7,11 @@ class AuthHelper:
     """
     Provide functionality needed for authenticating phone numbers
     """
-    to_check = []
+    to_check = {}
     log_path = "C:/temp/call_log.txt"
     
     def clean_up_to_check(self):
-        self.to_check = []
+        self.to_check = {}
 
     def authenticate(self, number):
         try:
@@ -20,21 +21,30 @@ class AuthHelper:
             return False
 
     def observe_number(self, number):
-        if self.to_check.count(number) < 1:
-            self.to_check.append(number)
+        if not self.to_check.has_key(number):
+            self.to_check[number] = {"has_called" : False, "time" : time()}
     
     def check_log(self, number):
-        parse_log(self.log_path)
+        self.parse_log(self.log_path)
     
-        if number == "0123456":
-            return True
+        if self.to_check.has_key(number):
+            return self.to_check[number]["has_called"]
         else:
-            if number == "01234":
-                raise NotObservedNumberException('Number was not observed')
-            return False
+            raise NotObservedNumberException('Number was not observed')
     
-def parse_log(log_file):
-    pass
+    def parse_log(self, log_file):
+        log = open(log_file)
+        for entry in log:
+            (timestamp, datetime, phone, called_number) = entry.split("\t")
+            if self.to_check.has_key(phone):
+                self.to_check[phone]["has_called"] = True
+        log.close()
+        
+        log = open(log_file, "w")
+        log.write("")
+        log.close()
+        
+        pass
     
 def format_phone_number(number):
     """

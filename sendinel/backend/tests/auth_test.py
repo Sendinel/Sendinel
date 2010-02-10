@@ -32,10 +32,15 @@ class AuthTest(unittest.TestCase):
         self.assertFalse(self.ah.authenticate(number))
         
     def test_check_log(self):
+        self.ah.log_path="fake_file_log"
+        
         self.ah.observe_number("0123456")
         self.ah.observe_number("0678945")
         
-        # generate fake log file with call from number 0123456
+        fake = open("fake_file_log", 'w')
+        fake.write("""1265799669\t02/10/2010-12:01:09\t0654357987\t2428534
+        1265799669\t02/10/2010-12:01:09\t0123456\t2428534""")
+        fake.close()
         
         self.assertTrue(self.ah.check_log("0123456"))
         self.assertFalse(self.ah.check_log("0678945"))
@@ -52,8 +57,16 @@ class AuthTest(unittest.TestCase):
         
         
     def test_parse_log(self):
+        self.ah.clean_up_to_check()
+        self.ah.observe_number("012345678")
+        self.ah.observe_number("087654321")
+        
         fake = open("fake_file_log", 'w')
         fake.write("1265799669\t02/10/2010-12:01:09\t012345678\t2428534")
         fake.close()
-        parse_log("fake_file_log")
+        self.ah.parse_log("fake_file_log")
+        
+        self.assertTrue(self.ah.to_check["012345678"]["has_called"])
+        self.assertFalse(self.ah.to_check["087654321"]["has_called"])
+         
         
