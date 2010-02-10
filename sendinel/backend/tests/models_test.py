@@ -41,4 +41,44 @@ class ModelsTest(TestCase):
         data = OutputData()
         appointment.get_data_for_sms = lambda: data
         self.assertEquals(appointment.get_data_for_sending(), object)
+        
+class HospitalAppointmentTest(TestCase):
+    """
+    Test for the HospitalAppointment class which derives from Sendable.
+    """
+    
+    def setUp(self):
+        self.appointment = HospitalAppointment()
+        self.appointment.recipient = Patient()
+        self.appointment.hospital = Hospital()
+        self.appointment.doctor = Doctor()
+    
+    # def test_save_without_all_attributes(self):
+        # self.appointment.save
+        
+    def test_get_data_for_sms(self):
+        self.appointment.recipient.phone_number = 12345
+        data = self.appointment.get_data_for_sms()
+        self.assertEquals(data.phone_number, 12345)
+        self.assertTrue(type(data)== string)
+        
+        
+class TextMessageTest(TestCase):
+    """
+    Test for the TextMessage class which derives from Sendable.
+    """
+    
+    def setUp(self):
+        self.message = TextMessage()
+        self.message.recipient = Patient()
+    
+    # def test_save_without_all_attributes(self):
+        # self.appointment.save
+        
+    def test_get_data_for_sms(self):
+        self.message.recipient.phone_number = 12345
+        data = self.message.get_data_for_sms()
+        self.assertEquals(data.phone_number, 12345)
+        self.assertTrue(type(data)== String)
+        
 

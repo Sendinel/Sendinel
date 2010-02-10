@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 import smshelper
+from string import Template
+from backend.output import *
 
 
 class User(models.Model):
@@ -46,6 +48,7 @@ class Sendable(models.Model):
         ('voice','Voice Call'),
     )
     way_of_communication = models.CharField(max_length=9, choices=WAYS_OF_COMMUNICATION)
+    recipient = models.ForeignKey(Patient)
     
     def get_data_for_bluetooth():
         """
@@ -83,9 +86,10 @@ class HospitalAppointment(Sendable):
     date = models.DateTimeField()
     doctor = models.ForeignKey(Doctor)
     hospital = models.ForeignKey(Hospital)
-    patient = models.ForeignKey(Patient)
+    template = Template("Dear $name, please remember your appointment" + \
+                         " at the $hospital at $date with doctor $doctor")
     
-    def get_data_for_bluaetooth():
+    def get_data_for_bluetooth():
         """
         Prepare OutputData for bluetooth.
         Return BluetoothOutputData for sending.
@@ -100,10 +104,15 @@ class HospitalAppointment(Sendable):
         Return SMSOutputData for sending.
         """
         data = SMSOutputData()
-        data.data = smshelper.generate_appointment_sms(str(self.date),
-                                            self.doctor.name,
-                                            self.hospital.name,
-                                            self.patient.name)
+        contents = {'date':str(self.date), 'name': self.recipient.name, \
+                    'doctor': self.doctor.name, 'hospital': self.hospital.name}
+                    
+        data.data = smshelper.generate_sms(contents, HospitalAppointment.template)
+        
+        # generate_appointment_sms(str(self.date),
+                                            # self.doctor.name,
+                                            # self.hospital.name,
+                                            # self.patient.name)
         data.phone_number = self.patient.phone_number
         return data
 
@@ -114,6 +123,29 @@ class HospitalAppointment(Sendable):
         TODO Not implemented yet.
         """
         pass
+        
+        
+class TextMessage(Sendable):
+    """
+    Define a TextMessage.
+    """
+    template = Template("$text")
+    # restrict text to 160? but not good for voice calls
+    text = models.TextField()
+    
+    
+    def get_data_for_sms(self):
+        """
+        Prepare OutputData for sms.
+        Generate the message for an HospitalAppointment.
+        Return SMSOutputData for sending.
+        """
+        
+        data = SMSOutputData()            
+        data.data = smshelper.generate_sms({'text': self.text},\
+                                            TextMessage.template)
+        data.phone_number = self.recipient.phone_number
+        return data
     
     
 class ScheduledEvent(models.Model):
