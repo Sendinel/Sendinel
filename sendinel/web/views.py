@@ -2,6 +2,8 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
+
+from sendinel.backend.models import Patient
 from sendinel.web.forms import *
 
 def index(request):
@@ -12,7 +14,9 @@ def create_appointment(request):
     if request.method == "POST":
         form = HospitalAppointmentForm(request.POST)
         appointment = form.save(commit=False)
-        appointment.recipient = Patient(name = form.cleaned_data['recipient'])
+        patient = Patient(name = form.cleaned_data['recipient_name'])
+        patient.save()
+        appointment.recipient = patient
         appointment.save()
         return HttpResponseRedirect(reverse('index'))
     else:

@@ -6,10 +6,10 @@ from sendinel.backend.models import HospitalAppointment
 
 class HospitalAppointmentForm(ModelForm):
     date = DateTimeField(widget = AdminSplitDateTime())
-    recipient = CharField(max_length = 255, label = "Patient name")
+    recipient_name = CharField(max_length = 255, label = "Patient name")
     class Meta:
         model = HospitalAppointment
         exclude = ['recipient_type', 'recipient_id']
-        fields = ['recipient', 'date', 'hospital', 'doctor',
+        fields = ['recipient_name', 'date', 'hospital', 'doctor',
                     'way_of_communication']
         

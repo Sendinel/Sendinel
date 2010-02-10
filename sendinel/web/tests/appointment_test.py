@@ -16,7 +16,7 @@ class AppointmentViewTest(TestCase):
         self.assertContains(response, 'name="date_1"')
         self.assertContains(response, 'name="doctor"')
         self.assertContains(response, 'name="hospital"')
-        self.assertContains(response, 'name="recipient"')
+        self.assertContains(response, 'name="recipient_name"')
         self.assertNotContains(response, 'name="recipient_type"')
         self.assertNotContains(response, 'name="recipient_id"')
 
@@ -27,13 +27,16 @@ class AppointmentViewTest(TestCase):
                     'date_1': '19:02:42',
                     'doctor': "1",
                     'hospital': '1',
-                    'recipient': 'Shiko Taga'  })
+                    'recipient_name': 'Shiko Taga',
+                    'way_of_communication': 'sms'  })
         self.assertRedirects(response, reverse('index'))
         self.assertEquals(HospitalAppointment.objects.count(),
                             number_of_appointments + 1)
-        appointment = HospitalAppointments.objects.reverse()[:1][0]
+        appointment = HospitalAppointment.objects
+            .order_by("id").reverse()[:1][0]
         self.assertEquals(appointment.hospital.id, 1)
         self.assertEquals(appointment.doctor.id, 1)
         self.assertEquals(appointment.recipient.name, 'Shiko Taga')
         self.assertEquals(appointment.date, datetime(2012,8,12,19,02,42))
+        self.assertEquals(appointment.way_of_communication, "sms")
         
