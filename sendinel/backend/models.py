@@ -3,7 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 import smshelper
 from string import Template
-from backend.output import *
+from sendinel.backend.output import *
 
 
 class User(models.Model):
@@ -48,7 +48,10 @@ class Sendable(models.Model):
         ('voice','Voice Call'),
     )
     way_of_communication = models.CharField(max_length=9, choices=WAYS_OF_COMMUNICATION)
-    recipient = models.ForeignKey(Patient)
+
+    recipient_type = models.ForeignKey(ContentType)
+    recipient_id = models.PositiveIntegerField()
+    recipient = generic.GenericForeignKey('recipient_type', 'recipient_id')
     
     def get_data_for_bluetooth():
         """
@@ -108,12 +111,8 @@ class HospitalAppointment(Sendable):
                     'doctor': self.doctor.name, 'hospital': self.hospital.name}
                     
         data.data = smshelper.generate_sms(contents, HospitalAppointment.template)
+        data.phone_number = self.recipient.phone_number
         
-        # generate_appointment_sms(str(self.date),
-                                            # self.doctor.name,
-                                            # self.hospital.name,
-                                            # self.patient.name)
-        data.phone_number = self.patient.phone_number
         return data
 
     def get_data_for_voice():
@@ -145,6 +144,7 @@ class TextMessage(Sendable):
         data.data = smshelper.generate_sms({'text': self.text},\
                                             TextMessage.template)
         data.phone_number = self.recipient.phone_number
+        
         return data
     
     
