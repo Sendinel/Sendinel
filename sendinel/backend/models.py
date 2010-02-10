@@ -159,9 +159,10 @@ class ScheduledEvent(models.Model):
     send_time = models.DateTimeField()
 
     STATES= (
-        ('N','New'),
-        ('S','Sent'),
+        ('new','new'),
+        ('sent','sent'),
+        ('failed','failed'),
     )
-    state = models.CharField(max_length=1, choices=STATES)
+    state = models.CharField(max_length = 1, choices = STATES, default = 'new')
     
 
