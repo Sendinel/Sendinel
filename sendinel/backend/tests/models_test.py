@@ -26,7 +26,7 @@ class ModelsTest(TestCase):
 
       
 
-class SMSTest(TestCase):
+class ModelsSMSTest(TestCase):
     
     fixtures = ['backend']
     

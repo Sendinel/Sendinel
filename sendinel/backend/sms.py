@@ -47,8 +47,8 @@ def send_sms(recipient, message, ser_conn=None):
     ser.write(chr(26))
     """
     
-    
-    print ser.portstr       # check which port was really used
+    # TODO remove this
+    #print ser.portstr       # check which port was really used
     ser.setTimeout(0.2)
     
     def send(s):
@@ -60,7 +60,6 @@ def send_sms(recipient, message, ser_conn=None):
                 if str(data).find("Error")!=-1:
                     raise SerialConnectionError(data)
             else:
-                print
                 break
             
     send('AT\r')
