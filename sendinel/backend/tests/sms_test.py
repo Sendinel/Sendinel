@@ -3,7 +3,7 @@ import unittest
 serial_available = False
 try:
     import serial
-    from backend.sms import *
+    from sendinel.backend.sms import *
     serial_available = True
 except ImportError:
     print "Warning: SMS serial test not running since pyserial is" + \
