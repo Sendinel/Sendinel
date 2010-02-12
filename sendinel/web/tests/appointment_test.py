@@ -41,7 +41,6 @@ class AppointmentViewTest(TestCase):
         self.assertEquals(appointment.way_of_communication, "sms")
     
     def test_create_appointment_submit_validations(self):
-        number_of_appointments = HospitalAppointment.objects.count()
         response = self.client.post("/create_appointment/", 
                     {'date_0': 'abc',
                     'date_1': 'def',
@@ -61,8 +60,31 @@ class AppointmentViewTest(TestCase):
         self.assertFormError(response, 'form', 'way_of_communication',
                             'Select a valid choice. xyz' \
                             + ' is not one of the available choices.')
-
-
+                            
+    def test_create_appointment_scheduled_event_sms(self):
+        number_of_events = ScheduledEvent.objects.count()
+        response = self.client.post("/create_appointment/", 
+                    {'date_0': '2012-08-12',
+                    'date_1': '19:02:42',
+                    'doctor': "1",
+                    'hospital': '1',
+                    'recipient_name': 'Shiko Taga',
+                    'way_of_communication': 'sms'  })
+        self.assertEquals(ScheduledEvent.objects.count(),
+                            number_of_events + 1)
+    
+        
+    def test_create_appointment_scheduled_event_bluetooth(self):
+        number_of_events = ScheduledEvent.objects.count()
+        response = self.client.post("/create_appointment/", 
+                    {'date_0': '2012-08-12',
+                    'date_1': '19:02:42',
+                    'doctor': "1",
+                    'hospital': '1',
+                    'recipient_name': 'Shiko Taga',
+                    'way_of_communication': 'bluetooth'  })
+        self.assertEquals(ScheduledEvent.objects.count(),
+                            number_of_events)
 
 
 

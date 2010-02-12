@@ -1,3 +1,4 @@
+from datetime import timedelta
 from os.path import abspath, dirname
 # Django settings for sendinel project.
 
@@ -83,3 +84,8 @@ INSTALLED_APPS = (
     'sendinel.web',
     'sendinel.backend'
 )
+
+####################################
+# should be in own config file
+REMINDER_DAYS_BEFORE_EVENT = timedelta(days=-1)
+####################################

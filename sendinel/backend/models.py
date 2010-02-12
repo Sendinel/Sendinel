@@ -174,4 +174,7 @@ class ScheduledEvent(models.Model):
                              choices = STATES,
                              default = 'new')
     
+    # def __init__(self, sendable, send_time):
+        # self.sendable= sendable.id
+        # self.send_time = send_time
 
