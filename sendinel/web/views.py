@@ -1,4 +1,3 @@
-from sendinel import settings
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -20,11 +19,8 @@ def create_appointment(request):
         appointment.recipient = patient
         appointment.save()
         if appointment.way_of_communication != 'bluetooth':
-            send_time = appointment.date - settings.REMINDER_DAYS_BEFORE_EVENT
-            scheduled_event= ScheduledEvent()
-            scheduled_event.sendable = appointment
-            scheduled_event.send_time = send_time
-            scheduled_event.save()
+            appointment.create_scheduled_event()
+
         return HttpResponseRedirect(reverse('index'))
     else:
         return render_to_response('create_appointment.html',

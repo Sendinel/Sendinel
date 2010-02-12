@@ -87,5 +87,5 @@ INSTALLED_APPS = (
 
 ####################################
 # should be in own config file
-REMINDER_DAYS_BEFORE_EVENT = timedelta(days=-1)
+REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days=-1)
 ####################################

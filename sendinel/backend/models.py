@@ -1,8 +1,12 @@
+from datetime import datetime
+from string import Template
+
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-import smshelper
-from string import Template
+
+from sendinel import settings
+from sendinel.backend import smshelper
 from sendinel.backend.output import *
 
 
@@ -84,8 +88,15 @@ class Sendable(models.Model):
         Return an object of a subclass of OutputData.
         """
         return eval("self.get_data_for_%s()" % self.way_of_communication)
+        
+    def create_scheduled_event(self, send_time):
+        """
+            Creates a ScheduledEvent for the Sendable at the given send_time.
+        """
+        scheduled_event = ScheduledEvent(sendable = self,
+                                         send_time = send_time)
+        scheduled_event.save()
 
- 
 class HospitalAppointment(Sendable):
     """
     Define a HospitalAppointment.
@@ -129,14 +140,23 @@ class HospitalAppointment(Sendable):
         TODO Not implemented yet.
         """
         pass
-        
-        
+
+    def create_scheduled_event(self):
+        """
+            Create a scheduled event for sending a reminder before an
+            appointment. The time before the appointment is used as specified
+            in the settings:
+            REMINDER_TIME_BEFORE_APPOINTMENT specified as timedelta object.
+        """
+        send_time = self.date - settings.REMINDER_TIME_BEFORE_APPOINTMENT
+        Sendable.create_scheduled_event(self, send_time)
+
 class TextMessage(Sendable):
     """
     Define a TextMessage.
     """
     template = Template("$text")
-    # restrict text to 160? but not good for voice calls
+    # TODO restrict text to 160? but not good for voice calls
     text = models.TextField()
     
     
@@ -173,8 +193,5 @@ class ScheduledEvent(models.Model):
     state = models.CharField(max_length = 1,
                              choices = STATES,
                              default = 'new')
-    
-    # def __init__(self, sendable, send_time):
-        # self.sendable= sendable.id
-        # self.send_time = send_time
+
 
