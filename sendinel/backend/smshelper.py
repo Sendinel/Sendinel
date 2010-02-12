@@ -1,4 +1,4 @@
-from math import floor
+from math import ceil, floor
 from string import Template
 
 
@@ -38,7 +38,7 @@ def replace_dollar_signs(contents):
         the substitution of the template
     """
     for value in contents.itervalues():
-		value.replace("$","$$")
+        value.replace("$","$$")
     return contents
 
 def reduce_contents(contents, chars_left):

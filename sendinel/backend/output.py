@@ -34,4 +34,4 @@ def send(data_object):
     """
     Take an OutputData and send this to the specified Output
     """
-    pass
+    print 'sending data: %s' % data_object
