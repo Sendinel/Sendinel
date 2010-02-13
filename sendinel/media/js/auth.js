@@ -9,25 +9,23 @@ var check_for_call = function() {
         onSuccess: function(response) {
             var json = (response.responseText || "").evalJSON();   
             if(json && json.status) {
-                switch(json.status) {
-                    case "waiting":
-                        var statusText = $("auth_status");
+                var statusText = $("auth_status");
+                
+                switch(json.status) {                
+                    case "waiting":                        
                         statusText.innerHTML = "Waiting for your call";
+                        window.setTimeout("check_for_call()",1000);
                     break;
                     
-                    case "received":
-                        var statusText = $("auth_status");
+                    case "received":                        
                         statusText.innerHTML = "Thank you! Your telephone number has been authenticated.";
                         $("auth_spinner").hide();
-                        window.clearInterval(checker);
                     break;
                     
                     case "failed":
-                        var statusText = $("auth_status");
                         statusText.innerHTML = "Sorry, the authentication of your telephone number failed. Please try again.";
                         $("auth_spinner").hide();
-                        window.clearInterval(checker);
-                        
+                                                
                     break;
                 }
             }             
@@ -38,4 +36,4 @@ var check_for_call = function() {
     });
 };
 
-var checker = window.setInterval("check_for_call()", 1000);
+window.setTimeout("check_for_call()", 1000);
