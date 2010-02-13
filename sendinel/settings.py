@@ -1,3 +1,4 @@
+from datetime import timedelta
 from os.path import abspath, dirname
 # Django settings for sendinel project.
 
@@ -32,6 +33,10 @@ LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
+# Specify a COM Port for SMS
+# for windows maybe it starts at 0
+SERIALPORTSMS = 4
+
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
@@ -48,7 +53,7 @@ MEDIA_URL = '/mediaweb/'
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/admin_media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '4ztf1p=e9d*ns^d*f@bs3mu#37p)$jp(%lzo2a+-%j8^=eq852'
@@ -83,3 +88,8 @@ INSTALLED_APPS = (
     'sendinel.web',
     'sendinel.backend'
 )
+
+####################################
+# should be in own config file
+REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days=-1)
+####################################
