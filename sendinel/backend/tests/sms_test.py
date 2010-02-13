@@ -5,11 +5,12 @@ try:
     import serial
     from sendinel.backend.sms import *
     serial_available = True
+    # TODO check for pyserial version - serial_for_url was introduced with 2.5
 except ImportError:
     print "Warning: SMS serial test not running since pyserial is" + \
             " not installed"
 
-from backend.smspdu import *
+from sendinel.backend.smspdu import *
 
 if serial_available:
     class SMSTest(unittest.TestCase):

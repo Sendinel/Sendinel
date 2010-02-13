@@ -49,6 +49,9 @@ class Sendable(models.Model):
     """
     Define an interface for a Sendable object.
     """
+    class Meta:
+        abstract = True
+
     WAYS_OF_COMMUNICATION = (
         ('sms','SMS'),
         ('bluetooth','Bluetooth'),

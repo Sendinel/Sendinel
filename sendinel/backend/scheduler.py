@@ -4,8 +4,8 @@ from django.core.management import setup_environ
 from sendinel import settings
 setup_environ(settings)
 
-from backend.models import ScheduledEvent
-from backend.output import send
+from sendinel.backend.models import ScheduledEvent
+from sendinel.backend.output import send
 
 def run(run_only_one_time = False):
     while True:

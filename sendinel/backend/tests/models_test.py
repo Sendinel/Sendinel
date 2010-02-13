@@ -33,7 +33,7 @@ class HospitalAppointmentTest(TestCase):
     fixtures = ['backend']
     
     def setUp(self):
-      self.appointment = HospitalAppointment.objects.get(pk=2)
+      self.appointment = HospitalAppointment.objects.get(pk = 1)
 
     def test_create_scheduled_event(self):
         number_of_events = ScheduledEvent.objects.count()
@@ -56,7 +56,7 @@ class ModelsSMSTest(TestCase):
     fixtures = ['backend']
     
     def test_hospital_appointment_get_data_for_sms(self):
-        data = HospitalAppointment.objects.get( pk = 2).get_data_for_sms()
+        data = HospitalAppointment.objects.get(pk = 1).get_data_for_sms()
         self.assertions_for_sms_output_object(data)
         
     def test_text_message_get_data_for_sms(self):
