@@ -38,8 +38,8 @@ class AuthTest(unittest.TestCase):
         self.ah.observe_number("0678945")
         
         fake = open("fake_file_log", 'w')
-        fake.write("""1265799669\t02/10/2010-12:01:09\t0654357987\t2428534
-        1265799669\t02/10/2010-12:01:09\t0123456\t2428534""")
+        fake.write("""1265799666\t02/10/2010-12:01:06\t0654357987\t2428534\n""")
+        fake.write("""1265799669\t02/10/2010-12:01:09\t0123456\t2428534""")
         fake.close()
         
         self.assertTrue(self.ah.check_log("0123456"))
