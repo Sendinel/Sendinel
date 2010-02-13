@@ -1,7 +1,8 @@
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.utils import simplejson
 
 from sendinel.backend.models import Patient, ScheduledEvent
 from sendinel.backend.authhelper import AuthHelper
@@ -49,6 +50,22 @@ def authenticate_phonenumber(request):
     return render_to_response('authenticate_phonenumber.html', 
                               locals(),
                               context_instance = RequestContext(request))
+
+def call_handler(request):
+    if request.method == "POST":
+        authHelper = AuthHelper()
+        number = request.REQUEST["number"]
+        response_dict = {}
+        
+        try:
+            if authHelper.check_log(number):
+                response_dict["status"] = "received"
+            else:
+                response_dict["status"] = "waiting"
+        except:
+                response_dict["status"] = "failed"
+    
+        return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
 
 def input_text(request):
     return render_to_response('input_text.html',

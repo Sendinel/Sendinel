@@ -1,5 +1,5 @@
 var check_for_call = function() {
-    var url = "/call_handler";
+    var url = "/web/call_handler/";
     
     new Ajax.Request(url, {
         method: 'post',
@@ -7,21 +7,27 @@ var check_for_call = function() {
             number: $("phonenumber").value
         },
         onSuccess: function(response) {
-            var json = (response.responseText || "").toJSON();   
-            
+            var json = (response.responseText || "").evalJSON();   
             if(json && json.status) {
                 switch(json.status) {
                     case "waiting":
+                        var statusText = $("auth_status");
+                        statusText.innerHTML = "Waiting for your call";
                     break;
                     
                     case "received":
-                        var statusText = $("auth_spinner");
-                        statusText.innerHTML = "";
-                        
+                        var statusText = $("auth_status");
+                        statusText.innerHTML = "Thank you! Your telephone number has been authenticated.";
+                        $("auth_spinner").hide();
                         window.clearInterval(checker);
                     break;
                     
-                    case "failes":
+                    case "failed":
+                        var statusText = $("auth_status");
+                        statusText.innerHTML = "Sorry, the authentication of your telephone number failed. Please try again.";
+                        $("auth_spinner").hide();
+                        window.clearInterval(checker);
+                        
                     break;
                 }
             }             
@@ -32,4 +38,4 @@ var check_for_call = function() {
     });
 };
 
-var checker = window.setInterval("check_for_call()", 5000);
+var checker = window.setInterval("check_for_call()", 1000);
