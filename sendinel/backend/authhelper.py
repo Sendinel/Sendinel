@@ -10,6 +10,9 @@ class AuthHelper:
     to_check = {}
     log_path = "C:/temp/call_log.txt"
     
+    """
+    delete all entries 
+    """
     def clean_up_to_check(self):
         self.to_check = {}
         
