@@ -34,7 +34,7 @@ class AuthTest(unittest.TestCase):
         self.ah.log_path = "fake_file_log"
         
         number = "01621785295"
-        self.assertTrue(self.ah.authenticate(number))
+        self.assertTrue(self.ah.authenticate(number, "Test"))
         
         fake = open("fake_file_log", 'w')
         fake.write("1265799666\t02/10/2010-12:01:06\t" + number + "\t2428534\n")
@@ -43,7 +43,7 @@ class AuthTest(unittest.TestCase):
         self.assertTrue(self.ah.check_log("01621785295"))
         
         number = "noValidNumber"
-        self.assertFalse(self.ah.authenticate(number))
+        self.assertFalse(self.ah.authenticate(number, "Test"))
         
     def test_check_log(self):
         
@@ -51,8 +51,8 @@ class AuthTest(unittest.TestCase):
         
         self.ah.log_path="fake_file_log"
         
-        self.ah.observe_number("0123456")
-        self.ah.observe_number("0678945")
+        self.ah.observe_number("0123456", "Test")
+        self.ah.observe_number("0678945", "Test")
         
         fake = open("fake_file_log", 'w')
         fake.write("1265799666\t02/10/2010-12:01:06\t0654357987\t2428534\n")
@@ -71,8 +71,8 @@ class AuthTest(unittest.TestCase):
         self.ah.clean_up_to_check()
         self.assertEquals(len(self.ah.to_check), 0)
         number = "0123456"
-        self.ah.observe_number(number)
-        self.ah.observe_number(number)
+        self.ah.observe_number(number, "Test")
+        self.ah.observe_number(number, "Test")
         self.assertEquals(len(self.ah.to_check), 1)
         
         
@@ -81,8 +81,8 @@ class AuthTest(unittest.TestCase):
         self.setUp()
         
         self.ah.clean_up_to_check()
-        self.ah.observe_number("012345678")
-        self.ah.observe_number("087654321")
+        self.ah.observe_number("012345678", "Test")
+        self.ah.observe_number("087654321", "Test")
         
         fake = open("fake_file_log", 'w')
         fake.write("1265799669\t02/10/2010-12:01:09\t012345678\t2428534\n")

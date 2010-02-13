@@ -38,7 +38,9 @@ def authenticate_phonenumber(request):
         authHelper = AuthHelper()
         
         number = request.REQUEST["phonenumber"]
-        number = authHelper.authenticate(number)
+        name = request.REQUEST["patient_name"]
+        
+        number = authHelper.authenticate(number, name)
         if number:
             return render_to_response('authenticate_phonenumber_call.html', 
                                       locals(),

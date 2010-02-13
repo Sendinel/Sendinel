@@ -2,11 +2,15 @@
 
 {% block content %}
     <h3>Authenticate Phonenumber</h3>
-	<p>Please enter your phone number.</p>
+	<p>Please enter your name and your phone number.</p>
     <p>
         <form method="post">
-            <input type="text" name="phonenumber" /><br />
-            <input type="submit" name="submit" value="Save" id="id_submit" />
+            <table>
+				<tr><td>name</td><td><input type="text" name="patient_name" /></td></tr>
+				<tr><td>phone number</td><td><input type="text" name="phonenumber" /></td></tr>
+				
+            <tr><td>&nbsp;</td><td><input type="submit" name="submit" value="Save" id="id_submit" /></td>
+	</table>
         </form>
     </p>
 {% endblock %}
