@@ -8,7 +8,7 @@ class AuthHelper:
     Provide functionality needed for authenticating phone numbers
     """
     to_check = {}
-    log_path = "C:/temp/call_log.txt"
+    log_path = "/tmp/call_log.txt"
     
    
     def clean_up_to_check(self):
@@ -35,9 +35,20 @@ class AuthHelper:
             del(self.to_check[entry])
 
     def authenticate(self, number):
+        """
+        Write the number to the observation list and return
+        the number as it will be observed
+        
+        @param  number:     Phone number (may contain special chars)
+        @type   number:     String
+        
+        @return Phone number without special chars on success
+        """
         try:
             number = format_phone_number(number)
-            return True
+            self.observe_number(number)
+            
+            return number
         except ValueError:
             return False
 
@@ -65,7 +76,11 @@ class AuthHelper:
                (oberservation may have timed out)
         """
         self.delete_old_numbers()
-        self.parse_log(self.log_path)
+        try:
+            self.parse_log(self.log_path)
+        except:
+            open(self.log_path, 'w').close()
+            self.parse_log(self.log_path)
     
         if self.to_check.has_key(number):
             return self.to_check[number]["has_called"]
