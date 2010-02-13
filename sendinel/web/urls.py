@@ -7,5 +7,7 @@ urlpatterns = patterns("",
         name = 'create_appointment'),
     url(r'^inputText/$', 'sendinel.web.views.input_text', name = 'input_text'),
     url(r'^chooseCommunication/$', 'sendinel.web.views.choose_communication',
-        name = 'choose_communication')
+        name = 'choose_communication'),
+    url(r'^authenticate_phonenumber/$', 'sendinel.web.views.authenticate_phonenumber',
+        name = 'authenticate_phonenumber')
     )
