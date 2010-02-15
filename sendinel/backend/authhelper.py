@@ -61,10 +61,13 @@ class AuthHelper:
         @param  number: the phone number to be observed
         @type   number: string        
         """
-        if not self.to_check.has_key(number):
-            self.to_check[number] = {"has_called" : False, "time" : time(), "name" : name}
+        
+        # only use the last 7 digits of the number for the key
+        
+        if not self.to_check.has_key(number[-7:]):
+            self.to_check[number[-7:]] = {"number" : number, "has_called" : False, "time" : time(), "name" : name}
         else:
-            self.to_check[number]["time"] = time() 
+            self.to_check[number[-7:]]["time"] = time() 
     
     def check_log(self, number):
         """
@@ -84,11 +87,11 @@ class AuthHelper:
             open(self.log_path, 'w').close()
             self.parse_log(self.log_path)
     
-        if self.to_check.has_key(number):
-            if self.to_check[number]["has_called"]:
+        if self.to_check.has_key(number[-7:]):
+            if self.to_check[number[-7:]]["has_called"]:
                 person = Patient()
-                person.phone_number = number
-                person.name = self.to_check[number]["name"]
+                person.phone_number = self.to_check[number[-7:]]["number"]
+                person.name = self.to_check[number[-7:]]["name"]
                 person.save()
                 return True
             else:
@@ -108,8 +111,8 @@ class AuthHelper:
         log = open(log_file)
         for entry in log:
             (timestamp, datetime, phone, called_number) = entry.split("\t")
-            if self.to_check.has_key(phone):
-                self.to_check[phone]["has_called"] = True
+            if self.to_check.has_key(phone[-7:]):
+                self.to_check[phone[-7:]]["has_called"] = True
         log.close()
         
         # Empty the log file

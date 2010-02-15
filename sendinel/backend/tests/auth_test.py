@@ -34,13 +34,21 @@ class AuthTest(unittest.TestCase):
         self.ah.log_path = "fake_file_log"
         
         number = "01621785295"
+        number2 = "004916217852567"
+        number3 = "016217852567"
+        
         self.assertTrue(self.ah.authenticate(number, "Test"))
+        self.assertTrue(self.ah.authenticate(number2, "Test 2"))
         
         fake = open("fake_file_log", 'w')
         fake.write("1265799666\t02/10/2010-12:01:06\t" + number + "\t2428534\n")
+        fake.write("1265799667\t02/10/2010-12:01:07\t" + number3 + "\t2428534\n")
+        
         fake.close()
         
-        self.assertTrue(self.ah.check_log("01621785295"))
+        self.assertTrue(self.ah.check_log(number))
+        self.assertTrue(self.ah.check_log(number2))
+        
         
         number = "noValidNumber"
         self.assertFalse(self.ah.authenticate(number, "Test"))
@@ -89,8 +97,8 @@ class AuthTest(unittest.TestCase):
         fake.close()
         self.ah.parse_log("fake_file_log")
         
-        self.assertTrue(self.ah.to_check["012345678"]["has_called"])
-        self.assertFalse(self.ah.to_check["087654321"]["has_called"])
+        self.assertTrue(self.ah.to_check["2345678"]["has_called"])
+        self.assertFalse(self.ah.to_check["7654321"]["has_called"])
          
     def test_delete_old_numbers(self):
         
