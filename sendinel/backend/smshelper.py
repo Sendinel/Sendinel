@@ -1,23 +1,13 @@
-from math import ceil, floor
+from math import floor
 from string import Template
 
 
     
 def generate_sms(contents, template):
     """
-        Return an sms text as string from a given template that is not 
-        longer than 160 characters. Substitute all placeholders in template
-        with their corresponding entry in contents.
-
-        @param contents: Dictionary with specific information
-        @param template: Template for the SMS with placeholders
-
-        >>> generate_sms({'date': "10.2.09",
-                      'hospital': "Your Hospital"},
-                     Template("go $date to $hospital"))
-        ("go 10.2.09 to Your Hospital")
+    creates an sms text from a given template that is not longer than 160 characters
     """
-
+    #template aus self wenn in klasse
     contents = replace_dollar_signs(contents)
     sms = template.substitute(contents)
     if len(sms) > 160:
@@ -27,23 +17,27 @@ def generate_sms(contents, template):
     return sms
     
 def get_content_length(contents):
-    """ returns the length of all dictionary values together """
+    """ 
+    returns the length of all dictionary values together 
+    """
     length = 0
     for value in contents.itervalues():
         length += len(value)
     return length
 
 def replace_dollar_signs(contents):
-    """ dollar signs are represented in a way, that they continue to be $, even after
-        the substitution of the template
+    """ 
+    dollar signs are represented in a way, that they continue to be $, even after
+    the substitution of the template
     """
     for value in contents.itervalues():
-        value.replace("$","$$")
+		value.replace("$","$$")
     return contents
 
 def reduce_contents(contents, chars_left):
-    """ the inserted fields are shortened, 
-        so that the sms will in total not ecceed 160 characters
+    """ 
+    the inserted fields are shortened, 
+    so that the sms will in total not ecceed 160 characters
     """
     #DATE FIELD IS HARD CODED NOW
     if 'date' in contents:
@@ -59,7 +53,8 @@ def reduce_contents(contents, chars_left):
 
     
 def generate_appointment_sms(specific_content,text):
-    """ generates an appointment sms from a given string text. 
+    """ 
+    generates an appointment sms from a given string text. 
     not currently used
     """
     sms_static_text = text % (('',) * 4)

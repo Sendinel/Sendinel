@@ -1,0 +1,12 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <h3>Authenticate Phonenumber</h3>
+	<p>Please enter your phone number.</p>
+    <p>
+        <form method="post">
+            <input type="text" name="phonenumber" /><br />
+            <input type="submit" name="submit" value="Save" id="id_submit" />
+        </form>
+    </p>
+{% endblock %}
