@@ -1,6 +1,7 @@
 import re
 from time import time
 
+from sendinel.backend.models import *
 from sendinel.backend.helper import NotObservedNumberException
 
 class AuthHelper:
@@ -34,7 +35,7 @@ class AuthHelper:
         for entry in to_delete:
             del(self.to_check[entry])
 
-    def authenticate(self, number):
+    def authenticate(self, number, name):
         """
         Write the number to the observation list and return
         the number as it will be observed
@@ -46,13 +47,13 @@ class AuthHelper:
         """
         try:
             number = format_phone_number(number)
-            self.observe_number(number)
+            self.observe_number(number, name)
             
             return number
         except ValueError:
             return False
 
-    def observe_number(self, number):
+    def observe_number(self, number, name):
         """
         add the given number to the observation list
         if it is already in the list, update the timestamp
@@ -60,14 +61,18 @@ class AuthHelper:
         @param  number: the phone number to be observed
         @type   number: string        
         """
-        if not self.to_check.has_key(number):
-            self.to_check[number] = {"has_called" : False, "time" : time()}
+        
+        # only use the last 7 digits of the number for the key
+        
+        if not self.to_check.has_key(number[-7:]):
+            self.to_check[number[-7:]] = {"number" : number, "has_called" : False, "time" : time(), "name" : name}
         else:
-            self.to_check[number]["time"] = time() 
+            self.to_check[number[-7:]]["time"] = time() 
     
     def check_log(self, number):
         """
         answer whether the given number has already called
+        if a number is successfully authenticated, add the person to the database
         
         @param  number:     telephone number to check
         @type   number:     string
@@ -82,8 +87,15 @@ class AuthHelper:
             open(self.log_path, 'w').close()
             self.parse_log(self.log_path)
     
-        if self.to_check.has_key(number):
-            return self.to_check[number]["has_called"]
+        if self.to_check.has_key(number[-7:]):
+            if self.to_check[number[-7:]]["has_called"]:
+                person = Patient()
+                person.phone_number = self.to_check[number[-7:]]["number"]
+                person.name = self.to_check[number[-7:]]["name"]
+                person.save()
+                return True
+            else:
+                return False
         else:
             raise NotObservedNumberException('Number was not observed')
     
@@ -99,8 +111,8 @@ class AuthHelper:
         log = open(log_file)
         for entry in log:
             (timestamp, datetime, phone, called_number) = entry.split("\t")
-            if self.to_check.has_key(phone):
-                self.to_check[phone]["has_called"] = True
+            if self.to_check.has_key(phone[-7:]):
+                self.to_check[phone[-7:]]["has_called"] = True
         log.close()
         
         # Empty the log file
