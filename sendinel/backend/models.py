@@ -1,7 +1,7 @@
 from datetime import datetime
 from string import Template
 
-from django.db import models
+from django.db import models, IntegrityError
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
@@ -42,8 +42,24 @@ class Hospital(models.Model):
     
     def __str__(self):
         return self.name
+        
+        
+class Usergroup(models.Model):
+    """
+    Represent a user group.
+    Raises integrity error
+    """
+    name = models.CharField(max_length=255, unique=True)
 
-
+    def __str__(self):
+        return self.name
+        
+    def __init__(self, new_name):
+        super(models.Model, self).__init__()
+        self.name = new_name
+        if len(Usergroup.objects.filter(name = new_name))>0:
+            raise IntegrityError
+    
 
 class Sendable(models.Model):
     """

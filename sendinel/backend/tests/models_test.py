@@ -67,5 +67,16 @@ class ModelsSMSTest(TestCase):
         self.assertEquals(type(data), SMSOutputData)
         self.assertEquals(data.phone_number, "12345")
         self.assertEquals(type(data.data), unicode)
+        
+class ModelsUsergroupTest(TestCase):
+    
+    def test_no_groups_with_same_name(self):
+        first_group = Usergroup("Hospitalinfos").save()
+        self.assertRaises(IntegrityError, Usergroup( "Hospitalinfos").save())
+        
+    def test_no_groups_with_empty_name(self):
+        fail
+        
+    
 
 
