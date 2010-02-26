@@ -1,6 +1,19 @@
 import unittest
-import sendinel.backend.voicecall
 
+linux_available = False
+try:
+    import grp
+    import os
+    import pwd
+    import shutil
+   
+    linux_available = True
+    
+except ImportError:
+    print "Warning: Linux operating system is required to run the voicecall functionality"
+    
+import sendinel.backend.voicecall    
+    
 class VoicecallTest(unittest.TestCase):
     def setUp(self):
         self.vc = sendinel.backend.voicecall.Voicecall()
