@@ -77,10 +77,24 @@ class ModelsUsergroupTest(TestCase):
         first_group.save()
         second_group = Usergroup(name ="Hospitalinfos")
         self.assertRaises(IntegrityError, second_group.save)
-        
-    def test_no_groups_with_empty_name(self):
-        self.fail
-        
     
+    #TODO bei Form testen, dass keine Nullwerte angegeben werden duerfen
+    # def test_no_groups_with_empty_name(self):
+        # self.assertRaises(IntegrityError, Usergroup(name = None).save)
+        # amount = Usergroup.objects.all().count()
+        # first_group = Usergroup()
+        # import pdb; pdb.set_trace()
+        # first_group.save()
+        # print first_group.__str__
+        # self.assertEquals(Usergroup.objects.all().count(), amount) 
+        
+    def test_group_member_relation(self):
+        group = Usergroup(name = "Gruppe")
+        group.save()
+        patient = Patient()
+        patient.save()
+        group.members.add(patient)
+        self.assertTrue(patient in group.members.all())
+        self.assertTrue(group in patient.groups())
 
 

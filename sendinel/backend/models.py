@@ -17,6 +17,7 @@ class User(models.Model):
     class Meta:
         abstract = True
     name = models.CharField(max_length=255)
+   
     
     def __str__(self):
         return self.name
@@ -32,6 +33,9 @@ class Patient(User):
     Represent a patient.
     """
     phone_number = models.CharField(max_length=20)
+    
+    def groups(self):
+        return Usergroup.objects.filter(members__id = self.id)
 
 
 class Hospital(models.Model):
@@ -49,7 +53,8 @@ class Usergroup(models.Model):
     Represent a user group.
     Raises integrity error
     """
-    name = models.CharField(max_length=255, unique=True)
+    members = models.ManyToManyField(Patient)
+    name = models.CharField(max_length=255, unique=True, blank=False, null=False)
 
     def __str__(self):
         return self.name
