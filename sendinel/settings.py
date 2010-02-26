@@ -8,7 +8,6 @@ PROJECT_PATH = dirname(abspath(__file__))
 
 
 ADMINS = (
-    ('sendinel', 'contact@sendinel.org'),
 )
 
 MANAGERS = ADMINS
@@ -93,3 +92,10 @@ INSTALLED_APPS = (
 # should be in own config file
 REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days=-1)
 ####################################
+
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
+

@@ -2,3 +2,4 @@
 thumbs.db
 *.pyc
 sendinel.db
+local_settings.py
