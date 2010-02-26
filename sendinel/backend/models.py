@@ -53,12 +53,6 @@ class Usergroup(models.Model):
 
     def __str__(self):
         return self.name
-        
-    def __init__(self, new_name):
-        super(models.Model, self).__init__()
-        self.name = new_name
-        if len(Usergroup.objects.filter(name = new_name))>0:
-            raise IntegrityError
     
 
 class Sendable(models.Model):

@@ -2,6 +2,8 @@ from datetime import datetime
 
 from django.test import TestCase
 
+from django.db import IntegrityError
+
 from sendinel import settings
 from sendinel.backend.models import *
 from sendinel.backend.output import *
@@ -71,11 +73,13 @@ class ModelsSMSTest(TestCase):
 class ModelsUsergroupTest(TestCase):
     
     def test_no_groups_with_same_name(self):
-        first_group = Usergroup("Hospitalinfos").save()
-        self.assertRaises(IntegrityError, Usergroup( "Hospitalinfos").save())
+        first_group = Usergroup(name ="Hospitalinfos")
+        first_group.save()
+        second_group = Usergroup(name ="Hospitalinfos")
+        self.assertRaises(IntegrityError, second_group.save)
         
     def test_no_groups_with_empty_name(self):
-        fail
+        self.fail
         
     
 
