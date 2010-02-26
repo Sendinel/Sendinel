@@ -93,3 +93,10 @@ INSTALLED_APPS = (
 # should be in own config file
 REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days=-1)
 ####################################
+
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
+
