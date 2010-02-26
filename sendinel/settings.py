@@ -8,7 +8,6 @@ PROJECT_PATH = dirname(abspath(__file__))
 
 
 ADMINS = (
-    ('sendinel', 'contact@sendinel.org'),
 )
 
 MANAGERS = ADMINS
