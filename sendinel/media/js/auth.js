@@ -1,39 +1,37 @@
 var check_for_call = function() {
-    var url = "/web/call_handler/";
-    
-    new Ajax.Request(url, {
-        method: 'post',
-        parameters: {
-            number: $("phonenumber").value
+        
+    $.post("/web/call_handler/",
+        {
+            number: $("#phonenumber").val()
         },
-        onSuccess: function(response) {
-            var json = (response.responseText || "").evalJSON();   
+        function(json) {
+   
             if(json && json.status) {
-                var statusText = $("auth_status");
+                var statusText = $("#auth_status");
                 
                 switch(json.status) {                
                     case "waiting":                        
-                        statusText.innerHTML = "Waiting for your call";
+                        statusText.text("Waiting for your call");
                         window.setTimeout("check_for_call()",1000);
                     break;
                     
                     case "received":                        
-                        statusText.innerHTML = "Thank you! Your telephone number has been authenticated.";
-                        $("auth_spinner").hide();
+                        statusText.text("Thank you! Your telephone number has been authenticated.");
+                        $("#auth_spinner").hide();
                     break;
                     
                     case "failed":
-                        statusText.innerHTML = "Sorry, the authentication of your telephone number failed. Please try again.";
-                        $("auth_spinner").hide();
+                        statusText.text("Sorry, the authentication of your telephone number failed. Please try again.");
+                        $("#auth_spinner").hide();
                                                 
                     break;
                 }
-            }             
+            }
         },
-        onFailure: function() {
-            
-        }
-    });
+        "json");
 };
 
-window.setTimeout("check_for_call()", 1000);
+$(document).ready(check_for_call);
+
+
+

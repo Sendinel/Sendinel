@@ -67,7 +67,7 @@ def call_handler(request):
         except:
                 response_dict["status"] = "failed"
     
-        return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+        return HttpResponse(simplejson.dumps(response_dict), mimetype='application/json')
 
 def input_text(request):
     return render_to_response('input_text.html',
