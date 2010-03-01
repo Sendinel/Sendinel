@@ -1,5 +1,6 @@
 import sendinel.settings
 
+global linux_available
 linux_available = False
 
 try:
@@ -31,10 +32,10 @@ class Voicecall:
         hash = md5(text).hexdigest()
         filename = "%s/%s.ulaw" % (self.asterisk_festivalcache, hash)
         if not os.path.exists(filename):
-			args = "-o %s -otype ulaw -" % (filename)
-			Popen(["text2wave"] + args.split(" "),stdin=PIPE)
+            args = "-o %s -otype ulaw -" % (filename)
+            p = Popen(["text2wave"] + args.split(" "),stdin=PIPE)
             p.communicate(input=text)
-		else:
+        else:
             pass
         return "%s/%s" % (self.asterisk_festivalcache, hash)
 
@@ -124,10 +125,9 @@ Set: PassedInfo=%s
         """
         
         if linux_available:
-            voicefile = create_voicefile(text)
+            voicefile = self.create_voicefile(text)
             content = self.create_spool_content(number, voicefile, self.asterisk_extension, self.asterisk_sip_account, context)
             self.create_spool_file("tmp", content)
             return self.move_spool_file("tmp")
         else:
             return False
-            
