@@ -7,7 +7,6 @@ from django.db import IntegrityError
 from sendinel import settings
 from sendinel.backend.models import *
 from sendinel.backend.output import *
-import sendinel.backend.tests.contenttype_helper
 
 
 class ScheduledEventTest(TestCase):
