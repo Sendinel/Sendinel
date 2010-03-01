@@ -1,4 +1,8 @@
-import serial
+try:
+    import serial
+except ImportError:
+    print "Warning: SMS serial test not running since pyserial is" + \
+            " not installed"
 import settings
 import smspdu
 import operator

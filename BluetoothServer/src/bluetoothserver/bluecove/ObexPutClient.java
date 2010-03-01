@@ -31,13 +31,10 @@ public class ObexPutClient {
         OutputStream os = putOperation.openOutputStream();
         os.write(data);
         os.close();
-
         putOperation.close();
-
         clientSession.disconnect(null);
-
         clientSession.close();
-        
+        bluetoothserver.Logging.log("sent", 0);
     }
 
 }
