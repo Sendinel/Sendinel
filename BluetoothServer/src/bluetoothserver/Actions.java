@@ -84,7 +84,6 @@ public class Actions {
                 //Send File to the Device
                 String url = ServicesSearch.searchServices(mac);
                 ObexPutClient.send(url, data, filename, filetype);
-
                 return "done";
             }
         }catch(Exception e){
@@ -93,6 +92,7 @@ public class Actions {
             //start Inquiry
             RemoteDeviceDiscovery.enable();
         }
+        
     }
 
     /**
