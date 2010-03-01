@@ -71,6 +71,12 @@ class ModelsSMSTest(TestCase):
         self.assertEquals(type(data.data), unicode)
         
 class ModelsUsergroupTest(TestCase):
+    def setUp(self):
+        self.group = Usergroup(name = "Gruppe")
+        self.group.save()
+        self.patient = Patient()
+        self.patient.save()
+        self.group.members.add(self.patient)
     
     def test_no_groups_with_same_name(self):
         first_group = Usergroup(name ="Hospitalinfos")
@@ -88,13 +94,12 @@ class ModelsUsergroupTest(TestCase):
         # print first_group.__str__
         # self.assertEquals(Usergroup.objects.all().count(), amount) 
         
-    def test_group_member_relation(self):
-        group = Usergroup(name = "Gruppe")
-        group.save()
-        patient = Patient()
-        patient.save()
-        group.members.add(patient)
-        self.assertTrue(patient in group.members.all())
-        self.assertTrue(group in patient.groups())
+    def test_group_member_relation_add(self):
+        self.assertTrue(self.patient in self.group.members.all())
+        self.assertTrue(self.group in self.patient.groups())
 
+    def test_group_member_relation_delete(self):
+        self.group.members.remove(self.patient)
+        self.assertTrue(self.patient not in self.group.members.all())
+        self.assertTrue(self.group not in self.patient.groups())
 
