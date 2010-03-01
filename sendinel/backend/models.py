@@ -1,8 +1,14 @@
+from datetime import datetime
+from string import Template
+
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-import smshelper
-from output import *
+
+from sendinel import settings
+from sendinel.backend import smshelper
+from sendinel.backend.output import *
+
 
 class User(models.Model):
     """
@@ -11,6 +17,9 @@ class User(models.Model):
     class Meta:
         abstract = True
     name = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return self.name
     
 class Doctor(User):
     """
@@ -23,8 +32,6 @@ class Patient(User):
     Represent a patient.
     """
     phone_number = models.CharField(max_length=20)
-    pass
-
 
 
 class Hospital(models.Model):
@@ -33,6 +40,8 @@ class Hospital(models.Model):
     """
     name = models.CharField(max_length=255)
     
+    def __str__(self):
+        return self.name
 
 
 
@@ -40,14 +49,22 @@ class Sendable(models.Model):
     """
     Define an interface for a Sendable object.
     """
+    class Meta:
+        abstract = True
+
     WAYS_OF_COMMUNICATION = (
         ('sms','SMS'),
         ('bluetooth','Bluetooth'),
         ('voice','Voice Call'),
     )
-    way_of_communication = models.CharField(max_length=9, choices=WAYS_OF_COMMUNICATION)
+    way_of_communication = models.CharField(max_length=9,
+                                choices=WAYS_OF_COMMUNICATION)
+
+    recipient_type = models.ForeignKey(ContentType)
+    recipient_id = models.PositiveIntegerField()
+    recipient = generic.GenericForeignKey('recipient_type', 'recipient_id')
     
-    def get_data_for_bluetooth():
+    def get_data_for_bluetooth(self):
         """
         Prepare OutputData for bluetooth.
         Return BluetoothOutputData for sending.
@@ -61,7 +78,7 @@ class Sendable(models.Model):
         """
         pass
     
-    def get_data_for_voice():
+    def get_data_for_voice(self):
         """
         Prepare OutputData for voice.
         Return VoiceOutputData for sending.
@@ -74,8 +91,15 @@ class Sendable(models.Model):
         Return an object of a subclass of OutputData.
         """
         return eval("self.get_data_for_%s()" % self.way_of_communication)
+        
+    def create_scheduled_event(self, send_time):
+        """
+            Creates a ScheduledEvent for the Sendable at the given send_time.
+        """
+        scheduled_event = ScheduledEvent(sendable = self,
+                                         send_time = send_time)
+        scheduled_event.save()
 
- 
 class HospitalAppointment(Sendable):
     """
     Define a HospitalAppointment.
@@ -83,9 +107,10 @@ class HospitalAppointment(Sendable):
     date = models.DateTimeField()
     doctor = models.ForeignKey(Doctor)
     hospital = models.ForeignKey(Hospital)
-    patient = models.ForeignKey(Patient)
+    template = Template("Dear $name, please remember your appointment" + \
+                         " at the $hospital at $date with doctor $doctor")
     
-    def get_data_for_bluaetooth():
+    def get_data_for_bluetooth(self):
         """
         Prepare OutputData for bluetooth.
         Return BluetoothOutputData for sending.
@@ -100,20 +125,57 @@ class HospitalAppointment(Sendable):
         Return SMSOutputData for sending.
         """
         data = SMSOutputData()
-        data.data = smshelper.generate_appointment_sms(str(self.date),
-                                            self.doctor.name,
-                                            self.hospital.name,
-                                            self.patient.name)
-        data.phone_number = self.patient.phone_number
+        contents = {'date':str(self.date),
+                    'name': self.recipient.name,
+                    'doctor': self.doctor.name,
+                    'hospital': self.hospital.name}
+                    
+        data.data = smshelper.generate_sms(contents,
+                        HospitalAppointment.template)
+        data.phone_number = self.recipient.phone_number
+        
         return data
 
-    def get_data_for_voice():
+    def get_data_for_voice(self):
         """
         Prepare OutputData for voice.
         Return VoiceOutputData for sending.
         TODO Not implemented yet.
         """
         pass
+
+    def create_scheduled_event(self):
+        """
+            Create a scheduled event for sending a reminder before an
+            appointment. The time before the appointment is used as specified
+            in the settings:
+            REMINDER_TIME_BEFORE_APPOINTMENT specified as timedelta object.
+        """
+        send_time = self.date - settings.REMINDER_TIME_BEFORE_APPOINTMENT
+        Sendable.create_scheduled_event(self, send_time)
+
+class TextMessage(Sendable):
+    """
+    Define a TextMessage.
+    """
+    template = Template("$text")
+    # TODO restrict text to 160? but not good for voice calls
+    text = models.TextField()
+    
+    
+    def get_data_for_sms(self):
+        """
+        Prepare OutputData for sms.
+        Generate the message for an HospitalAppointment.
+        Return SMSOutputData for sending.
+        """
+        
+        data = SMSOutputData()            
+        data.data = smshelper.generate_sms({'text': self.text},
+                                            TextMessage.template)
+        data.phone_number = self.recipient.phone_number
+        
+        return data
     
     
 class ScheduledEvent(models.Model):
@@ -126,11 +188,13 @@ class ScheduledEvent(models.Model):
 
     send_time = models.DateTimeField()
 
-    STATES= (
+    STATES = (
         ('new','new'),
         ('sent','sent'),
         ('failed','failed'),
     )
-    state = models.CharField(max_length = 1, choices = STATES, default = 'new')
-    
+    state = models.CharField(max_length = 1,
+                             choices = STATES,
+                             default = 'new')
+
 

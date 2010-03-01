@@ -3,12 +3,25 @@
 <head>
 
 <!-- change this to the title you want to appear in browser title bar -->
+{% comment %}For DateTime picker from Django admin.{% endcomment %}
+{% if form.media %}
+    {% comment %}
+        TODO use ADMIN_MEDIA_PREFIX
+    {% endcomment %}
+    <script type="text/javascript" src="/admin_media/js/core.js"></script>
+    <script type="text/javascript" src="/admin/jsi18n/"></script>
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/datetimepicker.css" type="text/css" media="screen" charset="utf-8" />
+{% endif %}
+{{ form.media }}
 
 <title>sendinel</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="author" content="sendinel" />
 <meta name="description" content=" " />
-<link rel="stylesheet" href="../mediaweb/style.css" type="text/css" />
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/sendinel.css" type="text/css" />
+<script src="{{MEDIA_URL}}js/prototype.js" type="text/javascript"></script>
+<script src="{{MEDIA_URL}}js/auth.js" type="text/javascript"></script>
+
 </head>
 
 <body>
@@ -40,7 +53,9 @@
 <div id="container">
 
 <div id="title">
-    <img src="../mediaweb/logoSend.gif" alt="sendinel" />
+    <a href="{% url index %}">
+        <img src="{{ MEDIA_URL }}/logoSend.gif" alt="sendinel" />
+    </a>
 </div>
 
 <div id="content1">
@@ -53,11 +68,7 @@
 
 
 <div id="footer">  <br />
-<!-- it'd be super if you left this link intact -->    
-    
-<a href="http://www.dream-logic.com">Web Design by dreamLogic</a> | 
-<a href="#">Privacy Policy</a> | 
-<a href="#">Terms and Conditions</a>
+
 </div>
 
 <!-- end container -->
