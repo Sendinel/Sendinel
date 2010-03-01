@@ -85,6 +85,3 @@ class AppointmentViewTest(TestCase):
                     'way_of_communication': 'bluetooth'  })
         self.assertEquals(ScheduledEvent.objects.count(),
                             number_of_events)
-
-
-

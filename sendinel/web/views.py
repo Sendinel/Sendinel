@@ -34,11 +34,12 @@ def create_appointment(request):
                                 context_instance=RequestContext(request))
 
 def authenticate_phonenumber(request):
+    
     if request.method == "POST":
         authHelper = AuthHelper()
         
-        number = request.REQUEST["phonenumber"]
-        name = request.REQUEST["patient_name"]
+        number = request.REQUEST["number"]
+        name = request.REQUEST["name"]
         
         number = authHelper.authenticate(number, name)
         if number:
@@ -53,7 +54,7 @@ def authenticate_phonenumber(request):
                               locals(),
                               context_instance = RequestContext(request))
 
-def call_handler(request):
+def check_call_received(request):
     if request.method == "POST":
         authHelper = AuthHelper()
         number = request.REQUEST["number"]
@@ -67,7 +68,8 @@ def call_handler(request):
         except:
                 response_dict["status"] = "failed"
     
-        return HttpResponse(simplejson.dumps(response_dict), mimetype='application/json')
+        return HttpResponse(content = simplejson.dumps(response_dict),
+                            content_type = "application/json")
 
 def input_text(request):
     return render_to_response('input_text.html',

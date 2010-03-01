@@ -1,6 +1,6 @@
 var check_for_call = function() {
         
-    $.post("/web/call_handler/",
+    $.post("/web/check_call_received/",
         {
             number: $("#phonenumber").val()
         },
