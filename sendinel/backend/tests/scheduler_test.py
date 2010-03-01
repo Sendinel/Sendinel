@@ -3,7 +3,6 @@ from datetime import datetime
 
 from sendinel.backend.models import ScheduledEvent
 from sendinel.backend import scheduler
-from sendinel.backend.tests import contenttype_helper
 from sendinel.backend import output
 
 class SchedulerTest(TestCase):
