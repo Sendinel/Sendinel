@@ -7,7 +7,7 @@ from django.utils import simplejson
 from sendinel.backend.models import Patient, ScheduledEvent
 from sendinel.backend.authhelper import AuthHelper
 from sendinel.web.forms import *
-from sendinel import settings
+from sendinel.settings import AUTH_NUMBER
 
 def index(request):
     return render_to_response('start.html',
@@ -38,7 +38,7 @@ def authenticate_phonenumber(request):
     
     if request.method == "POST":
         authHelper = AuthHelper()
-        auth_number = settings.AUTH_NUMBER
+        auth_number = AUTH_NUMBER
         
         number = request.REQUEST["number"]
         name = request.REQUEST["name"]
