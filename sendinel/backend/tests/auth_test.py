@@ -1,13 +1,14 @@
 import unittest
 from sendinel.backend.authhelper import *
+from sendinel.backend.models import AuthenticationCall
+from sendinel.asterisk import log_call
 
 class AuthTest(unittest.TestCase):
     def setUp(self):
         self.ah = AuthHelper()
 
     def test_number_formating(self):
-        
-        self.setUp()
+
         
         number = "0123456789"
         self.assertEquals(format_phone_number(number), "0123456789")             
@@ -30,7 +31,6 @@ class AuthTest(unittest.TestCase):
 
     def test_authenticate(self):
         
-        self.setUp()
         self.ah.log_path = "fake_file_log"
         
         number = "01621785295"
@@ -95,10 +95,52 @@ class AuthTest(unittest.TestCase):
         self.assertFalse(self.ah.to_check["7654321"]["has_called"])
          
     def test_delete_old_numbers(self):
-        
-        self.setUp()
-        
+
         self.ah.clean_up_to_check()
         self.ah.to_check["0123456"] = {"has_called":"False", "time":(time()-200)}
         self.ah.delete_old_numbers()
         self.assertEquals(len(self.ah.to_check), 0)
+        
+    def test_asterisk_log_call(self):
+        class MockFile:
+            def readlines(input):
+                fake_data = """agi_request: call_log.agi
+agi_channel: SIP/ext-sip-account-b50d4dc8
+agi_language: en
+agi_type: SIP
+agi_uniqueid: 1267543275.24
+agi_version: 1.6.2.0~rc2-0ubuntu1.2
+agi_callerid: 01601234567
+agi_calleridname: 01601234567
+agi_callingpres: 0
+agi_callingani2: 0
+agi_callington: 0
+agi_callingtns: 0
+agi_dnid: 2428534
+agi_rdnis: unknown
+agi_context: von-voip-provider
+agi_extension: 2428534
+agi_priority: 1
+agi_enhanced: 0.0
+agi_accountcode: 
+agi_threadid: -1258067088
+"""
+                return fake_data.splitlines()
+
+
+        real_stdin = log_call.sys.stdin
+        fake_stdin = MockFile()
+        log_call.sys.stdin = fake_stdin
+        
+        AuthenticationCall.objects.all().delete()
+        
+        log_call.log_call()
+        
+        count = AuthenticationCall.objects.all().count()
+        self.assertEquals(count, 1, "AuthenticationCall object was not created.")
+        
+        call = AuthenticationCall.objects.all()[0]
+        self.assertEquals(call.number, "01601234567")
+
+        log_call.sys.stdin = real_stdin
+    
