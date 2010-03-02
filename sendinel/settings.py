@@ -91,6 +91,13 @@ INSTALLED_APPS = (
 ####################################
 # should be in own config file
 REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days=-1)
+
+ASTERISK_USER = "hudson"
+ASTERISK_GROUP = "hudson"
+ASTERISK_SPOOL_DIR = "/var/spool/asterisk/outgoing/"
+
+ASTERISK_EXTENSION = "s"
+ASTERISK_SIP_ACCOUNT = "ext-sip-account"
 ####################################
 
 
