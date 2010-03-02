@@ -218,7 +218,7 @@ class ScheduledEvent(models.Model):
         ('sent','sent'),
         ('failed','failed'),
     )
-    state = models.CharField(max_length = 1,
+    state = models.CharField(max_length = 3,
                              choices = STATES,
                              default = 'new')
 
