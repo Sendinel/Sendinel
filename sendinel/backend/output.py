@@ -1,5 +1,6 @@
 import sms
 import bluetooth
+import voicecall
 
 class OutputData(object):
     """
@@ -29,12 +30,13 @@ class VoiceOutputData(OutputData):
     phone_number = None
     
     
-
-"""
-Do the sending for the given outputData
-@param  the outputData Object to send
-"""
 def send(outputData):
+    """
+        Do the sending for the given outputData
+        
+        @param  outputData: the outputData Object to send
+        @type   outputData: OutputData
+    """
     typ = type(outputData).__name__
     if typ == 'SMSOutputData':
         send_smsdata(outputData)
@@ -47,24 +49,33 @@ def send(outputData):
     else:
         pass
     
-"""
-Send a sms
-"""
 def send_smsdata(smsOutputData):
+    """
+        Send a sms
+        
+        @param  smsOutputData:  the data needed for sending the message
+        @type   smsOutputData:  SMSOutputData    
+    """
     recipient = smsOutputData.phone_number
     message = smsOutputData.data
     sms.send_sms(recipient, message)
 
-"""
-Call a number with a specific voice
-"""
 def send_voicedata(voiceOutputData):
-    pass
+    """
+        Call a number with a specific voice
+        
+        @param  voiceOutputData:    data for putting the call
+        @type   voiceOutputData:    VoiceOutputData
+    """
+    phone_number = voiceOutputData.phone_number
+    voicetext = voiceOutputData.data
+    call = voicecall.Voicecall()
+    call.conduct_call(phone_number, voicetext, "outbound-call")
 
-"""
-Send data to a bluetoothDevice
-"""
 def send_bluetoothdata(bluetoothOutputData):
+    """
+        Send data to a bluetoothDevice
+    """
     mac = bluetoothOutputData.mac
     data = bluetoothOutputData.data
     addressServer = bluetoothOutputData.addressServer

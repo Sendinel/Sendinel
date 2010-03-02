@@ -49,6 +49,9 @@ MEDIA_ROOT = PROJECT_PATH + '/media'
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/mediaweb/'
 
+# Phonenumber to authenticate against the system
+AUTH_NUMBER = "0331-27975256"
+
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
@@ -91,6 +94,13 @@ INSTALLED_APPS = (
 ####################################
 # should be in own config file
 REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days=-1)
+
+ASTERISK_USER = "hudson"
+ASTERISK_GROUP = "hudson"
+ASTERISK_SPOOL_DIR = "/var/spool/asterisk/outgoing/"
+
+ASTERISK_EXTENSION = "s"
+ASTERISK_SIP_ACCOUNT = "ext-sip-account"
 ####################################
 
 
