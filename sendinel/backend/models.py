@@ -1,7 +1,7 @@
 from datetime import datetime
 from string import Template
 
-from django.db import models
+from django.db import models, IntegrityError
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
@@ -17,6 +17,7 @@ class User(models.Model):
     class Meta:
         abstract = True
     name = models.CharField(max_length=255)
+   
     
     def __str__(self):
         return self.name
@@ -32,6 +33,9 @@ class Patient(User):
     Represent a patient.
     """
     phone_number = models.CharField(max_length=20)
+    
+    def groups(self):
+        return Usergroup.objects.filter(members__id = self.id)
 
 
 class Hospital(models.Model):
@@ -42,8 +46,19 @@ class Hospital(models.Model):
     
     def __str__(self):
         return self.name
+        
+        
+class Usergroup(models.Model):
+    """
+    Represent a user group.
+    Raises integrity error
+    """
+    members = models.ManyToManyField(Patient)
+    name = models.CharField(max_length=255, unique=True, blank=False, null=False)
 
-
+    def __str__(self):
+        return self.name
+    
 
 class Sendable(models.Model):
     """
