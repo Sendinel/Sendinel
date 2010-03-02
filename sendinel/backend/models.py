@@ -127,22 +127,14 @@ class HospitalAppointment(Sendable):
     
     def get_data_for_bluetooth(self):
         """
-        Prepare OutputData for voice.
-        Generate the message for an HospitalAppointment.
-        Return VoiceOutputData for sending.
-        """
-        data = VoiceOutputData()
-        contents = {'date':str(self.date),
-                    'name': self.recipient.name,
-                    'doctor': self.doctor.name,
-                    'hospital': self.hospital.name}
-                    
-        data.data = smshelper.generate_sms(contents,
-                        HospitalAppointment.template)
-        data.phone_number = self.recipient.phone_number
-        
-        return data
-    
+            Prepare OutputData for voice.
+            Generate the message for an HospitalAppointment.
+            Return BluetoothOutputData for sending.
+
+            TODO: Implement it...
+   	"""
+	pass
+ 
     def get_data_for_sms(self):
         """
         Prepare OutputData for sms.
@@ -164,10 +156,20 @@ class HospitalAppointment(Sendable):
     def get_data_for_voice(self):
         """
         Prepare OutputData for voice.
+        Generate the message for an HospitalAppointment.
         Return VoiceOutputData for sending.
-        TODO Not implemented yet.
         """
-        pass
+        data = VoiceOutputData()
+        contents = {'date':str(self.date),
+                    'name': self.recipient.name,
+                    'doctor': self.doctor.name,
+                    'hospital': self.hospital.name}
+
+        data.data = smshelper.generate_sms(contents,
+                        HospitalAppointment.template)
+        data.phone_number = self.recipient.phone_number
+
+        return data
 
     def create_scheduled_event(self):
         """
