@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 
 {% block script %}
-    <script src="{{MEDIA_URL}}js/auth.js" type="text/javascript"></script>
+    <script src="{{MEDIA_URL}}/js/auth.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
@@ -10,8 +10,8 @@
     {% comment %}
         TODO Write number to local phone settings
     {% endcomment %}
-	<p>please call the following phone number: 0331-27975256.</p>
-    <input type="hidden" id="phonenumber" value="{{number}}" />
-    <img src="{{ MEDIA_URL }}ajax-loader.gif" alt="Spinner" id="auth_spinner"/>
+	<p>please call the following phone number: {{auth_number}}.</p>
+    <input type="hidden" id="number" value="{{number}}" />
+    <img src="{{ MEDIA_URL }}/ajax-loader.gif" alt="Spinner" id="auth_spinner"/>
 	<div id="auth_status"></div>
 {% endblock %}

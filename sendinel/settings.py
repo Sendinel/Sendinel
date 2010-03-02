@@ -49,6 +49,9 @@ MEDIA_ROOT = PROJECT_PATH + '/media'
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/mediaweb/'
 
+# Phonenumber to authenticate against the system
+AUTH_NUMBER = "0331-27975256"
+
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".

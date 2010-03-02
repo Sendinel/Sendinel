@@ -2,7 +2,7 @@ var check_for_call = function() {
         
     $.post("/web/check_call_received/",
         {
-            number: $("#phonenumber").val()
+            number: $("#number").val()
         },
         function(json) {
    
