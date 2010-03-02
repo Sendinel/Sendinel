@@ -196,5 +196,15 @@ class ScheduledEvent(models.Model):
     state = models.CharField(max_length = 1,
                              choices = STATES,
                              default = 'new')
+                             
+                             
+class AuthenticationCallQueue(models.Model):
+    """
+    Queues all calls that were made to authenticate a user via his 
+    mobile phone number
+    """
+    number = models.CharField(max_length = 20)
+    
+               
 
 

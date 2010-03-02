@@ -54,9 +54,7 @@ class AuthTest(unittest.TestCase):
         self.assertFalse(self.ah.authenticate(number, "Test"))
         
     def test_check_log(self):
-        
-        self.setUp()
-        
+
         self.ah.log_path="fake_file_log"
         
         self.ah.observe_number("0123456", "Test")
@@ -74,8 +72,6 @@ class AuthTest(unittest.TestCase):
         
     def test_observe_number(self):
         
-        self.setUp()
-        
         self.ah.clean_up_to_check()
         self.assertEquals(len(self.ah.to_check), 0)
         number = "0123456"
@@ -85,8 +81,6 @@ class AuthTest(unittest.TestCase):
         
         
     def test_parse_log(self):
-        
-        self.setUp()
         
         self.ah.clean_up_to_check()
         self.ah.observe_number("012345678", "Test")
