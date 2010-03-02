@@ -37,13 +37,10 @@ def create_appointment(request):
 def authenticate_phonenumber(request):
     
     if request.method == "POST":
-<<<<<<< HEAD
         number = request.REQUEST["number"].strip()
         name = request.REQUEST["name"].strip()
-=======
-        authHelper = AuthHelper()
         auth_number = AUTH_NUMBER
->>>>>>> develop
+
         
         request.session['authenticate_phonenumber'] =
                                 { 'name': name, 'number': number }
