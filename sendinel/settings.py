@@ -34,7 +34,7 @@ SITE_ID = 1
 
 # Specify a COM Port for SMS
 # for windows maybe it starts at 0
-SERIALPORTSMS = 4
+SERIALPORTSMS = '/dev/rfcomm0'
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
