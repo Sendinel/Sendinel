@@ -101,7 +101,8 @@ Set: PassedInfo=%s
         """
         try:
             os.chown(filename, pwd.getpwnam(self.asterisk_user).pw_uid, grp.getgrnam(self.asterisk_group).gr_gid)
-            filepath = self.asterisk_spool_dir + str(time.time)
+            os.fchmod(filename, 666)
+            filepath = self.asterisk_spool_dir + str(time.time())
             shutil.move(filename, filepath)
             return True
             
