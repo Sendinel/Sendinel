@@ -9,6 +9,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', redirect_to, {'url': 'web/'}),
     (r'^web/', include('sendinel.web.urls')),
+    (r'^staff/', include('sendinel.staff.urls')),    
     (r'^admin/jsi18n/$', 'django.views.i18n.javascript_catalog'),
 
     # Example:
@@ -20,6 +21,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)), 
+    (r'^accounts/login/$', 'django.contrib.auth.views.login'),
 )
 if settings.DEBUG:
     urlpatterns += patterns('',
