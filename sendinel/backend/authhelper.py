@@ -9,7 +9,7 @@ class AuthHelper:
     Provide functionality needed for authenticating phone numbers
     """
     to_check = {}
-    log_path = "/tmp/call_log.txt"
+    log_path = "C:\call_log.txt"
     
    
     def clean_up_to_check(self):

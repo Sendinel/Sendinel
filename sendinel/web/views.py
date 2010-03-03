@@ -22,8 +22,8 @@ def create_appointment(request):
         patient = Patient(name = form.cleaned_data['recipient_name'])
         patient.save()
         
-        appointment.recipient = patient
         appointment.save()
+        appointment.recipients.add(patient)
         
         if appointment.way_of_communication != 'bluetooth':
             appointment.create_scheduled_event()
