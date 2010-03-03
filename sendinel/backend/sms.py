@@ -3,10 +3,12 @@ try:
 except ImportError:
     print "Warning: SMS serial test not running since pyserial is" + \
             " not installed"
-import settings
-import smspdu
 import operator
 from time import sleep
+
+import sendinel.settings
+import sendinel.backend.smspdu
+
 
 class SerialConnectionError(Exception):
     """
