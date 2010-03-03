@@ -1,22 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <django-objects version="1.0">
     <object pk="1" model="backend.doctor">
-        <field type="CharField" name="name">Saskia</field>
+        <field type="CharField" name="name">Dr. Meinel</field>
     </object>
     <object pk="1" model="backend.patient">
-        <field type="CharField" name="name">Patrick</field>
-        <field type="CharField" name="phone_number">12345</field>
+        <field type="CharField" name="name">peter</field>
+        <field type="CharField" name="phone_number">01234</field>
     </object>
     <object pk="2" model="backend.patient">
-        <field type="CharField" name="name">Daniel</field>
-        <field type="CharField" name="phone_number">023456</field>
-    </object>
-    <object pk="3" model="backend.patient">
-        <field type="CharField" name="name">Phil</field>
-        <field type="CharField" name="phone_number">06789</field>
+        <field type="CharField" name="name">Philipp</field>
+        <field type="CharField" name="phone_number">09876</field>
     </object>
     <object pk="1" model="backend.hospital">
-        <field type="CharField" name="name">Hassos Hospital</field>
+        <field type="CharField" name="name">Hassos Klinik</field>
+    </object>
+    <object pk="1" model="backend.usergroup">
+        <field type="CharField" name="name">group</field>
+        <field to="backend.patient" name="members" rel="ManyToManyRel"><object pk="1"></object><object pk="2"></object></field>
     </object>
     <object pk="1" model="backend.hospitalappointment">
         <field type="CharField" name="way_of_communication">sms</field>
@@ -25,10 +25,10 @@
         <field to="backend.hospital" name="hospital" rel="ManyToOneRel">1</field>
         <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
     </object>
-    <object pk="1" model="backend.textmessage">
+    <object pk="1" model="backend.infoservice">
         <field type="CharField" name="way_of_communication">sms</field>
         <field type="TextField" name="text">hey there, i would like to have $ 100</field>
-        <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
+        <field to="backend.usergroup" name="recipient" rel="ManyToOneRel">1</field>
     </object>
     <object pk="1" model="backend.scheduledevent">
         <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>backend</natural><natural>hospitalappointment</natural></field>
@@ -37,9 +37,9 @@
         <field type="CharField" name="state">new</field>
     </object>
     <object pk="2" model="backend.scheduledevent">
-        <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>backend</natural><natural>textmessage</natural></field>
+        <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>backend</natural><natural>infoservice</natural></field>
         <field type="PositiveIntegerField" name="sendable_id">1</field>
         <field type="DateTimeField" name="send_time">2010-02-09 18:00:57</field>
         <field type="CharField" name="state">new</field>
-    </object>
+    </object>    
 </django-objects>
