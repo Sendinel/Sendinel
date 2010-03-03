@@ -1,45 +1,53 @@
-import unittest
-import sendinel.backend.output
+from django.test import TestCase
+from sendinel.backend.output import *
 
-class OutputTest(unittest.TestCase):
+class OutputTest(TestCase):
     """
     """
     def setUp(self):
         pass
+        
+    def test_implementation_of_send(self):
+        outputData = OutputData()
+        self.assertRaises(NotImplementedError, outputData.send)
     
     def test_send_smsoutputobject(self):
-        self.message = "test"
-        self.number = "1234"
+        message = "test"
+        number = "1234"
     
-        d = sendinel.backend.output.SMSOutputData()
-        d.data = self.message
-        d.phone_number = self.number
+        smsoutput = SMSOutputData()
+        smsoutput.data = message
+        smsoutput.phone_number = number
         
-        def send_sms1(recipient, message, ser_conn=None):
-            self.assertEquals(message,self.message)
-            self.assertEquals(recipient,self.number)
+        def send_sms1(recipient, message2):
+            self.assertEquals(message2, message)
+            self.assertEquals(recipient, number)
             
-        self.send_sms_old = sendinel.backend.output.sms.send_sms
-        sendinel.backend.output.sms.send_sms = send_sms1
-        sendinel.backend.output.send(d)
-        sendinel.backend.output.sms.send_sms = self.send_sms_old
+        send_sms_old = sms.send_sms
+        sms.send_sms = send_sms1
+        #TODO send(smsoutput) is deprecated
+        send(smsoutput)
+        smsoutput.send()
+        sms.send_sms = send_sms_old
         
     def test_send_bluetoothoutputobject(self):
-        self.data = "test"
-        self.mac = "1234"
-        self.addressServer = "127"
+        data = "test"
+        mac = "1234"
+        addressServer = "127"
     
-        d = sendinel.backend.output.BluetoothOutputData()
-        d.data = self.data
-        d.mac = self.mac
-        d.addressServer = self.addressServer
+        bluetoothoutput = BluetoothOutputData()
+        bluetoothoutput.data = data
+        bluetoothoutput.mac = mac
+        bluetoothoutput.addressServer = addressServer
         
-        def send_vcal1(addressServer, mac, data):
-            self.assertEquals(addressServer,self.addressServer)
-            self.assertEquals(mac,self.mac)
-            self.assertEquals(data,self.data)
+        def send_vcal1(addressServer2, mac2, data2):
+            self.assertEquals(addressServer2, addressServer)
+            self.assertEquals(mac2, mac)
+            self.assertEquals(data2, data)
               
-        self.send_vcal_old = sendinel.backend.output.bluetooth.send_vcal
-        sendinel.backend.output.bluetooth.send_vcal = send_vcal1
-        sendinel.backend.output.send(d)
-        sendinel.backend.output.bluetooth.send_vcal = self.send_vcal_old
+        send_vcal_old = bluetooth.send_vcal
+        bluetooth.send_vcal = send_vcal1
+        #TODO send(bluetoothoutput) is deprecated
+        send(bluetoothoutput)
+        bluetoothoutput.send()
+        bluetooth.send_vcal = send_vcal_old

@@ -49,40 +49,7 @@ class VoiceOutputData(OutputData):
 Do the sending for the given outputData
 @param  the outputData Object to send
 """
+
+#TODO remove!
 def send(outputData):
     outputData.send()
-
-
-    # typ = type(outputData).__name__
-    # if typ == 'SMSOutputData':
-        # send_smsdata(outputData)
-        
-    # elif typ == 'VoiceOutputData':
-        # send_voicedata(outputData)
-        
-    # elif typ == 'BluetoothOutputData':
-        # send_bluetoothdata(outputData)
-    # else:
-        # pass    
-# """
-# Send a sms
-# """
-# def send_smsdata(smsOutputData):
-    # recipient = smsOutputData.phone_number
-    # message = smsOutputData.data
-    # sms.send_sms(recipient, message)
-
-# """
-# Call a number with a specific voice
-# """
-# def send_voicedata(voiceOutputData):
-    # pass
-
-# """
-# Send data to a bluetoothDevice
-# """
-# def send_bluetoothdata(bluetoothOutputData):
-    # mac = bluetoothOutputData.mac
-    # data = bluetoothOutputData.data
-    # addressServer = bluetoothOutputData.addressServer
-    # bluetooth.send_vcal(addressServer, mac, data)
