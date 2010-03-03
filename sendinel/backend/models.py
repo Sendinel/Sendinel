@@ -6,7 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
 from sendinel import settings
-from sendinel.backend import smshelper
+from sendinel.backend import texthelper
 from sendinel.backend.output import *
 
 
@@ -147,7 +147,7 @@ class HospitalAppointment(Sendable):
                     'doctor': self.doctor.name,
                     'hospital': self.hospital.name}
                     
-        data.data = smshelper.generate_sms(contents,
+        data.data = texthelper.generate_text(contents,
                         HospitalAppointment.template)
         data.phone_number = self.recipient.phone_number
         
@@ -165,8 +165,8 @@ class HospitalAppointment(Sendable):
                     'doctor': self.doctor.name,
                     'hospital': self.hospital.name}
 
-        data.data = smshelper.generate_sms(contents,
-                        HospitalAppointment.template)
+        data.data = texthelper.generate_text(contents,
+                        HospitalAppointment.template, False)
         data.phone_number = self.recipient.phone_number
 
         return data
@@ -198,7 +198,7 @@ class TextMessage(Sendable):
         """
         
         data = SMSOutputData()            
-        data.data = smshelper.generate_sms({'text': self.text},
+        data.data = texthelper.generate_text({'text': self.text},
                                             TextMessage.template)
         data.phone_number = self.recipient.phone_number
         
