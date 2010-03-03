@@ -75,9 +75,8 @@ class Sendable(models.Model):
     way_of_communication = models.CharField(max_length=9,
                                 choices=WAYS_OF_COMMUNICATION)
 
-    recipient_type = models.ForeignKey(ContentType)
-    recipient_id = models.PositiveIntegerField()
-    recipient = generic.GenericForeignKey('recipient_type', 'recipient_id')
+
+    recipient = None
     
     def get_data_for_bluetooth(self):
         """
@@ -119,6 +118,9 @@ class HospitalAppointment(Sendable):
     """
     Define a HospitalAppointment.
     """
+    
+    recipient = models.ForeignKey(Patient)
+    
     date = models.DateTimeField()
     doctor = models.ForeignKey(Doctor)
     hospital = models.ForeignKey(Hospital)
@@ -141,6 +143,7 @@ class HospitalAppointment(Sendable):
         Generate the message for an HospitalAppointment.
         Return SMSOutputData for sending.
         """
+
         data = SMSOutputData()
         contents = {'date':str(self.date),
                     'name': self.recipient.name,
@@ -151,7 +154,7 @@ class HospitalAppointment(Sendable):
                         HospitalAppointment.template)
         data.phone_number = self.recipient.phone_number
         
-        return data
+        return [data]
 
     def get_data_for_voice(self):
         """
@@ -181,10 +184,12 @@ class HospitalAppointment(Sendable):
         send_time = self.date - settings.REMINDER_TIME_BEFORE_APPOINTMENT
         Sendable.create_scheduled_event(self, send_time)
 
-class TextMessage(Sendable):
+class InfoService(Sendable):
     """
-    Define a TextMessage.
+    Define a InfoService.
     """
+    recipient = models.ForeignKey(Usergroup)
+    #TODO extract to superclass?
     template = Template("$text")
     # TODO restrict text to 160? but not good for voice calls
     text = models.TextField()
@@ -197,10 +202,14 @@ class TextMessage(Sendable):
         Return SMSOutputData for sending.
         """
         
-        data = SMSOutputData()            
-        data.data = texthelper.generate_text({'text': self.text},
-                                            TextMessage.template)
-        data.phone_number = self.recipient.phone_number
+        # TODO implement data as a list
+        data = []
+        for patient in self.recipient.members.all():
+            entry = SMSOutputData()           
+            entry.data = texthelper.generate_text({'text': self.text},
+                                                InfoService.template)
+            entry.phone_number = patient.phone_number
+            data.append(entry)
         
         return data
     
