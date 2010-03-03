@@ -23,12 +23,12 @@
         <field type="DateTimeField" name="date">2010-02-08 18:43:07</field>
         <field to="backend.doctor" name="doctor" rel="ManyToOneRel">1</field>
         <field to="backend.hospital" name="hospital" rel="ManyToOneRel">1</field>
-        <field to="backend.patient" name="recipients" rel="ManyToManyRel"><object pk="1"></object><object pk="2"></object></field>
+        <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
     </object>
     <object pk="1" model="backend.textmessage">
         <field type="CharField" name="way_of_communication">sms</field>
         <field type="TextField" name="text">hey there, i would like to have $ 100</field>
-        <field to="backend.patient" name="recipients" rel="ManyToManyRel"></field>
+        <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
     </object>
     <object pk="1" model="backend.scheduledevent">
         <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>backend</natural><natural>hospitalappointment</natural></field>

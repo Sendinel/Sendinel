@@ -79,7 +79,7 @@ class Sendable(models.Model):
     #recipient_id = models.PositiveIntegerField()
     #recipient = generic.GenericForeignKey('recipient_type', 'recipient_id')
     
-    recipients = models.ManyToManyField(Patient)
+    recipient = models.ForeignKey(Patient)
     
     def get_data_for_bluetooth(self):
         """
@@ -141,16 +141,16 @@ class HospitalAppointment(Sendable):
         Generate the message for an HospitalAppointment.
         Return SMSOutputData for sending.
         """
-        for recipient in self.recipients.all():
-            data = SMSOutputData()
-            contents = {'date':str(self.date),
-                        'name': recipient.name,
-                        'doctor': self.doctor.name,
-                        'hospital': self.hospital.name}
-                        
-            data.data = smshelper.generate_sms(contents,
-                            HospitalAppointment.template)
-            data.phone_number = recipient.phone_number
+
+        data = SMSOutputData()
+        contents = {'date':str(self.date),
+                    'name': self.recipient.name,
+                    'doctor': self.doctor.name,
+                    'hospital': self.hospital.name}
+                    
+        data.data = smshelper.generate_sms(contents,
+                        HospitalAppointment.template)
+        data.phone_number = self.recipient.phone_number
         
         return data
 
@@ -189,11 +189,10 @@ class TextMessage(Sendable):
         """
         
         # TODO implement data as a list
-        data = SMSOutputData()
-        for recipient in self.recipients.all():            
-            data.data = smshelper.generate_sms({'text': self.text},
-                                                TextMessage.template)
-            data.phone_number = self.recipient.phone_number
+        data = SMSOutputData()           
+        data.data = smshelper.generate_sms({'text': self.text},
+                                            TextMessage.template)
+        data.phone_number = self.recipient.phone_number
         
         return data
     

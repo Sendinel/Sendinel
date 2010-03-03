@@ -36,7 +36,7 @@ class AppointmentViewTest(TestCase):
             .order_by("id").reverse()[:1][0]
         self.assertEquals(appointment.hospital.id, 1)
         self.assertEquals(appointment.doctor.id, 1)
-        self.assertEquals(appointment.recipients.all().get().name, 'Shiko Taga')
+        self.assertEquals(appointment.recipient.name, 'Shiko Taga')
         self.assertEquals(appointment.date, datetime(2012,8,12,19,02,42))
         self.assertEquals(appointment.way_of_communication, "sms")
     
