@@ -102,7 +102,7 @@ Set: PassedInfo=%s
         try:
             os.chown(filename, pwd.getpwnam(self.asterisk_user).pw_uid, grp.getgrnam(self.asterisk_group).gr_gid)
             # set permissions to unix 666
-            os.fchmod(filename, 438)
+            os.chmod(filename, 438)
             filepath = self.asterisk_spool_dir + str(time.time())
             shutil.move(filename, filepath)
             return True
