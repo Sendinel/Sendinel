@@ -52,25 +52,25 @@ class OutputTest(TestCase):
         bluetoothoutput.send()
         bluetooth.send_vcal = send_vcal_old
 
-   def test_send_voiceoutputobject(self):
-        self.phone_number = "test"
-        self.data = "1234"
-        d = sendinel.backend.output.VoiceOutputData()
-        d.phone_number = self.phone_number
-        d.data = self.data
-        
+    def test_send_voiceoutputobject(self):
+        phone_number = "1234"
+        data = "test"
+        voicecalldata = VoiceOutputData()
+        voicecalldata.phone_number = phone_number
+        voicecalldata.data = data
         
         def conduct_call1(self, number, text, context):
-            OutputTest.numberResult = number
-            OutputTest.textResult = text
-            
-
+            #use class variables because of contextbinding to VoiceOutputData
+            OutputTest.phone_number_value = number
+            OutputTest.text_value = text
               
-        self.conduct_call_old = sendinel.backend.output.voicecall.Voicecall.conduct_call
+        conduct_call_old = voicecall.Voicecall.conduct_call
+        voicecall.Voicecall.conduct_call = conduct_call1
+        #TODO send(voicecalldata) is deprecated
+        send(voicecalldata)
+        voicecalldata.send()
+        voicecall.Voicecall.conduct_call = conduct_call_old
         
-        sendinel.backend.output.voicecall.Voicecall.conduct_call = conduct_call1
-        sendinel.backend.output.send(d)
-        self.assertEquals(OutputTest.numberResult,self.phone_number)
-        self.assertEquals(OutputTest.textResult,self.data)
-        sendinel.backend.output.voicecall.Voicecall.conduct_call = self.conduct_call_old
+        self.assertEquals(self.text_value, data)
+        self.assertEquals(self.phone_number_value, phone_number)
 

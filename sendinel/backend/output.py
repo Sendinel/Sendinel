@@ -42,10 +42,10 @@ class VoiceOutputData(OutputData):
     phone_number = None
     
     def send(self):
-        pass
-    
-    
+        call = voicecall.Voicecall()
+        call.conduct_call(self.phone_number, self.data, "outbound-call")
 
+        
 """
 Do the sending for the given outputData
 @param  the outputData Object to send
@@ -55,15 +55,4 @@ Do the sending for the given outputData
 def send(outputData):
     outputData.send()
 
-def send_voicedata(voiceOutputData):
-    """
-        Call a number with a specific voice
-        
-        @param  voiceOutputData:    data for putting the call
-        @type   voiceOutputData:    VoiceOutputData
-    """
-    phone_number = voiceOutputData.phone_number
-    voicetext = voiceOutputData.data
-    call = voicecall.Voicecall()
-    call.conduct_call(phone_number, voicetext, "outbound-call")
 
