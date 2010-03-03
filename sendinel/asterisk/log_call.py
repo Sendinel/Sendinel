@@ -10,6 +10,12 @@ setup_environ(settings)
 
 
 def log_call():
+    """
+    Save calls from asterisk in the database.
+    This function reads data from stdin and should be called by asterisk
+    using the Asterisk Gateway Interface (AGI)
+    """
+    # read all data from stdin - should be less than 25 lines
     data = sys.stdin.readlines()
     
     number = None
@@ -23,8 +29,8 @@ def log_call():
     if not number:
         raise ValueError("agi_callerid not found in stdin data.")
     
-    call = AuthenticationCall(number = number.strip())
-    call.save()
+    number = number.strip()
+    AuthenticationCall(number = number).save()
     
 
 if __name__ == "__main__":
