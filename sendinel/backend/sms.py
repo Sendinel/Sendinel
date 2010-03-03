@@ -6,7 +6,7 @@ except ImportError:
 import operator
 from time import sleep
 
-import sendinel.settings
+from sendinel import settings
 from sendinel.backend import smspdu
 
 
