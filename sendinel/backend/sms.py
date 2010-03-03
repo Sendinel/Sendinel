@@ -7,7 +7,7 @@ import operator
 from time import sleep
 
 import sendinel.settings
-import sendinel.backend.smspdu
+from sendinel.backend import smspdu
 
 
 class SerialConnectionError(Exception):
