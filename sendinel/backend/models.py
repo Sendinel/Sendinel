@@ -223,5 +223,19 @@ class ScheduledEvent(models.Model):
     state = models.CharField(max_length = 3,
                              choices = STATES,
                              default = 'new')
+                             
+                             
+class AuthenticationCall(models.Model):
+    """
+    Queues all calls that were made to authenticate a user via his 
+    mobile phone number. These calls get deleted once the user has
+    been authenticated successfully.
+    """
+    number = models.CharField(max_length = 20)
+    time = models.DateTimeField(auto_now_add = True)
+    
+
+    
+               
 
 

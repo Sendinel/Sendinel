@@ -1,12 +1,17 @@
+from datetime import datetime
+
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils import simplejson
 
+from sendinel.backend.authhelper import calculate_call_timeout, \
+                                    check_and_delete_authentication_call, \
+                                    delete_timed_out_authentication_calls, \
+                                    format_phonenumber
 from sendinel.backend.models import Patient, ScheduledEvent
-from sendinel.backend.authhelper import AuthHelper
-from sendinel.web.forms import *
+from sendinel.web.forms import HospitalAppointmentForm
 from sendinel.settings import AUTH_NUMBER
 
 def index(request):
@@ -35,43 +40,49 @@ def create_appointment(request):
                                 context_instance=RequestContext(request))
 
 def authenticate_phonenumber(request):
-    
     if request.method == "POST":
-        authHelper = AuthHelper()
+        number = request.REQUEST["number"].strip()
+        number = format_phonenumber(number)
+        name = request.REQUEST["name"].strip()
         auth_number = AUTH_NUMBER
+
         
-        number = request.REQUEST["number"]
-        name = request.REQUEST["name"]
+        request.session['authenticate_phonenumber'] = \
+                                { 'name': name,
+                                  'number': number,
+                                  'start_time': datetime.now() }
         
-        number = authHelper.authenticate(number, name)
-        if number:
-            return render_to_response('authenticate_phonenumber_call.html', 
-                                      locals(),
-                                      context_instance = RequestContext(request))
-        else:
-            # there should happen something if the number was not valid
-            pass
-    
+        return render_to_response('authenticate_phonenumber_call.html', 
+                              locals(),
+                              context_instance = RequestContext(request))
+        # TODO implement form validation
+
+
+    delete_timed_out_authentication_calls()
+
     return render_to_response('authenticate_phonenumber.html', 
                               locals(),
                               context_instance = RequestContext(request))
 
 def check_call_received(request):
-    if request.method == "POST":
-        authHelper = AuthHelper()
-        number = request.REQUEST["number"]
-        response_dict = {}
-        
-        try:
-            if authHelper.check_log(number):
+    response_dict = {}
+
+    try:
+        response_dict["status"] = "failed"
+
+        number = request.session['authenticate_phonenumber']['number']
+        start_time = request.session['authenticate_phonenumber']['start_time']
+    
+        if start_time >= calculate_call_timeout():
+            if check_and_delete_authentication_call(number):
                 response_dict["status"] = "received"
             else:
                 response_dict["status"] = "waiting"
-        except:
-                response_dict["status"] = "failed"
-    
-        return HttpResponse(content = simplejson.dumps(response_dict),
-                            content_type = "application/json")
+    except KeyError:
+        pass
+
+    return HttpResponse(content = simplejson.dumps(response_dict),
+                        content_type = "application/json")
 
 def input_text(request):
     return render_to_response('input_text.html',
