@@ -1,6 +1,6 @@
 var check_for_call = function() {
-        
-    $.post("/web/check_call_received/",
+    var url = "../check_call_received/";
+    $.post(url,
         {
             number: $("#number").val()
         },
