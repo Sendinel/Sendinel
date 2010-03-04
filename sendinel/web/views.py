@@ -41,7 +41,7 @@ def create_appointment(request):
                                    %appointment.way_of_communication) +\
                                 "(this is neither bluetooth nor sms or voice)"
         else: 
-            return render_to_response('create_appointment.html',
+            return render_to_response('appointment_create.html',
                                 locals(),
                                 context_instance=RequestContext(request))
     else:
@@ -52,7 +52,7 @@ def create_appointment(request):
             initial_data = {}
         initial_data.update({'way_of_communication': Sendable.WAYS_OF_COMMUNICATION[0][1]})
         form = HospitalAppointmentForm(initial = initial_data)
-        return render_to_response('create_appointment.html',
+        return render_to_response('appointment_create.html',
                                 locals(),
                                 context_instance=RequestContext(request))
   
@@ -65,6 +65,9 @@ def save_appointment(request):
         return HttpResponseRedirect(reverse(create_appointment))
     # TODO Rueckgabe testen, Fehlerbehandlung
     appointment.save_with_patient(patient)
+    return render_to_response('appointment_saved.html',
+                            locals(),
+                            context_instance=RequestContext(request))
 
 def send_appointment(request):
     pass
