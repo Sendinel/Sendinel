@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.test.client import Client
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 from sendinel.backend.models import ScheduledEvent
 
@@ -18,10 +19,10 @@ class InfoserviceTest(TestCase):
     
         counter = ScheduledEvent.objects.all().count()
     
-        response = self.client.post("/staff/create_infomessage/1/", {
+        response = self.client.post(reverse("staff_create_infomessage",kwargs={"id":1}), {
             "text" : "This is a testmessage",
             "date" : "2010-01-01 00:00:00"
         })
                 
-        self.assertRedirects(response, "/staff/list_infoservices/")
+        self.assertRedirects(response, reverse("staff_list_infoservices"))
         self.assertEquals(ScheduledEvent.objects.all().count(), counter + 1)
