@@ -3,17 +3,18 @@ from string import Template
 
 
     
-def generate_sms(contents, template):
+def generate_text(contents, template, reduce = True):
     """
     creates an sms text from a given template that is not longer than 160 characters
     """
     #template aus self wenn in klasse
     contents = replace_dollar_signs(contents)
     sms = template.substitute(contents)
-    if len(sms) > 160:
-        template_length = len(sms)-get_content_length(contents)
-        new_contents = reduce_contents(contents, 160 - template_length)
-        sms = template.substitute(new_contents)
+    if reduce:
+	if len(sms) > 160:
+	    template_length = len(sms)-get_content_length(contents)
+	    new_contents = reduce_contents(contents, 160 - template_length)
+	    sms = template.substitute(new_contents)
     return sms
     
 def get_content_length(contents):

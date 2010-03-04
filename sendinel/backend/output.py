@@ -1,5 +1,6 @@
 import sms
 import bluetooth
+import voicecall
 
 class OutputData(object):
     """
@@ -41,15 +42,15 @@ class VoiceOutputData(OutputData):
     phone_number = None
     
     def send(self):
-        pass
-    
-    
+        call = voicecall.Voicecall()
+        call.conduct_call(self.phone_number, self.data, "outbound-call")
 
+        
 """
 Do the sending for the given outputData
 @param  the outputData Object to send
 """
 
-#TODO remove!
-def send(outputData):
-    outputData.send()
+# TODO remove!
+# def send(outputData):
+    # outputData.send()

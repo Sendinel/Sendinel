@@ -25,8 +25,6 @@ class OutputTest(TestCase):
             
         send_sms_old = sms.send_sms
         sms.send_sms = send_sms1
-        #TODO send(smsoutput) is deprecated
-        send(smsoutput)
         smsoutput.send()
         sms.send_sms = send_sms_old
         
@@ -47,7 +45,26 @@ class OutputTest(TestCase):
               
         send_vcal_old = bluetooth.send_vcal
         bluetooth.send_vcal = send_vcal1
-        #TODO send(bluetoothoutput) is deprecated
-        send(bluetoothoutput)
         bluetoothoutput.send()
         bluetooth.send_vcal = send_vcal_old
+
+    def test_send_voiceoutputobject(self):
+        phone_number = "1234"
+        data = "test"
+        voicecalldata = VoiceOutputData()
+        voicecalldata.phone_number = phone_number
+        voicecalldata.data = data
+        
+        def conduct_call1(self, number, text, context):
+            #use class variables because of contextbinding to VoiceOutputData
+            OutputTest.phone_number_value = number
+            OutputTest.text_value = text
+              
+        conduct_call_old = voicecall.Voicecall.conduct_call
+        voicecall.Voicecall.conduct_call = conduct_call1
+        voicecalldata.send()
+        voicecall.Voicecall.conduct_call = conduct_call_old
+        
+        self.assertEquals(self.text_value, data)
+        self.assertEquals(self.phone_number_value, phone_number)
+

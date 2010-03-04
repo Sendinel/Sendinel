@@ -3,14 +3,16 @@ import unittest
 serial_available = False
 try:
     import serial
-    from sendinel.backend.sms import *
+    import sendinel.backend.smspdu
+    import sendinel.backend.sms
     serial_available = True
     # TODO check for pyserial version - serial_for_url was introduced with 2.5
 except ImportError:
     print "Warning: SMS serial test not running since pyserial is" + \
             " not installed"
 
-from sendinel.backend.smspdu import *
+import sendinel.backend.smspdu
+import sendinel.backend.sms
 
 if serial_available:
     class SMSTest(unittest.TestCase):
@@ -29,7 +31,7 @@ if serial_available:
                       ' we just want to test the behaviour\n becuase' + \
                       ' often it works wrong, but our app is pretty ' + \
                       'cool, but for correctness we test all methods'
-            pdu = PDU()
+            pdu = sendinel.backend.smspdu.PDU()
             pdu_string =  pdu.encodeSMS(recipient,message[0:160])
         
             self.counter = 0
@@ -50,7 +52,7 @@ if serial_available:
             self.ser.write1= self.ser.write
             self.ser.write = write
         
-            send_sms(recipient, message, self.ser)
+            sendinel.backend.sms.send_sms(recipient, message, self.ser)
         
             self.ser.close = self.ser.close1
             self.ser.close()

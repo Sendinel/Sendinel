@@ -1,83 +1,83 @@
+import copy
+from datetime import datetime, timedelta
+
 from django.test import TestCase 
 from django.test.client import Client
 
-import sendinel.web.views 
-import copy
+from sendinel.backend.models import AuthenticationCall
+from sendinel.web import views
+
 
 class AuthenticateViewTests(TestCase):
     
     urls = "web.urls"
-    
-    def setUp(self):
-        self.client = Client()
-            
+
     def test_authenticate_phonenumber(self):
         response = self.client.get("/authenticate_phonenumber/")
         
         self.failUnlessEqual(response.status_code, 200)
         self.assertContains(response, 'name="number"')
         self.assertContains(response, 'name="name"')
+
         
-        response = self.client.post("/authenticate_phonenumber",
-            {
+        response = self.client.post("/authenticate_phonenumber/", {
                 'number':'01234 / 56789012',
-                'name' : 'Homer Simpson'
-            })
-            
-        self.failUnlessEqual(response.status_code, 301)
-                
-        response = self.client.post("/authenticate_phonenumber/",
-            {
-                'number' : 'abcdfef',
-                'name' : ''
-            })                   
-        
+                'name' : 'Homer Simpson'})
+
         self.failUnlessEqual(response.status_code, 200)
-        self.assertContains(response, 'name="number"')
-        self.assertContains(response, 'name="name"')
+        self.assertEquals(response.template[0].name,
+                          "authenticate_phonenumber_call.html")
+        self.assertContains(response, "auth.js")
+        self.assertContains(response, "<noscript>")
+        
+        session_data = self.client.session['authenticate_phonenumber']
+        self.assertEquals(session_data['number'], "0123456789012")
+        self.assertEquals(session_data['name'], "Homer Simpson")
+        self.assertTrue(isinstance(session_data['start_time'], datetime))
+
+        # TODO check delete_timed_out_authentication_calls gets called
+
+        # TODO implement Form validation
+        # response = self.client.post("/authenticate_phonenumber/",
+        #     {
+        #         'number' : 'abcdfef',
+        #         'name' : ''
+        #     })                   
+        # 
+        # self.failUnlessEqual(response.status_code, 200)
+        # 
+        # self.assertContains(response, 'name="name"')
         
     def test_check_call_received(self):
-        check_log_save = sendinel.web.views.AuthHelper.check_log
+        # make sure there are no AuthenticationCall objects in the db
+        AuthenticationCall.objects.all().delete()
         
-        def return_true(self, number):
-            return True
-        
-        sendinel.web.views.AuthHelper.check_log = return_true
+        self.client.post("/authenticate_phonenumber/", {
+                'number':'01234 / 56789012',
+                'name' : 'Homer Simpson'})
 
-        response = self.client.post("/check_call_received/",
-            {
-                'number':'0123456789012'
-            })
-                
-        self.failUnlessEqual(response.status_code, 200)
-        self.assertContains(response, "received")
-        
-        def return_false(self, number):
-            return False
-        
-        sendinel.web.views.AuthHelper.check_log = return_false
-        
-        response = self.client.post("/check_call_received/",
-            {
-                'number':'0123456789012'
-            })
-            
+        response = self.client.post("/check_call_received/")
+
         self.failUnlessEqual(response.status_code, 200)
         self.assertContains(response, "waiting")
         
-        def exception_raiser(self):
-            raise Exception
+        AuthenticationCall(number = "0123456789012").save()
         
-        sendinel.web.views.AuthHelper.check_log = exception_raiser
-        
-        response = self.client.post("/check_call_received/",
-            {
-                'number':'0123456789012'
-            })  
+        response = self.client.post("/check_call_received/")
             
         self.failUnlessEqual(response.status_code, 200)
-        self.assertContains(response, "failed")      
+        self.assertContains(response, "received")
+        
+        # make sure timeout is over
+        real_timeout = views.AUTHENTICATION_CALL_TIMEOUT
+        views.AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = -1)
 
-        sendinel.web.views.AuthHelper.check_log = check_log_save
+        response = self.client.post("/check_call_received/")  
         
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertContains(response, "failed")      
         
+        views.AUTHENTICATION_CALL_TIMEOUT = real_timeout
+        
+
+

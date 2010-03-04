@@ -6,7 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
 from sendinel import settings
-from sendinel.backend import smshelper
+from sendinel.backend import texthelper
 from sendinel.backend.output import *
 
 
@@ -129,12 +129,14 @@ class HospitalAppointment(Sendable):
     
     def get_data_for_bluetooth(self):
         """
-        Prepare OutputData for bluetooth.
-        Return BluetoothOutputData for sending.
-        TODO Not implemented yet.
-        """
-        pass
-    
+            Prepare OutputData for voice.
+            Generate the message for an HospitalAppointment.
+            Return BluetoothOutputData for sending.
+
+            TODO: Implement it...
+   	"""
+	pass
+ 
     def get_data_for_sms(self):
         """
         Prepare OutputData for sms.
@@ -148,7 +150,7 @@ class HospitalAppointment(Sendable):
                     'doctor': self.doctor.name,
                     'hospital': self.hospital.name}
                     
-        data.data = smshelper.generate_sms(contents,
+        data.data = texthelper.generate_text(contents,
                         HospitalAppointment.template)
         data.phone_number = self.recipient.phone_number
         
@@ -157,10 +159,20 @@ class HospitalAppointment(Sendable):
     def get_data_for_voice(self):
         """
         Prepare OutputData for voice.
+        Generate the message for an HospitalAppointment.
         Return VoiceOutputData for sending.
-        TODO Not implemented yet.
         """
-        pass
+        data = VoiceOutputData()
+        contents = {'date':str(self.date),
+                    'name': self.recipient.name,
+                    'doctor': self.doctor.name,
+                    'hospital': self.hospital.name}
+
+        data.data = texthelper.generate_text(contents,
+                        HospitalAppointment.template, False)
+        data.phone_number = self.recipient.phone_number
+
+        return data
 
     def create_scheduled_event(self):
         """
@@ -194,7 +206,7 @@ class InfoService(Sendable):
         data = []
         for patient in self.recipient.members.all():
             entry = SMSOutputData()           
-            entry.data = smshelper.generate_sms({'text': self.text},
+            entry.data = texthelper.generate_text({'text': self.text},
                                                 InfoService.template)
             entry.phone_number = patient.phone_number
             data.append(entry)
@@ -217,8 +229,22 @@ class ScheduledEvent(models.Model):
         ('sent','sent'),
         ('failed','failed'),
     )
-    state = models.CharField(max_length = 1,
+    state = models.CharField(max_length = 3,
                              choices = STATES,
                              default = 'new')
+                             
+                             
+class AuthenticationCall(models.Model):
+    """
+    Queues all calls that were made to authenticate a user via his 
+    mobile phone number. These calls get deleted once the user has
+    been authenticated successfully.
+    """
+    number = models.CharField(max_length = 20)
+    time = models.DateTimeField(auto_now_add = True)
+    
+
+    
+               
 
 

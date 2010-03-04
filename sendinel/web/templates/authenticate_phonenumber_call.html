@@ -13,5 +13,8 @@
 	<p>please call the following phone number: {{auth_number}}.</p>
     <input type="hidden" id="number" value="{{number}}" />
     <img src="{{ MEDIA_URL }}/ajax-loader.gif" alt="Spinner" id="auth_spinner"/>
+    <noscript>
+        <h1>This page needs JavaScript to work.</h1>
+    </noscript>
 	<div id="auth_status"></div>
 {% endblock %}

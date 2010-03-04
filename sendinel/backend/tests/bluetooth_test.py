@@ -2,17 +2,11 @@ import unittest
 import sendinel.backend.bluetooth
 
 class BluetoothTest(unittest.TestCase):
-    """
-    """
-    
-    devices = {}
-    def setUp(self):
-        pass
     
     def test_discoveredDevices(self):
-        
+        devices = {}
         BluetoothTest.devices = {'00A48F': 'super Handy'}
-        self.addressServer = "127"
+        self.address_server = "127"
         
         class Action:
             def getDiscoveredDevices(self):
@@ -28,7 +22,8 @@ class BluetoothTest(unittest.TestCase):
         sendinel.backend.bluetooth.set_connection_to_bluetooth = set_conn
 
        
-        result = sendinel.backend.bluetooth.get_discovered_devices(self.addressServer)
+        result = sendinel.backend.\
+                bluetooth.get_discovered_devices(self.address_server)
         self.assertEquals(result, self.devices)
 
         sendinel.backend.bluetooth.set_connection_to_bluetooth = temp
@@ -37,7 +32,7 @@ class BluetoothTest(unittest.TestCase):
         BluetoothTest.mac = "00A48F"
         BluetoothTest.data = "Das ist eine VCS"
         BluetoothTest.filename = "reminder.vcs"
-        BluetoothTest.addressServer = "127"
+        BluetoothTest.address_server = "127"
         
         class Action:
             def sendVCalFile(self, mac, data, filename):
@@ -54,7 +49,7 @@ class BluetoothTest(unittest.TestCase):
         sendinel.backend.bluetooth.set_connection_to_bluetooth = set_conn
         
         
-        sendinel.backend.bluetooth.send_vcal(BluetoothTest.addressServer,
+        sendinel.backend.bluetooth.send_vcal(BluetoothTest.address_server,
                                             BluetoothTest.mac,
                                             BluetoothTest.data)
         self.assertEquals(BluetoothTest.mac, BluetoothTest.macResult);
