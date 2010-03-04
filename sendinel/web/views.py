@@ -12,7 +12,7 @@ from sendinel.backend.authhelper import calculate_call_timeout, \
                                     format_phonenumber
 from sendinel.backend.models import Patient, ScheduledEvent
 from sendinel.web.forms import HospitalAppointmentForm
-from sendinel.settings import AUTH_NUMBER, AUTHENTICATION_CALL_TIMEOUT,
+from sendinel.settings import AUTH_NUMBER, AUTHENTICATION_CALL_TIMEOUT, \
                               BLUETOOTH_SERVER_ADDRESS
 from sendinel.backend import bluetooth
 
