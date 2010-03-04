@@ -29,12 +29,12 @@ def create_appointment(request):
             request.session['patient'] = patient
             
             if appointment.way_of_communication == 'bluetooth':
-                return HttpResponseRedirect(reverse("list_devices") + \
-                                "?next=" + reverse(send_appointment))
+                return HttpResponseRedirect(reverse("web_list_devices") + \
+                                "?next=" + reverse("web_send_appointment"))
             elif appointment.way_of_communication in ('sms', 'voice' ):
                 return HttpResponseRedirect( \
-                    reverse("authenticate_phonenumber") + "?next=" + \
-                    reverse(save_appointment))
+                    reverse("web_authenticate_phonenumber") + "?next=" + \
+                    reverse("web_save_appointment"))
             else:
                 raise Exception ("Unknown way of communication %s " \
                                    %appointment.way_of_communication) +\
@@ -63,6 +63,9 @@ def save_appointment(request):
     # TODO Rueckgabe testen, Fehlerbehandlung
     appointment.save_with_patient(patient)
 
+def send_appointment(request):
+    pass
+    
 def authenticate_phonenumber(request):
     if request.method == "POST":
         number = request.REQUEST["number"].strip()

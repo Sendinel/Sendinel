@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.core.urlresolvers import reverse
-from django.test import TestCase
+from django.test import TestCase, Client
 
 from sendinel.backend.models import ScheduledEvent, HospitalAppointment, Hospital
 from sendinel import settings
@@ -12,6 +12,7 @@ class AppointmentViewTest(TestCase):
     
     def setUp (self):
         self.hospital = Hospital.objects.get(current_hospital = True)
+        #self.client = Client()
     
     def test_create_appointment(self):
         response = self.client.get("/create_appointment/")
@@ -92,6 +93,7 @@ class AppointmentViewTest(TestCase):
                     'doctor': "1",
                     'recipient_name': 'Shiko Taga',
                     'way_of_communication': 'bluetooth'  })
+
         appointment = HospitalAppointment.objects \
             .order_by("id").reverse()[:1][0]
         self.assertTrue(1, Hospital.objects.all().count())
@@ -105,7 +107,7 @@ class AppointmentViewTest(TestCase):
                     'doctor': "1",
                     'recipient_name': 'Shiko Taga',
                     'way_of_communication': 'sms'  })
-        self.assertRedirects(response, "/web/authenticate_phonenumber/?next=/create_appointment/save")        
+        self.assertRedirects(response, "/web/authenticate_phonenumber/?next=/create_appointment/save/")        
         #test everything saved in session variable
         
     def test_create_appointment_entered_bluetooth(self):
@@ -115,7 +117,7 @@ class AppointmentViewTest(TestCase):
                     'doctor': "1",
                     'recipient_name': 'Shiko Taga',
                     'way_of_communication': 'bluetooth'  })
-        self.assertRedirects(response, "/web/list_devices")        
+        self.assertRedirects(response, "/web/list_devices/")        
         #test everything saved in session variable
 
         
