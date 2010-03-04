@@ -63,10 +63,10 @@ def save_appointment(request):
     appointment = request.session.get('appointment', None)
     patient = request.session.get('patient',None)
     if not appointment or not patient:
-        print appointment
-        print patient
         return HttpResponseRedirect(reverse(create_appointment))
     # TODO Rueckgabe testen, Fehlerbehandlung
+    patient.phone_number = request.session['authenticate_phonenumber']['number']
+    
     appointment.save_with_patient(patient)
     return render_to_response('appointment_saved.html',
                             locals(),
@@ -76,28 +76,27 @@ def send_appointment(request):
     pass
     
 def authenticate_phonenumber(request):
+    next = ''
     if request.method == "POST":
         number = request.REQUEST["number"].strip()
         number = format_phonenumber(number)
         name = request.REQUEST["name"].strip()
         auth_number = AUTH_NUMBER
-
         
         request.session['authenticate_phonenumber'] = \
                                 { 'name': name,
                                   'number': number,
                                   'start_time': datetime.now() }
+        next = request.GET.get('next','')
         
         return render_to_response('authenticate_phonenumber_call.html', 
                               locals(),
                               context_instance = RequestContext(request))
         # TODO implement form validation
-
-
     delete_timed_out_authentication_calls()
-
+    context = locals().update({'next': next})
     return render_to_response('authenticate_phonenumber.html', 
-                              locals(),
+                              context,
                               context_instance = RequestContext(request))
 
 def check_call_received(request):

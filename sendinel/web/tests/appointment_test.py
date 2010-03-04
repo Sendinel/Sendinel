@@ -75,7 +75,7 @@ class AppointmentViewTest(TestCase):
         self.assertTrue(self.client.session.has_key('patient'))
         self.assertTrue(self.client.session.has_key('appointment'))                             
 
-    def test_create_appointment_submit_redirect_voice(self):
+    def test_create_appointment_submit_redirect_bluetooth(self):
         number_of_appointments = HospitalAppointment.objects.count()
         response = self.client.post("/appointment/create/", 
                     {'date_0': '2012-08-12',
@@ -90,17 +90,21 @@ class AppointmentViewTest(TestCase):
         self.assertTrue(self.client.session.has_key('patient'))
         self.assertTrue(self.client.session.has_key('appointment'))                                                          
                              
-    def test_save_appointment(self):
+    def test_save_appointment_voice(self):
+        recipient_name = 'Shiko Taga'
         self.client.post("/appointment/create/", 
                     {'date_0': '2012-08-12',
                     'date_1': '19:02:42',
                     'doctor': "1",
-                    'recipient_name': 'Shiko Taga',
-                    'way_of_communication': 'bluetooth'  })
+                    'recipient_name': recipient_name,
+                    'way_of_communication': 'voice'  })
+        self.client.post(reverse('web_authenticate_phonenumber'),
+                    {'name': recipient_name,
+                     'number': '0123455'})
         response = self.client.get(reverse("web_appointment_save"))
-        self.failUnlessEqual(response.status_code, 302)  
+        self.failUnlessEqual(response.status_code, 200)  
         appoint = HospitalAppointment.objects.order_by("id").reverse()[:1][0]
-        self.asserEquals(appoint.date, date)
+        self.assertEquals(unicode(appoint.recipient), recipient_name)
                                                      
             
                 #                              
