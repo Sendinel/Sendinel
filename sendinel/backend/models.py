@@ -240,7 +240,7 @@ class InfoMessage(Sendable):
         
         for patient in self.recipient.members.all():
             entry = VoiceOutputData()
-            entry.data = text
+            entry.data = self.text
             entry.phone_number = patient.phone_number
             
             data.append(entry)
