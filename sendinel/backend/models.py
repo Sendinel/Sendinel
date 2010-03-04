@@ -80,6 +80,9 @@ class Sendable(models.Model):
     recipient_id = models.PositiveIntegerField()
     recipient = generic.GenericForeignKey('recipient_type', 'recipient_id')
     
+    def __unicode__(self):
+        return "%s %s" %(unicode(self.recipient), self.way_of_communication)
+    
     def get_data_for_bluetooth(self):
         """
         Prepare OutputData for bluetooth.
@@ -182,6 +185,23 @@ class HospitalAppointment(Sendable):
         send_time = self.date - settings.REMINDER_TIME_BEFORE_APPOINTMENT
         Sendable.create_scheduled_event(self, send_time)
 
+        
+    def save_with_patient(self, patient):
+        """
+            Save the appointment with the patient and create a scheduled event
+        """
+        patient.save()
+        try:
+            hospital = Hospital.objects.get(current_hospital = True)
+        except Hospital.DoesNotExist:
+            hospital = Hospital(name = DEFAULT_HOSPITAL_NAME, current_hospital = True)
+            hospital.save() 
+        self.recipient = patient
+        self.hospital = hospital
+        self.save()
+        self.create_scheduled_event()    
+        return true
+       
 class TextMessage(Sendable):
     """
     Define a TextMessage.

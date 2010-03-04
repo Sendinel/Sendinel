@@ -10,32 +10,38 @@ from sendinel.backend.authhelper import calculate_call_timeout, \
                                     check_and_delete_authentication_call, \
                                     delete_timed_out_authentication_calls, \
                                     format_phonenumber
-from sendinel.backend.models import Patient, ScheduledEvent, Sendable, Doctor
+from sendinel.backend.models import Patient, ScheduledEvent, Sendable, Doctor, Hospital
 from sendinel.web.forms import HospitalAppointmentForm
-from sendinel.settings import AUTH_NUMBER
+from sendinel.settings import AUTH_NUMBER, DEFAULT_HOSPITAL_NAME
 
 def index(request):
     return render_to_response('start.html',
                               context_instance=RequestContext(request))
 
 def create_appointment(request):
-    
-    
     if request.method == "POST":
         form = HospitalAppointmentForm(request.POST)
         if form.is_valid():
             appointment = form.save(commit=False)
-            
             patient = Patient(name = form.cleaned_data['recipient_name'])
-            patient.save()
+            request.session['appointment'] = appointment
+            request.session['patient'] = patient
             
-            appointment.recipient = patient
-            appointment.save()
-            
-            if appointment.way_of_communication != 'bluetooth':
-                appointment.create_scheduled_event()
-
-            return HttpResponseRedirect(reverse('index'))
+            if appointment.way_of_communication == 'bluetooth':
+                return HttpResponseRedirect(reverse("list_devices") + \
+                                "?next=" + reverse(send_appointment))
+            elif appointment.way_of_communication in ('sms', 'voice' ):
+                return HttpResponseRedirect( \
+                    reverse("authenticate_phonenumber") + "?next=" + \
+                    reverse(save_appointment))
+            else:
+                raise Exception ("Unknown way of communication %s " \
+                                   %appointment.way_of_communication) +\
+                                "(this is neither bluetooth nor sms or voice)"
+        else: 
+            return render_to_response('create_appointment.html',
+                                locals(),
+                                context_instance=RequestContext(request))
     else:
         #TODO: initiale Dateneintraege funktionieren noch nicht
         try:
@@ -47,6 +53,14 @@ def create_appointment(request):
         return render_to_response('create_appointment.html',
                                 locals(),
                                 context_instance=RequestContext(request))
+  
+def save_appointment(request):
+    appointment = request.session.get('appointment', None)
+    patient = request.session.get('patient',None)
+    if not appointment or not patient:
+        return HTTPResponseRedirect(reverse(create_appointment))
+    # TODO Rueckgabe testen, Fehlerbehandlung
+    appointment.save_with_patient(patient)
 
 def authenticate_phonenumber(request):
     if request.method == "POST":

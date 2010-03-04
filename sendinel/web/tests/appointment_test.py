@@ -92,5 +92,30 @@ class AppointmentViewTest(TestCase):
                     'doctor': "1",
                     'recipient_name': 'Shiko Taga',
                     'way_of_communication': 'bluetooth'  })
+        appointment = HospitalAppointment.objects \
+            .order_by("id").reverse()[:1][0]
+        self.assertTrue(1, Hospital.objects.all().count())
+        self.assertEquals(Hospital.objects.all()[0].name, settings.DEFAULT_HOSPITAL_NAME)
         self.assertEquals(appointment.hospital.name, settings.DEFAULT_HOSPITAL_NAME)
+        
+    def test_create_appointment_entered_sms(self):
+        response = self.client.post("/create_appointment/", 
+                    {'date_0': '2012-08-12',
+                    'date_1': '19:02:42',
+                    'doctor': "1",
+                    'recipient_name': 'Shiko Taga',
+                    'way_of_communication': 'sms'  })
+        self.assertRedirects(response, "/web/authenticate_phonenumber/?next=/create_appointment/save")        
+        #test everything saved in session variable
+        
+    def test_create_appointment_entered_bluetooth(self):
+        response = self.client.post("/create_appointment/", 
+                    {'date_0': '2012-08-12',
+                    'date_1': '19:02:42',
+                    'doctor': "1",
+                    'recipient_name': 'Shiko Taga',
+                    'way_of_communication': 'bluetooth'  })
+        self.assertRedirects(response, "/web/list_devices")        
+        #test everything saved in session variable
+
         
