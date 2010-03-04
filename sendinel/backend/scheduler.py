@@ -13,8 +13,15 @@ def run(run_only_one_time = False):
                         .filter(send_time__lte=datetime.now())
         for event in dueEvents:
             data = event.sendable.get_data_for_sending()
-            for entry in data:
-                entry.send()
+            # TODO error handling
+            try:
+                for entry in data:
+                    entry.send()
+            except:
+                print "Failed to send: " + str(entry)
+                event.state = "failed"
+                event.save()
+                    
             
             event.state = 'sent'
             event.save()
