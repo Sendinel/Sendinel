@@ -30,11 +30,11 @@ def create_appointment(request):
             
             if appointment.way_of_communication == 'bluetooth':
                 return HttpResponseRedirect(reverse("web_list_devices") + \
-                                "?next=" + reverse("web_send_appointment"))
+                                "?next=" + reverse("web_appointment_send"))
             elif appointment.way_of_communication in ('sms', 'voice' ):
                 return HttpResponseRedirect( \
                     reverse("web_authenticate_phonenumber") + "?next=" + \
-                    reverse("web_save_appointment"))
+                    reverse("web_appointment_save"))
             else:
                 raise Exception ("Unknown way of communication %s " \
                                    %appointment.way_of_communication) +\

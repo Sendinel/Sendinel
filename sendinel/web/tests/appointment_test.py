@@ -15,7 +15,7 @@ class AppointmentViewTest(TestCase):
         #self.client = Client()
     
     def test_create_appointment(self):
-        response = self.client.get("/create_appointment/")
+        response = self.client.get("/appointment/create/")
         self.failUnlessEqual(response.status_code, 200)
         self.assertContains(response, 'name="date_0"')
         self.assertContains(response, 'name="date_1"')
@@ -25,7 +25,7 @@ class AppointmentViewTest(TestCase):
         self.assertNotContains(response, 'name="recipient_id"')
         self.assertNotContains(response, 'name="hospital"')
 
-    def test_create_appointment_submit(self):
+    def test_create_appointment_submit_redirect_sms(self):
         number_of_appointments = HospitalAppointment.objects.count()
         response = self.client.post("/create_appointment/", 
                     {'date_0': '2012-08-12',
@@ -33,19 +33,26 @@ class AppointmentViewTest(TestCase):
                     'doctor': "1",
                     'recipient_name': 'Shiko Taga',
                     'way_of_communication': 'sms'  })
-        self.assertRedirects(response, reverse('index'))
-        self.assertEquals(HospitalAppointment.objects.count(),
-                            number_of_appointments + 1)
-        appointment = HospitalAppointment.objects \
-            .order_by("id").reverse()[:1][0]
-        self.assertEquals(appointment.doctor.id, 1)
-        self.assertEquals(appointment.recipient.name, 'Shiko Taga')
-        self.assertEquals(appointment.date, datetime(2012, 8, 12, 19, 02, 42))
-        self.assertEquals(appointment.way_of_communication, "sms")
-        self.assertEquals(appointment.hospital, self.hospital)
+        self.assertRedirects(response, 
+                             reverse('web_authenticate_phonenumber') + \
+                             "?next=" + \
+                             reverse('web_appointment_save'))
+                             
+    def test_save_appointment(self):
+        
+        pass
+        # self.assertEquals(HospitalAppointment.objects.count(),
+                            # number_of_appointments + 1)
+        # appointment = HospitalAppointment.objects \
+            # .order_by("id").reverse()[:1][0]
+        # self.assertEquals(appointment.doctor.id, 1)
+        # self.assertEquals(appointment.recipient.name, 'Shiko Taga')
+        # self.assertEquals(appointment.date, datetime(2012, 8, 12, 19, 02, 42))
+        # self.assertEquals(appointment.way_of_communication, "sms")
+        # self.assertEquals(appointment.hospital, self.hospital)
     
     def test_create_appointment_submit_validations(self):
-        response = self.client.post("/create_appointment/", 
+        response = self.client.post("/appointment/create/", 
                     {'date_0': 'abc',
                     'date_1': 'def',
                     'doctor': '',
@@ -64,7 +71,7 @@ class AppointmentViewTest(TestCase):
                             
     def test_create_appointment_scheduled_event_sms(self):
         number_of_events = ScheduledEvent.objects.count()
-        self.client.post("/create_appointment/", 
+        self.client.post("/appointment/create/", 
                     {'date_0': '2012-08-12',
                     'date_1': '19:02:42',
                     'doctor': "1",
@@ -76,7 +83,7 @@ class AppointmentViewTest(TestCase):
         
     def test_create_appointment_scheduled_event_bluetooth(self):
         number_of_events = ScheduledEvent.objects.count()
-        self.client.post("/create_appointment/", 
+        self.client.post("/appointment/create/", 
                     {'date_0': '2012-08-12',
                     'date_1': '19:02:42',
                     'doctor': "1",
@@ -84,40 +91,28 @@ class AppointmentViewTest(TestCase):
                     'way_of_communication': 'bluetooth'  })
         self.assertEquals(ScheduledEvent.objects.count(),
                             number_of_events)
-                            
-    def test_create_appointment_no_current_hospital(self):
-        Hospital.objects.all().delete()
-        self.client.post("/create_appointment/", 
-                    {'date_0': '2012-08-12',
-                    'date_1': '19:02:42',
-                    'doctor': "1",
-                    'recipient_name': 'Shiko Taga',
-                    'way_of_communication': 'bluetooth'  })
 
-        appointment = HospitalAppointment.objects \
-            .order_by("id").reverse()[:1][0]
-        self.assertTrue(1, Hospital.objects.all().count())
-        self.assertEquals(Hospital.objects.all()[0].name, settings.DEFAULT_HOSPITAL_NAME)
-        self.assertEquals(appointment.hospital.name, settings.DEFAULT_HOSPITAL_NAME)
-        
     def test_create_appointment_entered_sms(self):
-        response = self.client.post("/create_appointment/", 
+        response = self.client.post("/appointment/create/", 
                     {'date_0': '2012-08-12',
                     'date_1': '19:02:42',
                     'doctor': "1",
                     'recipient_name': 'Shiko Taga',
                     'way_of_communication': 'sms'  })
-        self.assertRedirects(response, "/web/authenticate_phonenumber/?next=/create_appointment/save/")        
+        self.assertRedirects(response, "/web/authenticate_phonenumber/?next=/appointment/save/")        
         #test everything saved in session variable
         
     def test_create_appointment_entered_bluetooth(self):
-        response = self.client.post("/create_appointment/", 
+        response = self.client.post("/appointment/create/", 
                     {'date_0': '2012-08-12',
                     'date_1': '19:02:42',
                     'doctor': "1",
                     'recipient_name': 'Shiko Taga',
                     'way_of_communication': 'bluetooth'  })
-        self.assertRedirects(response, "/web/list_devices/")        
+        self.assertRedirects(response, \
+                             reverse('web_list_devices') + \
+                             "?next=" + \
+                             reverse('web_appointment_send'))        
         #test everything saved in session variable
 
         
