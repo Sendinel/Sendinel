@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Available Infoservices</h3>
+    
+    <table cellspacing="0" cellpadding="3">
+        <tr>   
+            <td>Service</td>
+            <td></td>
+        </tr>
+    {% for group in groups %}
+        
+        <tr>
+            <td>{{ group.name }}</td>
+            <td><a href="create_infomessage/{{ group.id }}">Create message</a></td>
+        </tr>
+        
+    {% endfor %}
+    
+    </table>
+    
+{% endblock %}

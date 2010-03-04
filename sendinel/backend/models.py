@@ -184,16 +184,17 @@ class HospitalAppointment(Sendable):
         send_time = self.date - settings.REMINDER_TIME_BEFORE_APPOINTMENT
         Sendable.create_scheduled_event(self, send_time)
 
-class InfoService(Sendable):
+class InfoMessage(Sendable):
     """
-    Define a InfoService.
+    Define a InfoMessage.
     """
     recipient = models.ForeignKey(Usergroup)
     #TODO extract to superclass?
     template = Template("$text")
     # TODO restrict text to 160? but not good for voice calls
     text = models.TextField()
-    
+
+    name = models.TextField()
     
     def get_data_for_sms(self):
         """
@@ -207,7 +208,7 @@ class InfoService(Sendable):
         for patient in self.recipient.members.all():
             entry = SMSOutputData()           
             entry.data = texthelper.generate_text({'text': self.text},
-                                                InfoService.template)
+                                                InfoMessage.template)
             entry.phone_number = patient.phone_number
             data.append(entry)
         
