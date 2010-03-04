@@ -2,7 +2,7 @@ from django.conf.urls.defaults import *
 from sendinel.web.views import *
 
 urlpatterns = patterns("",
-    url(r"^$", 'sendinel.web.views.index', name = 'index'),
+    url(r"^$", 'sendinel.web.views.index', name = 'web_index'),
     url(r"^appointment/save/$", 'sendinel.web.views.save_appointment',
         name = 'web_appointment_save'),
     url(r"^appointment/create/$", 'sendinel.web.views.create_appointment',
