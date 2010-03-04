@@ -1,11 +1,13 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
+from django.views.generic.simple import redirect_to
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^$', redirect_to, {'url': 'web/'}),
     (r'^web/', include('sendinel.web.urls')),
     (r'^admin/jsi18n/$', 'django.views.i18n.javascript_catalog'),
 

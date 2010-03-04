@@ -3,7 +3,7 @@ from datetime import datetime
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from sendinel.backend.models import *
+from sendinel.backend.models import ScheduledEvent, HospitalAppointment
 
 class AppointmentViewTest(TestCase):
     fixtures = ['backend']
@@ -37,7 +37,7 @@ class AppointmentViewTest(TestCase):
         self.assertEquals(appointment.hospital.id, 1)
         self.assertEquals(appointment.doctor.id, 1)
         self.assertEquals(appointment.recipient.name, 'Shiko Taga')
-        self.assertEquals(appointment.date, datetime(2012,8,12,19,02,42))
+        self.assertEquals(appointment.date, datetime(2012, 8, 12, 19, 02, 42))
         self.assertEquals(appointment.way_of_communication, "sms")
     
     def test_create_appointment_submit_validations(self):
@@ -63,7 +63,7 @@ class AppointmentViewTest(TestCase):
                             
     def test_create_appointment_scheduled_event_sms(self):
         number_of_events = ScheduledEvent.objects.count()
-        response = self.client.post("/create_appointment/", 
+        self.client.post("/create_appointment/", 
                     {'date_0': '2012-08-12',
                     'date_1': '19:02:42',
                     'doctor': "1",
@@ -76,7 +76,7 @@ class AppointmentViewTest(TestCase):
         
     def test_create_appointment_scheduled_event_bluetooth(self):
         number_of_events = ScheduledEvent.objects.count()
-        response = self.client.post("/create_appointment/", 
+        self.client.post("/create_appointment/", 
                     {'date_0': '2012-08-12',
                     'date_1': '19:02:42',
                     'doctor': "1",
@@ -85,6 +85,3 @@ class AppointmentViewTest(TestCase):
                     'way_of_communication': 'bluetooth'  })
         self.assertEquals(ScheduledEvent.objects.count(),
                             number_of_events)
-
-
-

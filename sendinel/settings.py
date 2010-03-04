@@ -32,10 +32,6 @@ LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
-# Specify a COM Port for SMS
-# for windows maybe it starts at 0
-SERIALPORTSMS = 4
-
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
@@ -89,8 +85,28 @@ INSTALLED_APPS = (
 )
 
 ####################################
-# should be in own config file
-REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days=-1)
+# Sendinel Configuration
+REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days = 1)
+
+ASTERISK_USER = "hudson"
+ASTERISK_GROUP = "hudson"
+ASTERISK_SPOOL_DIR = "/var/spool/asterisk/outgoing/"
+
+ASTERISK_EXTENSION = "s"
+ASTERISK_SIP_ACCOUNT = "ext-sip-account"
+
+# Phonenumber to authenticate against the system
+# TODO move to local_settings on CI server
+AUTH_NUMBER = "0331-27975256"
+# time a user has to call the system to authenticate
+AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = 3)
+
+# Specify a COM Port for SMS
+# for windows maybe it starts at 0
+SERIALPORTSMS = '/dev/rfcomm0'
+
+# IP address to bluetooth server
+BLUETOOTH_SERVER_ADDRESS = '127.0.0.1'
 ####################################
 
 

@@ -1,4 +1,4 @@
-
+# pylint: disable-msg-cat=WCREFI
 ############################################################################
 #    Copyright (C) 2006 by Costin Stroie                                   #
 #    cstroie@users.sourceforge.net                                         #

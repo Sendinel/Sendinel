@@ -1,12 +1,21 @@
+from datetime import datetime
+
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils import simplejson
 
+from sendinel.backend.authhelper import calculate_call_timeout, \
+                                    check_and_delete_authentication_call, \
+                                    delete_timed_out_authentication_calls, \
+                                    format_phonenumber
 from sendinel.backend.models import Patient, ScheduledEvent
-from sendinel.backend.authhelper import AuthHelper
-from sendinel.web.forms import *
+from sendinel.web.forms import HospitalAppointmentForm
+from sendinel.settings import AUTH_NUMBER, AUTHENTICATION_CALL_TIMEOUT, \
+                              BLUETOOTH_SERVER_ADDRESS
+from sendinel.backend import bluetooth
+
 
 def index(request):
     return render_to_response('start.html',
@@ -35,39 +44,48 @@ def create_appointment(request):
 
 def authenticate_phonenumber(request):
     if request.method == "POST":
-        authHelper = AuthHelper()
+        number = request.REQUEST["number"].strip()
+        number = format_phonenumber(number)
+        name = request.REQUEST["name"].strip()
+        auth_number = AUTH_NUMBER
+
         
-        number = request.REQUEST["phonenumber"]
-        name = request.REQUEST["patient_name"]
+        request.session['authenticate_phonenumber'] = \
+                                { 'name': name,
+                                  'number': number,
+                                  'start_time': datetime.now() }
         
-        number = authHelper.authenticate(number, name)
-        if number:
-            return render_to_response('authenticate_phonenumber_call.html', 
-                                      locals(),
-                                      context_instance = RequestContext(request))
-        else:
-            # there should happen something if the number was not valid
-            pass
-    
+        return render_to_response('authenticate_phonenumber_call.html', 
+                              locals(),
+                              context_instance = RequestContext(request))
+        # TODO implement form validation
+
+
+    delete_timed_out_authentication_calls()
+
     return render_to_response('authenticate_phonenumber.html', 
                               locals(),
                               context_instance = RequestContext(request))
 
-def call_handler(request):
-    if request.method == "POST":
-        authHelper = AuthHelper()
-        number = request.REQUEST["number"]
-        response_dict = {}
-        
-        try:
-            if authHelper.check_log(number):
+def check_call_received(request):
+    response_dict = {}
+
+    try:
+        response_dict["status"] = "failed"
+
+        number = request.session['authenticate_phonenumber']['number']
+        start_time = request.session['authenticate_phonenumber']['start_time']
+    
+        if (start_time + AUTHENTICATION_CALL_TIMEOUT) >= datetime.now():
+            if check_and_delete_authentication_call(number):
                 response_dict["status"] = "received"
             else:
                 response_dict["status"] = "waiting"
-        except:
-                response_dict["status"] = "failed"
-    
-        return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+    except KeyError:
+        pass
+
+    return HttpResponse(content = simplejson.dumps(response_dict),
+                        content_type = "application/json")
 
 def input_text(request):
     return render_to_response('input_text.html',
@@ -76,3 +94,25 @@ def input_text(request):
 def choose_communication(request):
     return render_to_response('choose_communication.html',
                               context_instance=RequestContext(request))
+
+def list_bluetooth_devices(request):
+    return render_to_response('list_devices.html',
+                                locals(),
+                                context_instance=RequestContext(request))
+
+def get_bluetooth_devices(request):
+    response_dict = {}
+    devices_list = []
+    
+    devices = bluetooth.get_discovered_devices(BLUETOOTH_SERVER_ADDRESS)
+    for device in devices.items():
+        device_dict = {}
+        device_dict["name"] = device[1]
+        device_dict["mac"] = device[0]
+        devices_list.append(device_dict)
+    response_dict["devices"] = devices_list
+    
+    return HttpResponse(content = simplejson.dumps(response_dict),
+                        content_type = "application/json")
+        
+

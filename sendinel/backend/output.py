@@ -1,27 +1,39 @@
-from django.db import models
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
-
+import sms
+import bluetooth
+import voicecall
 
 class OutputData(object):
     """
     Define an interface for OutputData.
     """
+    class Meta:
+        abstract = True
+    
     data = None
     def __str__(self):
         return str(self.data)
+        
+    def send(self):
+        raise NotImplementedError("send() needs to be overridden.")
 
 class BluetoothOutputData(OutputData):
     """
     Define necessary OutputData for sending via bluetooth.
     """
-    url = None
+    mac = None
+    addressServer = None
+    
+    def send(self):
+        bluetooth.send_vcal(self.addressServer, self.mac, self.data)
 
 class SMSOutputData(OutputData):
     """
     Define necessary OutputData for sending via sms.
     """
     phone_number = None
+    
+    def send(self):
+        sms.send_sms(self.phone_number, self.data)
 
 class VoiceOutputData(OutputData):
     """
@@ -29,9 +41,16 @@ class VoiceOutputData(OutputData):
     """
     phone_number = None
     
-    
-def send(data_object):
-    """
-    Take an OutputData and send this to the specified Output
-    """
-    print 'sending data: %s' % data_object
+    def send(self):
+        call = voicecall.Voicecall()
+        call.conduct_call(self.phone_number, self.data, "outbound-call")
+
+        
+"""
+Do the sending for the given outputData
+@param  the outputData Object to send
+"""
+
+# TODO remove!
+# def send(outputData):
+    # outputData.send()
