@@ -20,7 +20,7 @@ class InfoserviceTest(TestCase):
     
         response = self.client.post("/staff/create_infomessage/1/", {
             "text" : "This is a testmessage",
-            "date" : "2010-01-01 00:00:00:0000"
+            "date" : "2010-01-01 00:00:00"
         })
                 
         self.assertRedirects(response, "/staff/list_infoservices/")
