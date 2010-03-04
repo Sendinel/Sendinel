@@ -91,7 +91,7 @@ class AppointmentViewTest(TestCase):
         self.assertTrue(self.client.session.has_key('appointment'))                                                          
                              
     def test_save_appointment(self):
-        response = self.client.post("/appointment/create/", 
+        self.client.post("/appointment/create/", 
                     {'date_0': '2012-08-12',
                     'date_1': '19:02:42',
                     'doctor': "1",

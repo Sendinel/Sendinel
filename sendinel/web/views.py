@@ -12,8 +12,11 @@ from sendinel.backend.authhelper import calculate_call_timeout, \
                                     format_phonenumber
 from sendinel.backend.models import Patient, ScheduledEvent, Sendable, Doctor, Hospital
 from sendinel.web.forms import HospitalAppointmentForm
-from sendinel.settings import AUTH_NUMBER, DEFAULT_HOSPITAL_NAME, BLUETOOTH_SERVER_ADDRESS
+from sendinel.settings import   AUTH_NUMBER, DEFAULT_HOSPITAL_NAME, \
+                                BLUETOOTH_SERVER_ADDRESS, \
+                                AUTHENTICATION_CALL_TIMEOUT
 from sendinel.backend import bluetooth
+
 
 def index(request):
     return render_to_response('start.html',
@@ -106,7 +109,7 @@ def check_call_received(request):
         number = request.session['authenticate_phonenumber']['number']
         start_time = request.session['authenticate_phonenumber']['start_time']
     
-        if start_time >= calculate_call_timeout():
+        if (start_time + AUTHENTICATION_CALL_TIMEOUT) >= datetime.now():
             if check_and_delete_authentication_call(number):
                 response_dict["status"] = "received"
             else:
@@ -145,9 +148,4 @@ def get_bluetooth_devices(request):
     return HttpResponse(content = simplejson.dumps(response_dict),
                         content_type = "application/json")
         
-    
-    
-    
-    
-    
-    
+

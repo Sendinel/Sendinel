@@ -5,7 +5,6 @@ from sendinel import settings
 setup_environ(settings)
 
 from sendinel.backend.models import ScheduledEvent
-from sendinel.backend.output import send
 
 def run(run_only_one_time = False):
     while True:
@@ -14,7 +13,9 @@ def run(run_only_one_time = False):
                         .filter(send_time__lte=datetime.now())
         for event in dueEvents:
             data = event.sendable.get_data_for_sending()
-            send(data)
+            for entry in data:
+                entry.send()
+            
             event.state = 'sent'
             event.save()
             del data

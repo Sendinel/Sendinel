@@ -25,8 +25,6 @@ class OutputTest(TestCase):
             
         send_sms_old = sms.send_sms
         sms.send_sms = send_sms1
-        #TODO send(smsoutput) is deprecated
-        send(smsoutput)
         smsoutput.send()
         sms.send_sms = send_sms_old
         
@@ -47,8 +45,6 @@ class OutputTest(TestCase):
               
         send_vcal_old = bluetooth.send_vcal
         bluetooth.send_vcal = send_vcal1
-        #TODO send(bluetoothoutput) is deprecated
-        send(bluetoothoutput)
         bluetoothoutput.send()
         bluetooth.send_vcal = send_vcal_old
 
@@ -66,8 +62,6 @@ class OutputTest(TestCase):
               
         conduct_call_old = voicecall.Voicecall.conduct_call
         voicecall.Voicecall.conduct_call = conduct_call1
-        #TODO send(voicecalldata) is deprecated
-        send(voicecalldata)
         voicecalldata.send()
         voicecall.Voicecall.conduct_call = conduct_call_old
         
