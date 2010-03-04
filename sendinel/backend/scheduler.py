@@ -12,7 +12,14 @@ def run(run_only_one_time = False):
                         .filter(state__exact = 'new') \
                         .filter(send_time__lte=datetime.now())
         for event in dueEvents:
-            data = event.sendable.get_data_for_sending()
+            try:
+                data = event.sendable.get_data_for_sending()
+            except:
+                print "Failed to get data for " + event
+                event.state = "failed"
+                event.save()
+                continue
+            
             # TODO error handling
             try:
                 for entry in data:

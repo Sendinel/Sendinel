@@ -32,8 +32,8 @@ var check_for_call = function() {
         },
         "json");
 };
-$("#next").hide();
-$(document).ready(check_for_call);
 
+$(document).ready(check_for_call);
+$(document).ready(function() { $("#next").hide();} );
 
 
