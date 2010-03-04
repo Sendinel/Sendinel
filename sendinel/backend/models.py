@@ -188,13 +188,12 @@ class InfoMessage(Sendable):
     """
     Define a InfoMessage.
     """
+    way_of_communication = ('sms','SMS')
     recipient = models.ForeignKey(Usergroup)
     #TODO extract to superclass?
     template = Template("$text")
     # TODO restrict text to 160? but not good for voice calls
     text = models.TextField()
-
-    name = models.TextField()
     
     def get_data_for_sms(self):
         """

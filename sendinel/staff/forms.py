@@ -2,11 +2,12 @@ from django.forms import CharField, DateTimeField, ModelForm
 
 from sendinel.backend.models import InfoMessage
 
-class InforServiceForm(ModelForm):
+class InfoMessageForm(ModelForm):
     
-    name = CharField(max_length = 255, label = "Infoservice Name")
+    text = CharField(max_length = 255, label = "Infoservice Text")
     
     class Meta:
         model = InfoMessage
         exclude = ['recipient']
-        fields = ['name']
+        fields = ['text']
+        
