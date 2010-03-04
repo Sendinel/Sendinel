@@ -101,7 +101,9 @@ Set: PassedInfo=%s
         """
         try:
             os.chown(filename, pwd.getpwnam(self.asterisk_user).pw_uid, grp.getgrnam(self.asterisk_group).gr_gid)
-            filepath = self.asterisk_spool_dir + str(time.time)
+            # set permissions to unix 666
+            os.chmod(filename, 438)
+            filepath = self.asterisk_spool_dir + str(time.time())
             shutil.move(filename, filepath)
             return True
             
