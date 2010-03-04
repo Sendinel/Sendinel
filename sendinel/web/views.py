@@ -28,6 +28,7 @@ def create_appointment(request):
             request.session['appointment'] = appointment
             request.session['patient'] = patient
             
+            
             if appointment.way_of_communication == 'bluetooth':
                 return HttpResponseRedirect(reverse("web_list_devices") + \
                                 "?next=" + reverse("web_appointment_send"))
@@ -59,7 +60,9 @@ def save_appointment(request):
     appointment = request.session.get('appointment', None)
     patient = request.session.get('patient',None)
     if not appointment or not patient:
-        return HTTPResponseRedirect(reverse(create_appointment))
+        print appointment
+        print patient
+        return HttpResponseRedirect(reverse(create_appointment))
     # TODO Rueckgabe testen, Fehlerbehandlung
     appointment.save_with_patient(patient)
 
