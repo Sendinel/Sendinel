@@ -28,7 +28,7 @@ def run(run_only_one_time = False):
                     print "  sending: %s" % str(entry)
                     entry.send()
             except Exception as e:
-                print "Failed to send: " + str(entry)
+                print "Failed to send: " + str(entry) + " exception " + str(e)
                 event.state = "failed"
                 event.save()
                     
