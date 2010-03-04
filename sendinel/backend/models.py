@@ -43,6 +43,7 @@ class Hospital(models.Model):
     Represent a Hospital.
     """
     name = models.CharField(max_length=255)
+    current_hospital = models.BooleanField()
     
     def __unicode__(self):
         return self.name

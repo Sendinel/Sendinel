@@ -87,6 +87,7 @@ INSTALLED_APPS = (
 ####################################
 # Sendinel Configuration
 REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days = 1)
+DEFAULT_HOSPITAL_NAME = 'your hospital'
 
 ASTERISK_USER = "hudson"
 ASTERISK_GROUP = "hudson"
