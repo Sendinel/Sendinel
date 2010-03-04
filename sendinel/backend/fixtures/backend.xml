@@ -47,5 +47,10 @@
         <field type="PositiveIntegerField" name="sendable_id">1</field>
         <field type="DateTimeField" name="send_time">2010-02-08 18:43:07</field>
         <field type="CharField" name="state">new</field>
-    </object>  
+    </object>
+    <object pk="1" model="backend.infomessage">
+        <field type="CharField" name="way_of_communication">voicecall</field>
+        <field to="backend.usergroup" name="recipient" rel="ManyToOneRel">1</field>
+        <field type="TextField" name="text">Das ist eine Nachricht</field>
+    </object>    
 </django-objects>

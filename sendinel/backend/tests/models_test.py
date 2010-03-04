@@ -78,17 +78,17 @@ class ModelsSMSTest(TestCase):
     
     def test_hospital_appointment_get_data_for_sms(self):
         smsoutputdata1 = SMSOutputData()
-        smsoutputdata1.phone_number = "01234"
+        smsoutputdata1.phone_number = "01621785295"
         data = HospitalAppointment.objects.get(pk = 1).get_data_for_sms()
         entry = data[0]
         
         self.assertEquals(len(data), 1)
         self.assertEquals(type(entry), SMSOutputData)
-        self.assertEquals(entry.phone_number, "01234")
+        self.assertEquals(entry.phone_number, "01621785295")
         self.assertEquals(type(entry.data), unicode)
         
     def test_text_message_get_data_for_sms(self):
-        numbers = ["01234", "09876"]
+        numbers = [u"01621785295", u"015222502372", u"03315509256"]
         data = InfoMessage.objects.get(pk = 1).get_data_for_sms()
         
         self.assertTrue(len(data) >= 1)
