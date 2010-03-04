@@ -29,7 +29,7 @@ def create_infomessage(request, id):
         
         info_message.text = request.REQUEST["text"]
         info_message.recipient = Usergroup.objects.filter(pk = id)[0]
-        info_message.way_of_communication = "voicecall"
+        info_message.way_of_communication = "voice"
 
         info_message.save()        
         info_message.create_scheduled_event(datetime.now())
