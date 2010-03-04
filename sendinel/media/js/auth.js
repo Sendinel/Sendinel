@@ -32,7 +32,7 @@ var check_for_call = function() {
         },
         "json");
 };
-$(#next).hide();
+$("#next").hide();
 $(document).ready(check_for_call);
 
 
