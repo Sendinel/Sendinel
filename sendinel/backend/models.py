@@ -234,6 +234,18 @@ class InfoMessage(Sendable):
             data.append(entry)
         
         return data
+        
+    def get_data_for_voice(self):
+        data = []
+        
+        for patient in self.recipient.members.all():
+            entry = VoiceOutputData()
+            entry.data = text
+            entry.phone_number = patient.phone_number
+            
+            data.append(entry)
+            
+        return data
     
     
 class ScheduledEvent(models.Model):
