@@ -19,7 +19,7 @@ class User(models.Model):
     name = models.CharField(max_length=255)
    
     
-    def __str__(self):
+    def __unicode__(self):
         return self.name
     
 class Doctor(User):
@@ -44,7 +44,7 @@ class Hospital(models.Model):
     """
     name = models.CharField(max_length=255)
     
-    def __str__(self):
+    def __unicode__(self):
         return self.name
         
         
@@ -56,7 +56,7 @@ class Usergroup(models.Model):
     members = models.ManyToManyField(Patient)
     name = models.CharField(max_length=255, unique=True, blank=False, null=False)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
     
 

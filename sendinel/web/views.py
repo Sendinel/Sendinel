@@ -10,7 +10,7 @@ from sendinel.backend.authhelper import calculate_call_timeout, \
                                     check_and_delete_authentication_call, \
                                     delete_timed_out_authentication_calls, \
                                     format_phonenumber
-from sendinel.backend.models import Patient, ScheduledEvent
+from sendinel.backend.models import Patient, ScheduledEvent, Sendable, Doctor
 from sendinel.web.forms import HospitalAppointmentForm
 from sendinel.settings import AUTH_NUMBER
 
@@ -19,22 +19,31 @@ def index(request):
                               context_instance=RequestContext(request))
 
 def create_appointment(request):
-    form = HospitalAppointmentForm(request.POST)
     
-    if request.method == "POST" and form.is_valid():
-        appointment = form.save(commit=False)
-        
-        patient = Patient(name = form.cleaned_data['recipient_name'])
-        patient.save()
-        
-        appointment.recipient = patient
-        appointment.save()
-        
-        if appointment.way_of_communication != 'bluetooth':
-            appointment.create_scheduled_event()
+    
+    if request.method == "POST":
+        form = HospitalAppointmentForm(request.POST)
+        if form.is_valid():
+            appointment = form.save(commit=False)
+            
+            patient = Patient(name = form.cleaned_data['recipient_name'])
+            patient.save()
+            
+            appointment.recipient = patient
+            appointment.save()
+            
+            if appointment.way_of_communication != 'bluetooth':
+                appointment.create_scheduled_event()
 
-        return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('index'))
     else:
+        #TODO: initiale Dateneintraege funktionieren noch nicht
+        try:
+            initial_data = {'doctor': unicode(Doctor.objects.all()[0])}
+        except Doctor.DoesNotExist:
+            initial_data = {}
+        initial_data.update({'way_of_communication': Sendable.WAYS_OF_COMMUNICATION[0][1]})
+        form = HospitalAppointmentForm(initial = initial_data)
         return render_to_response('create_appointment.html',
                                 locals(),
                                 context_instance=RequestContext(request))
