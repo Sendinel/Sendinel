@@ -5,7 +5,7 @@ from django.db import models, IntegrityError
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-from sendinel import settings
+from sendinel.settings import DEFAULT_HOSPITAL_NAME, REMINDER_TIME_BEFORE_APPOINTMENT   
 from sendinel.backend import texthelper
 from sendinel.backend.output import *
 
@@ -19,7 +19,7 @@ class User(models.Model):
     name = models.CharField(max_length=255)
    
     
-    def __str__(self):
+    def __unicode__(self):
         return self.name
     
 class Doctor(User):
@@ -43,8 +43,9 @@ class Hospital(models.Model):
     Represent a Hospital.
     """
     name = models.CharField(max_length=255)
+    current_hospital = models.BooleanField()
     
-    def __str__(self):
+    def __unicode__(self):
         return self.name
         
         
@@ -56,7 +57,7 @@ class Usergroup(models.Model):
     members = models.ManyToManyField(Patient)
     name = models.CharField(max_length=255, unique=True, blank=False, null=False)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
     
 
@@ -77,6 +78,9 @@ class Sendable(models.Model):
 
 
     recipient = None
+    
+    def __unicode__(self):
+        return "%s %s" %(unicode(self.recipient), self.way_of_communication)
     
     def get_data_for_bluetooth(self):
         """
@@ -129,13 +133,13 @@ class HospitalAppointment(Sendable):
     
     def get_data_for_bluetooth(self):
         """
-            Prepare OutputData for voice.
-            Generate the message for an HospitalAppointment.
-            Return BluetoothOutputData for sending.
+        Prepare OutputData for voice.
+        Generate the message for an HospitalAppointment.
+        Return BluetoothOutputData for sending.
 
-            TODO: Implement it...
-   	"""
-	pass
+        TODO: Implement it...
+        """
+        pass
  
     def get_data_for_sms(self):
         """
@@ -176,14 +180,30 @@ class HospitalAppointment(Sendable):
 
     def create_scheduled_event(self):
         """
-            Create a scheduled event for sending a reminder before an
-            appointment. The time before the appointment is used as specified
-            in the settings:
-            REMINDER_TIME_BEFORE_APPOINTMENT specified as timedelta object.
+        Create a scheduled event for sending a reminder before an
+        appointment. The time before the appointment is used as specified
+        in the settings:
+        REMINDER_TIME_BEFORE_APPOINTMENT specified as timedelta object.
         """
-        send_time = self.date - settings.REMINDER_TIME_BEFORE_APPOINTMENT
+        send_time = self.date - REMINDER_TIME_BEFORE_APPOINTMENT
         Sendable.create_scheduled_event(self, send_time)
-
+       
+    def save_with_patient(self, patient):
+        """
+        Save appointment with patient & hospital and create a scheduled event
+        """
+        patient.save()
+        try:
+            hospital = Hospital.objects.get(current_hospital = True)
+        except Hospital.DoesNotExist:
+            hospital = Hospital(name = DEFAULT_HOSPITAL_NAME, current_hospital = True)
+            hospital.save() 
+        self.recipient = patient
+        self.hospital = hospital
+        self.save()
+        self.create_scheduled_event()    
+        return self
+       
 class InfoService(Sendable):
     """
     Define a InfoService.

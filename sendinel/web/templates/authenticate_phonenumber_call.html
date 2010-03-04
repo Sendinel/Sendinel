@@ -11,6 +11,7 @@
         TODO Write number to local phone settings
     {% endcomment %}
 	<p>please call the following phone number: {{auth_number}}.</p>
+    <p id="next">Please <a href="{{ next }}">click here</a> to save the appointment and finish</p>
     <input type="hidden" id="number" value="{{number}}" />
     <img src="{{ MEDIA_URL }}/ajax-loader.gif" alt="Spinner" id="auth_spinner"/>
     <noscript>

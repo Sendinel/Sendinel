@@ -51,7 +51,27 @@ class HospitalAppointmentTest(TestCase):
                             settings.REMINDER_TIME_BEFORE_APPOINTMENT
         self.assertEquals(scheduled_event.send_time,
                             send_time_should)
+                            
+    def test_save_with_patient_no_hospital(self):
+        Hospital.objects.all().delete()
+        try:
+            self.appointment.hospital
+            self.fail()
+        except Hospital.DoesNotExist:
+            pass
+        patient = Patient(name="Test Person", phone_number="030123456789")
+        self.appointment.save_with_patient(patient)
+        self.assertTrue(1, Hospital.objects.all().count())
+        self.assertEquals(Hospital.objects.all()[0].name, settings.DEFAULT_HOSPITAL_NAME)
+        self.assertEquals(self.appointment.hospital.name, settings.DEFAULT_HOSPITAL_NAME)
 
+    def test_save_with_patient_with_hospital(self):
+        patient = Patient(name="Test Person", phone_number="030123456789")
+        hospital = self.appointment.hospital
+        self.appointment.save_with_patient(patient)
+        self.assertEquals(self.appointment.recipient, patient)
+        self.assertEquals(self.appointment.hospital, hospital)
+        
 class ModelsSMSTest(TestCase):
     
     fixtures = ['backend']

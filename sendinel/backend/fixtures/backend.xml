@@ -12,8 +12,13 @@
         <field type="CharField" name="phone_number">09876</field>
     </object>
     <object pk="1" model="backend.hospital">
-        <field type="CharField" name="name">Hassos Klinik</field>
+        <field type="CharField" name="name">Hassos Clinic</field>
+        <field type="BooleanField" name="current_hospital">True</field>
     </object>
+    <object pk="2" model="backend.hospital">
+        <field type="CharField" name="name">Another Clinic</field>
+        <field type="BooleanField" name="current_hospital">False</field>        
+    </object>    
     <object pk="1" model="backend.usergroup">
         <field type="CharField" name="name">group</field>
         <field to="backend.patient" name="members" rel="ManyToManyRel"><object pk="1"></object><object pk="2"></object></field>
