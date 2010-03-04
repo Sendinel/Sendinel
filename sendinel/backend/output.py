@@ -51,8 +51,6 @@ Do the sending for the given outputData
 @param  the outputData Object to send
 """
 
-#TODO remove!
-def send(outputData):
-    outputData.send()
-
-
+# TODO remove!
+# def send(outputData):
+    # outputData.send()
