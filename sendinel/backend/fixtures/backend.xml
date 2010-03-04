@@ -12,8 +12,13 @@
         <field type="CharField" name="phone_number">09876</field>
     </object>
     <object pk="1" model="backend.hospital">
-        <field type="CharField" name="name">Hassos Klinik</field>
+        <field type="CharField" name="name">Hassos Clinic</field>
+        <field type="BooleanField" name="current_hospital">True</field>
     </object>
+    <object pk="2" model="backend.hospital">
+        <field type="CharField" name="name">Another Clinic</field>
+        <field type="BooleanField" name="current_hospital">False</field>        
+    </object>    
     <object pk="1" model="backend.usergroup">
         <field type="CharField" name="name">group</field>
         <field to="backend.patient" name="members" rel="ManyToManyRel"><object pk="1"></object><object pk="2"></object></field>
@@ -25,7 +30,7 @@
         <field to="backend.hospital" name="hospital" rel="ManyToOneRel">1</field>
         <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
     </object>
-    <object pk="1" model="backend.infoservice">
+    <object pk="1" model="backend.infomessage">
         <field type="CharField" name="way_of_communication">sms</field>
         <field type="TextField" name="text">hey there, i would like to have $ 100</field>
         <field to="backend.usergroup" name="recipient" rel="ManyToOneRel">1</field>
@@ -37,7 +42,7 @@
         <field type="CharField" name="state">new</field>
     </object>
     <object pk="2" model="backend.scheduledevent">
-        <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>backend</natural><natural>infoservice</natural></field>
+        <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>backend</natural><natural>infomessage</natural></field>
         <field type="PositiveIntegerField" name="sendable_id">1</field>
         <field type="DateTimeField" name="send_time">2010-02-09 18:00:57</field>
         <field type="CharField" name="state">new</field>

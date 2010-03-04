@@ -10,10 +10,11 @@ from sendinel.backend.authhelper import calculate_call_timeout, \
                                     check_and_delete_authentication_call, \
                                     delete_timed_out_authentication_calls, \
                                     format_phonenumber
-from sendinel.backend.models import Patient, ScheduledEvent
+from sendinel.backend.models import Patient, ScheduledEvent, Sendable, Doctor, Hospital
 from sendinel.web.forms import HospitalAppointmentForm
-from sendinel.settings import AUTH_NUMBER, AUTHENTICATION_CALL_TIMEOUT, \
-                              BLUETOOTH_SERVER_ADDRESS
+from sendinel.settings import   AUTH_NUMBER, DEFAULT_HOSPITAL_NAME, \
+                                BLUETOOTH_SERVER_ADDRESS, \
+                                AUTHENTICATION_CALL_TIMEOUT
 from sendinel.backend import bluetooth
 
 
@@ -22,49 +23,80 @@ def index(request):
                               context_instance=RequestContext(request))
 
 def create_appointment(request):
-    form = HospitalAppointmentForm(request.POST)
-    
-    if request.method == "POST" and form.is_valid():
-        appointment = form.save(commit=False)
-        
-        patient = Patient(name = form.cleaned_data['recipient_name'])
-        patient.save()
-        
-        appointment.recipient = patient
-        appointment.save()
-        
-        if appointment.way_of_communication != 'bluetooth':
-            appointment.create_scheduled_event()
-
-        return HttpResponseRedirect(reverse('index'))
-    else:
-        return render_to_response('create_appointment.html',
+    if request.method == "POST":
+        form = HospitalAppointmentForm(request.POST)
+        if form.is_valid():
+            appointment = form.save(commit=False)
+            patient = Patient(name = form.cleaned_data['recipient_name'])
+            request.session['appointment'] = appointment
+            request.session['patient'] = patient
+            
+            
+            if appointment.way_of_communication == 'bluetooth':
+                return HttpResponseRedirect(reverse("web_list_devices") + \
+                                "?next=" + reverse("web_appointment_send"))
+            elif appointment.way_of_communication in ('sms', 'voice' ):
+                return HttpResponseRedirect( \
+                    reverse("web_authenticate_phonenumber") + "?next=" + \
+                    reverse("web_appointment_save"))
+            else:
+                raise Exception ("Unknown way of communication %s " \
+                                   %appointment.way_of_communication) +\
+                                "(this is neither bluetooth nor sms or voice)"
+        else: 
+            return render_to_response('appointment_create.html',
                                 locals(),
                                 context_instance=RequestContext(request))
+    else:
+        #TODO: initiale Dateneintraege funktionieren noch nicht
+        try:
+            initial_data = {'doctor': unicode(Doctor.objects.all()[0])}
+        except Doctor.DoesNotExist:
+            initial_data = {}
+        initial_data.update({'way_of_communication': Sendable.WAYS_OF_COMMUNICATION[0][1]})
+        form = HospitalAppointmentForm(initial = initial_data)
+        return render_to_response('appointment_create.html',
+                                locals(),
+                                context_instance=RequestContext(request))
+  
+def save_appointment(request):
+    appointment = request.session.get('appointment', None)
+    patient = request.session.get('patient',None)
+    if not appointment or not patient:
+        return HttpResponseRedirect(reverse(create_appointment))
+    # TODO Rueckgabe testen, Fehlerbehandlung
+    patient.phone_number = request.session['authenticate_phonenumber']['number']
+    
+    appointment.save_with_patient(patient)
+    return render_to_response('appointment_saved.html',
+                            locals(),
+                            context_instance=RequestContext(request))
 
+def send_appointment(request):
+    pass
+    
 def authenticate_phonenumber(request):
+    next = ''
     if request.method == "POST":
         number = request.REQUEST["number"].strip()
         number = format_phonenumber(number)
         name = request.REQUEST["name"].strip()
         auth_number = AUTH_NUMBER
-
         
         request.session['authenticate_phonenumber'] = \
                                 { 'name': name,
                                   'number': number,
                                   'start_time': datetime.now() }
+        next = request.GET.get('next','')
         
         return render_to_response('authenticate_phonenumber_call.html', 
                               locals(),
                               context_instance = RequestContext(request))
         # TODO implement form validation
-
-
     delete_timed_out_authentication_calls()
-
+    context = locals().update({'next': next})
     return render_to_response('authenticate_phonenumber.html', 
-                              locals(),
+                              context,
                               context_instance = RequestContext(request))
 
 def check_call_received(request):

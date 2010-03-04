@@ -11,7 +11,8 @@
         TODO Write number to local phone settings
     {% endcomment %}
 	<p>please call the following phone number: {{auth_number}}.</p>
-	<p>Your mobile's function send own number must be activated. This is the default on most phones. If the authentication does not work, your can try to enable it by calling the number <pre>*31#</pre></p>
+	<p>Your mobile's function send own number must be activated. This is the default on most phones. If the authentication does not work, your can try to enable it by calling the number *31#</p>
+    <p id="next">Please <a href="{{ next }}"><strong>click here</strong></a> to save the appointment and finish</p>
     <input type="hidden" id="number" value="{{number}}" />
     <img src="{{ MEDIA_URL }}/ajax-loader.gif" alt="Spinner" id="auth_spinner"/>
     <noscript>
