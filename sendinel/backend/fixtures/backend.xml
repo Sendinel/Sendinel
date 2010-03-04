@@ -49,7 +49,7 @@
         <field type="CharField" name="state">new</field>
     </object>
     <object pk="1" model="backend.infomessage">
-        <field type="CharField" name="way_of_communication">voicecall</field>
+        <field type="CharField" name="way_of_communication">voice</field>
         <field to="backend.usergroup" name="recipient" rel="ManyToOneRel">1</field>
         <field type="TextField" name="text">Das ist eine Nachricht</field>
     </object>    
