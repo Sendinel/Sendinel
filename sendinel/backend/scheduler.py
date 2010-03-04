@@ -14,8 +14,10 @@ def run(run_only_one_time = False):
         for event in dueEvents:
             try:
                 data = event.sendable.get_data_for_sending()
-            except:
-                print "Failed to get data for " + event
+                print "Trying to send: %s" % str(event.sendable)
+            except e:
+                print "Failed to get data for " + event + " exception " + str(e)
+                
                 event.state = "failed"
                 event.save()
                 continue
@@ -23,8 +25,9 @@ def run(run_only_one_time = False):
             # TODO error handling
             try:
                 for entry in data:
+                    print "  sending: %s" % str(entry)
                     entry.send()
-            except:
+            except e:
                 print "Failed to send: " + str(entry)
                 event.state = "failed"
                 event.save()
