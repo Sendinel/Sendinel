@@ -1,6 +1,9 @@
 import unittest
+from datetime import datetime
+
 from sendinel.backend.authhelper import format_phonenumber, \
-                                        check_and_delete_authentication_call
+                                        check_and_delete_authentication_call, \
+                                        delete_timed_out_authentication_calls
 from sendinel.backend.models import AuthenticationCall
 from sendinel.asterisk import log_call
 
@@ -79,4 +82,19 @@ agi_threadid: -1258067088
         call_received = check_and_delete_authentication_call(" 0160 1234567 ")
         self.assertFalse(call_received)
 
+    def test_delete_timed_out_authentication_calls(self):
+        AuthenticationCall.objects.all().delete()
+        
+        call1 = AuthenticationCall(number = '023444')
+        call1.save()    # save so time is set on create
+        call1.time = datetime(2007, 01, 01)
+        call1.save()
+        
+        call2 = AuthenticationCall(number = '033233')
+        call2.save()
+        call2.time = datetime(3000, 01, 01)
+        call2.save()
+        
+        delete_timed_out_authentication_calls()
 
+        self.assertEquals(1, AuthenticationCall.objects.all().count())
