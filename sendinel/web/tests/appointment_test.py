@@ -105,6 +105,8 @@ class AppointmentViewTest(TestCase):
         self.failUnlessEqual(response.status_code, 200)  
         appoint = HospitalAppointment.objects.order_by("id").reverse()[:1][0]
         self.assertEquals(unicode(appoint.recipient), recipient_name)
+        event = ScheduledEvent.objects.order_by("id").reverse()[:1][0]
+        self.assertEquals(event.sendable, appoint)
                                                      
             
                 #                              

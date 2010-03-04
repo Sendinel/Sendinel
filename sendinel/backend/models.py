@@ -176,7 +176,7 @@ class HospitalAppointment(Sendable):
                         HospitalAppointment.template, False)
         data.phone_number = self.recipient.phone_number
 
-        return data
+        return [data]
 
     def create_scheduled_event(self):
         """
@@ -186,7 +186,9 @@ class HospitalAppointment(Sendable):
         REMINDER_TIME_BEFORE_APPOINTMENT specified as timedelta object.
         """
         send_time = self.date - REMINDER_TIME_BEFORE_APPOINTMENT
-        Sendable.create_scheduled_event(self, send_time)
+        scheduled_event = ScheduledEvent(sendable = self,
+                                         send_time = send_time)
+        scheduled_event.save()
        
     def save_with_patient(self, patient):
         """
