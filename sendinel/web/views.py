@@ -119,14 +119,6 @@ def check_call_received(request):
     return HttpResponse(content = simplejson.dumps(response_dict),
                         content_type = "application/json")
 
-def input_text(request):
-    return render_to_response('input_text.html',
-                              context_instance=RequestContext(request))
-
-def choose_communication(request):
-    return render_to_response('choose_communication.html',
-                              context_instance=RequestContext(request))
-
 def list_bluetooth_devices(request):
     return render_to_response('list_devices.html',
                                 locals(),
