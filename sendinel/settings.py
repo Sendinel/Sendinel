@@ -105,6 +105,9 @@ AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = 3)
 # Specify a COM Port for SMS
 # for windows maybe it starts at 0
 SERIALPORTSMS = '/dev/rfcomm0'
+
+# IP address to bluetooth server
+BLUETOOTH_SERVER_ADDRESS = '127.0.0.1'
 ####################################
 
 

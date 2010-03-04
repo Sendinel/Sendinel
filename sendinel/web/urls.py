@@ -11,5 +11,10 @@ urlpatterns = patterns("",
     url(r'^authenticate_phonenumber/$', 'sendinel.web.views.authenticate_phonenumber',
         name = 'authenticate_phonenumber'),
     url(r'^check_call_received/$', 'sendinel.web.views.check_call_received', 
-        name = 'check_call_received')
+        name = 'check_call_received'),
+    url(r'^list_devices/$', 'sendinel.web.views.list_bluetooth_devices', 
+        name = 'list_devices'),
+    url(r'^get_devices/$', 'sendinel.web.views.get_bluetooth_devices', 
+        name = 'get_devices')
+        
     )

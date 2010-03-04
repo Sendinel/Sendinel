@@ -57,17 +57,26 @@ class ModelsSMSTest(TestCase):
     fixtures = ['backend']
     
     def test_hospital_appointment_get_data_for_sms(self):
+        smsoutputdata1 = SMSOutputData()
+        smsoutputdata1.phone_number = "01234"
         data = HospitalAppointment.objects.get(pk = 1).get_data_for_sms()
-        self.assertions_for_sms_output_object(data)
+        entry = data[0]
+        
+        self.assertEquals(len(data), 1)
+        self.assertEquals(type(entry), SMSOutputData)
+        self.assertEquals(entry.phone_number, "01234")
+        self.assertEquals(type(entry.data), unicode)
         
     def test_text_message_get_data_for_sms(self):
-        data = TextMessage.objects.get(pk = 1).get_data_for_sms()
-        self.assertions_for_sms_output_object(data)
+        numbers = ["01234", "09876"]
+        data = InfoService.objects.get(pk = 1).get_data_for_sms()
         
-    def assertions_for_sms_output_object(self, data):
-        self.assertEquals(type(data), SMSOutputData)
-        self.assertEquals(data.phone_number, "12345")
-        self.assertEquals(type(data.data), unicode)
+        self.assertTrue(len(data) >= 1)
+        for entry in data:
+            self.assertEquals(type(entry), SMSOutputData)
+            self.assertTrue(entry.phone_number in numbers)
+            self.assertEquals(type(entry.data), unicode)
+            
         
 class ModelsUsergroupTest(TestCase):
     def setUp(self):

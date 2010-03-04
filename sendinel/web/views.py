@@ -12,7 +12,8 @@ from sendinel.backend.authhelper import calculate_call_timeout, \
                                     format_phonenumber
 from sendinel.backend.models import Patient, ScheduledEvent, Sendable, Doctor, Hospital
 from sendinel.web.forms import HospitalAppointmentForm
-from sendinel.settings import AUTH_NUMBER, DEFAULT_HOSPITAL_NAME
+from sendinel.settings import AUTH_NUMBER, DEFAULT_HOSPITAL_NAME, BLUETOOTH_SERVER_ADDRESS
+from sendinel.backend import bluetooth
 
 def index(request):
     return render_to_response('start.html',
@@ -114,3 +115,30 @@ def input_text(request):
 def choose_communication(request):
     return render_to_response('choose_communication.html',
                               context_instance=RequestContext(request))
+
+def list_bluetooth_devices(request):
+    return render_to_response('list_devices.html',
+                                locals(),
+                                context_instance=RequestContext(request))
+
+def get_bluetooth_devices(request):
+    response_dict = {}
+    devices_list = []
+    
+    devices = bluetooth.get_discovered_devices(BLUETOOTH_SERVER_ADDRESS)
+    for device in devices.items():
+        device_dict = {}
+        device_dict["name"] = device[1]
+        device_dict["mac"] = device[0]
+        devices_list.append(device_dict)
+    response_dict["devices"] = devices_list
+    
+    return HttpResponse(content = simplejson.dumps(response_dict),
+                        content_type = "application/json")
+        
+    
+    
+    
+    
+    
+    
