@@ -31,6 +31,7 @@ class SchedulerTest(TestCase):
         output.BluetoothOutputData.send = send
         output.VoiceOutputData.send = send
         
+        SchedulerTest.counter = 0
         self.assertTrue(scheduled_events_count() > 0)
         
         scheduler.run(run_only_one_time = True)
