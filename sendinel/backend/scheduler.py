@@ -15,7 +15,7 @@ def run(run_only_one_time = False):
             try:
                 data = event.sendable.get_data_for_sending()
                 print "Trying to send: %s" % str(event.sendable)
-            except e:
+            except Exception as e:
                 print "Failed to get data for " + event + " exception " + str(e)
                 
                 event.state = "failed"
@@ -27,7 +27,7 @@ def run(run_only_one_time = False):
                 for entry in data:
                     print "  sending: %s" % str(entry)
                     entry.send()
-            except e:
+            except Exception as e:
                 print "Failed to send: " + str(entry)
                 event.state = "failed"
                 event.save()
