@@ -89,7 +89,7 @@ class ModelsSMSTest(TestCase):
         
     def test_text_message_get_data_for_sms(self):
         numbers = ["01234", "09876"]
-        data = InfoService.objects.get(pk = 1).get_data_for_sms()
+        data = InfoMessage.objects.get(pk = 1).get_data_for_sms()
         
         self.assertTrue(len(data) >= 1)
         for entry in data:
