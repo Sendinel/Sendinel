@@ -9,14 +9,14 @@ from sendinel import settings
 
 class AppointmentViewTest(TestCase):
     fixtures = ['backend']
-    urls = 'web.urls'
+    urls = 'urls'
     
     def setUp (self):
         self.hospital = Hospital.objects.get(current_hospital = True)
         #self.client = Client()
     
     def test_create_appointment_form(self):
-        response = self.client.get("/appointment/create/")
+        response = self.client.get("/web/appointment/create/")
         self.failUnlessEqual(response.status_code, 200)
         self.assertContains(response, 'name="date_0"')
         self.assertContains(response, 'name="date_1"')
@@ -27,7 +27,7 @@ class AppointmentViewTest(TestCase):
         self.assertNotContains(response, 'name="hospital"')
 
     def test_create_appointment_submit_validations(self):
-        response = self.client.post("/appointment/create/", 
+        response = self.client.post("/web/appointment/create/", 
                     {'date_0': 'abc',
                     'date_1': 'def',
                     'doctor': '',
@@ -51,18 +51,18 @@ class AppointmentViewTest(TestCase):
                 'recipient_name': 'Shiko Taga',
                 'way_of_communication': 'sms'}
         number_of_appointments = HospitalAppointment.objects.count()
-        response = self.client.post("/appointment/create/", data)
+        response = self.client.post("/web/appointment/create/", data)
         self.assertRedirects(response, 
                              reverse('web_authenticate_phonenumber') + \
                              "?next=" + \
                              reverse('web_appointment_save'))
-        response = self.client.post("/appointment/create/", data, follow=True)
+        response = self.client.post("/web/appointment/create/", data, follow=True)
         self.assertTrue(self.client.session.has_key('patient'))
         self.assertTrue(self.client.session.has_key('appointment'))        
  
     def test_create_appointment_submit_redirect_voice(self):
         number_of_appointments = HospitalAppointment.objects.count()
-        response = self.client.post("/appointment/create/", 
+        response = self.client.post("/web/appointment/create/", 
                     {'date_0': '2012-08-12',
                     'date_1': '19:02:42',
                     'doctor': "1",
@@ -77,7 +77,7 @@ class AppointmentViewTest(TestCase):
 
     def test_create_appointment_submit_redirect_bluetooth(self):
         number_of_appointments = HospitalAppointment.objects.count()
-        response = self.client.post("/appointment/create/", 
+        response = self.client.post("/web/appointment/create/", 
                     {'date_0': '2012-08-12',
                     'date_1': '19:02:42',
                     'doctor': "1",
@@ -92,7 +92,7 @@ class AppointmentViewTest(TestCase):
                              
     def test_save_appointment_voice(self):
         recipient_name = 'Shiko Taga'
-        self.client.post("/appointment/create/", 
+        self.client.post("/web/appointment/create/", 
                     {'date_0': '2012-08-12',
                     'date_1': '19:02:42',
                     'doctor': "1",

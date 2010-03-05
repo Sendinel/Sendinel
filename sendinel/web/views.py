@@ -12,17 +12,20 @@ from sendinel.backend.authhelper import calculate_call_timeout, \
                                     format_phonenumber
 from sendinel.backend.models import Patient, ScheduledEvent, Sendable, Doctor, Hospital
 from sendinel.web.forms import HospitalAppointmentForm
-from sendinel.settings import   AUTH_NUMBER, DEFAULT_HOSPITAL_NAME, \
+from sendinel.settings import   AUTH_NUMBER, \
+                                DEFAULT_HOSPITAL_NAME, \
                                 BLUETOOTH_SERVER_ADDRESS, \
-                                AUTHENTICATION_CALL_TIMEOUT
+                                AUTHENTICATION_CALL_TIMEOUT, \
+                                ADMIN_MEDIA_PREFIX
 from sendinel.backend import bluetooth
 
 
 def index(request):
-    return render_to_response('start.html',
+    return render_to_response('web/index.html',
                               context_instance=RequestContext(request))
 
 def create_appointment(request):
+    admin_media_prefix = ADMIN_MEDIA_PREFIX
     if request.method == "POST":
         form = HospitalAppointmentForm(request.POST)
         if form.is_valid():
@@ -42,8 +45,8 @@ def create_appointment(request):
                 raise Exception ("Unknown way of communication %s " \
                                    %appointment.way_of_communication) +\
                                 "(this is neither bluetooth nor sms or voice)"
-        else: 
-            return render_to_response('appointment_create.html',
+        else:
+            return render_to_response('web/appointment_create.html',
                                 locals(),
                                 context_instance=RequestContext(request))
     else:
@@ -55,7 +58,7 @@ def create_appointment(request):
         initial_data = {'way_of_communication': \
                         Sendable.WAYS_OF_COMMUNICATION[0][1]}
         form = HospitalAppointmentForm(initial = initial_data)
-        return render_to_response('appointment_create.html',
+        return render_to_response('web/appointment_create.html',
                                 locals(),
                                 context_instance=RequestContext(request))
   
@@ -68,7 +71,7 @@ def save_appointment(request):
     patient.phone_number = request.session['authenticate_phonenumber']['number']
     
     appointment.save_with_patient(patient)
-    return render_to_response('appointment_saved.html',
+    return render_to_response('web/appointment_saved.html',
                             locals(),
                             context_instance=RequestContext(request))
 
@@ -86,7 +89,7 @@ def authenticate_phonenumber(request):
                                 { 'number': number,
                                   'start_time': datetime.now() }
         next = request.GET.get('next','')
-        return render_to_response('authenticate_phonenumber_call.html', 
+        return render_to_response('web/authenticate_phonenumber_call.html', 
                               locals(),
                               context_instance = RequestContext(request))
         # TODO implement form validation
@@ -97,7 +100,7 @@ def authenticate_phonenumber(request):
     if(patient): patient_name = patient.name
     
     locals().update({'next': next})
-    return render_to_response('authenticate_phonenumber.html', 
+    return render_to_response('web/authenticate_phonenumber.html', 
                               locals(),
                               context_instance = RequestContext(request))
 
@@ -122,7 +125,7 @@ def check_call_received(request):
                         content_type = "application/json")
 
 def list_bluetooth_devices(request):
-    return render_to_response('list_devices.html',
+    return render_to_response('web/list_devices.html',
                                 locals(),
                                 context_instance=RequestContext(request))
 
