@@ -17,11 +17,13 @@ var check_for_call = function() {
                     
                     case "received":                        
                         statusText.text("Thank you! Your telephone number has been authenticated.");
+                        $("#next").show();
                         $("#auth_spinner").hide();
                     break;
                     
                     case "failed":
                         statusText.text("Sorry, the authentication of your telephone number failed. Please try again.");
+                        $("#next").hide();
                         $("#auth_spinner").hide();
                                                 
                     break;
@@ -32,6 +34,6 @@ var check_for_call = function() {
 };
 
 $(document).ready(check_for_call);
-
+$(document).ready(function() { $("#next").hide();} );
 
 

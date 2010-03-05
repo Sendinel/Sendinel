@@ -14,7 +14,7 @@
         <tr>
             <td>{{ group.name }}</td>
             <td>{{ group.count_members }}</td>
-            <td><a href="../create_infomessage/{{ group.id }}/">Create message</a></td>
+            <td><a href="{% url staff_create_infomessage id=group.id %}">Create message</a></td>
         </tr>
         
     {% endfor %}

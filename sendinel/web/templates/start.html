@@ -4,9 +4,10 @@
     <h3>Choose what you want to do:</h3>
     <p>
         <ul id="navlist">
-            <a href="inputText">Send a text message</a>
-            <a href="create_appointment">Add an appointment</a>
-            <a href="authenticate_phonenumber">Auth Phone</a>
+            <a href="{% url web_appointment_create %}">Add an appointment</a>
         </ul>
+    </p>
+    <p>
+        <a href="{% url sendinel.staff.views.index %}">Staff</a>
     </p>
 {% endblock %}

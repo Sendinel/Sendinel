@@ -35,7 +35,7 @@ var check_for_devices = function() {
                     
                     var name_form = document.createElement("form");
                     var action = document.createAttribute("action");
-                    action.nodeValue = "";
+                    action.nodeValue = "#";
                     var method = document.createAttribute("method");
                     method.nodeValue = "POST";
                     var form_name = document.createAttribute("name");

@@ -10,7 +10,7 @@ class HospitalAppointmentForm(ModelForm):
     
     class Meta:
         model = HospitalAppointment
-        exclude = ['recipient_type', 'recipient_id']
-        fields = ['recipient_name', 'date', 'hospital', 'doctor',
+        exclude = ['recipient_type', 'recipient_id', 'hospital']
+        fields = ['recipient_name', 'date', 'doctor',
                     'way_of_communication']
         
