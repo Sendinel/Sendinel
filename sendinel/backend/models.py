@@ -224,7 +224,6 @@ class InfoMessage(Sendable):
         Return SMSOutputData for sending.
         """
         
-        # TODO implement data as a list
         data = []
         for patient in self.recipient.members.all():
             entry = SMSOutputData()           

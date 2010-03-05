@@ -131,3 +131,13 @@ class ModelsUsergroupTest(TestCase):
         self.assertTrue(self.patient not in self.group.members.all())
         self.assertTrue(self.group not in self.patient.groups())
 
+class ModelsInfoMessageTest(TestCase):
+
+    fixtures = ["backend"]
+    
+    def test_get_data_for_sms(self):
+        info_message = InfoMessage()
+        
+        info_message.text = "Test Message"
+        
+        
