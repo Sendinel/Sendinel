@@ -19,7 +19,7 @@ from sendinel.backend import bluetooth
 
 
 def index(request):
-    return render_to_response('start.html',
+    return render_to_response('web/index.html',
                               context_instance=RequestContext(request))
 
 def create_appointment(request):
@@ -44,7 +44,7 @@ def create_appointment(request):
                                    %appointment.way_of_communication) +\
                                 "(this is neither bluetooth nor sms or voice)"
         else: 
-            return render_to_response('appointment_create.html',
+            return render_to_response('web/appointment_create.html',
                                 locals(),
                                 context_instance=RequestContext(request))
     else:
@@ -56,7 +56,7 @@ def create_appointment(request):
         initial_data = {'way_of_communication': \
                         Sendable.WAYS_OF_COMMUNICATION[0][1]}
         form = HospitalAppointmentForm(initial = initial_data)
-        return render_to_response('appointment_create.html',
+        return render_to_response('web/appointment_create.html',
                                 locals(),
                                 context_instance=RequestContext(request))
   
@@ -69,7 +69,7 @@ def save_appointment(request):
     patient.phone_number = request.session['authenticate_phonenumber']['number']
     
     appointment.save_with_patient(patient)
-    return render_to_response('appointment_saved.html',
+    return render_to_response('web/appointment_saved.html',
                             locals(),
                             context_instance=RequestContext(request))
 
@@ -86,13 +86,13 @@ def authenticate_phonenumber(request):
                                 { 'number': number,
                                   'start_time': datetime.now() }
         next = request.GET.get('next','')
-        return render_to_response('authenticate_phonenumber_call.html', 
+        return render_to_response('web/authenticate_phonenumber_call.html', 
                               locals(),
                               context_instance = RequestContext(request))
         # TODO implement form validation
     delete_timed_out_authentication_calls()
     context = locals().update({'next': next})
-    return render_to_response('authenticate_phonenumber.html', 
+    return render_to_response('web/authenticate_phonenumber.html', 
                               context,
                               context_instance = RequestContext(request))
 
@@ -117,7 +117,7 @@ def check_call_received(request):
                         content_type = "application/json")
 
 def list_bluetooth_devices(request):
-    return render_to_response('list_devices.html',
+    return render_to_response('web/list_devices.html',
                                 locals(),
                                 context_instance=RequestContext(request))
 
