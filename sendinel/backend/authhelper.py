@@ -5,7 +5,7 @@ from sendinel.backend.models import AuthenticationCall
 from sendinel.backend.helper import NotObservedNumberException
 from settings import AUTHENTICATION_CALL_TIMEOUT, \
                      COUNTRY_CODE_PHONE, \
-                     AREA_CODE_PHONE
+                     START_MOBILE_PHONE
 
 def format_phonenumber(number):
     """
@@ -30,7 +30,7 @@ def format_phonenumber(number):
     # if the conversion to int does not fail
     # then there are only numbers included
     # in the string
-    if int(number) and number.startswith(AREA_CODE_PHONE):
+    if int(number) and number.startswith(START_MOBILE_PHONE):
         return number
     else:
         raise ValueError('please give national number without country prefix')    

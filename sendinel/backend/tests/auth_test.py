@@ -8,7 +8,7 @@ class AuthTest(unittest.TestCase):
 
     def test_number_formating(self):
         authhelper.COUNTRY_CODE_PHONE = "0027"
-        authhelper.AREA_CODE_PHONE = "07"
+        authhelper.START_MOBILE_PHONE = "07"
         number = "+27723456789"
         self.assertEquals(authhelper.format_phonenumber(number), "0723456789")          
         number = "+277 234/567 89"
