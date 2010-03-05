@@ -3,7 +3,9 @@ from datetime import datetime
 
 from sendinel.backend.models import AuthenticationCall
 from sendinel.backend.helper import NotObservedNumberException
-from settings import AUTHENTICATION_CALL_TIMEOUT
+from settings import AUTHENTICATION_CALL_TIMEOUT, \
+                     COUNTRY_CODE_PHONE, \
+                     AREA_CODE_PHONE
 
 def format_phonenumber(number):
     """
@@ -16,14 +18,20 @@ def format_phonenumber(number):
     
     @raise  ValueError
     """
+   
+    if number.startswith('+'):
+        number = number.replace('+','00',1)
     regex = re.compile('(\/|\+|-| )')
-    new_number = regex.sub('', number)
+    number = regex.sub('', number)
     
+    if number.startswith(COUNTRY_CODE_PHONE):
+        number = number.replace(COUNTRY_CODE_PHONE,'0',1)
+
     # if the conversion to int does not fail
     # then there are only numbers included
     # in the string
-    if int(new_number) and new_number[0] == '0':
-        return new_number
+    if int(number) and number.startswith(AREA_CODE_PHONE):
+        return number
     else:
         raise ValueError('please give national number without country prefix')    
 

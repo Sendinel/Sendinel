@@ -88,6 +88,9 @@ INSTALLED_APPS = (
 # Sendinel Configuration
 REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days=-1)
 
+COUNTRY_CODE_PHONE = "0049" #"0027"
+AREA_CODE_PHONE = "01" #"07"
+
 ASTERISK_USER = "hudson"
 ASTERISK_GROUP = "hudson"
 ASTERISK_SPOOL_DIR = "/var/spool/asterisk/outgoing/"

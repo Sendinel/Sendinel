@@ -1,31 +1,27 @@
 import unittest
-from sendinel.backend.authhelper import format_phonenumber, \
-                                        check_and_delete_authentication_call
+from sendinel.settings import COUNTRY_CODE_PHONE
+from sendinel.backend import authhelper
 from sendinel.backend.models import AuthenticationCall
 from sendinel.asterisk import log_call
 
 class AuthTest(unittest.TestCase):
 
     def test_number_formating(self):
-        number = "0123456789"
-        self.assertEquals(format_phonenumber(number), "0123456789")             
-        number = "+0123456789"
-        self.assertEquals(format_phonenumber(number), "0123456789")
-        number = "+01234/56789"
-        self.assertEquals(format_phonenumber(number), "0123456789")
-        number = "+01234 56789"
-        self.assertEquals(format_phonenumber(number), "0123456789")
-        number = "+0 1234 56789"
-        self.assertEquals(format_phonenumber(number), "0123456789")        
-        number = "+01234-56789"
-        self.assertEquals(format_phonenumber(number), "0123456789")
-        number = "abc"
-        self.assertRaises(ValueError, format_phonenumber, number)
+        authhelper.COUNTRY_CODE_PHONE = "0027"
+        authhelper.AREA_CODE_PHONE = "07"
+        number = "+27723456789"
+        self.assertEquals(authhelper.format_phonenumber(number), "0723456789")          
+        number = "+277 234/567 89"
+        self.assertEquals(authhelper.format_phonenumber(number), "0723456789")    
+        number = "00277 234-56789"
+        self.assertEquals(authhelper.format_phonenumber(number), "0723456789")
         number = "0123a45678"
-        self.assertRaises(ValueError, format_phonenumber, number)
-        number = "+49123456789"
-        self.assertRaises(ValueError, format_phonenumber, number)          
-        
+        self.assertRaises(ValueError, authhelper.format_phonenumber, number)
+        number = "0049123456789"
+        self.assertRaises(ValueError, authhelper.format_phonenumber, number)
+        number = "030123456789"
+        self.assertRaises(ValueError, authhelper.format_phonenumber, number)          
+
         
     def test_asterisk_log_call(self):
         class MockFile:
@@ -74,9 +70,9 @@ agi_threadid: -1258067088
         AuthenticationCall.objects.all().delete()
         AuthenticationCall(number = "01601234567").save()
 
-        call_received = check_and_delete_authentication_call(" 0160 1234567 ")
+        call_received = authhelper.check_and_delete_authentication_call(" 0160 1234567 ")
         self.assertTrue(call_received)
-        call_received = check_and_delete_authentication_call(" 0160 1234567 ")
+        call_received = authhelper.check_and_delete_authentication_call(" 0160 1234567 ")
         self.assertFalse(call_received)
 
 
