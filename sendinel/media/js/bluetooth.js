@@ -57,6 +57,22 @@ var check_for_devices = function() {
                 });
             }
             window.setTimeout("check_for_devices()", 3000);
+        },
+        error: function() {
+            $("#loading").hide();
+        
+            var deviceTable = $("#bluetooth_devices")[0];
+                
+            deviceTable.innerHTML = "";
+        
+            var tr = document.createElement("tr");
+            var td = document.createElement("td");
+            
+            td.innerHTML = "The Bluetooth device doesn't work correctly. ";
+            td.innerHTML += "Please inform the clerk.";
+
+            tr.appendChild(td);
+            deviceTable.appendChild(tr);
         }
     });
 };
