@@ -110,9 +110,11 @@ class Sendable(models.Model):
         """
         return eval("self.get_data_for_%s()" % self.way_of_communication)
         
-    def create_scheduled_event(self, send_time):
+    def create_scheduled_event(self, send_time=None):
         """
-            Creates a ScheduledEvent for the Sendable at the given send_time.
+        Create a scheduled event for a specific send_time
+        @param send_time: Datetime object with the time of the reminder        
+        Creates a ScheduledEvent for the Sendable at the given send_time.
         """
         scheduled_event = ScheduledEvent(sendable = self,
                                          send_time = send_time)
@@ -178,17 +180,16 @@ class HospitalAppointment(Sendable):
 
         return [data]
 
-    def create_scheduled_event(self):
+    def create_scheduled_event(self, send_time=None):
         """
-        Create a scheduled event for sending a reminder before an
-        appointment. The time before the appointment is used as specified
-        in the settings:
-        REMINDER_TIME_BEFORE_APPOINTMENT specified as timedelta object.
+        Create a scheduled event for sending a reminder for an appointment. 
+        @param send_time: Datetime object with the time of the reminder
+        If send_time is not give, REMINDER_TIME_BEFORE_APPOINTMENT is used.
+        Calls Sendable.create_scheduled_event() to create the ScheduledEvent
         """
-        send_time = self.date - REMINDER_TIME_BEFORE_APPOINTMENT
-        scheduled_event = ScheduledEvent(sendable = self,
-                                         send_time = send_time)
-        scheduled_event.save()
+        if not send_time:      
+          send_time = self.date - REMINDER_TIME_BEFORE_APPOINTMENT
+        super(HospitalAppointment, self).create_scheduled_event(send_time)
        
     def save_with_patient(self, patient):
         """

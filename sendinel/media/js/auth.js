@@ -18,7 +18,6 @@ var check_for_call = function() {
                     case "received":                        
                         statusText.text("Thank you! Your telephone number has been authenticated.");
                         var next = $("#next").attr("value");
-                        console.log(next);
                         window.location.replace(next);
                         $("#auth_spinner").hide();
                     break;
