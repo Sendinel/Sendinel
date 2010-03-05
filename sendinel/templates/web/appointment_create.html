@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <h3>Appointment</h3>
+	<p>Please enter the appointment details.</p>
+    <p>
+        <form action="./" method="post">
+            <table>
+                {{ form.as_table }}
+            </table>
+            <input type="submit" name="submit" value="Save" id="id_submit" />
+        </form>
+    </p>
+{% endblock %}
