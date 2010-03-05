@@ -49,11 +49,12 @@ def create_appointment(request):
                                 context_instance=RequestContext(request))
     else:
         #TODO: initiale Dateneintraege funktionieren noch nicht
-        try:
-            initial_data = {'doctor': unicode(Doctor.objects.all()[0])}
-        except Doctor.DoesNotExist:
-            initial_data = {}
-        initial_data.update({'way_of_communication': Sendable.WAYS_OF_COMMUNICATION[0][1]})
+        # try:
+        #     initial_data = {'doctor': unicode(Doctor.objects.all().get())}
+        # except Doctor.DoesNotExist:
+        #     initial_data = {}
+        initial_data = {'way_of_communication': \
+                        Sendable.WAYS_OF_COMMUNICATION[0][1]}
         form = HospitalAppointmentForm(initial = initial_data)
         return render_to_response('appointment_create.html',
                                 locals(),
@@ -78,17 +79,13 @@ def send_appointment(request):
 def authenticate_phonenumber(request):
     next = ''
     if request.method == "POST":
-        number = request.REQUEST["number"].strip()
+        number = request.POST["number"].strip()
         number = format_phonenumber(number)
-        name = request.REQUEST["name"].strip()
         auth_number = AUTH_NUMBER
-        
         request.session['authenticate_phonenumber'] = \
-                                { 'name': name,
-                                  'number': number,
+                                { 'number': number,
                                   'start_time': datetime.now() }
         next = request.GET.get('next','')
-        
         return render_to_response('authenticate_phonenumber_call.html', 
                               locals(),
                               context_instance = RequestContext(request))
