@@ -2,7 +2,7 @@ import unittest
 
 from datetime import datetime
 
-from sendinel.settings import COUNTRY_CODE_PHONE
+from sendinel.settings import COUNTRY_CODE_PHONE, START_MOBILE_PHONE
 from sendinel.backend import authhelper
 from sendinel.backend.models import AuthenticationCall
 from sendinel.asterisk import log_call
@@ -16,7 +16,7 @@ class AuthTest(unittest.TestCase):
         self.assertEquals(authhelper.format_phonenumber(number), "0723456789")          
         number = "+277 234/567 89"
         self.assertEquals(authhelper.format_phonenumber(number), "0723456789")    
-        number = "00277 234-56789"
+        number = "07 234-56789"
         self.assertEquals(authhelper.format_phonenumber(number), "0723456789")
         number = "0123a45678"
         self.assertRaises(ValueError, authhelper.format_phonenumber, number)
@@ -24,7 +24,8 @@ class AuthTest(unittest.TestCase):
         self.assertRaises(ValueError, authhelper.format_phonenumber, number)
         number = "030123456789"
         self.assertRaises(ValueError, authhelper.format_phonenumber, number)          
-
+        authhelper.COUNTRY_CODE_PHONE = COUNTRY_CODE_PHONE
+        authhelper.START_MOBILE_PHONE = START_MOBILE_PHONE
         
     def test_asterisk_log_call(self):
         class MockFile:
