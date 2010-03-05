@@ -94,6 +94,9 @@ INSTALLED_APPS = (
 REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days = 1)
 DEFAULT_HOSPITAL_NAME = 'your hospital'
 
+COUNTRY_CODE_PHONE = "0049" #"0027"
+START_MOBILE_PHONE = "01" #"07"
+
 ASTERISK_USER = "hudson"
 ASTERISK_GROUP = "hudson"
 ASTERISK_SPOOL_DIR = "/var/spool/asterisk/outgoing/"

@@ -1,4 +1,4 @@
-from datetime import datetime
+﻿from datetime import datetime
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
@@ -29,8 +29,7 @@ def create_appointment(request):
             appointment = form.save(commit=False)
             patient = Patient(name = form.cleaned_data['recipient_name'])
             request.session['appointment'] = appointment
-            request.session['patient'] = patient
-            
+            request.session['patient'] = patient            
             
             if appointment.way_of_communication == 'bluetooth':
                 return HttpResponseRedirect(reverse("web_list_devices") + \
@@ -80,6 +79,7 @@ def authenticate_phonenumber(request):
     next = ''
     if request.method == "POST":
         number = request.POST["number"].strip()
+
         number = format_phonenumber(number)
         auth_number = AUTH_NUMBER
         request.session['authenticate_phonenumber'] = \
@@ -90,10 +90,15 @@ def authenticate_phonenumber(request):
                               locals(),
                               context_instance = RequestContext(request))
         # TODO implement form validation
+        
     delete_timed_out_authentication_calls()
-    context = locals().update({'next': next})
+    
+    patient = request.session.get('patient',None)
+    if(patient): patient_name = patient.name
+    
+    locals().update({'next': next})
     return render_to_response('authenticate_phonenumber.html', 
-                              context,
+                              locals(),
                               context_instance = RequestContext(request))
 
 def check_call_received(request):
@@ -125,15 +130,19 @@ def get_bluetooth_devices(request):
     response_dict = {}
     devices_list = []
     
-    devices = bluetooth.get_discovered_devices(BLUETOOTH_SERVER_ADDRESS)
-    for device in devices.items():
-        device_dict = {}
-        device_dict["name"] = device[1]
-        device_dict["mac"] = device[0]
-        devices_list.append(device_dict)
-    response_dict["devices"] = devices_list
-    
-    return HttpResponse(content = simplejson.dumps(response_dict),
-                        content_type = "application/json")
+    try:
+        devices = bluetooth.get_discovered_devices(BLUETOOTH_SERVER_ADDRESS)
+        for device in devices.items():
+            device_dict = {}
+            device_dict["name"] = device[1]
+            device_dict["mac"] = device[0]
+            devices_list.append(device_dict)
+        response_dict["devices"] = devices_list
+        
+        return HttpResponse(content = simplejson.dumps(response_dict),
+                            content_type = "application/json")
+    except:
+        # TODO write bluetooth error to log file
+        return HttpResponse(status = 500)
         
 
