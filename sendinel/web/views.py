@@ -12,9 +12,11 @@ from sendinel.backend.authhelper import calculate_call_timeout, \
                                     format_phonenumber
 from sendinel.backend.models import Patient, ScheduledEvent, Sendable, Doctor, Hospital
 from sendinel.web.forms import HospitalAppointmentForm
-from sendinel.settings import   AUTH_NUMBER, DEFAULT_HOSPITAL_NAME, \
+from sendinel.settings import   AUTH_NUMBER, \
+                                DEFAULT_HOSPITAL_NAME, \
                                 BLUETOOTH_SERVER_ADDRESS, \
-                                AUTHENTICATION_CALL_TIMEOUT
+                                AUTHENTICATION_CALL_TIMEOUT, \
+                                ADMIN_MEDIA_PREFIX
 from sendinel.backend import bluetooth
 
 
@@ -23,6 +25,7 @@ def index(request):
                               context_instance=RequestContext(request))
 
 def create_appointment(request):
+    admin_media_prefix = ADMIN_MEDIA_PREFIX
     if request.method == "POST":
         form = HospitalAppointmentForm(request.POST)
         if form.is_valid():
@@ -43,7 +46,7 @@ def create_appointment(request):
                 raise Exception ("Unknown way of communication %s " \
                                    %appointment.way_of_communication) +\
                                 "(this is neither bluetooth nor sms or voice)"
-        else: 
+        else:
             return render_to_response('web/appointment_create.html',
                                 locals(),
                                 context_instance=RequestContext(request))

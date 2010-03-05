@@ -105,4 +105,7 @@ th {
     vertical-align: top;
 }
 
+img {
+    border-width: 0;
+}
 
