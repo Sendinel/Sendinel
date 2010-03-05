@@ -64,11 +64,13 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.csrf.middleware.CsrfMiddleware'
 )
 
 ROOT_URLCONF = 'sendinel.urls'
 
-TEMPLATE_DIRS = (PROJECT_PATH + "/web/templates"
+TEMPLATE_DIRS = (
+    PROJECT_PATH + "/templates",
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -81,12 +83,17 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'sendinel.web',
-    'sendinel.backend'
+    'sendinel.backend',
+    'sendinel.staff'
 )
 
 ####################################
 # Sendinel Configuration
 REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days = 1)
+DEFAULT_HOSPITAL_NAME = 'your hospital'
+
+COUNTRY_CODE_PHONE = "0049" #"0027"
+START_MOBILE_PHONE = "01" #"07"
 
 ASTERISK_USER = "hudson"
 ASTERISK_GROUP = "hudson"

@@ -63,7 +63,7 @@ def send_sms(recipient, message, ser_conn=None):
         while True:
             data = ser.read(64)
             if len(data) != 0:
-                if str(data).find("Error")!=-1:
+                if str(data).lower().find("error") != -1:
                     raise SerialConnectionError(data)
             else:
                 break

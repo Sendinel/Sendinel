@@ -6,6 +6,6 @@ admin.site.register(Doctor)
 admin.site.register(Patient)
 admin.site.register(Hospital)
 admin.site.register(HospitalAppointment)
-admin.site.register(InfoService)
+admin.site.register(InfoMessage)
 admin.site.register(ScheduledEvent)
-
+admin.site.register(AuthenticationCall)
