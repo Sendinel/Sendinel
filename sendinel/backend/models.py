@@ -5,7 +5,7 @@ from django.db import models, IntegrityError
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-from sendinel import settings
+from sendinel.settings import DEFAULT_HOSPITAL_NAME, REMINDER_TIME_BEFORE_APPOINTMENT   
 from sendinel.backend import texthelper
 from sendinel.backend.output import *
 
@@ -19,7 +19,7 @@ class User(models.Model):
     name = models.CharField(max_length=255)
    
     
-    def __str__(self):
+    def __unicode__(self):
         return self.name
     
 class Doctor(User):
@@ -43,8 +43,9 @@ class Hospital(models.Model):
     Represent a Hospital.
     """
     name = models.CharField(max_length=255)
+    current_hospital = models.BooleanField()
     
-    def __str__(self):
+    def __unicode__(self):
         return self.name
         
         
@@ -56,7 +57,7 @@ class Usergroup(models.Model):
     members = models.ManyToManyField(Patient)
     name = models.CharField(max_length=255, unique=True, blank=False, null=False)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
     
 
@@ -77,6 +78,9 @@ class Sendable(models.Model):
 
 
     recipient = None
+    
+    def __unicode__(self):
+        return "%s %s" %(unicode(self.recipient), self.way_of_communication)
     
     def get_data_for_bluetooth(self):
         """
@@ -106,9 +110,11 @@ class Sendable(models.Model):
         """
         return eval("self.get_data_for_%s()" % self.way_of_communication)
         
-    def create_scheduled_event(self, send_time):
+    def create_scheduled_event(self, send_time=None):
         """
-            Creates a ScheduledEvent for the Sendable at the given send_time.
+        Create a scheduled event for a specific send_time
+        @param send_time: Datetime object with the time of the reminder        
+        Creates a ScheduledEvent for the Sendable at the given send_time.
         """
         scheduled_event = ScheduledEvent(sendable = self,
                                          send_time = send_time)
@@ -129,13 +135,13 @@ class HospitalAppointment(Sendable):
     
     def get_data_for_bluetooth(self):
         """
-            Prepare OutputData for voice.
-            Generate the message for an HospitalAppointment.
-            Return BluetoothOutputData for sending.
+        Prepare OutputData for voice.
+        Generate the message for an HospitalAppointment.
+        Return BluetoothOutputData for sending.
 
-            TODO: Implement it...
-   	"""
-	pass
+        TODO: Implement it...
+        """
+        pass
  
     def get_data_for_sms(self):
         """
@@ -172,18 +178,35 @@ class HospitalAppointment(Sendable):
                         HospitalAppointment.template, False)
         data.phone_number = self.recipient.phone_number
 
-        return data
+        return [data]
 
-    def create_scheduled_event(self):
+    def create_scheduled_event(self, send_time=None):
         """
-            Create a scheduled event for sending a reminder before an
-            appointment. The time before the appointment is used as specified
-            in the settings:
-            REMINDER_TIME_BEFORE_APPOINTMENT specified as timedelta object.
+        Create a scheduled event for sending a reminder for an appointment. 
+        @param send_time: Datetime object with the time of the reminder
+        If send_time is not give, REMINDER_TIME_BEFORE_APPOINTMENT is used.
+        Calls Sendable.create_scheduled_event() to create the ScheduledEvent
         """
-        send_time = self.date - settings.REMINDER_TIME_BEFORE_APPOINTMENT
-        Sendable.create_scheduled_event(self, send_time)
-
+        if not send_time:      
+          send_time = self.date - REMINDER_TIME_BEFORE_APPOINTMENT
+        super(HospitalAppointment, self).create_scheduled_event(send_time)
+       
+    def save_with_patient(self, patient):
+        """
+        Save appointment with patient & hospital and create a scheduled event
+        """
+        patient.save()
+        try:
+            hospital = Hospital.objects.get(current_hospital = True)
+        except Hospital.DoesNotExist:
+            hospital = Hospital(name = DEFAULT_HOSPITAL_NAME, current_hospital = True)
+            hospital.save() 
+        self.recipient = patient
+        self.hospital = hospital
+        self.save()
+        self.create_scheduled_event()    
+        return self
+       
 class InfoMessage(Sendable):
     """
     Define a InfoMessage.
@@ -212,6 +235,18 @@ class InfoMessage(Sendable):
             data.append(entry)
         
         return data
+        
+    def get_data_for_voice(self):
+        data = []
+        
+        for patient in self.recipient.members.all():
+            entry = VoiceOutputData()
+            entry.data = self.text
+            entry.phone_number = patient.phone_number
+            
+            data.append(entry)
+            
+        return data
     
     
 class ScheduledEvent(models.Model):
@@ -229,8 +264,8 @@ class ScheduledEvent(models.Model):
         ('sent','sent'),
         ('failed','failed'),
     )
-    
-    state = models.CharField(max_length = 3,
+
+    state = models.CharField(max_length = 10,
                              choices = STATES,
                              default = 'new')                             
                              

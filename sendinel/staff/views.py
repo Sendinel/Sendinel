@@ -4,13 +4,14 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 
 from sendinel.backend.models import Usergroup, ScheduledEvent, InfoMessage
 from sendinel.staff.forms import InfoMessageForm
 
 @login_required
 def index(request):
-    return render_to_response('index.html',
+    return render_to_response('staff/index.html',
                               context_instance=RequestContext(request))
   
 @login_required
@@ -19,7 +20,7 @@ def create_infomessage(request, id):
     if(request.method == "GET"):
         form = InfoMessageForm()
     
-        return render_to_response("create_infomessage.html",
+        return render_to_response("staff/create_infomessage.html",
                                     locals(),
                                     context_instance = RequestContext(request))
     elif(request.method == "POST"):
@@ -28,12 +29,12 @@ def create_infomessage(request, id):
         
         info_message.text = request.REQUEST["text"]
         info_message.recipient = Usergroup.objects.filter(pk = id)[0]
-        info_message.way_of_communication = "sms"
+        info_message.way_of_communication = "voice"
 
         info_message.save()        
         info_message.create_scheduled_event(datetime.now())
         
-        return HttpResponseRedirect("/staff/list_infoservices/")
+        return HttpResponseRedirect(reverse("staff_list_infoservices"))
 
     
 @login_required
@@ -50,6 +51,6 @@ def list_infoservices(request):
             "count_members": group.members.all().count()
         })
             
-    return render_to_response("list_infoservices.html",
+    return render_to_response("staff/list_infoservices.html",
                                 locals(),
                                 context_instance = RequestContext(request))

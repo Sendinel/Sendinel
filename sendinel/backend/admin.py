@@ -8,4 +8,4 @@ admin.site.register(Hospital)
 admin.site.register(HospitalAppointment)
 admin.site.register(InfoMessage)
 admin.site.register(ScheduledEvent)
-
+admin.site.register(AuthenticationCall)

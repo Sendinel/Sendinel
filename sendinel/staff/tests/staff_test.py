@@ -17,5 +17,5 @@ class StaffTest(TestCase):
         user = User.objects.create_user('john', 'l@example.com', 'passwd')
         self.client.login(username='john', password="passwd")
         response = self.client.get("/staff/")
-        self.assertTemplateUsed(response, 'index.html')
+        self.assertTemplateUsed(response, 'staff/index.html')
         self.assertContains(response, 'Your are logged in')

@@ -39,7 +39,7 @@ class SchedulerTest(TestCase):
         # assert that all scheduled events have been processed by send()
         # as defined in fixtures there is one usergroup with 2 members and
         # one single patient
-        self.assertEquals(3, SchedulerTest.counter)
+        self.assertEquals(1, SchedulerTest.counter)
         # assert that no events with state new exist anymore
         self.assertEquals(scheduled_events_count(), 0)
         
