@@ -11,7 +11,7 @@ from sendinel.staff.forms import InfoMessageForm
 
 @login_required
 def index(request):
-    return render_to_response('index.html',
+    return render_to_response('staff/index.html',
                               context_instance=RequestContext(request))
   
 @login_required
@@ -20,7 +20,7 @@ def create_infomessage(request, id):
     if(request.method == "GET"):
         form = InfoMessageForm()
     
-        return render_to_response("create_infomessage.html",
+        return render_to_response("staff/create_infomessage.html",
                                     locals(),
                                     context_instance = RequestContext(request))
     elif(request.method == "POST"):
@@ -51,6 +51,6 @@ def list_infoservices(request):
             "count_members": group.members.all().count()
         })
             
-    return render_to_response("list_infoservices.html",
+    return render_to_response("staff/list_infoservices.html",
                                 locals(),
                                 context_instance = RequestContext(request))

@@ -23,7 +23,7 @@ class AuthenticateViewTests(TestCase):
 
         self.failUnlessEqual(response.status_code, 200)
         self.assertEquals(response.template[0].name,
-                          "authenticate_phonenumber_call.html")
+                          "web/authenticate_phonenumber_call.html")
         self.assertContains(response, "auth.js")
         self.assertContains(response, "<noscript>")
         
