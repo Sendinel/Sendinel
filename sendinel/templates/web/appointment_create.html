@@ -5,15 +5,33 @@
     <script type="text/javascript" src="{% url admin:jsi18n %}"></script>
     <link rel="stylesheet" href="{{ MEDIA_URL }}/css/datetimepicker.css" type="text/css" media="screen" charset="utf-8" />
     {{ form.media }}
+    
+    <script src="{{ MEDIA_URL }}/js/numpad.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="{{ MEDIA_URL }}/css/numpad.css" type="text/css" />
+    
 {% endblock %}
 
 {% block content %}
     <h3>Appointment</h3>
 	<p>Please enter the appointment details.</p>
     <p>
-        <form action="./" method="post">
+        <form action="./" method="post" class="selectable_form">
             <table>
                 {{ form.as_table }}
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    <td>
+                        <div class="testform">a
+                            <p class="selectable">
+                                <input type="text" maxlength="2" name="" class="subselectable" />
+                                <input type="text" maxlength="2" name="" class="subselectable" />
+                                <input type="text" maxlength="2" name="" class="subselectable" />
+                            </p>
+                        </div>
+                    </td>
+                </tr>
             </table>
             <input type="submit" name="submit" value="Save" id="id_submit" />
         </form>
