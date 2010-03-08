@@ -1,3 +1,4 @@
+import logging
 from datetime import timedelta
 from os.path import abspath, dirname
 # Django settings for sendinel project.
@@ -6,6 +7,8 @@ DEBUG = True        #for scheduling set to false
 TEMPLATE_DEBUG = DEBUG
 PROJECT_PATH = dirname(abspath(__file__))
 
+LOGGING_LEVEL = logging.INFO
+LOGGING_LEVEL_TEST = logging.CRITICAL
 
 ADMINS = (
 )
@@ -118,7 +121,7 @@ SERIALPORTSMS = '/dev/rfcomm0'
 BLUETOOTH_SERVER_ADDRESS = '127.0.0.1'
 ####################################
 
-
+# Setup Local_Settings if present
 try:
     from local_settings import *
 except ImportError:
