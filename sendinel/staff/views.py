@@ -6,7 +6,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 
-from sendinel.backend.models import Usergroup, ScheduledEvent, InfoMessage
+from sendinel.backend.models import Usergroup, InfoMessage
 from sendinel.staff.forms import InfoMessageForm
 
 @login_required

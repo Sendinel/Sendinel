@@ -2,10 +2,9 @@ import re
 from datetime import datetime
 
 from sendinel.backend.models import AuthenticationCall
-from sendinel.backend.helper import NotObservedNumberException
-from settings import AUTHENTICATION_CALL_TIMEOUT, \
-                     COUNTRY_CODE_PHONE, \
-                     START_MOBILE_PHONE
+from sendinel.settings import AUTHENTICATION_CALL_TIMEOUT, \
+                              COUNTRY_CODE_PHONE, \
+                              START_MOBILE_PHONE
 
 def format_phonenumber(number, country_code, start_mobile_number):
     """
@@ -13,6 +12,7 @@ def format_phonenumber(number, country_code, start_mobile_number):
     "+", "-" and "/" and checks that there are no
     letters included. Checks also if the number is the number of a 
     mobile phone.
+    TODO update docstring for mobile number
     
     @param  number:     The phone number that will be checked
     @type   number:     string
@@ -21,11 +21,13 @@ def format_phonenumber(number, country_code, start_mobile_number):
     """
    
     if number.startswith('+'):
-        number = number.replace('+','00',1)
+        number = number.replace('+', '00', 1)
+    
     regex = re.compile('(\/|\+|-| )')
     number = regex.sub('', number)
+    
     if number.startswith(country_code):
-        number = number.replace(country_code,'0',1)
+        number = number.replace(country_code, '0', 1)
 
     # if the conversion to int does not fail
     # then there are only numbers included
@@ -33,7 +35,7 @@ def format_phonenumber(number, country_code, start_mobile_number):
     if int(number) and number.startswith(start_mobile_number):
         return number
     else:
-        raise ValueError('please give national number without country prefix')    
+        raise ValueError('Invalid phonenumber given.')    
 
 def check_and_delete_authentication_call(number):
     """
