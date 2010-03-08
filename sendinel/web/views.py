@@ -16,6 +16,7 @@ from sendinel.settings import   AUTH_NUMBER, \
                                 DEFAULT_HOSPITAL_NAME, \
                                 BLUETOOTH_SERVER_ADDRESS, \
                                 AUTHENTICATION_CALL_TIMEOUT, \
+                                COUNTRY_CODE_PHONE, START_MOBILE_PHONE, \
                                 ADMIN_MEDIA_PREFIX
 from sendinel.backend import bluetooth
 
@@ -83,7 +84,7 @@ def authenticate_phonenumber(request):
     if request.method == "POST":
         number = request.POST["number"].strip()
 
-        number = format_phonenumber(number)
+        number = format_phonenumber(number, COUNTRY_CODE_PHONE, START_MOBILE_PHONE)
         auth_number = AUTH_NUMBER
         request.session['authenticate_phonenumber'] = \
                                 { 'number': number,
