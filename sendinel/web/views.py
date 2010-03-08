@@ -14,7 +14,8 @@ from sendinel.backend.models import Patient, ScheduledEvent, Sendable, Doctor, H
 from sendinel.web.forms import HospitalAppointmentForm
 from sendinel.settings import   AUTH_NUMBER, DEFAULT_HOSPITAL_NAME, \
                                 BLUETOOTH_SERVER_ADDRESS, \
-                                AUTHENTICATION_CALL_TIMEOUT
+                                AUTHENTICATION_CALL_TIMEOUT, \
+                                COUNTRY_CODE_PHONE, START_MOBILE_PHONE
 from sendinel.backend import bluetooth
 
 
@@ -80,7 +81,7 @@ def authenticate_phonenumber(request):
     next = ''
     if request.method == "POST":
         number = request.POST["number"].strip()
-        number = format_phonenumber(number)
+        number = format_phonenumber(number, COUNTRY_CODE_PHONE, START_MOBILE_PHONE)
         auth_number = AUTH_NUMBER
         request.session['authenticate_phonenumber'] = \
                                 { 'number': number,
