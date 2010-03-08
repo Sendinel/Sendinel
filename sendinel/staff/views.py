@@ -6,7 +6,8 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 
-from sendinel.backend.models import Usergroup, ScheduledEvent, InfoMessage
+from sendinel.backend.models import Usergroup, ScheduledEvent, InfoMessage, \
+                                    Subscription
 from sendinel.staff.forms import InfoMessageForm
 
 @login_required
@@ -25,14 +26,22 @@ def create_infomessage(request, id):
                                     context_instance = RequestContext(request))
     elif(request.method == "POST"):
         
-        info_message = InfoMessage()
+        group = Usergroup.objects.filter(pk = id)[0]
         
-        info_message.text = request.REQUEST["text"]
-        info_message.recipient = Usergroup.objects.filter(pk = id)[0]
-        info_message.way_of_communication = "voice"
+        for patient in group.members.all():
+        
+            info_message = InfoMessage()
+        
+            info_message.text = request.POST["text"]
+            
+            subscription = Subscription.objects.filter(patient = patient,
+                                                       usergroup = group)[0]
+            
+            info_message.recipient = patient
+            info_message.way_of_communication = subscription.way_of_communication
 
-        info_message.save()        
-        info_message.create_scheduled_event(datetime.now())
+            info_message.save()        
+            info_message.create_scheduled_event(datetime.now())
         
         return HttpResponseRedirect(reverse("staff_list_infoservices"))
 

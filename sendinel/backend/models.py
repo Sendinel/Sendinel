@@ -32,7 +32,7 @@ class Patient(User):
     """
     Represent a patient.
     """
-    phone_number = models.CharField(max_length=20)
+    phone_number = models.CharField(max_length = 20)
     
     def groups(self):
         return Usergroup.objects.filter(members__id = self.id)
@@ -54,7 +54,7 @@ class Usergroup(models.Model):
     Represent a user group.
     Raises integrity error
     """
-    members = models.ManyToManyField(Patient)
+    members = models.ManyToManyField(Patient, through="Subscription")
     name = models.CharField(max_length=255, unique=True, blank=False, null=False)
 
     def __unicode__(self):
@@ -211,8 +211,7 @@ class InfoMessage(Sendable):
     """
     Define a InfoMessage.
     """
-    way_of_communication = ('sms','SMS')
-    recipient = models.ForeignKey(Usergroup)
+    recipient = models.ForeignKey(Patient)
     #TODO extract to superclass?
     template = Template("$text")
     # TODO restrict text to 160? but not good for voice calls
@@ -221,19 +220,16 @@ class InfoMessage(Sendable):
     def get_data_for_sms(self):
         """
         Prepare OutputData for sms.
-        Generate the message for an HospitalAppointment.
+        Generate the message for an InfoMessage.
         Return SMSOutputData for sending.
         """
         
         # TODO implement data as a list
-        data = []
-        for patient in self.recipient.members.all():
-            entry = SMSOutputData()           
-            entry.data = texthelper.generate_text({'text': self.text},
-                                                InfoMessage.template)
-            entry.phone_number = patient.phone_number
-            data.append(entry)
-        
+        data = SMSOutputData()           
+        data.data = texthelper.generate_text({'text': self.text},
+                                             InfoMessage.template)
+        data.phone_number = self.recipient.phone_number
+                
         return data
         
     def get_data_for_voice(self):
@@ -278,3 +274,11 @@ class AuthenticationCall(models.Model):
     """
     number = models.CharField(max_length = 20)
     time = models.DateTimeField(auto_now_add = True)
+    
+class Subscription(models.Model):
+    
+    patient = models.ForeignKey(Patient)
+    usergroup = models.ForeignKey(Usergroup)
+    
+    way_of_communication = models.CharField(max_length=9,
+                                choices=Sendable.WAYS_OF_COMMUNICATION)

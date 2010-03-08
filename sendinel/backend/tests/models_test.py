@@ -62,8 +62,12 @@ class HospitalAppointmentTest(TestCase):
         patient = Patient(name="Test Person", phone_number="030123456789")
         self.appointment.save_with_patient(patient)
         self.assertTrue(1, Hospital.objects.all().count())
-        self.assertEquals(Hospital.objects.all()[0].name, settings.DEFAULT_HOSPITAL_NAME)
-        self.assertEquals(self.appointment.hospital.name, settings.DEFAULT_HOSPITAL_NAME)
+        
+        self.assertEquals(Hospital.objects.all()[0].name, 
+                          settings.DEFAULT_HOSPITAL_NAME)
+                          
+        self.assertEquals(self.appointment.hospital.name, 
+                          settings.DEFAULT_HOSPITAL_NAME)
 
     def test_save_with_patient_with_hospital(self):
         patient = Patient(name="Test Person", phone_number="030123456789")
@@ -87,15 +91,14 @@ class ModelsSMSTest(TestCase):
         self.assertEquals(entry.phone_number, "01621785295")
         self.assertEquals(type(entry.data), unicode)
         
-    def test_text_message_get_data_for_sms(self):
-        numbers = [u"01621785295", u"015222502372", u"03315509256"]
-        data = InfoMessage.objects.get(pk = 1).get_data_for_sms()
-        
-        self.assertTrue(len(data) >= 1)
-        for entry in data:
-            self.assertEquals(type(entry), SMSOutputData)
-            self.assertTrue(entry.phone_number in numbers)
-            self.assertEquals(type(entry.data), unicode)
+    def test_info_message_get_data_for_sms(self):
+        number = u"01621785295"
+        info_output = InfoMessage.objects.get(pk = 1).get_data_for_sms()
+        recipient = InfoMessage.objects.get(pk = 1).recipient
+
+        self.assertEquals(type(info_output), SMSOutputData)
+        self.assertEquals(info_output.phone_number, recipient.phone_number)
+        self.assertEquals(type(info_output.data), unicode)
             
         
 class ModelsUsergroupTest(TestCase):
@@ -104,7 +107,6 @@ class ModelsUsergroupTest(TestCase):
         self.group.save()
         self.patient = Patient()
         self.patient.save()
-        self.group.members.add(self.patient)
     
     def test_no_groups_with_same_name(self):
         first_group = Usergroup(name ="Hospitalinfos")
@@ -122,12 +124,40 @@ class ModelsUsergroupTest(TestCase):
         # print first_group.__str__
         # self.assertEquals(Usergroup.objects.all().count(), amount) 
         
+
+class SubscriptionTest(TestCase):
+    
+    def setUp(self):
+        self.group = Usergroup(name = "Gruppe")
+        self.group.save()
+        self.patient = Patient()
+        self.patient.save()
+        self.subscription = Subscription(patient = self.patient, 
+                                         usergroup = self.group)
+        self.subscription.save()
+        
     def test_group_member_relation_add(self):
         self.assertTrue(self.patient in self.group.members.all())
         self.assertTrue(self.group in self.patient.groups())
 
     def test_group_member_relation_delete(self):
-        self.group.members.remove(self.patient)
+        self.subscription.delete()
         self.assertTrue(self.patient not in self.group.members.all())
         self.assertTrue(self.group not in self.patient.groups())
-
+        
+    def test_subscription_creation(self):
+        subscription = Subscription()        
+        
+        self.assertRaises(IntegrityError, subscription.save)
+        
+        usergroup = Usergroup(name = "Group")
+        usergroup.save()
+        
+        subscription.patient = self.patient
+        subscription.usergroup = usergroup
+        
+        subscription.save()
+        
+        self.assertEquals(self.group.members.all().count(), 1)
+        self.assertEquals(self.group.members.all()[0], self.patient)
+        self.assertTrue(self.group in self.patient.groups())

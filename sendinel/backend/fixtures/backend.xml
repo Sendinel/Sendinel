@@ -25,15 +25,19 @@
     </object>    
     <object pk="1" model="backend.usergroup">
         <field type="CharField" name="name">Bachelorproject</field>
-        <field to="backend.patient" name="members" rel="ManyToManyRel">
-            <object pk="1"></object>
-            <object pk="2"></object>
-            <object pk="3"></object>
-        </field>
+    </object>
+    <object pk="1" model="backend.subscription">
+        <field to="backend.patient" name="patient" rel="ManyToOneRel">1</field>
+        <field to="backend.usergroup" name="usergroup" rel="ManyToOneRel">1</field>
+        <field type="CharField" name="way_of_communication">sms</field>
+    </object>
+    <object pk="2" model="backend.subscription">
+        <field to="backend.patient" name="patient" rel="ManyToOneRel">2</field>
+        <field to="backend.usergroup" name="usergroup" rel="ManyToOneRel">1</field>
+        <field type="CharField" name="way_of_communication">voice</field>
     </object>
     <object pk="2" model="backend.usergroup">
         <field type="CharField" name="name">Sendinel-Tester</field>
-        <field to="backend.patient" name="members" rel="ManyToManyRel"><object pk="1"></object><object pk="2"></object></field>
     </object>
     <object pk="1" model="backend.hospitalappointment">
         <field type="CharField" name="way_of_communication">sms</field>
@@ -49,8 +53,8 @@
         <field type="CharField" name="state">new</field>
     </object>
     <object pk="1" model="backend.infomessage">
-        <field type="CharField" name="way_of_communication">voice</field>
-        <field to="backend.usergroup" name="recipient" rel="ManyToOneRel">1</field>
+        <field type="CharField" name="way_of_communication">sms</field>
+        <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
         <field type="TextField" name="text">Das ist eine Nachricht</field>
     </object>    
 </django-objects>
