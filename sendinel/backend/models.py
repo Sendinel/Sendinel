@@ -1,13 +1,13 @@
-from datetime import datetime
 from string import Template
 
-from django.db import models, IntegrityError
+from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-from sendinel.settings import DEFAULT_HOSPITAL_NAME, REMINDER_TIME_BEFORE_APPOINTMENT   
+from sendinel.settings import DEFAULT_HOSPITAL_NAME, \
+                              REMINDER_TIME_BEFORE_APPOINTMENT   
 from sendinel.backend import texthelper
-from sendinel.backend.output import *
+from sendinel.backend.output import SMSOutputData, VoiceOutputData
 
 
 class User(models.Model):
@@ -55,7 +55,8 @@ class Usergroup(models.Model):
     Raises integrity error
     """
     members = models.ManyToManyField(Patient)
-    name = models.CharField(max_length=255, unique=True, blank=False, null=False)
+    name = models.CharField(max_length=255, unique=True,blank=False, \
+                            null=False)
 
     def __unicode__(self):
         return self.name
@@ -80,7 +81,7 @@ class Sendable(models.Model):
     recipient = None
     
     def __unicode__(self):
-        return "%s %s" %(unicode(self.recipient), self.way_of_communication)
+        return "%s %s" % (unicode(self.recipient), self.way_of_communication)
     
     def get_data_for_bluetooth(self):
         """
@@ -188,7 +189,7 @@ class HospitalAppointment(Sendable):
         Calls Sendable.create_scheduled_event() to create the ScheduledEvent
         """
         if not send_time:      
-          send_time = self.date - REMINDER_TIME_BEFORE_APPOINTMENT
+            send_time = self.date - REMINDER_TIME_BEFORE_APPOINTMENT
         super(HospitalAppointment, self).create_scheduled_event(send_time)
        
     def save_with_patient(self, patient):
@@ -199,7 +200,8 @@ class HospitalAppointment(Sendable):
         try:
             hospital = Hospital.objects.get(current_hospital = True)
         except Hospital.DoesNotExist:
-            hospital = Hospital(name = DEFAULT_HOSPITAL_NAME, current_hospital = True)
+            hospital = Hospital(name = DEFAULT_HOSPITAL_NAME, \
+                                current_hospital = True)
             hospital.save() 
         self.recipient = patient
         self.hospital = hospital
