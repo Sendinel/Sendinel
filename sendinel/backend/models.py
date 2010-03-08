@@ -160,7 +160,7 @@ class HospitalAppointment(Sendable):
                         HospitalAppointment.template)
         data.phone_number = self.recipient.phone_number
         
-        return [data]
+        return data
 
     def get_data_for_voice(self):
         """

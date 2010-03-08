@@ -1,10 +1,14 @@
 import time
-from datetime import datetime
-from django.core.management import setup_environ
-from sendinel import settings
-setup_environ(settings)
 
+from datetime import datetime
+
+from django.core.management import setup_environ
+
+from sendinel import settings
 from sendinel.backend.models import ScheduledEvent
+from sendinel.logger import logger
+
+setup_environ(settings)
 
 def run(run_only_one_time = False):
     while True:
@@ -14,9 +18,10 @@ def run(run_only_one_time = False):
         for event in dueEvents:
             try:
                 data = event.sendable.get_data_for_sending()
-                print "Trying to send: %s" % str(event.sendable)
+                logger.info("Trying to send: %s" % str(event.sendable))
             except Exception as e:
-                print "Failed to get data for " + str(event) + " exception " + str(e)
+                logger.error("Failed to get data for " + str(event) + \
+                             " exception " + str(e))
                 
                 event.state = "failed"
                 event.save()
@@ -24,11 +29,11 @@ def run(run_only_one_time = False):
             
             # TODO error handling
             try:
-                for entry in data:
-                    print "  sending: %s" % str(entry)
-                    entry.send()
+                logger.info("  sending: %s" % str(data))
+                data.send()
             except Exception as e:
-                print "Failed to send: " + str(entry) + " exception " + str(e)
+                logger.error("Failed to send: " + str(data) + \
+                             " exception " + str(e))
                 event.state = "failed"
                 event.save()
                     
