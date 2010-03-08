@@ -229,9 +229,10 @@ class ScheduledEvent(models.Model):
         ('sent','sent'),
         ('failed','failed'),
     )
+    
     state = models.CharField(max_length = 3,
                              choices = STATES,
-                             default = 'new')
+                             default = 'new')                             
                              
                              
 class AuthenticationCall(models.Model):
@@ -242,9 +243,3 @@ class AuthenticationCall(models.Model):
     """
     number = models.CharField(max_length = 20)
     time = models.DateTimeField(auto_now_add = True)
-    
-
-    
-               
-
-
