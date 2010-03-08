@@ -11,7 +11,8 @@ def format_phonenumber(number, country_code, start_mobile_number):
     """
     Replaces all number specific characters like
     "+", "-" and "/" and checks that there are no
-    letters included.
+    letters included. Checks also if the number is the number of a 
+    mobile phone.
     
     @param  number:     The phone number that will be checked
     @type   number:     string
