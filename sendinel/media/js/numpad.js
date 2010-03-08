@@ -3,15 +3,34 @@ var numpad = {
     selectables: new Array(),
     selected: 0,
 
+    getSelected: function() {
+        return $(numpad.selectables[numpad.selected]);
+    },
 
     handleKeydown: function(event) {
         switch(event.keyCode) {
-            case 38:
+            case 13: // Enter
+                numpad.clickOnSelected();
+                break;
+            case 38: // Arrow up
                 numpad.selectPrevious();
                 break;
-            case 40:
+            case 39: //Arrow right
+                numpad.clickOnSelected();
+                break;
+            case 40: // Arrow down
                 numpad.selectNext();
                 break;
+        }
+    },
+    
+    clickOnSelected: function() {
+        console.log(numpad.getSelected());    
+        var el = numpad.getSelected()[0];
+        if(el.tagName.toLowerCase() == "a") {
+            window.location = el.href;
+        } else {
+            numpad.getSelected().trigger('click');
         }
     },
     
@@ -27,7 +46,7 @@ var numpad = {
         if(number < 0 || number >= numpad.selectables.length) {
             return false;
         }
-        $(numpad.selectables[numpad.selected]).removeClass("selected");
+        numpad.getSelected().removeClass("selected");
         $(numpad.selectables[number]).addClass("selected");
         numpad.selected = number;
         return true;
