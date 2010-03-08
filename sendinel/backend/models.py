@@ -5,8 +5,8 @@ from django.db import models, IntegrityError
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-from sendinel import settings
-from sendinel.backend import smshelper
+from sendinel.settings import DEFAULT_HOSPITAL_NAME, REMINDER_TIME_BEFORE_APPOINTMENT   
+from sendinel.backend import texthelper
 from sendinel.backend.output import *
 
 
@@ -19,7 +19,7 @@ class User(models.Model):
     name = models.CharField(max_length=255)
    
     
-    def __str__(self):
+    def __unicode__(self):
         return self.name
     
 class Doctor(User):
@@ -43,8 +43,9 @@ class Hospital(models.Model):
     Represent a Hospital.
     """
     name = models.CharField(max_length=255)
+    current_hospital = models.BooleanField()
     
-    def __str__(self):
+    def __unicode__(self):
         return self.name
         
         
@@ -56,7 +57,7 @@ class Usergroup(models.Model):
     members = models.ManyToManyField(Patient)
     name = models.CharField(max_length=255, unique=True, blank=False, null=False)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
     
 
@@ -75,9 +76,11 @@ class Sendable(models.Model):
     way_of_communication = models.CharField(max_length=9,
                                 choices=WAYS_OF_COMMUNICATION)
 
-    recipient_type = models.ForeignKey(ContentType)
-    recipient_id = models.PositiveIntegerField()
-    recipient = generic.GenericForeignKey('recipient_type', 'recipient_id')
+
+    recipient = None
+    
+    def __unicode__(self):
+        return "%s %s" %(unicode(self.recipient), self.way_of_communication)
     
     def get_data_for_bluetooth(self):
         """
@@ -107,9 +110,11 @@ class Sendable(models.Model):
         """
         return eval("self.get_data_for_%s()" % self.way_of_communication)
         
-    def create_scheduled_event(self, send_time):
+    def create_scheduled_event(self, send_time=None):
         """
-            Creates a ScheduledEvent for the Sendable at the given send_time.
+        Create a scheduled event for a specific send_time
+        @param send_time: Datetime object with the time of the reminder        
+        Creates a ScheduledEvent for the Sendable at the given send_time.
         """
         scheduled_event = ScheduledEvent(sendable = self,
                                          send_time = send_time)
@@ -119,6 +124,9 @@ class HospitalAppointment(Sendable):
     """
     Define a HospitalAppointment.
     """
+    
+    recipient = models.ForeignKey(Patient)
+    
     date = models.DateTimeField()
     doctor = models.ForeignKey(Doctor)
     hospital = models.ForeignKey(Hospital)
@@ -129,6 +137,35 @@ class HospitalAppointment(Sendable):
         """
         Prepare OutputData for voice.
         Generate the message for an HospitalAppointment.
+        Return BluetoothOutputData for sending.
+
+        TODO: Implement it...
+        """
+        pass
+ 
+    def get_data_for_sms(self):
+        """
+        Prepare OutputData for sms.
+        Generate the message for an HospitalAppointment.
+        Return SMSOutputData for sending.
+        """
+
+        data = SMSOutputData()
+        contents = {'date':str(self.date),
+                    'name': self.recipient.name,
+                    'doctor': self.doctor.name,
+                    'hospital': self.hospital.name}
+                    
+        data.data = texthelper.generate_text(contents,
+                        HospitalAppointment.template)
+        data.phone_number = self.recipient.phone_number
+        
+        return [data]
+
+    def get_data_for_voice(self):
+        """
+        Prepare OutputData for voice.
+        Generate the message for an HospitalAppointment.
         Return VoiceOutputData for sending.
         """
         data = VoiceOutputData()
@@ -136,58 +173,51 @@ class HospitalAppointment(Sendable):
                     'name': self.recipient.name,
                     'doctor': self.doctor.name,
                     'hospital': self.hospital.name}
-                    
-        data.data = smshelper.generate_sms(contents,
-                        HospitalAppointment.template)
+
+        data.data = texthelper.generate_text(contents,
+                        HospitalAppointment.template, False)
         data.phone_number = self.recipient.phone_number
-        
-        return data
-    
-    def get_data_for_sms(self):
-        """
-        Prepare OutputData for sms.
-        Generate the message for an HospitalAppointment.
-        Return SMSOutputData for sending.
-        """
-        data = SMSOutputData()
-        contents = {'date':str(self.date),
-                    'name': self.recipient.name,
-                    'doctor': self.doctor.name,
-                    'hospital': self.hospital.name}
-                    
-        data.data = smshelper.generate_sms(contents,
-                        HospitalAppointment.template)
-        data.phone_number = self.recipient.phone_number
-        
-        return data
 
-    def get_data_for_voice(self):
-        """
-        Prepare OutputData for voice.
-        Return VoiceOutputData for sending.
-        TODO Not implemented yet.
-        """
-        pass
+        return [data]
 
-    def create_scheduled_event(self):
+    def create_scheduled_event(self, send_time=None):
         """
-            Create a scheduled event for sending a reminder before an
-            appointment. The time before the appointment is used as specified
-            in the settings:
-            REMINDER_TIME_BEFORE_APPOINTMENT specified as timedelta object.
+        Create a scheduled event for sending a reminder for an appointment. 
+        @param send_time: Datetime object with the time of the reminder
+        If send_time is not give, REMINDER_TIME_BEFORE_APPOINTMENT is used.
+        Calls Sendable.create_scheduled_event() to create the ScheduledEvent
         """
-        send_time = self.date - settings.REMINDER_TIME_BEFORE_APPOINTMENT
-        Sendable.create_scheduled_event(self, send_time)
-
-class TextMessage(Sendable):
+        if not send_time:      
+          send_time = self.date - REMINDER_TIME_BEFORE_APPOINTMENT
+        super(HospitalAppointment, self).create_scheduled_event(send_time)
+       
+    def save_with_patient(self, patient):
+        """
+        Save appointment with patient & hospital and create a scheduled event
+        """
+        patient.save()
+        try:
+            hospital = Hospital.objects.get(current_hospital = True)
+        except Hospital.DoesNotExist:
+            hospital = Hospital(name = DEFAULT_HOSPITAL_NAME, current_hospital = True)
+            hospital.save() 
+        self.recipient = patient
+        self.hospital = hospital
+        self.save()
+        self.create_scheduled_event()    
+        return self
+       
+class InfoMessage(Sendable):
     """
-    Define a TextMessage.
+    Define a InfoMessage.
     """
+    way_of_communication = ('sms','SMS')
+    recipient = models.ForeignKey(Usergroup)
+    #TODO extract to superclass?
     template = Template("$text")
     # TODO restrict text to 160? but not good for voice calls
     text = models.TextField()
     
-    
     def get_data_for_sms(self):
         """
         Prepare OutputData for sms.
@@ -195,11 +225,27 @@ class TextMessage(Sendable):
         Return SMSOutputData for sending.
         """
         
-        data = SMSOutputData()            
-        data.data = smshelper.generate_sms({'text': self.text},
-                                            TextMessage.template)
-        data.phone_number = self.recipient.phone_number
+        # TODO implement data as a list
+        data = []
+        for patient in self.recipient.members.all():
+            entry = SMSOutputData()           
+            entry.data = texthelper.generate_text({'text': self.text},
+                                                InfoMessage.template)
+            entry.phone_number = patient.phone_number
+            data.append(entry)
         
+        return data
+        
+    def get_data_for_voice(self):
+        data = []
+        
+        for patient in self.recipient.members.all():
+            entry = VoiceOutputData()
+            entry.data = self.text
+            entry.phone_number = patient.phone_number
+            
+            data.append(entry)
+            
         return data
     
     
@@ -218,7 +264,7 @@ class ScheduledEvent(models.Model):
         ('sent','sent'),
         ('failed','failed'),
     )
-    state = models.CharField(max_length = 3,
+    state = models.CharField(max_length = 10,
                              choices = STATES,
                              default = 'new')
                              

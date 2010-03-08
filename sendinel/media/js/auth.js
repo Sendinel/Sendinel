@@ -1,6 +1,6 @@
 var check_for_call = function() {
-        
-    $.post("/web/check_call_received/",
+    var url = "../check_call_received/";
+    $.post(url,
         {
             number: $("#number").val()
         },
@@ -17,6 +17,8 @@ var check_for_call = function() {
                     
                     case "received":                        
                         statusText.text("Thank you! Your telephone number has been authenticated.");
+                        var next = $("#next").attr("value");
+                        window.location.replace(next);
                         $("#auth_spinner").hide();
                     break;
                     
@@ -32,6 +34,5 @@ var check_for_call = function() {
 };
 
 $(document).ready(check_for_call);
-
 
 

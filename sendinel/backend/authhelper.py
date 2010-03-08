@@ -55,7 +55,7 @@ def delete_timed_out_authentication_calls():
     Find and delete all timed out authentication calls.
     This can be configured through settings.
     """
-    AuthenticationCall.objects.filter(time__lt = calculate_call_timeout). \
+    AuthenticationCall.objects.filter(time__lt = calculate_call_timeout()). \
                                                                     delete()
     
 def calculate_call_timeout():

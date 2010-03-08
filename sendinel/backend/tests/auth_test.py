@@ -1,5 +1,8 @@
 import unittest
-from sendinel.settings import COUNTRY_CODE_PHONE
+
+from datetime import datetime
+
+from sendinel.settings import COUNTRY_CODE_PHONE, START_MOBILE_PHONE
 from sendinel.backend import authhelper
 from sendinel.backend.models import AuthenticationCall
 from sendinel.asterisk import log_call
@@ -13,7 +16,7 @@ class AuthTest(unittest.TestCase):
         self.assertEquals(authhelper.format_phonenumber(number), "0723456789")          
         number = "+277 234/567 89"
         self.assertEquals(authhelper.format_phonenumber(number), "0723456789")    
-        number = "00277 234-56789"
+        number = "07 234-56789"
         self.assertEquals(authhelper.format_phonenumber(number), "0723456789")
         number = "0123a45678"
         self.assertRaises(ValueError, authhelper.format_phonenumber, number)
@@ -21,7 +24,8 @@ class AuthTest(unittest.TestCase):
         self.assertRaises(ValueError, authhelper.format_phonenumber, number)
         number = "030123456789"
         self.assertRaises(ValueError, authhelper.format_phonenumber, number)          
-
+        authhelper.COUNTRY_CODE_PHONE = COUNTRY_CODE_PHONE
+        authhelper.START_MOBILE_PHONE = START_MOBILE_PHONE
         
     def test_asterisk_log_call(self):
         class MockFile:
@@ -75,4 +79,19 @@ agi_threadid: -1258067088
         call_received = authhelper.check_and_delete_authentication_call(" 0160 1234567 ")
         self.assertFalse(call_received)
 
+    def test_delete_timed_out_authentication_calls(self):
+        AuthenticationCall.objects.all().delete()
+        
+        call1 = AuthenticationCall(number = '023444')
+        call1.save()    # save so time is set on create
+        call1.time = datetime(2007, 01, 01)
+        call1.save()
+        
+        call2 = AuthenticationCall(number = '033233')
+        call2.save()
+        call2.time = datetime(3000, 01, 01)
+        call2.save()
+        
+        authhelper.delete_timed_out_authentication_calls()
 
+        self.assertEquals(1, AuthenticationCall.objects.all().count())
