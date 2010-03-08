@@ -4,6 +4,7 @@ import sys
 from settings import LOGGING_LEVEL, LOGGING_LEVEL_TEST
 
 logger = logging.getLogger('sendinel')
+LOG_MSG_FORMAT = '%(asctime)s %(levelname)s %(filename)s#%(lineno)d %(message)s'
 
 if 'test' in sys.argv:
   # set logging level for tests
@@ -12,7 +13,6 @@ else:
   # set logging level for anything else
   if len(logger.handlers) < 1:
     logger.setLevel(LOGGING_LEVEL)    
-    LOG_MSG_FORMAT = '%(asctime)s %(levelname)s %(filename)s#%(lineno)d %(message)s'
     handler = logging.StreamHandler()
     formatter = logging.Formatter(LOG_MSG_FORMAT)
     handler.setFormatter(formatter)
