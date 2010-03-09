@@ -76,18 +76,6 @@ class Sendable(models.Model):
     way_of_communication = models.CharField(max_length=9,
                                 choices=WAYS_OF_COMMUNICATION)
 
-    send_time = models.DateTimeField()
-
-    STATES = (
-        ('new','new'),
-        ('sent','sent'),
-        ('failed','failed'),
-    )
-
-    state = models.CharField(max_length = 10,
-                             choices = STATES,
-                             default = 'new')
-
     recipient = models.ForeignKey(Patient)
     
     def __unicode__(self):
@@ -121,12 +109,11 @@ class Sendable(models.Model):
         """
         return eval("self.get_data_for_%s()" % self.way_of_communication)
         
-    def create_scheduled_event(self, send_time=None):
+    def create_scheduled_event(self, send_time):
         """
         Create a scheduled event for a specific send_time
-        @param send_time: Datetime object with the time of the reminder        
-        Creates a ScheduledEvent for the Sendable at the given send_time.
-        """
+        @param send_time: Datetime object with the time of the reminder 
+        """        
         scheduled_event = ScheduledEvent(sendable = self,
                                          send_time = send_time)
         scheduled_event.save()
@@ -198,6 +185,7 @@ class HospitalAppointment(Sendable):
         """
         if not send_time:      
           send_time = self.date - REMINDER_TIME_BEFORE_APPOINTMENT
+          
         super(HospitalAppointment, self).create_scheduled_event(send_time)
        
     def save_with_patient(self, patient):
@@ -212,10 +200,7 @@ class HospitalAppointment(Sendable):
             hospital.save() 
         self.recipient = patient
         self.hospital = hospital
-        
-        if not self.send_time:      
-          self.send_time = self.date - REMINDER_TIME_BEFORE_APPOINTMENT
-        
+                
         self.save()
         self.create_scheduled_event()    
         return self

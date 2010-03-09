@@ -13,22 +13,17 @@ from sendinel.logger import logger
 setup_environ(settings)
 
 def get_all_due_events():
-    due_events_1 = InfoMessage.objects \
+    return ScheduledEvent.objects \
                     .filter(state__exact = 'new') \
                     .filter(send_time__lte=datetime.now())
-                    
-    due_events_2 = HospitalAppointment.objects \
-                     .filter(state__exact = 'new') \
-                     .filter(send_time__lte=datetime.now())
-                     
-    #import pdb; pdb.set_trace()                 
-    
-    return due_events_1 | due_events_2
+
 
 def run(run_only_one_time = False):
     while True:        
+                 
+        dueEvents = get_all_due_events()
                          
-        for event in get_all_due_events():
+        for event in dueEvents:
             try:
                 data = event.sendable.get_data_for_sending()
                 logger.info("Trying to send: %s" % str(event.sendable))
