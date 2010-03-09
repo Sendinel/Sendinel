@@ -6,14 +6,12 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils import simplejson
 
-from sendinel.backend.authhelper import calculate_call_timeout, \
-                                    check_and_delete_authentication_call, \
+from sendinel.backend.authhelper import check_and_delete_authentication_call, \
                                     delete_timed_out_authentication_calls, \
                                     format_phonenumber
-from sendinel.backend.models import Patient, ScheduledEvent, Sendable, Doctor, Hospital
+from sendinel.backend.models import Patient, ScheduledEvent, Sendable
 from sendinel.web.forms import HospitalAppointmentForm
 from sendinel.settings import   AUTH_NUMBER, \
-                                DEFAULT_HOSPITAL_NAME, \
                                 BLUETOOTH_SERVER_ADDRESS, \
                                 AUTHENTICATION_CALL_TIMEOUT, \
                                 COUNTRY_CODE_PHONE, START_MOBILE_PHONE, \
@@ -65,7 +63,7 @@ def create_appointment(request):
   
 def save_appointment(request):
     appointment = request.session.get('appointment', None)
-    patient = request.session.get('patient',None)
+    patient = request.session.get('patient', None)
     if not appointment or not patient:
         return HttpResponseRedirect(reverse(create_appointment))
     # TODO Rueckgabe testen, Fehlerbehandlung
@@ -98,8 +96,9 @@ def authenticate_phonenumber(request):
         
     delete_timed_out_authentication_calls()
     
-    patient = request.session.get('patient',None)
-    if(patient): patient_name = patient.name
+    patient = request.session.get('patient', None)
+    if(patient):
+        patient_name = patient.name
     
     locals().update({'next': next})
     return render_to_response('web/authenticate_phonenumber.html', 

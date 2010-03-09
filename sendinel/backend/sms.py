@@ -3,7 +3,7 @@ try:
 except ImportError:
     print "Warning: SMS serial test not running since pyserial is" + \
             " not installed"
-import operator
+
 from time import sleep
 
 from sendinel import settings
@@ -17,7 +17,7 @@ class SerialConnectionError(Exception):
     def __init__(self, value):
         self.value = value
     def __str__(self):
-         return repr(self.value)
+        return repr(self.value)
 
 
 def get_serial():
@@ -72,9 +72,8 @@ def send_sms(recipient, message, ser_conn=None):
     send('AT+CMGF=0\r')
     send('AT+CSMS=0\r')
     
-    string = ''
     pdu = smspdu.PDU()
-    message_pdu = pdu.encodeSMS(recipient,message)
+    message_pdu = pdu.encodeSMS(recipient, message)
     send('AT+CMGS=%i\r'%((len(message_pdu)-2)/2))
     send(message_pdu) 
     send(chr(26)) # CTRL+Z           
