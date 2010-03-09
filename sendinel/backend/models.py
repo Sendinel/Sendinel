@@ -5,7 +5,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
 from sendinel.settings import DEFAULT_HOSPITAL_NAME, \
-                              REMINDER_TIME_BEFORE_APPOINTMENT   
+                              REMINDER_TIME_BEFORE_APPOINTMENT, \
+                              BLUETOOTH_SERVER_ADDRESS  
 from sendinel.backend import texthelper, vcal
 from sendinel.backend.output import SMSOutputData, VoiceOutputData
 
@@ -142,7 +143,20 @@ class HospitalAppointment(Sendable):
 
         TODO: Implement it...
         """
+        # data = BluetoothOutputData()
+        # data.mac = self.recipient.mac
+        # data.server_address = settings.BLUETOOTH_SERVER_ADDRESS
+        # content = "Please remember your Appointment tomorrow at "\
+                    # + self.hospital.name\
+                    # + " by doctor "\
+                    # + self.doctor.name
+        # uid = vcal.get_uid(self)
+        # data.data = vcal.create_vcal_string(self.date, 
+                                            # self.hospital, 
+                                            # content,
+                                            # uid)
         pass
+
  
     def get_data_for_sms(self):
         """

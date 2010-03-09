@@ -2,13 +2,12 @@
 
 import settings
 
-def create_vcal_string(start_date, end_date, location, content, uid):
+def create_vcal_string(start_date, location, content, uid):
     """
+        Create valid content of an vcal file.
+    
         @param  start_date:  Start Date of the appointment
         @type   start_date:  Datetime
-        
-        @param  end_date:    End Date of the appointment
-        @type   end_date:    Datetime
         
         @param  location:   Location for the appointment
         @type   location:   String
@@ -24,6 +23,7 @@ def create_vcal_string(start_date, end_date, location, content, uid):
     time_delta = settings.REMINDER_TIME_BEFORE_APPOINTMENT
     #need time difference in minutes for alarm
     alarm_time = (time_delta.days * 1440) + (time_delta.seconds/60)
+    end_date = start_date + settings.DEFAULT_APPOINTMENT_DURATION
     
     vcal_data = \
 """BEGIN:VCALENDAR
@@ -52,3 +52,8 @@ END:VCALENDAR""" % {\
     
     return vcal_data
     
+def get_uid(appointment):
+    """
+    
+    """
+    pass
