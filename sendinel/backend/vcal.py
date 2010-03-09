@@ -54,6 +54,12 @@ END:VCALENDAR""" % {\
     
 def get_uid(appointment):
     """
+        Calculate a unique UID for a vcal by using appointment id and a time.
     
+        @param  appointment:  The appointment, the UID is for
+        @type   appointment:  Sendable   
     """
-    pass
+    date_time = datetime.now().strftime("%Y%m%dT%H%M%S")
+    id_string = str(appointment.id)
+    return "%s-%s@%s" % (date_time, id_string, settings.VCAL_UID_SLUG)
+    
