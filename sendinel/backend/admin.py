@@ -1,6 +1,10 @@
 from django.contrib import admin
 
-from sendinel.backend.models import *
+from sendinel.backend.models import Doctor, Patient, Hospital, \
+                                    HospitalAppointment, \
+                                    InfoMessage, \
+                                    ScheduledEvent, \
+                                    AuthenticationCall
 
 admin.site.register(Doctor)
 admin.site.register(Patient)

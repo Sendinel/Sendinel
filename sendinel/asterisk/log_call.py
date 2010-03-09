@@ -7,7 +7,6 @@ PROJECT_PATH = dirname(abspath(__file__)) + "/../../"
 sys.path.insert(0, PROJECT_PATH)
 
 from django.core.management import setup_environ
-from django.conf import settings as django_settings
 from sendinel import settings
 setup_environ(settings)
 

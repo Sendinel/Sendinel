@@ -1,5 +1,4 @@
-from django.conf.urls.defaults import *
-from sendinel.web.views import *
+from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns("",
     url(r"^$", 'sendinel.staff.views.index', name = 'staff_index'),
