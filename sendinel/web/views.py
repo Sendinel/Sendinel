@@ -9,7 +9,8 @@ from django.utils import simplejson
 from sendinel.backend.authhelper import check_and_delete_authentication_call, \
                                     delete_timed_out_authentication_calls, \
                                     format_phonenumber
-from sendinel.backend.models import Patient, ScheduledEvent, Sendable
+from sendinel.backend.models import Patient, ScheduledEvent, Sendable, \
+                                    InfoService
 from sendinel.web.forms import HospitalAppointmentForm
 from sendinel.settings import   AUTH_NUMBER, \
                                 BLUETOOTH_SERVER_ADDRESS, \
@@ -20,7 +21,9 @@ from sendinel.backend import bluetooth
 
 
 def index(request):
+    informationservices = InfoService.objects.all()
     return render_to_response('web/index.html',
+                              locals(),  
                               context_instance=RequestContext(request))
 
 def create_appointment(request):
@@ -148,5 +151,12 @@ def get_bluetooth_devices(request):
     except:
         # TODO write bluetooth error to log file
         return HttpResponse(status = 500)
+        
+def register_infoservice(request, id):
+   # request.session['
+    return HttpResponse()
+    return render_to_response('web/register_infoservice.html',
+                              locals(),
+                              context_instance=RequestContext(request))
         
 

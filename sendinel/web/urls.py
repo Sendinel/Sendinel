@@ -15,6 +15,7 @@ urlpatterns = patterns("",
     url(r"^appointment/send$", 'sendinel.web.views.send_appointment',
         name = 'web_appointment_send'),        
     url(r'^get_devices/$', 'sendinel.web.views.get_bluetooth_devices', 
-        name = 'web_get_devices')
-        
+        name = 'web_get_devices'),
+    url(r"^infoservice/register/(?P<id>\d+)/$", 'sendinel.web.views.register_infoservice', 
+       name = 'web_infoservice_register')      
     )
