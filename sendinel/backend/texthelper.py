@@ -5,7 +5,6 @@ def generate_text(contents, template, reduce = True):
     """
     creates an sms text from a given template that is not longer than 160 characters
     """
-    #template aus self wenn in klasse
     contents = replace_dollar_signs(contents)
     sms = template.substitute(contents)
     if reduce:
@@ -42,38 +41,10 @@ def reduce_contents(contents, chars_left):
     if 'date' in contents:
         chars_left -= len(contents ['date'])
         cut_length = int(floor(float(chars_left)/(len(contents) - 1)))
-        # TODO refactor DRY, why -1?
+        # because date is not shortened, len(contents) must be one shorter
     else:
         cut_length = int(ceil(float(chars_left)/len(contents)))
     for key in contents.iterkeys():
         if key != 'date':
             contents[key] = contents[key][0:cut_length]
     return contents
-
-
-    
-def generate_appointment_sms(specific_content,text):
-    """ 
-    generates an appointment sms from a given string text. 
-    not currently used
-    """
-    sms_static_text = text % (('',) * 4)
-    chars_left = 160 - len(specific_content.get('date')) - len(text)
-    
-    max_length = int(floor(chars_left/3))
-
-    # TODO refactor this - DRY!
-    sms =  text % (specific_content.get('name'), \
-                    specific_content.get('hospital'), \
-                    specific_content.get('date'), \
-                    specific_content.get('doctor'))
-  
-    if len(sms) > 160:
-        sms = text % (specific_content.get('name')[0:max_length],\
-                        specific_content.get('hospital')[0:max_length], \
-                        specific_content.get('date'), \
-                        specific_content.get('doctor')[0:max_length])
-                
-    
-    return sms
-
