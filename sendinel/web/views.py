@@ -72,6 +72,7 @@ def save_appointment(request):
     patient.phone_number = request.session['authenticate_phonenumber']['number']
     
     appointment.save_with_patient(patient)
+
     return render_to_response('web/appointment_saved.html',
                             locals(),
                             context_instance=RequestContext(request))

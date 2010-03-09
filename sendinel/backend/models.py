@@ -76,8 +76,19 @@ class Sendable(models.Model):
     way_of_communication = models.CharField(max_length=9,
                                 choices=WAYS_OF_COMMUNICATION)
 
+    send_time = models.DateTimeField()
 
-    recipient = None
+    STATES = (
+        ('new','new'),
+        ('sent','sent'),
+        ('failed','failed'),
+    )
+
+    state = models.CharField(max_length = 10,
+                             choices = STATES,
+                             default = 'new')
+
+    recipient = models.ForeignKey(Patient)
     
     def __unicode__(self):
         return "%s %s" %(unicode(self.recipient), self.way_of_communication)
@@ -124,8 +135,6 @@ class HospitalAppointment(Sendable):
     """
     Define a HospitalAppointment.
     """
-    
-    recipient = models.ForeignKey(Patient)
     
     date = models.DateTimeField()
     doctor = models.ForeignKey(Doctor)
@@ -203,6 +212,10 @@ class HospitalAppointment(Sendable):
             hospital.save() 
         self.recipient = patient
         self.hospital = hospital
+        
+        if not self.send_time:      
+          self.send_time = self.date - REMINDER_TIME_BEFORE_APPOINTMENT
+        
         self.save()
         self.create_scheduled_event()    
         return self
@@ -211,7 +224,6 @@ class InfoMessage(Sendable):
     """
     Define a InfoMessage.
     """
-    recipient = models.ForeignKey(Patient)
     #TODO extract to superclass?
     template = Template("$text")
     # TODO restrict text to 160? but not good for voice calls

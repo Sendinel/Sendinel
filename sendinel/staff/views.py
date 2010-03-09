@@ -8,6 +8,8 @@ from django.core.urlresolvers import reverse
 
 from sendinel.backend.models import Usergroup, ScheduledEvent, InfoMessage, \
                                     Subscription
+from datetime import datetime
+
 from sendinel.staff.forms import InfoMessageForm
 
 @login_required
@@ -38,6 +40,7 @@ def create_infomessage(request, id):
                                                        usergroup = group)[0]
             
             info_message.recipient = patient
+            info_message.send_time = datetime.now()
             info_message.way_of_communication = subscription.way_of_communication
 
             info_message.save()        

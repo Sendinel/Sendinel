@@ -1,25 +1,22 @@
 from django.test import TestCase
 from datetime import datetime
 
-from sendinel.backend.models import ScheduledEvent
+from sendinel.backend.models import ScheduledEvent, Sendable, InfoMessage, \
+                                    HospitalAppointment
 from sendinel.backend import scheduler
 from sendinel.backend import output
 
-class SchedulerTest(TestCase):
-    
+class SchedulerTest(TestCase):    
     
     counter = 0
     fixtures = ['backend']
     
-    def test_scheduler(self):
-    
-        
+    def test_scheduler(self):     
         
         def scheduled_events_count(state = 'new'):
-            return ScheduledEvent.objects \
-                                 .filter(state__exact = state) \
-                                 .filter(send_time__lte=datetime.now()) \
-                                 .count()
+            
+            return scheduler.get_all_due_events().count()
+            
         def send(data):
             SchedulerTest.counter += 1
         
@@ -33,7 +30,7 @@ class SchedulerTest(TestCase):
         
         SchedulerTest.counter = 0
         self.assertTrue(scheduled_events_count() > 0)
-        
+                
         scheduler.run(run_only_one_time = True)
         
         # assert that all scheduled events have been processed by send()

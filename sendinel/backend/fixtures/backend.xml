@@ -42,6 +42,7 @@
     <object pk="1" model="backend.hospitalappointment">
         <field type="CharField" name="way_of_communication">sms</field>
         <field type="DateTimeField" name="date">2010-02-08 18:43:07</field>
+        <field type="DateTimeField" name="send_time">2010-02-08 18:43:07</field>
         <field to="backend.doctor" name="doctor" rel="ManyToOneRel">1</field>
         <field to="backend.hospital" name="hospital" rel="ManyToOneRel">1</field>
         <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
@@ -54,6 +55,7 @@
     </object>
     <object pk="1" model="backend.infomessage">
         <field type="CharField" name="way_of_communication">sms</field>
+        <field type="DateTimeField" name="send_time">2010-02-08 18:43:07</field>
         <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
         <field type="TextField" name="text">Das ist eine Nachricht</field>
     </object>    

@@ -9,32 +9,24 @@ from sendinel.backend.models import *
 from sendinel.backend.output import *
 
 
-class ScheduledEventTest(TestCase):
+class SendableTest(TestCase):
 
     fixtures = ['backend']
 
     def setUp(self):
-        self.event = ScheduledEvent.objects.get(pk=1)
-    
-    def test_sendable_polymorphic(self):
-        appointment = self.event.sendable
-        self.assertEquals(type(appointment),
-                            HospitalAppointment,
-                            'Sendable polymorphic type is wrong')
+        self.sendable = InfoMessage()
+        self.sendable.way_of_communication = "sms"
+        self.sendable.text = "Test Text"
 
     def test_sendable_get_data_for_sending(self):
-        appointment = self.event.sendable
-        appointment.way_of_communication="sms"
-        data = OutputData()
-        appointment.get_data_for_sms = lambda: data
-        self.assertEquals(appointment.get_data_for_sending(), data)
+        pass
         
 
 class HospitalAppointmentTest(TestCase):
     fixtures = ['backend']
     
     def setUp(self):
-      self.appointment = HospitalAppointment.objects.get(pk = 1)
+      self.appointment = HospitalAppointment.objects.get(id = 1)
 
     def test_create_scheduled_event(self):
         number_of_events = ScheduledEvent.objects.count()
