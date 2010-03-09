@@ -7,6 +7,7 @@
     {{ form.media }}
     
     <script src="{{ MEDIA_URL }}/js/numpad.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ MEDIA_URL }}/js/numpad_datetime.js" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="{{ MEDIA_URL }}/css/numpad.css" type="text/css" />
     
 {% endblock %}
@@ -25,9 +26,9 @@
                     <td>
                         <div class="testform">a
                             <p class="selectable">
-                                <input type="text" maxlength="2" name="" class="subselectable" />
-                                <input type="text" maxlength="2" name="" class="subselectable" />
-                                <input type="text" maxlength="2" name="" class="subselectable" />
+                                <input type="text" maxlength="2" name="" class="subselectable twocharinput" />
+                                <input type="text" maxlength="2" name="" class="subselectable twocharinput" />
+                                <input type="text" maxlength="2" name="" class="subselectable twocharinput" />
                             </p>
                         </div>
                     </td>

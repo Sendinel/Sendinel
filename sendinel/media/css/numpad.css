@@ -5,3 +5,11 @@
 .selected {
     background-color: red;
 }
+
+.subselected {
+    background-color: blue;
+}
+
+.twocharinput {
+    width: 2em;
+}

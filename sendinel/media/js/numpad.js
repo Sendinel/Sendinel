@@ -29,7 +29,6 @@ var numpad = {
     },
     
     clickOnSelected: function() {
-        console.log(numpad.getSelected());    
         var el = numpad.getSelected()[0];
         if(el.tagName.toLowerCase() == "a") {
             window.location = el.href;
@@ -50,43 +49,36 @@ var numpad = {
         if(number < 0 || number >= numpad.selectables.length) {
             return false;
         }
-        numpad.getSelected().removeClass("selected");
+        var oldItem = numpad.getSelected();
+        if(oldItem[0].handleDeselected) {
+           oldItem[0].handleDeselected();
+        }
+        oldItem.removeClass("selected");
+        
         numpad.selected = number;
+        
         var item = numpad.getSelected();
         item.addClass("selected")
         
-        item.focus();
-        item.children(".subselectable").first().focus();
-
+        if(item[0].handleSelected) {
+           item[0].handleSelected();
+        } else {
+            item.focus();
+        }
         return true;
     },
     
     
     convert_forms: function() {
-        numpad.conversions.convertDatetimes();
-        numpad.conversions.convertSelects();
+        numpad.inputs.datetime.convert();
+        // numpad.conversions.convertDatetimes();
+        numpad.inputs.convertSelects();
 
-        $(".testform .subselectable")
-            .focus(function(event) {
-                $(this).select();
-            })
-            .keydown(function(event){
-                switch(event.keyCode) {
-                    case 37: // Arrow left
-                        console.log("this should select the previous field");
-                        break;
-                    case 39: // Arrow right
-                        console.log("this should select the next field");
-                        break
-                    default:
-                        return true;
-                }
-                return false;
-            });
+
         
     },
     
-    conversions: {
+    inputs: {
         convertDatetimes: function() {
             $(".selectable_form .datetime").each(function(index) {
                $(this).addClass("selectable")
