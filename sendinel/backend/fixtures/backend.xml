@@ -23,20 +23,20 @@
         <field type="CharField" name="name">Another Clinic</field>
         <field type="BooleanField" name="current_hospital">False</field>        
     </object>    
-    <object pk="1" model="backend.usergroup">
+    <object pk="1" model="backend.infoservice">
         <field type="CharField" name="name">Bachelorproject</field>
     </object>
     <object pk="1" model="backend.subscription">
         <field to="backend.patient" name="patient" rel="ManyToOneRel">1</field>
-        <field to="backend.usergroup" name="usergroup" rel="ManyToOneRel">1</field>
+        <field to="backend.infoservice" name="infoservice" rel="ManyToOneRel">1</field>
         <field type="CharField" name="way_of_communication">sms</field>
     </object>
     <object pk="2" model="backend.subscription">
         <field to="backend.patient" name="patient" rel="ManyToOneRel">2</field>
-        <field to="backend.usergroup" name="usergroup" rel="ManyToOneRel">1</field>
+        <field to="backend.infoservice" name="infoservice" rel="ManyToOneRel">1</field>
         <field type="CharField" name="way_of_communication">voice</field>
     </object>
-    <object pk="2" model="backend.usergroup">
+    <object pk="2" model="backend.infoservice">
         <field type="CharField" name="name">Sendinel-Tester</field>
     </object>
     <object pk="1" model="backend.hospitalappointment">

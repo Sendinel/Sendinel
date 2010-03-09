@@ -91,18 +91,18 @@ class ModelsSMSTest(TestCase):
         self.assertEquals(type(info_output.data), unicode)
             
         
-class ModelsUsergroupTest(TestCase):
+class ModelsInfoServiceTest(TestCase):
     def setUp(self):
-        self.group = Usergroup(name = "Gruppe")
-        self.group.save()
+        self.infoservice = InfoService(name = "Gruppe")
+        self.infoservice.save()
         self.patient = Patient()
         self.patient.save()
     
-    def test_no_groups_with_same_name(self):
-        first_group = Usergroup(name ="Hospitalinfos")
-        first_group.save()
-        second_group = Usergroup(name ="Hospitalinfos")
-        self.assertRaises(IntegrityError, second_group.save)
+    def test_no_infoservices_with_same_name(self):
+        first_infoservice = InfoService(name ="Hospitalinfos")
+        first_infoservice.save()
+        second_infoservice = InfoService(name ="Hospitalinfos")
+        self.assertRaises(IntegrityError, second_infoservice.save)
     
     #TODO bei Form testen, dass keine Nullwerte angegeben werden duerfen
     # def test_no_groups_with_empty_name(self):
@@ -118,36 +118,36 @@ class ModelsUsergroupTest(TestCase):
 class SubscriptionTest(TestCase):
     
     def setUp(self):
-        self.group = Usergroup(name = "Gruppe")
-        self.group.save()
+        self.infoservice = InfoService(name = "Gruppe")
+        self.infoservice.save()
         self.patient = Patient()
         self.patient.save()
         self.subscription = Subscription(patient = self.patient, 
-                                         usergroup = self.group)
+                                         infoservice = self.infoservice)
         self.subscription.save()
         
-    def test_group_member_relation_add(self):
-        self.assertTrue(self.patient in self.group.members.all())
-        self.assertTrue(self.group in self.patient.groups())
+    def test_infoservice_member_relation_add(self):
+        self.assertTrue(self.patient in self.infoservice.members.all())
+        self.assertTrue(self.infoservice in self.patient.infoservices())
 
-    def test_group_member_relation_delete(self):
+    def test_infoservice_member_relation_delete(self):
         self.subscription.delete()
-        self.assertTrue(self.patient not in self.group.members.all())
-        self.assertTrue(self.group not in self.patient.groups())
+        self.assertTrue(self.patient not in self.infoservice.members.all())
+        self.assertTrue(self.infoservice not in self.patient.infoservices())
         
     def test_subscription_creation(self):
         subscription = Subscription()        
         
         self.assertRaises(IntegrityError, subscription.save)
         
-        usergroup = Usergroup(name = "Group")
-        usergroup.save()
+        infoservice = InfoService(name = "Group")
+        infoservice.save()
         
         subscription.patient = self.patient
-        subscription.usergroup = usergroup
+        subscription.infoservice = infoservice
         
         subscription.save()
         
-        self.assertEquals(self.group.members.all().count(), 1)
-        self.assertEquals(self.group.members.all()[0], self.patient)
-        self.assertTrue(self.group in self.patient.groups())
+        self.assertEquals(self.infoservice.members.all().count(), 1)
+        self.assertEquals(self.infoservice.members.all()[0], self.patient)
+        self.assertTrue(self.infoservice in self.patient.infoservices())

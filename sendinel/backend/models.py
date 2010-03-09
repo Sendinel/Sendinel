@@ -34,8 +34,8 @@ class Patient(User):
     """
     phone_number = models.CharField(max_length = 20)
     
-    def groups(self):
-        return Usergroup.objects.filter(members__id = self.id)
+    def infoservices(self):
+        return InfoService.objects.filter(members__id = self.id)
 
 
 class Hospital(models.Model):
@@ -49,7 +49,7 @@ class Hospital(models.Model):
         return self.name
         
         
-class Usergroup(models.Model):
+class InfoService(models.Model):
     """
     Represent a user group.
     Raises integrity error
@@ -275,7 +275,7 @@ class AuthenticationCall(models.Model):
 class Subscription(models.Model):
     
     patient = models.ForeignKey(Patient)
-    usergroup = models.ForeignKey(Usergroup)
+    infoservice = models.ForeignKey(InfoService)
     
     way_of_communication = models.CharField(max_length=9,
                                 choices=Sendable.WAYS_OF_COMMUNICATION)

@@ -9,12 +9,12 @@
             <td>Members</td>
             <td />
         </tr>
-    {% for group in groups %}
+    {% for infoservice in infoservices %}
         
         <tr>
-            <td>{{ group.name }}</td>
-            <td>{{ group.count_members }}</td>
-            <td><a href="{% url staff_create_infomessage id=group.id %}">Create message</a></td>
+            <td>{{ infoservice.name }}</td>
+            <td>{{ infoservice.count_members }}</td>
+            <td><a href="{% url staff_create_infomessage id=infoservice.id %}">Create message</a></td>
         </tr>
         
     {% endfor %}

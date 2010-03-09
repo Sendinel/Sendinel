@@ -3,7 +3,7 @@ from django.test.client import Client
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
-from sendinel.backend.models import ScheduledEvent, Usergroup, InfoMessage, \
+from sendinel.backend.models import ScheduledEvent, InfoService, InfoMessage, \
                                     Subscription
 
 class InfoserviceTest(TestCase):
@@ -19,7 +19,7 @@ class InfoserviceTest(TestCase):
     def test_create_infomessage(self):
     
         counter = ScheduledEvent.objects.all().count()
-        usergroup = Usergroup.objects.filter(pk = 1)[0]
+        infoservice = InfoService.objects.filter(pk = 1)[0]
     
         response = self.client.post(reverse("staff_create_infomessage",
             kwargs={"id":1}), {
@@ -29,7 +29,7 @@ class InfoserviceTest(TestCase):
                 
         self.assertRedirects(response, reverse("staff_list_infoservices"))
         
-        offset = usergroup.members.all().count()
+        offset = infoservice.members.all().count()
         
         self.assertEquals(ScheduledEvent.objects.all().count(), 
                           counter + offset)
@@ -37,7 +37,7 @@ class InfoserviceTest(TestCase):
         for message in InfoMessage.objects.all():
             subscription = Subscription.objects.filter(
                                             patient = message.recipient,
-                                            usergroup = usergroup)[0]
+                                            infoservice = infoservice)[0]
             
             self.assertEquals(message.way_of_communication,
                               subscription.way_of_communication)                  

@@ -6,7 +6,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 
-from sendinel.backend.models import Usergroup, ScheduledEvent, InfoMessage, \
+from sendinel.backend.models import InfoService, ScheduledEvent, InfoMessage, \
                                     Subscription
 from datetime import datetime
 
@@ -28,16 +28,16 @@ def create_infomessage(request, id):
                                     context_instance = RequestContext(request))
     elif(request.method == "POST"):
         
-        group = Usergroup.objects.filter(pk = id)[0]
+        infoservice = InfoService.objects.filter(pk = id)[0]
         
-        for patient in group.members.all():
+        for patient in infoservice.members.all():
         
             info_message = InfoMessage()
         
             info_message.text = request.POST["text"]
             
             subscription = Subscription.objects.filter(patient = patient,
-                                                       usergroup = group)[0]
+                                                       infoservice = infoservice)[0]
             
             info_message.recipient = patient
             info_message.send_time = datetime.now()
@@ -52,15 +52,15 @@ def create_infomessage(request, id):
 @login_required
 def list_infoservices(request):
 
-    all_groups = Usergroup.objects.all()
+    all_infoservices = InfoService.objects.all()
 
-    groups = []
+    infoservices = []
     
-    for group in all_groups:
-        groups.append({
-            "id": group.id,
-            "name": group.name, 
-            "count_members": group.members.all().count()
+    for infoservice in all_infoservices:
+        infoservices.append({
+            "id": infoservice.id,
+            "name": infoservice.name, 
+            "count_members": infoservice.members.all().count()
         })
             
     return render_to_response("staff/list_infoservices.html",
