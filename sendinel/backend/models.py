@@ -143,18 +143,18 @@ class HospitalAppointment(Sendable):
 
         TODO: Implement it...
         """
-        # data = BluetoothOutputData()
-        # data.mac = self.recipient.mac
-        # data.server_address = settings.BLUETOOTH_SERVER_ADDRESS
-        # content = "Please remember your Appointment tomorrow at "\
-                    # + self.hospital.name\
-                    # + " by doctor "\
-                    # + self.doctor.name
-        # uid = vcal.get_uid(self)
-        # data.data = vcal.create_vcal_string(self.date, 
-                                            # self.hospital, 
-                                            # content,
-                                            # uid)
+        data = BluetoothOutputData()
+        data.bluetooth_mac_address = self.bluetooth_mac_address
+        data.server_address = settings.BLUETOOTH_SERVER_ADDRESS
+        content = "Please remember your Appointment tomorrow at "\
+                    + self.hospital.name\
+                    + " by doctor "\
+                    + self.doctor.name
+        uid = vcal.get_uid(self)
+        data.data = vcal.create_vcal_string(self.date, 
+                                            self.hospital, 
+                                            content,
+                                            uid)
         pass
 
  
