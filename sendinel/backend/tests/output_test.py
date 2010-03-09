@@ -31,15 +31,15 @@ class OutputTest(TestCase):
     def test_send_bluetoothoutputobject(self):
         data = "test"
         mac = "1234"
-        addressServer = "127"
+        serverAddress = "127"
     
         bluetoothoutput = BluetoothOutputData()
         bluetoothoutput.data = data
         bluetoothoutput.mac = mac
-        bluetoothoutput.addressServer = addressServer
+        bluetoothoutput.serverAddress = serverAddress
         
-        def send_vcal1(addressServer2, mac2, data2):
-            self.assertEquals(addressServer2, addressServer)
+        def send_vcal1(serverAddress2, mac2, data2):
+            self.assertEquals(serverAddress2, serverAddress)
             self.assertEquals(mac2, mac)
             self.assertEquals(data2, data)
               

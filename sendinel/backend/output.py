@@ -20,11 +20,12 @@ class BluetoothOutputData(OutputData):
     """
     Define necessary OutputData for sending via bluetooth.
     """
+    
     mac = None
-    addressServer = None
+    serverAddress = None
     
     def send(self):
-        bluetooth.send_vcal(self.addressServer, self.mac, self.data)
+        bluetooth.send_vcal(self.serverAddress, self.mac, self.data)
 
 class SMSOutputData(OutputData):
     """

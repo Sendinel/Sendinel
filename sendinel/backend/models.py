@@ -6,7 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
 from sendinel.settings import DEFAULT_HOSPITAL_NAME, REMINDER_TIME_BEFORE_APPOINTMENT   
-from sendinel.backend import texthelper
+from sendinel.backend import texthelper, vcal
 from sendinel.backend.output import *
 
 

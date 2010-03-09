@@ -6,7 +6,7 @@ class BluetoothTest(unittest.TestCase):
     def test_discoveredDevices(self):
         devices = {}
         BluetoothTest.devices = {'00A48F': 'super Handy'}
-        self.address_server = "127"
+        self.serverAddress = "127"
         
         class Action:
             def getDiscoveredDevices(self):
@@ -15,7 +15,7 @@ class BluetoothTest(unittest.TestCase):
             Actions = Action()
             
             
-        def set_conn(addressServer):
+        def set_conn(serverAddress):
             return Connection()
       
         temp = sendinel.backend.bluetooth.set_connection_to_bluetooth
@@ -23,7 +23,7 @@ class BluetoothTest(unittest.TestCase):
 
        
         result = sendinel.backend.\
-                bluetooth.get_discovered_devices(self.address_server)
+                bluetooth.get_discovered_devices(self.serverAddress)
         self.assertEquals(result, self.devices)
 
         sendinel.backend.bluetooth.set_connection_to_bluetooth = temp
@@ -32,7 +32,7 @@ class BluetoothTest(unittest.TestCase):
         BluetoothTest.mac = "00A48F"
         BluetoothTest.data = "Das ist eine VCS"
         BluetoothTest.filename = "reminder.vcs"
-        BluetoothTest.address_server = "127"
+        BluetoothTest.serverAddress = "127"
         
         class Action:
             def sendVCalFile(self, mac, data, filename):
@@ -42,14 +42,14 @@ class BluetoothTest(unittest.TestCase):
         class Connection:
             Actions = Action()
             
-        def set_conn(addressServer):
+        def set_conn(serverAddress):
             return Connection()
 
         temp = sendinel.backend.bluetooth.set_connection_to_bluetooth
         sendinel.backend.bluetooth.set_connection_to_bluetooth = set_conn
         
         
-        sendinel.backend.bluetooth.send_vcal(BluetoothTest.address_server,
+        sendinel.backend.bluetooth.send_vcal(BluetoothTest.serverAddress,
                                             BluetoothTest.mac,
                                             BluetoothTest.data)
         self.assertEquals(BluetoothTest.mac, BluetoothTest.macResult);
