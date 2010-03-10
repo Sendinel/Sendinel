@@ -1,10 +1,6 @@
 var numpad = {
     selector: null,
 
-    getSelected: function() {
-        return $(numpad.selectables[numpad.selected]);
-    },
-
     handleKeydown: function(event) {
         switch(event.keyCode) {
             case 13: // Enter
@@ -27,18 +23,25 @@ var numpad = {
     },
     
     clickOnSelected: function() {
-        var el = numpad.getSelected()[0];
+        var el = numpad.selector.getSelected();
         if(el.tagName.toLowerCase() == "a") {
             window.location = el.href;
         } else {
-            numpad.getSelected().trigger('click');
+            $(numpad.selector.getSelected()).trigger('click');
         }
     },
     
     convert_forms: function() {
-        numpad.inputs.datetime.convert();
+        console.log($(".selectable_form [name]"));
+        $(".selectable_form [name]").each(function() {
+            if($(this).hasClass("vDateField")) {
+                new numpad.inputs.DateField(this);
+            }
+        });
+        
+        // numpad.inputs.datetime.convert();
         // numpad.conversions.convertDatetimes();
-        numpad.inputs.convertSelects();
+        // numpad.inputs.convertSelects();
         
         numpad.selector = new ElementSelector($(".selectable"));
         numpad.selector.select(0); 
@@ -91,8 +94,8 @@ ElementSelector = function(selectables) {
             return false;
         }
         var oldItem = this.selectables[this.selected];
-        if(oldItem.handleDeselected) {
-           oldItem.handleDeselected();
+        if(oldItem.fieldObject && oldItem.fieldObject.handleDeselected) {
+           oldItem.fieldObject.handleDeselected();
         }
         $(oldItem).removeClass(this.selectedClass);
         
@@ -100,8 +103,8 @@ ElementSelector = function(selectables) {
         
         item = this.selectables[number]
         $(item).addClass(this.selectedClass)
-        if(item.handleSelected) {
-           item.handleSelected();
+        if(item.fieldObject && item.fieldObject.handleSelected) {
+           item.fieldObject.handleSelected();
         }
     }
 }

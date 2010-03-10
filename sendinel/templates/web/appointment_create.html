@@ -1,13 +1,10 @@
 {% extends "base.html" %}
 
 {% block script %}
-    <script type="text/javascript" src="{{ admin_media_prefix }}js/core.js"></script>
-    <script type="text/javascript" src="{% url admin:jsi18n %}"></script>
-    <link rel="stylesheet" href="{{ MEDIA_URL }}/css/datetimepicker.css" type="text/css" media="screen" charset="utf-8" />
-    {{ form.media }}
-    
     <script src="{{ MEDIA_URL }}/js/numpad.js" type="text/javascript" charset="utf-8"></script>
     <script src="{{ MEDIA_URL }}/js/numpad_datetime.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ MEDIA_URL }}/js/numpad_date.js" type="text/javascript" charset="utf-8"></script>
+    
     <link rel="stylesheet" href="{{ MEDIA_URL }}/css/numpad.css" type="text/css" />
     
 {% endblock %}
@@ -19,24 +16,6 @@
         <form action="./" method="post" class="selectable_form">
             <table>
                 {{ form.as_table }}
-                <tr>
-                    <th>
-                        Date
-                    </th>
-                    <td>
-                        <div class="testform">a
-                            <p class="selectable dates">
-                                <input type="text" maxlength="4" name="" class="subselectable fourcharinput" />/
-                                <input type="text" maxlength="2" name="" class="subselectable twocharinput" />/
-                                <input type="text" maxlength="2" name="" class="subselectable twocharinput" />
-                            </p>
-                            <p class="selectable times">
-                                <input type="text" maxlength="2" name="" class="subselectable twocharinput" />:
-                                <input type="text" maxlength="2" name="" class="subselectable twocharinput" />
-                            </p>
-                        </div>
-                    </td>
-                </tr>
             </table>
             <input type="submit" name="submit" value="Save" id="id_submit" />
             <a href="#" onclick="numpad.submit(); return false;">Test submit</a>
