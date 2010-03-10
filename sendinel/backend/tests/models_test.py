@@ -5,8 +5,11 @@ from django.test import TestCase
 from django.db import IntegrityError
 
 from sendinel import settings
-from sendinel.backend.models import *
-from sendinel.backend.output import *
+from sendinel.backend.models import Hospital, HospitalAppointment, \
+                                    InfoMessage, InfoService,  Patient, \
+                                    Doctor, ScheduledEvent, Subscription
+from sendinel.backend.output import VoiceOutputData, SMSOutputData, \
+                                    BluetoothOutputData
 
 
 class SendableTest(TestCase):
@@ -75,7 +78,8 @@ class HospitalAppointmentTest(TestCase):
         
         self.assertEquals(type(output_data), BluetoothOutputData)
         self.assertEquals(output_data.bluetooth_mac_address, "00AA11BB22")
-        self.assertEquals(output_data.server_address, settings.BLUETOOTH_SERVER_ADDRESS)
+        self.assertEquals(output_data.server_address, \
+                          settings.BLUETOOTH_SERVER_ADDRESS)
         self.assertEquals(type(output_data.data).__name__, "unicode") 
     
     def test_get_data_for_sms(self):
