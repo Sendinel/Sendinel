@@ -13,7 +13,7 @@ class InfoserviceTest(TestCase):
     fixtures = ['backend']
     
     def setUp(self):
-        user = User.objects.create_user('john', 'l@example.com', 'passwd')
+        User.objects.create_user('john', 'l@example.com', 'passwd')
         self.client.login(username='john', password="passwd")
     
     def test_create_infomessage(self):

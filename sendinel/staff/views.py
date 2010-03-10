@@ -6,9 +6,8 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 
-from sendinel.backend.models import InfoService, ScheduledEvent, InfoMessage, \
+from sendinel.backend.models import InfoService, InfoMessage, \
                                     Subscription, Patient
-from datetime import datetime
 
 from sendinel.staff.forms import InfoMessageForm
 
@@ -41,7 +40,8 @@ def create_infomessage(request, id):
             
             info_message.recipient = patient
             info_message.send_time = datetime.now()
-            info_message.way_of_communication = subscription.way_of_communication
+            info_message.way_of_communication = \
+                            subscription.way_of_communication
 
             info_message.save()        
             info_message.create_scheduled_event(datetime.now())
