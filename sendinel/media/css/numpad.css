@@ -7,9 +7,12 @@
 }
 
 .datetime_selected {
-    background-color: blue;
+    background-color: orange;
 }
 
 .twocharinput {
     width: 2em;
+}
+.fourcharinput {
+    width: 4em;
 }

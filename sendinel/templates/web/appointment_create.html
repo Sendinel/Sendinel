@@ -25,9 +25,13 @@
                     </th>
                     <td>
                         <div class="testform">a
-                            <p class="selectable">
+                            <p class="selectable dates">
+                                <input type="text" maxlength="4" name="" class="subselectable fourcharinput" />/
+                                <input type="text" maxlength="2" name="" class="subselectable twocharinput" />/
                                 <input type="text" maxlength="2" name="" class="subselectable twocharinput" />
-                                <input type="text" maxlength="2" name="" class="subselectable twocharinput" />
+                            </p>
+                            <p class="selectable times">
+                                <input type="text" maxlength="2" name="" class="subselectable twocharinput" />:
                                 <input type="text" maxlength="2" name="" class="subselectable twocharinput" />
                             </p>
                         </div>
@@ -35,6 +39,7 @@
                 </tr>
             </table>
             <input type="submit" name="submit" value="Save" id="id_submit" />
+            <a href="#" onclick="numpad.submit(); return false;">Test submit</a>
         </form>
     </p>
 {% endblock %}

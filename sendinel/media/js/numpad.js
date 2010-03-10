@@ -44,6 +44,14 @@ var numpad = {
         numpad.selector.select(0); 
     },
     
+    submit: function() {
+        $(".selectable").each(function(index) {
+            if(this.handleSubmit) {
+                this.handleSubmit();
+            }
+        })
+    },
+    
     inputs: {
         convertDatetimes: function() {
             $(".selectable_form .datetime").each(function(index) {
@@ -58,9 +66,8 @@ var numpad = {
     }
 };
 
-ElementSelector = function(selectables, selectHandler) {
+ElementSelector = function(selectables) {
     this.selectables = selectables;
-    this.selectHandler = selectHandler;
     this.selected = 0;
     this.selectedClass = "selected";
     
