@@ -39,6 +39,11 @@ var numpad = {
             else if($(this).hasClass("vTimeField")) {
                 new numpad.inputs.TimeField(this);
             }
+            else if(this.tagName.toLowerCase() == "select") {
+                console.log("SELECT");
+                new numpad.inputs.SelectField(this);
+            }
+            console.log(this.tagName);            
         });
         
         $(".selectable_form").submit(this.submit);
@@ -88,8 +93,6 @@ ElementSelector = function(selectables) {
         // select element selectables[number],
         //  call handleDeselect on the deselected element and
         //  run handleSelect on the selected element
-        console.log(number);
-        console.log(this);
         if(number < 0 || number >= this.selectables.length) {
             return false;
         }

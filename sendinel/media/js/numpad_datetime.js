@@ -2,8 +2,6 @@ numpad.inputs.datetime = {
 
 
     createField: function(htmlBlock, selectedClass) {
-        console.log("creating date field");
-
         var fieldElement = $(htmlBlock)[0];
         fieldElement.fieldObject = this;
         console.log(fieldElement);
@@ -22,8 +20,6 @@ numpad.inputs.datetime = {
     },
     
     handleKeydown: function(event) {
-        console.log("datetime handlekeydown");
-        console.log(event);
         var fieldObject = $(event.target).parent()[0].fieldObject;
         switch(event.keyCode) {
             case 37: // Arrow left

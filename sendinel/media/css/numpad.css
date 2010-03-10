@@ -16,3 +16,10 @@
 .fourcharinput {
     width: 4em;
 }
+
+.select-div {
+    overflow-x: auto; 
+    overflow-y: hidden; 
+    width: 500px; 
+    white-space: nowrap;
+}
