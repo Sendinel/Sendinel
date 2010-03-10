@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils import simplejson
+from django.contrib import messages
 
 from sendinel.backend.authhelper import check_and_delete_authentication_call, \
                                     delete_timed_out_authentication_calls, \
@@ -153,10 +154,16 @@ def get_bluetooth_devices(request):
         return HttpResponse(status = 500)
         
 def register_infoservice(request, id):
-   # request.session['
-    return HttpResponse()
-    return render_to_response('web/register_infoservice.html',
-                              locals(),
-                              context_instance=RequestContext(request))
+    request.session['infoservice_message'] = "In order to register for the " + \
+                                "informationservice " + \
+                                InfoService.objects.filter(pk = id)[0].name + \
+                                "you have to authenticate your phone"
+    return HttpResponseRedirect(reverse('web_authenticate_phonenumber'))
+                             # "?next=" + 
+                             # reverse('web_infoservice_register', \
+                                     # kwargs={'id': id}))
+    # return render_to_response('web/register_infoservice.html',
+                              # locals(),
+                              # context_instance=RequestContext(request))
         
 

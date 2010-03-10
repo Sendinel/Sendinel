@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls.defaults import * # patterns, url
 
 urlpatterns = patterns("",
     url(r"^$", 'sendinel.web.views.index', name = 'web_index'),
