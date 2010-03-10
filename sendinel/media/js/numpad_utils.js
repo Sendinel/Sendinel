@@ -1,22 +1,22 @@
-numpad.inputs.datetime = {
+numpad.utils = {
 
 
-    createField: function(htmlBlock, selectedClass) {
+    createField: function(htmlBlock) {
         var fieldElement = $(htmlBlock)[0];
         fieldElement.fieldObject = this;
-        console.log(fieldElement);
-        
-        $(fieldElement).children("input")
+        this.fieldElement = fieldElement;
+        $(this.originalField).after(fieldElement).hide();
+    },
+    
+    setupSelector: function(selectables_selector) {
+        $(this.fieldElement).children(selectables_selector)
             .focus(function(event) {
                 $(this).select();
             })
-            .keydown(numpad.inputs.datetime.handleKeydown);
-        
-        this.selector = new ElementSelector($(fieldElement).children("input"));
-        this.selector.selectedClass = selectedClass;
-        
-        this.fieldElement = fieldElement;
-        $(this.originalField).after(fieldElement).hide();
+            .keydown(numpad.utils.handleKeydown);
+        var selectables = $(this.fieldElement).children(selectables_selector);
+        this.selector = new ElementSelector(selectables);
+        this.selector.selectedClass = "numpad_subselected";
     },
     
     handleKeydown: function(event) {
@@ -39,12 +39,13 @@ numpad.inputs.datetime = {
     },
 
 
-    // functions that get binded to datetime selectables
+    // functions that get binded to selectables
     handleDeselected: function() {
         console.log("deselected: ");
         console.log(this);
-        
-        $(this).children(".subselectable").removeClass("datetime_selected");
+
+        var selectedClass = this.selector.selectedClass;
+        this.selector.selectables.removeClass(selectedClass);
     },
     
     handleSelected: function() {
@@ -52,8 +53,7 @@ numpad.inputs.datetime = {
         console.log(this);
 
         this.selector.select(0);
-        console.log($(this.fieldElement).children(".subselectable"));
-        $(this.fieldElement).children(".subselectable").first().focus();
+        this.selector.selectables.first().focus();
     },
 };
 

@@ -6,7 +6,7 @@
     background-color: red;
 }
 
-.datetime_selected {
+.numpad_subselected {
     background-color: orange;
 }
 
@@ -23,3 +23,4 @@
     width: 500px; 
     white-space: nowrap;
 }
+
