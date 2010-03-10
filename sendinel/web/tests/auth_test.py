@@ -1,8 +1,7 @@
 import copy
 from datetime import datetime, timedelta
 
-from django.test import TestCase 
-from django.test.client import Client
+from django.test import TestCase
 
 from sendinel.backend.models import AuthenticationCall
 from sendinel.web import views
@@ -12,6 +11,18 @@ class AuthenticateViewTests(TestCase):
     
     urls = "web.urls"
 
+    def test_authenticate_phonenumber_messages(self):
+        # infoservice = Infoservice(name="tesstinfoservice")
+        # infoservice.save()
+        # self.client.post(reverse('web_authenticate_phonenumber') +"?next=" + 
+                                 # reverse('web_infoservice_register', \
+                                          # kwargs={'id': infoservice.id})),
+            # {infoservice_text = "You want to register " + \
+                                # "for" + str(infoservice)})
+        # self.assertContains(r
+        # infoservice.delete()
+        pass
+        
     def test_authenticate_phonenumber(self):
         response = self.client.get("/authenticate_phonenumber/")
         

@@ -8,6 +8,14 @@
         </ul>
     </p>
     <p>
+        <h4>Register for Information Services</h4>
+        <ul id="informationservices">
+            {% for service in informationservices %}
+                <a href="{% url web_infoservice_register id=service.id %}">{{service}}</a>
+            {% endfor %}
+        </ul>
+    </p>
+    <p>
         <a href="{% url sendinel.staff.views.index %}">Staff</a>
     </p>
 {% endblock %}
