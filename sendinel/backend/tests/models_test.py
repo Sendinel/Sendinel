@@ -70,7 +70,7 @@ class HospitalAppointmentTest(TestCase):
         appointment.date = datetime(2010, 4, 4)
         appointment.doctor = Doctor.objects.get(pk = 1)
         appointment.bluetooth_mac_address = "00AA11BB22"
-        
+                
         output_data = appointment.get_data_for_bluetooth()
         
         self.assertEquals(type(output_data), BluetoothOutputData)

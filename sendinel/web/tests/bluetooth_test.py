@@ -1,10 +1,12 @@
 import json
 
+from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
 
 from sendinel.web.views import get_bluetooth_devices
 from sendinel.backend import bluetooth
+from sendinel.backend.models import Doctor
 
 class BluetoothViewTest(TestCase):
     client = Client()
@@ -47,4 +49,40 @@ class BluetoothViewTest(TestCase):
         
         bluetooth.get_discovered_devices = get_discovered_devices_old
         
+    def test_send_appointment(self):   
+        doctor = Doctor(name = "Giese")
+        doctor.save()
+    
+        data = {'date_0': '2012-02-22',
+                'date_1': '19:02:42',
+                'doctor': doctor.id,
+                'recipient_name': 'Shiko Taga',
+                'way_of_communication': 'bluetooth'}
+                
+        self.client.post("/web/appointment/create/", data)
         
+        self.assertTrue(self.client.session.has_key("appointment"))
+    
+        old_send_vcal = bluetooth.send_vcal
+             
+        def return_true(val, val2, val3):
+            return True
+             
+        bluetooth.send_vcal = return_true
+        
+        response = self.client.post(reverse("web_appointment_send"), {
+                         "device_mac":"123456789"})
+        
+        self.assertEquals(response.status_code, 200)
+        
+        def return_false(val, val2, val3):
+            return False
+        
+        bluetooth.send_vcal = return_false
+        
+        response = self.client.post(reverse("web_appointment_send"), {
+                         "device_mac":"123456789"})
+                         
+        self.assertEquals(response.status_code, 500)
+        
+        bluetooth.send_vcal = old_send_vcal
