@@ -16,7 +16,7 @@ class User(models.Model):
     """
     class Meta:
         abstract = True
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, blank=True, null=True)
    
     
     def __unicode__(self):

@@ -11,7 +11,7 @@ from sendinel.backend.authhelper import check_and_delete_authentication_call, \
                                     delete_timed_out_authentication_calls, \
                                     format_phonenumber
 from sendinel.backend.models import Patient, ScheduledEvent, Sendable, \
-                                    InfoService
+                                    InfoService, Subscription
 from sendinel.web.forms import HospitalAppointmentForm
 from sendinel.settings import   AUTH_NUMBER, \
                                 BLUETOOTH_SERVER_ADDRESS, \
@@ -172,7 +172,18 @@ def register_infoservice(request, id):
                               
                               
 def save_registration_infoservice(request, id):
-    return HttpResponse()
+    import pdb; pdb.set_trace()
+    patient = Patient(phone_number = \
+                      request.session['authenticate_phonenumber']['number'])
+    patient.save()
+    way_of_communication = request.session['way_of_communication']
+    infoservice = InfoService.objects.get(pk = id)
+    subscription = Subscription(patient = patient,
+                                way_of_communication = way_of_communication,
+                                infoservice = infoservice)
+    subscription.save()
+    
+    return HttpResponseRedirect(reverse('web_index'))
         
 
 def fill_authentication_session_variable(request):

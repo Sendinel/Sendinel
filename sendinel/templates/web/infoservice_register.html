@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Register for the informationservice {{infoservice}}</h3>
+	<p>Please enter your phone number and the way you want to receive the messages</p>
+    <p>
+        <form method="post" action='#'>
+            <table>
+                <tr>
+                  <td>Phone Number</td>
+                  <td><input type="text" name="number" /></td>
+                </tr>
+                <tr>
+                  <td>Way of Communication</td>
+                  <td>
+                    <select name="way_of_communication" >
+                     <option value='sms'>SMS</option>
+                     <option value='voice'>Voice Call</option>
+                    </select> 
+                  </td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><input type="submit" name="submit" 
+                             value="Save" id="id_submit" /></td>
+                </tr>
+	         </table>
+        </form>
+    </p>
+{% endblock %}
