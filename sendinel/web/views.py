@@ -81,14 +81,28 @@ def save_appointment(request):
                             context_instance=RequestContext(request))
 
 def send_appointment(request):
-    appointment = request.session.get('appointment', None)
-    mac_address = request.POST['device_mac'].strip()
-    
-    logger.info("started send_appointment to mac_address: " + mac_address)
-    
-    appointment.bluetooth_mac_address = mac_address
-    output_data = appointment.get_data_for_sending()
-    output_data.send()
+    if (request.method == "POST"):       
+        appointment = request.session.get('appointment', None)
+        mac_address = request.POST['device_mac'].strip()
+        
+        logger.info("started send_appointment to mac_address: " + mac_address)
+        
+        appointment.bluetooth_mac_address = mac_address
+        output_data = appointment.get_data_for_sending()
+        result = output_data.send()
+        if(result):
+            return HttpResponse(status = 200)
+        else:
+            return HttpResponse(status = 500)
+            
+    url = reverse("web_appointment_send")
+    next = reverse("web_index")
+    mac_address = request.GET['device_mac'].strip()
+    return render_to_response('web/send_bluetooth_appointment.html',
+                                locals(),
+                                context_instance=RequestContext(request))
+
+                              
     
     
 def authenticate_phonenumber(request):

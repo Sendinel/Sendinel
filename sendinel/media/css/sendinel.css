@@ -14,11 +14,8 @@ A:visited:hover{ color:#fcc533; text-decoration:underline; }
 
 img { border: 0px; }
 
-#loading {
-    text-align: center;
-}
-
-#auth {
+.centered {
+    width: 100%;
     text-align: center;
 }
 
