@@ -32,25 +32,25 @@ var numpad = {
     },
     
     convert_forms: function() {
-        console.log($(".selectable_form [name]"));
         $(".selectable_form [name]").each(function() {
             if($(this).hasClass("vDateField")) {
                 new numpad.inputs.DateField(this);
             }
+            else if($(this).hasClass("vTimeField")) {
+                new numpad.inputs.TimeField(this);
+            }
         });
         
-        // numpad.inputs.datetime.convert();
-        // numpad.conversions.convertDatetimes();
-        // numpad.inputs.convertSelects();
-        
+        $(".selectable_form").submit(this.submit);
+            
         numpad.selector = new ElementSelector($(".selectable"));
         numpad.selector.select(0); 
     },
     
     submit: function() {
         $(".selectable").each(function(index) {
-            if(this.handleSubmit) {
-                this.handleSubmit();
+            if(this.fieldObject && this.fieldObject.handleSubmit) {
+                this.fieldObject.handleSubmit();
             }
         })
     },

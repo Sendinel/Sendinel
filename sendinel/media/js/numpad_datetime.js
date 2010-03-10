@@ -1,10 +1,25 @@
 numpad.inputs.datetime = {
 
 
-    // '<p class="selectable times">' + 
-    //     '<input type="text" maxlength="2" name="" class="subselectable twocharinput" />:' + 
-    //     '<input type="text" maxlength="2" name="" class="subselectable twocharinput" />'+
-    // '</p>';
+    createField: function(htmlBlock, selectedClass) {
+        console.log("creating date field");
+
+        var fieldElement = $(htmlBlock)[0];
+        fieldElement.fieldObject = this;
+        console.log(fieldElement);
+        
+        $(fieldElement).children("input")
+            .focus(function(event) {
+                $(this).select();
+            })
+            .keydown(numpad.inputs.datetime.handleKeydown);
+        
+        this.selector = new ElementSelector($(fieldElement).children("input"));
+        this.selector.selectedClass = selectedClass;
+        
+        this.fieldElement = fieldElement;
+        $(this.originalField).after(fieldElement).hide();
+    },
     
     handleKeydown: function(event) {
         console.log("datetime handlekeydown");
@@ -44,22 +59,5 @@ numpad.inputs.datetime = {
         console.log($(this.fieldElement).children(".subselectable"));
         $(this.fieldElement).children(".subselectable").first().focus();
     },
-    
-    // handleSubmit: function() {
-    //     console.log("datetime handlesubmit");
-    //     console.log(this.originalField);
-    //     
-    //     var fields = $(this).children("input");
-    //     if(this.fieldType == "date") {
-    //         var date = $(fields[0]).val() + "-" + $(fields[1]).val()
-    //                     + "-" + $(fields[2]).val();
-    //         console.log(date);
-    //         $(this.originalField).val(date);
-    //     } else if(this.fieldType == "time") {
-    //         var time = $(fields[0]).val() + ":" + $(fields[1]).val();
-    //         console.log(time);
-    //         $(this.originalField).val(time);
-    //     }
-    // }
 };
 
