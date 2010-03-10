@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Members of {{infoservice}}</h3>
+    
+    <table cellspacing="0" cellpadding="3">
+        <tr>   
+            <td>Phone Number</td>
+            <td>Way of Communication</td>
+            <td />
+
+        </tr>
+    {% for subscription in subscriptions %}
+        
+        <tr>
+            <td>{{ subscription.patient.phone_number }}</td>
+            <td>{{ subscription.way_of_communication }}</td>
+            <td><a href="{% url staff_infoservice_members_delete id=infoservice.id, patient_id=subscription.patient.id%}">
+                                Remove Patient from Group</a></td>
+        </tr>
+        
+    {% endfor %}
+    
+    </table>
+    
+{% endblock %}
