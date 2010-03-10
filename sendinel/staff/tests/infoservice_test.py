@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 from sendinel.backend.models import ScheduledEvent, InfoService, InfoMessage, \
-                                    Subscription
+                                    Subscription, Patient, Subscription
 
 class InfoserviceTest(TestCase):
     
@@ -41,4 +41,42 @@ class InfoserviceTest(TestCase):
             
             self.assertEquals(message.way_of_communication,
                               subscription.way_of_communication)                  
+                              
+    def test_create_infoservice(self):
+        response = self.client.get(reverse('staff_index'))
+        self.assertContains(response, "Create new infoservice")
+        response = self.client.get(reverse("staff_infoservice_create"))
+        self.assertContains(response, 'name="name"')
+        response = self.client.post(reverse("staff_infoservice_create"), 
+                                {"name" : "This is a name for an infoservice"})
+        self.assertRedirects(response, reverse('staff_index'))
+        response = self.client.get(reverse("staff_list_infoservices"))
+        self.assertContains(response, "This is a name for an infoservice")
+        
+    def test_manage_infoservice_groups(self):
+        info = InfoService(name = "testgroup")
+        info.save()
+        patient = Patient(phone_number = "012345")
+        patient.save()
+        subscription = Subscription(infoservice = info, 
+                                    patient = patient,
+                                    way_of_communication = "voice")
+        subscription.save()
+        response = self.client.get(reverse("staff_list_infoservices"))
+        self.assertContains(response, "Manage members")
+        response = self.client.get(reverse("staff_infoservice_members", 
+                                           kwargs={"id": info.id}))
+        self.assertContains(response, patient.phone_number)
+        subscription_count = Subscription.objects.all().count()
+        patient_count = Patient.objects.all().count()
+        response = self.client.get(reverse("staff_infoservice_members_delete", 
+                                           kwargs={"id": info.id, 
+                                                   "patient_id": patient.id}))
+
+        self.assertRedirects(response, reverse("staff_infoservice_members", 
+                                               kwargs={"id": info.id}))     
+        self.assertEquals(Subscription.objects.all().count(), subscription_count - 1)
+        self.assertEquals(Patient.objects.all().count(), patient_count - 1)
+                                         
+        
         

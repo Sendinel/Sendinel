@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 
 from sendinel.backend.models import InfoService, ScheduledEvent, InfoMessage, \
-                                    Subscription
+                                    Subscription, Patient
 from datetime import datetime
 
 from sendinel.staff.forms import InfoMessageForm
@@ -66,3 +66,29 @@ def list_infoservices(request):
     return render_to_response("staff/list_infoservices.html",
                                 locals(),
                                 context_instance = RequestContext(request))
+                                
+def create_infoservice(request):
+    if request.method == "POST":
+        infoservice = InfoService(name = request.POST["name"])
+        infoservice.save()
+        return HttpResponseRedirect(reverse('staff_index'))
+    return render_to_response("staff/infoservice_create.html",
+                                locals(),
+                                context_instance = RequestContext(request))    
+                                
+def list_members_of_infoservice(request, id):   
+    infoservice = InfoService.objects.filter(pk = id)[0]
+    subscriptions = Subscription.objects.filter(infoservice = id)
+    return render_to_response("staff/infoservice_members.html",
+                                locals(),
+                                context_instance = RequestContext(request))  
+
+def delete_members_of_infoservice(request, id, patient_id):
+    patient = Patient.objects.filter(pk = patient_id)[0]
+    infoservice = InfoService.objects.filter(pk = id)[0]
+    subscription = Subscription.objects.filter(patient = patient, 
+                                               infoservice = infoservice)
+    patient.delete()
+    subscription.delete()
+    return HttpResponseRedirect(reverse("staff_infoservice_members", 
+                                   kwargs={"id": infoservice.id}))
