@@ -1,6 +1,5 @@
-import sms
-import bluetooth
-import voicecall
+from sendinel.backend import sms, bluetooth, voicecall
+
 
 class OutputData(object):
     """

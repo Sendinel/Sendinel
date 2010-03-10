@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Choose what you want to do:</h3>
+    <p>
+        <ul id="navlist">
+            <a href="{% url web_appointment_create %}">Add an appointment</a>
+        </ul>
+    </p>
+    <p>
+        <h4>Register for Information Services</h4>
+        <ul id="informationservices">
+            {% for service in informationservices %}
+                <li><a href="{% url web_infoservice_register id=service.id %}">{{service}}</a></li>
+            {% endfor %}
+        </ul>
+    </p>
+    <p>
+        <a href="{% url sendinel.staff.views.index %}">Staff</a>
+    </p>
+{% endblock %}

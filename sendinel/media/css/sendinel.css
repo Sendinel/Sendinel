@@ -12,6 +12,15 @@ A:active:hover{ color:#fcc533; text-decoration:underline; }
 A:visited{ color:#999999; text-decoration:none; }
 A:visited:hover{ color:#fcc533; text-decoration:underline; }
 
+img { border: 0px; }
+
+#loading {
+    text-align: center;
+}
+
+#auth {
+    text-align: center;
+}
 
 #wrap{
 width:800px;
@@ -105,4 +114,7 @@ th {
     vertical-align: top;
 }
 
+img {
+    border-width: 0;
+}
 

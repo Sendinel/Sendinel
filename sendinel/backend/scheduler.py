@@ -1,22 +1,35 @@
 import time
+
 from datetime import datetime
+from itertools import chain
+
 from django.core.management import setup_environ
+
 from sendinel import settings
+from sendinel.backend.models import ScheduledEvent, InfoMessage,\
+                                    HospitalAppointment
+from sendinel.logger import logger
+
 setup_environ(settings)
 
-from sendinel.backend.models import ScheduledEvent
+def get_all_due_events():
+    return ScheduledEvent.objects \
+                    .filter(state__exact = 'new') \
+                    .filter(send_time__lte=datetime.now())
+
 
 def run(run_only_one_time = False):
-    while True:
-        dueEvents = ScheduledEvent.objects \
-                        .filter(state__exact = 'new') \
-                        .filter(send_time__lte=datetime.now())
+    while True:        
+                 
+        dueEvents = get_all_due_events()
+                         
         for event in dueEvents:
             try:
                 data = event.sendable.get_data_for_sending()
-                print "Trying to send: %s" % str(event.sendable)
+                logger.info("Trying to send: %s" % str(event.sendable))
             except Exception as e:
-                print "Failed to get data for " + event + " exception " + str(e)
+                logger.error("Failed to get data for " + str(event) + \
+                             " exception " + str(e))
                 
                 event.state = "failed"
                 event.save()
@@ -24,11 +37,11 @@ def run(run_only_one_time = False):
             
             # TODO error handling
             try:
-                for entry in data:
-                    print "  sending: %s" % str(entry)
-                    entry.send()
+                logger.info("  sending: %s" % str(data))
+                data.send()
             except Exception as e:
-                print "Failed to send: " + str(entry) + " exception " + str(e)
+                logger.error("Failed to send: " + str(data) + \
+                             " exception " + str(e))
                 event.state = "failed"
                 event.save()
                     
