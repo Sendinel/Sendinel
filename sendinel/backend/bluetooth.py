@@ -41,3 +41,4 @@ def send_vcal(server_address, mac, data):
     
     conn = set_connection_to_bluetooth(server_address)
     result = conn.Actions.sendVCalFile(mac, data, "reminder.vcs")
+    return (result == "done")
