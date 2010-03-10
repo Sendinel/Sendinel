@@ -26,6 +26,9 @@ var numpad = {
         var el = numpad.selector.getSelected();
         if(el.tagName.toLowerCase() == "a") {
             window.location = el.href;
+        } else if (el.type && el.type.toLowerCase() == "submit") {
+            this.submit();
+            el.form.submit();
         } else {
             $(numpad.selector.getSelected()).trigger('click');
         }

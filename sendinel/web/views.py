@@ -29,9 +29,10 @@ def create_appointment(request):
     admin_media_prefix = ADMIN_MEDIA_PREFIX
     if request.method == "POST":
         form = HospitalAppointmentForm(request.POST)
+        # import pdb; pdb.set_trace()
         if form.is_valid():
             appointment = form.save(commit=False)
-            patient = Patient(name = form.cleaned_data['recipient_name'])
+            patient = Patient()
             request.session['appointment'] = appointment
             request.session['patient'] = patient            
             
@@ -51,14 +52,8 @@ def create_appointment(request):
                                 locals(),
                                 context_instance=RequestContext(request))
     else:
-        #TODO: initiale Dateneintraege funktionieren noch nicht
-        # try:
-        #     initial_data = {'doctor': unicode(Doctor.objects.all().get())}
-        # except Doctor.DoesNotExist:
-        #     initial_data = {}
-        initial_data = {'way_of_communication': \
-                        Sendable.WAYS_OF_COMMUNICATION[0][1]}
-        form = HospitalAppointmentForm(initial = initial_data)
+        #TODO: initiale Dateneintraege
+        form = HospitalAppointmentForm()
         return render_to_response('web/appointment_create.html',
                                 locals(),
                                 context_instance=RequestContext(request))

@@ -20,7 +20,7 @@ class User(models.Model):
    
     
     def __unicode__(self):
-        return self.name
+        return "User %s" % self.name
     
 class Doctor(User):
     """
@@ -36,6 +36,9 @@ class Patient(User):
     
     def groups(self):
         return Usergroup.objects.filter(members__id = self.id)
+    
+    def __unicode__(self):
+        return "Patient %s" % self.name
 
 
 class Hospital(models.Model):
