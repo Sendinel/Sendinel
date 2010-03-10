@@ -8,7 +8,9 @@ from sendinel.settings import DEFAULT_HOSPITAL_NAME, \
                               REMINDER_TIME_BEFORE_APPOINTMENT, \
                               BLUETOOTH_SERVER_ADDRESS  
 from sendinel.backend import texthelper, vcal
-from sendinel.backend.output import SMSOutputData, VoiceOutputData
+from sendinel.backend.output import SMSOutputData, \
+                                    VoiceOutputData, \
+                                    BluetoothOutputData
 
 
 class User(models.Model):
@@ -48,7 +50,19 @@ class Hospital(models.Model):
     
     def __unicode__(self):
         return self.name
-        
+    
+    @classmethod
+    def get_current_hospital(cls):
+        """
+        Return the standard current hospital
+        """
+        try:
+            hospital = Hospital.objects.get(current_hospital = True)
+        except Hospital.DoesNotExist:
+            hospital = Hospital(name = DEFAULT_HOSPITAL_NAME, \
+            current_hospital = True)
+            hospital.save() 
+        return hospital    
         
 class Usergroup(models.Model):
     """
@@ -134,28 +148,33 @@ class HospitalAppointment(Sendable):
     hospital = models.ForeignKey(Hospital)
     template = Template("Dear $name, please remember your appointment" + \
                          " at the $hospital at $date with doctor $doctor")
-    
+                         
     def get_data_for_bluetooth(self):
         """
         Prepare OutputData for voice.
         Generate the message for an HospitalAppointment.
         Return BluetoothOutputData for sending.
 
-        TODO: Implement it...
         """
         data = BluetoothOutputData()
         data.bluetooth_mac_address = self.bluetooth_mac_address
-        data.server_address = settings.BLUETOOTH_SERVER_ADDRESS
+        data.server_address = BLUETOOTH_SERVER_ADDRESS
+        
+        try:
+            self.hospital
+        except Hospital.DoesNotExist:
+            self.hospital = Hospital.get_current_hospital()
+        
         content = "Please remember your Appointment tomorrow at "\
                     + self.hospital.name\
                     + " by doctor "\
                     + self.doctor.name
-        uid = vcal.get_uid(self)
+        uid = vcal.get_uid()
         data.data = vcal.create_vcal_string(self.date, 
                                             self.hospital, 
                                             content,
                                             uid)
-        pass
+        return [data]
 
  
     def get_data_for_sms(self):
@@ -211,18 +230,12 @@ class HospitalAppointment(Sendable):
         Save appointment with patient & hospital and create a scheduled event
         """
         patient.save()
-        try:
-            hospital = Hospital.objects.get(current_hospital = True)
-        except Hospital.DoesNotExist:
-            hospital = Hospital(name = DEFAULT_HOSPITAL_NAME, \
-                                current_hospital = True)
-            hospital.save() 
+        self.hospital = Hospital.get_current_hospital()
         self.recipient = patient
-        self.hospital = hospital
         self.save()
         self.create_scheduled_event()    
         return self
-       
+        
 class InfoMessage(Sendable):
     """
     Define a InfoMessage.
