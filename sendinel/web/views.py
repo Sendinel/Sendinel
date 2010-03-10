@@ -108,21 +108,19 @@ def authenticate_phonenumber(request):
 def check_call_received(request):
     response_dict = {}
 
-    # try:
-        # response_dict["status"] = "failed"
+    try:
+        response_dict["status"] = "failed"
 
-        # number = request.session['authenticate_phonenumber']['number']
-        # start_time = request.session['authenticate_phonenumber']['start_time']
+        number = request.session['authenticate_phonenumber']['number']
+        start_time = request.session['authenticate_phonenumber']['start_time']
     
-        # if (start_time + AUTHENTICATION_CALL_TIMEOUT) >= datetime.now():
-            # if check_and_delete_authentication_call(number):
-                # response_dict["status"] = "received"
-            # else:
-                # response_dict["status"] = "waiting"
-    # except KeyError:
-        # pass
-        
-    response_dict['status'] = 'received'
+        if (start_time + AUTHENTICATION_CALL_TIMEOUT) >= datetime.now():
+            if check_and_delete_authentication_call(number):
+                response_dict["status"] = "received"
+            else:
+                response_dict["status"] = "waiting"
+    except KeyError:
+        pass
 
     return HttpResponse(content = simplejson.dumps(response_dict),
                         content_type = "application/json")
@@ -172,12 +170,11 @@ def register_infoservice(request, id):
                               
                               
 def save_registration_infoservice(request, id):
-    import pdb; pdb.set_trace()
     patient = Patient(phone_number = \
                       request.session['authenticate_phonenumber']['number'])
     patient.save()
     way_of_communication = request.session['way_of_communication']
-    infoservice = InfoService.objects.get(pk = id)
+    infoservice = InfoService.objects.filter(pk = id)[0]
     subscription = Subscription(patient = patient,
                                 way_of_communication = way_of_communication,
                                 infoservice = infoservice)
