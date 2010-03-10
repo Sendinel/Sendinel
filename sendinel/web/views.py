@@ -11,7 +11,7 @@ from sendinel.backend.authhelper import check_and_delete_authentication_call, \
                                     delete_timed_out_authentication_calls, \
                                     format_phonenumber
 from sendinel.backend.models import Patient, ScheduledEvent, Sendable, \
-                                    InfoService
+                                    InfoService, Subscription
 from sendinel.web.forms import HospitalAppointmentForm
 from sendinel.settings import   AUTH_NUMBER, \
                                 BLUETOOTH_SERVER_ADDRESS, \
@@ -94,13 +94,8 @@ def send_appointment(request):
 def authenticate_phonenumber(request):
     next = ''
     if request.method == "POST":
-        number = request.POST["number"].strip()
-
-        number = format_phonenumber(number, COUNTRY_CODE_PHONE, START_MOBILE_PHONE)
+        number = fill_authentication_session_variable(request)
         auth_number = AUTH_NUMBER
-        request.session['authenticate_phonenumber'] = \
-                                { 'number': number,
-                                  'start_time': datetime.now() }
         next = request.GET.get('next','')
         return render_to_response('web/authenticate_phonenumber_call.html', 
                               locals(),
@@ -112,7 +107,8 @@ def authenticate_phonenumber(request):
     patient = request.session.get('patient', None)
     if(patient):
         patient_name = patient.name
-    
+   
+    # was macht die Zeile? next wird doch erst spaeter gefuellt   
     locals().update({'next': next})
     return render_to_response('web/authenticate_phonenumber.html', 
                               locals(),
@@ -164,16 +160,43 @@ def get_bluetooth_devices(request):
         return HttpResponse(status = 500)
         
 def register_infoservice(request, id):
-    request.session['infoservice_message'] = "In order to register for the " + \
-                                "informationservice " + \
-                                InfoService.objects.filter(pk = id)[0].name + \
-                                "you have to authenticate your phone"
-    return HttpResponseRedirect(reverse('web_authenticate_phonenumber'))
-                             # "?next=" + 
-                             # reverse('web_infoservice_register', \
-                                     # kwargs={'id': id}))
-    # return render_to_response('web/register_infoservice.html',
-                              # locals(),
-                              # context_instance=RequestContext(request))
+    if request.method == "POST":
+        request.session['way_of_communication'] = \
+                                        request.POST['way_of_communication']
+        number = fill_authentication_session_variable(request) 
+        auth_number = AUTH_NUMBER
+        next = reverse('web_infoservice_register_save', kwargs = {'id': id})
+        url = reverse('web_check_call_received')
+        return render_to_response('web/authenticate_phonenumber_call.html', 
+            locals(),
+            context_instance = RequestContext(request))
+    infoservice = InfoService.objects.filter(pk = id)[0].name
+    
+    return render_to_response('web/infoservice_register.html', 
+                              locals(),
+                              context_instance = RequestContext(request))
+
+  
+                              
+                              
+def save_registration_infoservice(request, id):
+    patient = Patient(phone_number = \
+                      request.session['authenticate_phonenumber']['number'])
+    patient.save()
+    way_of_communication = request.session['way_of_communication']
+    infoservice = InfoService.objects.filter(pk = id)[0]
+    subscription = Subscription(patient = patient,
+                                way_of_communication = way_of_communication,
+                                infoservice = infoservice)
+    subscription.save()
+    
+    return HttpResponseRedirect(reverse('web_index'))
         
 
+def fill_authentication_session_variable(request):
+    number = request.POST["number"].strip()
+    number = format_phonenumber(number, COUNTRY_CODE_PHONE, START_MOBILE_PHONE)
+    request.session['authenticate_phonenumber'] = \
+                            { 'number': number,
+                              'start_time': datetime.now() }
+    return number
