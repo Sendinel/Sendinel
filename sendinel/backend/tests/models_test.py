@@ -20,7 +20,20 @@ class SendableTest(TestCase):
 
     def test_sendable_get_data_for_sending(self):
         pass
-        
+
+class HospitalTest(TestCase):
+    fixtures = ['backend']
+    
+    def test_get_hospital_no_hospital(self):
+        Hospital.objects.all().delete()
+        hospital = Hospital.get_current_hospital()
+        self.assertTrue(1, Hospital.objects.all().count())
+        self.assertEquals(Hospital.objects.all()[0].name, settings.DEFAULT_HOSPITAL_NAME)
+        self.assertEquals(hospital.name, settings.DEFAULT_HOSPITAL_NAME)
+    
+    def test_get_hospital_with_hospital(self):
+        hospital = Hospital.objects.get(current_hospital = True)
+        self.assertEquals(Hospital.get_current_hospital(), hospital)
 
 class HospitalAppointmentTest(TestCase):
     fixtures = ['backend']
@@ -43,31 +56,14 @@ class HospitalAppointmentTest(TestCase):
                             settings.REMINDER_TIME_BEFORE_APPOINTMENT
         self.assertEquals(scheduled_event.send_time,
                             send_time_should)
-                            
-    def test_save_with_patient_no_hospital(self):
-        Hospital.objects.all().delete()
-        try:
-            self.appointment.hospital
-            self.fail()
-        except Hospital.DoesNotExist:
-            pass
-        patient = Patient(name="Test Person", phone_number="030123456789")
-        self.appointment.save_with_patient(patient)
-        self.assertTrue(1, Hospital.objects.all().count())
-        
-        self.assertEquals(Hospital.objects.all()[0].name, 
-                          settings.DEFAULT_HOSPITAL_NAME)
-                          
-        self.assertEquals(self.appointment.hospital.name, 
-                          settings.DEFAULT_HOSPITAL_NAME)
 
-    def test_save_with_patient_with_hospital(self):
+    def test_save_with_patient(self):
         patient = Patient(name="Test Person", phone_number="030123456789")
         hospital = self.appointment.hospital
         self.appointment.save_with_patient(patient)
         self.assertEquals(self.appointment.recipient, patient)
-        self.assertEquals(self.appointment.hospital, hospital)
-        
+        self.assertEquals(self.appointment.hospital, hospital) 
+    
 class ModelsSMSTest(TestCase):
     
     fixtures = ['backend']

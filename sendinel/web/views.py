@@ -19,6 +19,7 @@ from sendinel.settings import   AUTH_NUMBER, \
                                 COUNTRY_CODE_PHONE, START_MOBILE_PHONE, \
                                 ADMIN_MEDIA_PREFIX
 from sendinel.backend import bluetooth
+from sendinel.logger import logger
 
 
 def index(request):
@@ -80,7 +81,15 @@ def save_appointment(request):
                             context_instance=RequestContext(request))
 
 def send_appointment(request):
-    pass
+    appointment = request.session.get('appointment', None)
+    mac_address = request.POST['device_mac'].strip()
+    
+    logger.info("started send_appointment to mac_address: " + mac_address)
+    
+    appointment.bluetooth_mac_address = mac_address
+    output_data = appointment.get_data_for_sending()[0]
+    output_data.send()
+    
     
 def authenticate_phonenumber(request):
     next = ''
@@ -130,6 +139,7 @@ def check_call_received(request):
                         content_type = "application/json")
 
 def list_bluetooth_devices(request):
+    next = request.GET.get('next','')
     return render_to_response('web/list_devices.html',
                                 locals(),
                                 context_instance=RequestContext(request))

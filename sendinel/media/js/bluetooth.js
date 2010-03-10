@@ -35,16 +35,18 @@ var check_for_devices = function() {
                     
                     var name_form = document.createElement("form");
                     var action = document.createAttribute("action");
-                    action.nodeValue = "#";
-                    var method = document.createAttribute("method");
+                    action.nodeValue = $("#next").attr("value");                   var method = document.createAttribute("method");
                     method.nodeValue = "POST";
+                    
                     var form_name = document.createAttribute("name");
                     form_name.nodeValue = "form"+index;
                     name_form.setAttributeNode(action);
                     name_form.setAttributeNode(method);
                     name_form.setAttributeNode(form_name);
                     name_form.appendChild(hidden_name);
-                    name_form.appendChild(name_link);                    
+                    name_form.appendChild(name_link);
+                    var csrf = $("#csrf input").clone(); 
+                    csrf.appendTo(name_form);
                     
                     id_td.innerHTML = index+1;
                     name_td.appendChild(name_form);

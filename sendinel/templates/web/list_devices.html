@@ -12,5 +12,7 @@
             <img src="{{ MEDIA_URL }}/img/progress_bar.gif" /><br />
             Looking for further devices
         </div>
+        <span id="csrf">{% csrf_token %}</span>
+        <input type="hidden" id="next" value="{{ next }}">
     </p>
 {% endblock %}

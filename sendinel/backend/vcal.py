@@ -2,13 +2,12 @@
 
 import settings
 
-def create_vcal_string(start_date, end_date, location, content, uid):
+def create_vcal_string(start_date, location, content, uid):
     """
+        Create valid content of an vcal file.
+    
         @param  start_date:  Start Date of the appointment
         @type   start_date:  Datetime
-        
-        @param  end_date:    End Date of the appointment
-        @type   end_date:    Datetime
         
         @param  location:   Location for the appointment
         @type   location:   String
@@ -23,23 +22,22 @@ def create_vcal_string(start_date, end_date, location, content, uid):
     """
     time_delta = settings.REMINDER_TIME_BEFORE_APPOINTMENT
     #need time difference in minutes for alarm
-    alarm_time = (time_delta.days * 1440) + (time_delta.seconds/60)
+    alarm_time = start_date - time_delta
+    end_date = start_date + settings.DEFAULT_APPOINTMENT_DURATION
     
     vcal_data = \
 """BEGIN:VCALENDAR
-VERSION:2.0
+VERSION:1.0
 BEGIN:VEVENT
-UID:%(uid)d
-SUMMARY:%(content)s
-DTSTAMP:%(stamp)s
+UID:%(uid)s
 DTSTART:%(start)s
 DTEND:%(end)s
-LOCATION:%(location)s
-BEGIN:VALARM
-TRIGGER:-PT%(alarm)dM
-ACTION:DISPLAY
 DESCRIPTION:%(content)s
-END:VALARM
+SUMMARY:%(content)s
+DTSTAMP:%(stamp)s
+LOCATION:%(location)s
+DALARM:%(alarm)s
+AALARM:%(alarm)s
 END:VEVENT
 END:VCALENDAR""" % {\
     'uid': uid,
@@ -48,7 +46,14 @@ END:VCALENDAR""" % {\
     'start': start_date.strftime("%Y%m%dT%H%M%SZ"),
     'end': end_date.strftime("%Y%m%dT%H%M%SZ"),
     'stamp': datetime.now().strftime("%Y%m%dT%H%M%SZ"),    
-    'alarm': alarm_time}
+    'alarm': alarm_time.strftime("%Y%m%dT%H%M%SZ")}
     
     return vcal_data
+    
+def get_uid():
+    """
+        Calculate a unique UID for a vcal by using appointment id and a time.
+    """
+    date_time = datetime.now().strftime("%Y%m%dT%H%M%S")
+    return "%s@%s" % (date_time, settings.VCAL_UID_SLUG)
     
