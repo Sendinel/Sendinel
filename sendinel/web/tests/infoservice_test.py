@@ -3,6 +3,7 @@ from datetime import datetime
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from sendinel.backend.models import InfoService
+from sendinel.utils import last
 
 class InfoServiceTest(TestCase):
     def setUp(self):
@@ -34,10 +35,17 @@ class InfoServiceTest(TestCase):
         self.assertEquals(response.status_code, 200)
       
     def test_save_registration_infoservice(self):
-        self.client.get(reverse('web_infoservice_register', 
+        subscription_count = Subscription.objects.all().count()
+      
+      self.client.get(reverse('web_infoservice_register', 
                                     kwargs={'id': self.info.id}))
         response = self.client.get(reverse('web_authenticate_phonenumber') + \
                               "?next=" + 
                               reverse('web_infoservice_register_save', \
                                       kwargs={'id': self.info.id}))
+                                      
+        self.assertEquals(Subscription.objects.all().count(), subscription_count + 1)
+        new_subscription = last(Subscription)
+        self.assertEquals(new_subscription, 
+                                      
                                       

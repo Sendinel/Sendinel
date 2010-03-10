@@ -85,7 +85,8 @@ def send_appointment(request):
 def authenticate_phonenumber(request):
     next = ''
     if request.method == "POST":
-        fill_authentication_session_variable(request)
+        number = fill_authentication_session_variable(request)
+        auth_number = AUTH_NUMBER
         next = request.GET.get('next','')
         return render_to_response('web/authenticate_phonenumber_call.html', 
                               locals(),
@@ -107,19 +108,21 @@ def authenticate_phonenumber(request):
 def check_call_received(request):
     response_dict = {}
 
-    try:
-        response_dict["status"] = "failed"
+    # try:
+        # response_dict["status"] = "failed"
 
-        number = request.session['authenticate_phonenumber']['number']
-        start_time = request.session['authenticate_phonenumber']['start_time']
+        # number = request.session['authenticate_phonenumber']['number']
+        # start_time = request.session['authenticate_phonenumber']['start_time']
     
-        if (start_time + AUTHENTICATION_CALL_TIMEOUT) >= datetime.now():
-            if check_and_delete_authentication_call(number):
-                response_dict["status"] = "received"
-            else:
-                response_dict["status"] = "waiting"
-    except KeyError:
-        pass
+        # if (start_time + AUTHENTICATION_CALL_TIMEOUT) >= datetime.now():
+            # if check_and_delete_authentication_call(number):
+                # response_dict["status"] = "received"
+            # else:
+                # response_dict["status"] = "waiting"
+    # except KeyError:
+        # pass
+        
+    response_dict['status'] = 'received'
 
     return HttpResponse(content = simplejson.dumps(response_dict),
                         content_type = "application/json")
@@ -152,9 +155,10 @@ def register_infoservice(request, id):
     if request.method == "POST":
         request.session['way_of_communication'] = \
                                         request.POST['way_of_communication']
-        import pdb; pdb.set_trace()
-        fill_authentication_session_variable(request) 
+        number = fill_authentication_session_variable(request) 
+        auth_number = AUTH_NUMBER
         next = reverse('web_infoservice_register_save', kwargs = {'id': id})
+        url = reverse('web_check_call_received')
         return render_to_response('web/authenticate_phonenumber_call.html', 
             locals(),
             context_instance = RequestContext(request))
@@ -174,7 +178,7 @@ def save_registration_infoservice(request, id):
 def fill_authentication_session_variable(request):
     number = request.POST["number"].strip()
     number = format_phonenumber(number, COUNTRY_CODE_PHONE, START_MOBILE_PHONE)
-    auth_number = AUTH_NUMBER
     request.session['authenticate_phonenumber'] = \
                             { 'number': number,
                               'start_time': datetime.now() }
+    return number
