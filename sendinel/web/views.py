@@ -32,6 +32,7 @@ def create_appointment(request):
     admin_media_prefix = ADMIN_MEDIA_PREFIX
     if request.method == "POST":
         form = HospitalAppointmentForm(request.POST)
+       
         if form.is_valid():
             appointment = form.save(commit=False)
             patient = Patient(name = form.cleaned_data['recipient_name'])
@@ -81,7 +82,8 @@ def save_appointment(request):
                             context_instance=RequestContext(request))
 
 def send_appointment(request):
-    if (request.method == "POST"):       
+    if (request.method == "POST"):
+       
         appointment = request.session.get('appointment', None)
         mac_address = request.POST['device_mac'].strip()
         
@@ -102,9 +104,7 @@ def send_appointment(request):
                                 locals(),
                                 context_instance=RequestContext(request))
 
-                              
-    
-    
+  
 def authenticate_phonenumber(request):
     next = ''
     if request.method == "POST":
