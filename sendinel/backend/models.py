@@ -171,7 +171,7 @@ class HospitalAppointment(Sendable):
                                             self.hospital, 
                                             content,
                                             uid)
-        return [data]
+        return data
 
  
     def get_data_for_sms(self):
@@ -209,7 +209,7 @@ class HospitalAppointment(Sendable):
                         HospitalAppointment.template, False)
         data.phone_number = self.recipient.phone_number
 
-        return [data]
+        return data
 
     def create_scheduled_event(self, send_time=None):
         """
@@ -250,7 +250,6 @@ class InfoMessage(Sendable):
         Return SMSOutputData for sending.
         """
         
-        # TODO implement data as a list
         data = SMSOutputData()           
         data.data = texthelper.generate_text({'text': self.text},
                                              InfoMessage.template)
@@ -259,14 +258,15 @@ class InfoMessage(Sendable):
         return data
         
     def get_data_for_voice(self):
-        data = []
+        """
+        Prepare OutputData for voicecall.
+        Generate the message for an InfoMessage.
+        Return VoiceOutputData for sending.
+        """
         
-        for patient in self.recipient.members.all():
-            entry = VoiceOutputData()
-            entry.data = self.text
-            entry.phone_number = patient.phone_number
-            
-            data.append(entry)
+        data = VoiceOutputData()
+        data.data = self.text
+        data.phone_number = self.recipient.phone_number
             
         return data
     

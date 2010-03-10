@@ -39,7 +39,7 @@ class HospitalAppointmentTest(TestCase):
     fixtures = ['backend']
     
     def setUp(self):
-      self.appointment = HospitalAppointment.objects.get(id = 1)
+        self.appointment = HospitalAppointment.objects.get(id = 1)
 
     def test_create_scheduled_event(self):
         number_of_events = ScheduledEvent.objects.count()
@@ -63,31 +63,60 @@ class HospitalAppointmentTest(TestCase):
         self.appointment.save_with_patient(patient)
         self.assertEquals(self.appointment.recipient, patient)
         self.assertEquals(self.appointment.hospital, hospital) 
+        
+    def test_get_data_for_bluetooth(self):
+        #create new appointment without saving
+        appointment = HospitalAppointment()        
+        appointment.date = datetime(2010, 4, 4)
+        appointment.doctor = Doctor.objects.get(pk = 1)
+        appointment.bluetooth_mac_address = "00AA11BB22"
+        
+        output_data = appointment.get_data_for_bluetooth()
+        
+        self.assertEquals(type(output_data), BluetoothOutputData)
+        self.assertEquals(output_data.bluetooth_mac_address, "00AA11BB22")
+        self.assertEquals(output_data.server_address, settings.BLUETOOTH_SERVER_ADDRESS)
+        self.assertEquals(type(output_data.data).__name__, "unicode") 
     
-class ModelsSMSTest(TestCase):
-    
+    def test_get_data_for_sms(self):
+        self.appointment.recipient.phone_number = "012345678"
+        output_data = self.appointment.get_data_for_sms()
+        
+        self.assertEquals(type(output_data), SMSOutputData)
+        self.assertEquals(output_data.phone_number, "012345678")
+        self.assertEquals(type(output_data.data), unicode)
+        
+    def test_get_data_for_voice(self):
+        self.appointment.recipient.phone_number = "012345678"
+        output_data = self.appointment.get_data_for_voice()
+        
+        self.assertEquals(type(output_data), VoiceOutputData)
+        self.assertEquals(output_data.phone_number, "012345678")
+        self.assertEquals(type(output_data.data), unicode)
+        
+class InfoMessageTest(TestCase):
     fixtures = ['backend']
     
-    def test_hospital_appointment_get_data_for_sms(self):
-        smsoutputdata1 = SMSOutputData()
-        smsoutputdata1.phone_number = "01621785295"
-        appointment = HospitalAppointment.objects.get(pk = 1).get_data_for_sms()
-        
-        self.assertEquals(type(appointment), SMSOutputData)
-        self.assertEquals(appointment.phone_number, "01621785295")
-        self.assertEquals(type(appointment.data), unicode)
-        
-    def test_info_message_get_data_for_sms(self):
-        number = u"01621785295"
-        info_output = InfoMessage.objects.get(pk = 1).get_data_for_sms()
-        recipient = InfoMessage.objects.get(pk = 1).recipient
+    def setUp(self):
+        self.info_message = InfoMessage.objects.get(pk = 1)
+    
+    def test_get_data_for_sms(self):
+        self.info_message.recipient.phone_number = "012345678"        
+        info_output = self.info_message.get_data_for_sms()
 
         self.assertEquals(type(info_output), SMSOutputData)
-        self.assertEquals(info_output.phone_number, recipient.phone_number)
+        self.assertEquals(info_output.phone_number, "012345678")
         self.assertEquals(type(info_output.data), unicode)
-            
         
-class ModelsInfoServiceTest(TestCase):
+    def test_get_data_for_voice(self):
+        self.info_message.recipient.phone_number = "012345678"
+        output_data = self.info_message.get_data_for_voice()
+        
+        self.assertEquals(type(output_data), VoiceOutputData)
+        self.assertEquals(output_data.phone_number, "012345678")
+        self.assertEquals(type(output_data.data), unicode)
+    
+class InfoServiceTest(TestCase):
     def setUp(self):
         self.infoservice = InfoService(name = "Gruppe")
         self.infoservice.save()
