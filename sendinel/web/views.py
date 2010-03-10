@@ -19,6 +19,7 @@ from sendinel.settings import   AUTH_NUMBER, \
                                 COUNTRY_CODE_PHONE, START_MOBILE_PHONE, \
                                 ADMIN_MEDIA_PREFIX
 from sendinel.backend import bluetooth
+from sendinel.logger import logger
 
 
 def index(request):
@@ -31,6 +32,7 @@ def create_appointment(request):
     admin_media_prefix = ADMIN_MEDIA_PREFIX
     if request.method == "POST":
         form = HospitalAppointmentForm(request.POST)
+       
         if form.is_valid():
             appointment = form.save(commit=False)
             patient = Patient(name = form.cleaned_data['recipient_name'])
@@ -80,8 +82,29 @@ def save_appointment(request):
                             context_instance=RequestContext(request))
 
 def send_appointment(request):
-    pass
-    
+    if (request.method == "POST"):
+       
+        appointment = request.session.get('appointment', None)
+        mac_address = request.POST['device_mac'].strip()
+        
+        logger.info("started send_appointment to mac_address: " + mac_address)
+        
+        appointment.bluetooth_mac_address = mac_address
+        output_data = appointment.get_data_for_sending()
+        result = output_data.send()
+        if(result):
+            return HttpResponse(status = 200)
+        else:
+            return HttpResponse(status = 500)
+            
+    url = reverse("web_appointment_send")
+    next = reverse("web_index")
+    mac_address = request.GET['device_mac'].strip()
+    return render_to_response('web/send_bluetooth_appointment.html',
+                                locals(),
+                                context_instance=RequestContext(request))
+
+  
 def authenticate_phonenumber(request):
     next = ''
     if request.method == "POST":
@@ -126,6 +149,7 @@ def check_call_received(request):
                         content_type = "application/json")
 
 def list_bluetooth_devices(request):
+    next = request.GET.get('next','')
     return render_to_response('web/list_devices.html',
                                 locals(),
                                 context_instance=RequestContext(request))

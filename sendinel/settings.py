@@ -102,6 +102,7 @@ INSTALLED_APPS = (
 ####################################
 # Sendinel Configuration
 REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days = 1)
+DEFAULT_APPOINTMENT_DURATION = timedelta(minutes = 60)
 DEFAULT_HOSPITAL_NAME = 'your hospital'
 
 COUNTRY_CODE_PHONE = "0049" #"0027"
@@ -126,6 +127,9 @@ SERIALPORTSMS = '/dev/rfcomm0'
 
 # IP address to bluetooth server
 BLUETOOTH_SERVER_ADDRESS = '127.0.0.1'
+
+# used for marking the vcal uid
+VCAL_UID_SLUG = 'sendinel.org'
 ####################################
 
 # Setup Local_Settings if present
