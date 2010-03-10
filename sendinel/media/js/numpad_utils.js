@@ -23,12 +23,10 @@ numpad.utils = {
         var fieldObject = $(event.target).parent()[0].fieldObject;
         switch(event.keyCode) {
             case 37: // Arrow left
-                console.log("select the previous field");
                 fieldObject.selector.selectPrevious();
                 $(fieldObject.selector.getSelected()).focus();
                 break;
             case 39: // Arrow right
-                console.log("select the next field");
                 fieldObject.selector.selectNext();
                 $(fieldObject.selector.getSelected()).focus();
                 break;
@@ -41,17 +39,11 @@ numpad.utils = {
 
     // functions that get binded to selectables
     handleDeselected: function() {
-        console.log("deselected: ");
-        console.log(this);
-
         var selectedClass = this.selector.selectedClass;
         this.selector.selectables.removeClass(selectedClass);
     },
     
     handleSelected: function() {
-        console.log("selected: ");
-        console.log(this);
-
         this.selector.select(0);
         this.selector.selectables.first().focus();
     },

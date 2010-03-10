@@ -40,13 +40,11 @@ var numpad = {
                 new numpad.inputs.TimeField(this);
             }
             else if(this.tagName.toLowerCase() == "select") {
-                console.log("SELECT");
                 new numpad.inputs.SelectField(this);
             }
-            console.log(this.tagName);            
         });
         
-        $(".selectable_form").submit(this.submit);
+        $(".selectable_form").submit(numpad.submit);
             
         numpad.selector = new ElementSelector($(".selectable"));
         numpad.selector.select(0); 
@@ -60,18 +58,7 @@ var numpad = {
         })
     },
     
-    inputs: {
-        convertDatetimes: function() {
-            $(".selectable_form .datetime").each(function(index) {
-               $(this).addClass("selectable")
-            });
-        },
-        convertSelects: function() {
-            $("select").each(function(index) {
-                $(this).addClass("selectable");
-            });
-        },
-    }
+    inputs: {}
 };
 
 ElementSelector = function(selectables) {
@@ -108,14 +95,14 @@ ElementSelector = function(selectables) {
         $(item).addClass(this.selectedClass)
         if(item.fieldObject && item.fieldObject.handleSelected) {
            item.fieldObject.handleSelected();
+        } else {
+            item.focus();
         }
     }
 }
 
-
 $(document).ready(function() {
     numpad.convert_forms();
-    
     $(window).keydown(numpad.handleKeydown);
 });
 
