@@ -24,7 +24,7 @@ class BluetoothOutputData(OutputData):
     server_address = None
     
     def send(self):
-        bluetooth.send_vcal(self.server_address, 
+        return bluetooth.send_vcal(self.server_address, 
                             self.bluetooth_mac_address,
                             self.data)
 
