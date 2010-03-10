@@ -87,7 +87,7 @@ def send_appointment(request):
     logger.info("started send_appointment to mac_address: " + mac_address)
     
     appointment.bluetooth_mac_address = mac_address
-    output_data = appointment.get_data_for_sending()[0]
+    output_data = appointment.get_data_for_sending()
     output_data.send()
     
     
