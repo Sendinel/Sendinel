@@ -66,3 +66,12 @@ def list_infoservices(request):
     return render_to_response("staff/list_infoservices.html",
                                 locals(),
                                 context_instance = RequestContext(request))
+                                
+def create_infoservice(request):
+    if request.method == "POST":
+        infoservice = InfoService(name = request.POST["name"])
+        infoservice.save()
+        return HttpResponseRedirect(reverse('staff_index'))
+    return render_to_response("staff/infoservice_create.html",
+                                locals(),
+                                context_instance = RequestContext(request))    

@@ -41,4 +41,15 @@ class InfoserviceTest(TestCase):
             
             self.assertEquals(message.way_of_communication,
                               subscription.way_of_communication)                  
+                              
+    def test_create_infoservice(self):
+        response = self.client.get(reverse('staff_index'))
+        self.assertContains(response, "Create new infoservice")
+        response = self.client.get(reverse("staff_infoservice_create"))
+        self.assertContains(response, 'name="name"')
+        response = self.client.post(reverse("staff_infoservice_create"), 
+                                {"name" : "This is a name for an infoservice"})
+        self.assertRedirects(response, reverse('staff_index'))
+        response = self.client.get(reverse("staff_list_infoservices"))
+        self.assertContains(response, "This is a name for an infoservice")
         
