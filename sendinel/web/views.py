@@ -182,13 +182,14 @@ def register_infoservice(request, id):
                                         request.POST['way_of_communication']
         number = fill_authentication_session_variable(request) 
         auth_number = AUTH_NUMBER
+        backurl = reverse('web_infoservice_register',  kwargs = {'id': id})        
         next = reverse('web_infoservice_register_save', kwargs = {'id': id})
         url = reverse('web_check_call_received')
         return render_to_response('web/authenticate_phonenumber_call.html', 
             locals(),
             context_instance = RequestContext(request))
     infoservice = InfoService.objects.filter(pk = id)[0].name
-    
+    backurl = reverse("web_index")
     return render_to_response('web/infoservice_register.html', 
                               locals(),
                               context_instance = RequestContext(request))
