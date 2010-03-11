@@ -110,22 +110,21 @@ def authenticate_phonenumber(request):
     backurl = reverse('web_authenticate_phonenumber')
     next = ''
     if request.method == "POST":
-        number = fill_authentication_session_variable(request)
-        auth_number = AUTH_NUMBER
-        next = request.GET.get('next','')
-        return render_to_response('web/authenticate_phonenumber_call.html', 
+        try:
+            number = fill_authentication_session_variable(request)
+            auth_number = AUTH_NUMBER
+            next = request.GET.get('next','')
+            return render_to_response('web/authenticate_phonenumber_call.html', 
                               locals(),
                               context_instance = RequestContext(request))
-        # TODO implement form validation
+        except ValueError as e:
+            error = e
         
     delete_timed_out_authentication_calls()
     
     patient = request.session.get('patient', None)
     if(patient):
         patient_name = patient.name
-   
-    # was macht die Zeile? next wird doch erst spaeter gefuellt   
-    locals().update({'next': next})
     return render_to_response('web/authenticate_phonenumber.html', 
                               locals(),
                               context_instance = RequestContext(request))
@@ -180,14 +179,17 @@ def register_infoservice(request, id):
     if request.method == "POST":
         request.session['way_of_communication'] = \
                                         request.POST['way_of_communication']
-        number = fill_authentication_session_variable(request) 
-        auth_number = AUTH_NUMBER
-        backurl = reverse('web_infoservice_register',  kwargs = {'id': id})        
-        next = reverse('web_infoservice_register_save', kwargs = {'id': id})
-        url = reverse('web_check_call_received')
-        return render_to_response('web/authenticate_phonenumber_call.html', 
-            locals(),
-            context_instance = RequestContext(request))
+        try:                                
+            number = fill_authentication_session_variable(request) 
+            auth_number = AUTH_NUMBER
+            backurl = reverse('web_infoservice_register',  kwargs = {'id': id})        
+            next = reverse('web_infoservice_register_save', kwargs = {'id': id})
+            url = reverse('web_check_call_received')
+            return render_to_response('web/authenticate_phonenumber_call.html', 
+                locals(),
+                context_instance = RequestContext(request))
+        except ValueError as e:
+            error = e        
     infoservice = InfoService.objects.filter(pk = id)[0].name
     backurl = reverse("web_index")
     return render_to_response('web/infoservice_register.html', 

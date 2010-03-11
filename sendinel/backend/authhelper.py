@@ -32,10 +32,15 @@ def format_phonenumber(number, country_code, start_mobile_number):
     # if the conversion to int does not fail
     # then there are only numbers included
     # in the string
-    if int(number) and number.startswith(start_mobile_number):
+    try:
+        int(number)
+    except ValueError:
+        raise ValueError('Please enter a phonenumber like 0181238723.')
+    
+    if number.startswith(start_mobile_number):
         return number
     else:
-        raise ValueError('Invalid phonenumber given.')    
+        raise ValueError('Please enter a phonenumber like 0181238723.')    
 
 def check_and_delete_authentication_call(number):
     """

@@ -6,6 +6,9 @@
     <p>
         <form method="post" class="selectable_container" autocomplete="off">
             <table>
+                {% if error %}
+                <tr><td></td><td>{{ error }}</td></tr>
+                {% endif %}
                 <tr>
                   <td>Phone number</td>
                   <td><input type="text" name="number" class="selectable" /></td>
