@@ -1,6 +1,5 @@
 numpad.utils = {
 
-
     createField: function(htmlBlock) {
         var fieldElement = $(htmlBlock)[0];
         fieldElement.fieldObject = this;
@@ -9,18 +8,21 @@ numpad.utils = {
     },
     
     setupSelector: function(selectables_selector) {
-        $(this.fieldElement).children(selectables_selector)
+        $(this.fieldElement).find(selectables_selector)
             .focus(function(event) {
                 $(this).select();
             })
-            .keydown(numpad.utils.handleKeydown);
-        var selectables = $(this.fieldElement).children(selectables_selector);
+            .keydown(numpad.utils.handleKeydown)
+            .each($.proxy(function(index, element) {
+                element.fieldElement = this.fieldElement;
+            }, this));
+        var selectables = $(this.fieldElement).find(selectables_selector);
         this.selector = new ElementSelector(selectables);
         this.selector.selectedClass = "numpad_subselected";
     },
     
     handleKeydown: function(event) {
-        var fieldObject = $(event.target).parent()[0].fieldObject;
+        var fieldObject = event.target.fieldElement.fieldObject;
         switch(event.keyCode) {
             case 37: // Arrow left
                 fieldObject.selector.selectPrevious();

@@ -27,6 +27,8 @@ def index(request):
 
 def create_appointment(request):
     admin_media_prefix = ADMIN_MEDIA_PREFIX
+    nexturl = ""
+    backurl = reverse('web_index')
     if request.method == "POST":
         form = HospitalAppointmentForm(request.POST)
         # import pdb; pdb.set_trace()

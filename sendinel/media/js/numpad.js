@@ -4,13 +4,13 @@ var numpad = {
     handleKeydown: function(event) {
         switch(event.keyCode) {
             case 13: // Enter
-                numpad.clickOnSelected();
+                numpad.clickOnSelected(numpad.selector.getSelected());
                 break;
             case 38: // Arrow up
                 numpad.selector.selectPrevious();
                 break;
             case 39: //Arrow right
-                numpad.clickOnSelected();
+                numpad.clickOnSelected(numpad.selector.getSelected());
                 break;
             case 40: // Arrow down
                 numpad.selector.selectNext();
@@ -22,18 +22,30 @@ var numpad = {
         return false;
     },
     
-    clickOnSelected: function() {
-        var el = numpad.selector.getSelected();
-        if(el.tagName.toLowerCase() == "a") {
-            window.location = el.href;
-        } else if (el.type && el.type.toLowerCase() == "submit") {
-            this.submit();
-            el.form.submit();
-        } else {
-            $(numpad.selector.getSelected()).trigger('click');
+    clickOnSelected: function(element) {
+        var eTypeLow = (element.type || "").toLowerCase()
+        if(element){
+            if(element.tagName.toLowerCase() == "a") {
+                window.location = element.href;
+                return;
+            } else if (eTypeLow == "submit" || eTypeLow == "button") {
+                if(element.url) {
+                    window.location = element.url;
+                    return;                    
+                }
+                this.submit();
+                element.form.submit();
+                return;
+            }            
+                
+            // recursively clicking all subselected children
+            $(element).find(".numpad_subselected").each($.proxy(function(index,element) {
+                return this.clickOnSelected(element);
+            }, this));            
         }
+        return;
     },
-    
+        
     convert_forms: function() {
         $(".selectable_form [name]").each(function() {
             if($(this).hasClass("vDateField")) {
@@ -44,6 +56,9 @@ var numpad = {
             }
             else if(this.tagName.toLowerCase() == "select") {
                 new numpad.inputs.SelectField(this);
+            }
+            else if($(this).hasClass("control-buttons")) {
+                new numpad.inputs.controlButtonsField(this);
             }
         });
         

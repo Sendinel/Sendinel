@@ -6,6 +6,7 @@
     <script src="{{ MEDIA_URL }}/js/numpad_date.js" type="text/javascript" charset="utf-8"></script>
     <script src="{{ MEDIA_URL }}/js/numpad_time.js" type="text/javascript" charset="utf-8"></script>
     <script src="{{ MEDIA_URL }}/js/numpad_select.js" type="text/javascript" charset="utf-8"></script>    
+    <script src="{{ MEDIA_URL }}/js/numpad_controlButtons.js" type="text/javascript" charset="utf-8"></script>        
     
     <link rel="stylesheet" href="{{ MEDIA_URL }}/css/numpad.css" type="text/css" />
     
@@ -19,7 +20,7 @@
             <table>
                 {{ form.as_table }}
             </table>
-            <input type="submit" class="selectable" name="form_submit" value="Save" id="id_submit" />
+            {% include "web/control_buttons_widget.html" %}
         </form>
     </p>
 {% endblock %}

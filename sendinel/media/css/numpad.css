@@ -2,6 +2,10 @@
     background-color: yellow;
 }
 
+.subselectable {
+    background-color: yellow;
+}
+
 .selected {
     background-color: red;
 }
@@ -15,6 +19,18 @@
 }
 .fourcharinput {
     width: 4em;
+}
+
+.back-button {
+    float:left;
+}
+
+.next-button {
+    float:right;
+}
+
+.control-buttons {
+    height:20px;
 }
 
 .select-div {

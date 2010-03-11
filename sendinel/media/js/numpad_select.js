@@ -10,7 +10,7 @@ numpad.inputs.SelectField = function(originalField) {
     this.copyOriginalValues = function() {
         var fieldElement = this.fieldElement;
         $(this.originalField).children("option").each(function(index) {
-            var a = $('<a href="#""></a>');
+            var a = $('<a href="#" class="subselectable"></a>');
             a.html($(this).html());
             a[0].originalValue = $(this).val();
             $(a).click(function() {
