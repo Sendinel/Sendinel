@@ -1,6 +1,5 @@
 import sendinel.settings
 
-global linux_available
 linux_available = False
 
 try:
@@ -15,7 +14,7 @@ try:
     linux_available = True
     
 except ImportError:
-    print "Warning: Linux operating system is required to run the voicecall functionality"
+    print "Warning: Linux is required for voicecall functionality"
     
 import time
 
@@ -29,17 +28,18 @@ class Voicecall:
         self.asterisk_festivalcache = "/var/lib/asterisk/festivalcache"
         
     def create_voicefile(self, text):
-        hash = md5(text).hexdigest()
-        filename = "%s/%s.ulaw" % (self.asterisk_festivalcache, hash)
+        text_hash = md5(text).hexdigest()
+        filename = "%s/%s.ulaw" % (self.asterisk_festivalcache, text_hash)
         if not os.path.exists(filename):
             args = "-o %s -otype ulaw -" % (filename)
-            p = Popen(["text2wave"] + args.split(" "),stdin=PIPE)
-            p.communicate(input=text)
+            process = Popen(["text2wave"] + args.split(" "), stdin=PIPE)
+            process.communicate(input=text)
         else:
             pass
         return "%s/%s" % (self.asterisk_festivalcache, hash)
 
-    def create_spool_content(self, number, voicefile, extension, sip_account, context):
+    def create_spool_content(self, number, voicefile, extension,
+                            sip_account, context):
         """
             Create the content for asterisk's spool file
             
@@ -100,7 +100,10 @@ Set: PassedInfo=%s
             @return True if the operating succeeded, if not False
         """
         try:
-            os.chown(filename, pwd.getpwnam(self.asterisk_user).pw_uid, grp.getgrnam(self.asterisk_group).gr_gid)
+            uid = pwd.getpwnam(self.asterisk_user).pw_uid
+            gid = grp.getgrnam(self.asterisk_group).gr_gid
+            
+            os.chown(filename, uid, gid)
             # set permissions to unix 666
             os.chmod(filename, 438)
             filepath = self.asterisk_spool_dir + str(time.time())
@@ -128,7 +131,11 @@ Set: PassedInfo=%s
         
         if linux_available:
             voicefile = self.create_voicefile(text)
-            content = self.create_spool_content(number, voicefile, self.asterisk_extension, self.asterisk_sip_account, context)
+            content = self.create_spool_content(number,
+                                                voicefile,
+                                                self.asterisk_extension,
+                                                self.asterisk_sip_account,
+                                                context)
             self.create_spool_file("tmp", content)
             return self.move_spool_file("tmp")
         else:

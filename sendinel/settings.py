@@ -63,12 +63,21 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.load_template_source',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = ("django.core.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.contrib.messages.context_processors.messages")
+
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.csrf.middleware.CsrfMiddleware'
 )
+
+
 
 ROOT_URLCONF = 'sendinel.urls'
 
@@ -93,6 +102,7 @@ INSTALLED_APPS = (
 ####################################
 # Sendinel Configuration
 REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days = 1)
+DEFAULT_APPOINTMENT_DURATION = timedelta(minutes = 60)
 DEFAULT_HOSPITAL_NAME = 'your hospital'
 
 COUNTRY_CODE_PHONE = "0049" #"0027"
@@ -117,6 +127,9 @@ SERIALPORTSMS = '/dev/rfcomm0'
 
 # IP address to bluetooth server
 BLUETOOTH_SERVER_ADDRESS = '127.0.0.1'
+
+# used for marking the vcal uid
+VCAL_UID_SLUG = 'sendinel.org'
 ####################################
 
 # Setup Local_Settings if present

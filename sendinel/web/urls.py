@@ -1,5 +1,4 @@
-from django.conf.urls.defaults import *
-from sendinel.web.views import *
+from django.conf.urls.defaults import * # patterns, url
 
 urlpatterns = patterns("",
     url(r"^$", 'sendinel.web.views.index', name = 'web_index'),
@@ -16,6 +15,9 @@ urlpatterns = patterns("",
     url(r"^appointment/send$", 'sendinel.web.views.send_appointment',
         name = 'web_appointment_send'),        
     url(r'^get_devices/$', 'sendinel.web.views.get_bluetooth_devices', 
-        name = 'web_get_devices')
-        
+        name = 'web_get_devices'),
+    url(r"^infoservice/register/(?P<id>\d+)/$", 'sendinel.web.views.register_infoservice', 
+       name = 'web_infoservice_register'),     
+    url(r"^infoservice/register/save/(?P<id>\d+)/$", 'sendinel.web.views.save_registration_infoservice', 
+       name = 'web_infoservice_register_save')           
     )

@@ -6,7 +6,9 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 
-from sendinel.backend.models import Usergroup, ScheduledEvent, InfoMessage
+from sendinel.backend.models import InfoService, InfoMessage, \
+                                    Subscription, Patient
+
 from sendinel.staff.forms import InfoMessageForm
 
 @login_required
@@ -25,14 +27,24 @@ def create_infomessage(request, id):
                                     context_instance = RequestContext(request))
     elif(request.method == "POST"):
         
-        info_message = InfoMessage()
+        infoservice = InfoService.objects.filter(pk = id)[0]
         
-        info_message.text = request.REQUEST["text"]
-        info_message.recipient = Usergroup.objects.filter(pk = id)[0]
-        info_message.way_of_communication = "voice"
+        for patient in infoservice.members.all():
+        
+            info_message = InfoMessage()
+        
+            info_message.text = request.POST["text"]
+            
+            subscription = Subscription.objects.filter(patient = patient,
+                                                       infoservice = infoservice)[0]
+            
+            info_message.recipient = patient
+            info_message.send_time = datetime.now()
+            info_message.way_of_communication = \
+                            subscription.way_of_communication
 
-        info_message.save()        
-        info_message.create_scheduled_event(datetime.now())
+            info_message.save()        
+            info_message.create_scheduled_event(datetime.now())
         
         return HttpResponseRedirect(reverse("staff_list_infoservices"))
 
@@ -40,17 +52,43 @@ def create_infomessage(request, id):
 @login_required
 def list_infoservices(request):
 
-    all_groups = Usergroup.objects.all()
+    all_infoservices = InfoService.objects.all()
 
-    groups = []
+    infoservices = []
     
-    for group in all_groups:
-        groups.append({
-            "id": group.id,
-            "name": group.name, 
-            "count_members": group.members.all().count()
+    for infoservice in all_infoservices:
+        infoservices.append({
+            "id": infoservice.id,
+            "name": infoservice.name, 
+            "count_members": infoservice.members.all().count()
         })
             
     return render_to_response("staff/list_infoservices.html",
                                 locals(),
                                 context_instance = RequestContext(request))
+                                
+def create_infoservice(request):
+    if request.method == "POST":
+        infoservice = InfoService(name = request.POST["name"])
+        infoservice.save()
+        return HttpResponseRedirect(reverse('staff_index'))
+    return render_to_response("staff/infoservice_create.html",
+                                locals(),
+                                context_instance = RequestContext(request))    
+                                
+def list_members_of_infoservice(request, id):   
+    infoservice = InfoService.objects.filter(pk = id)[0]
+    subscriptions = Subscription.objects.filter(infoservice = id)
+    return render_to_response("staff/infoservice_members.html",
+                                locals(),
+                                context_instance = RequestContext(request))  
+
+def delete_members_of_infoservice(request, id, patient_id):
+    patient = Patient.objects.filter(pk = patient_id)[0]
+    infoservice = InfoService.objects.filter(pk = id)[0]
+    subscription = Subscription.objects.filter(patient = patient, 
+                                               infoservice = infoservice)
+    patient.delete()
+    subscription.delete()
+    return HttpResponseRedirect(reverse("staff_infoservice_members", 
+                                   kwargs={"id": infoservice.id}))

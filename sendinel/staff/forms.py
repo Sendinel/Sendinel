@@ -1,4 +1,4 @@
-from django.forms import CharField, DateTimeField, ModelForm
+from django.forms import CharField, ModelForm
 
 from sendinel.backend.models import InfoMessage
 
