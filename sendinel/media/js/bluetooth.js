@@ -13,6 +13,8 @@ var Bluetooth = {
                     deviceTable.innerHTML = "";
                     
                     $(json.devices).each(function(index, device) {                
+                        var html = ""
+                        
                         var tr = document.createElement("tr");
                         var id_td = document.createElement("td");
                         var name_td = document.createElement("td");
@@ -37,7 +39,8 @@ var Bluetooth = {
                         
                         var name_form = document.createElement("form");
                         var action = document.createAttribute("action");
-                        action.nodeValue = $("#next").attr("value");                   var method = document.createAttribute("method");
+                        action.nodeValue = $("#next").attr("value");                   
+                        var method = document.createAttribute("method");
                         method.nodeValue = "GET";
                         
                         var form_name = document.createAttribute("name");

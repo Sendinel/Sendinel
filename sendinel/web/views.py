@@ -148,6 +148,7 @@ def check_call_received(request):
 
 def list_bluetooth_devices(request):
     next = request.GET.get('next','')
+    backurl = reverse("web_appointment_create")
     return render_to_response('web/list_devices.html',
                                 locals(),
                                 context_instance=RequestContext(request))
