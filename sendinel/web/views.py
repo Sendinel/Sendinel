@@ -63,6 +63,7 @@ def create_appointment(request):
                                 context_instance=RequestContext(request))
   
 def save_appointment(request):
+    nexturl = reverse("web_index")
     appointment = request.session.get('appointment', None)
     patient = request.session.get('patient', None)
     if not appointment or not patient:

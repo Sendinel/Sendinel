@@ -1,4 +1,4 @@
-afrom string import Template
+from string import Template
 
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
