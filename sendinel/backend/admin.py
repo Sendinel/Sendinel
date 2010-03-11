@@ -4,7 +4,8 @@ from sendinel.backend.models import Doctor, Patient, Hospital, \
                                     HospitalAppointment, \
                                     InfoMessage, \
                                     ScheduledEvent, \
-                                    AuthenticationCall
+                                    AuthenticationCall, \
+                                    Subscription
 
 admin.site.register(Doctor)
 admin.site.register(Patient)
@@ -13,3 +14,4 @@ admin.site.register(HospitalAppointment)
 admin.site.register(InfoMessage)
 admin.site.register(ScheduledEvent)
 admin.site.register(AuthenticationCall)
+admin.site.register(Subscription)
