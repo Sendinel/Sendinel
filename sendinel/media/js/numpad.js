@@ -47,7 +47,7 @@ var numpad = {
     },
         
     convert_forms: function() {
-        $(".selectable_form [name]").each(function() {
+        $(".selectable_container [name]").each(function() {
             if($(this).hasClass("vDateField")) {
                 new numpad.inputs.DateField(this);
             }
@@ -62,7 +62,7 @@ var numpad = {
             }
         });
         
-        $(".selectable_form").submit(numpad.submit);
+        $(".selectable_container").submit(numpad.submit);
             
         numpad.selector = new ElementSelector($(".selectable"));
         numpad.selector.select(0); 

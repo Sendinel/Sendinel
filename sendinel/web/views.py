@@ -77,6 +77,8 @@ def send_appointment(request):
     pass
     
 def authenticate_phonenumber(request):
+    nexturl = ''
+    backurl = reverse('web_authenticate_phonenumber')
     next = ''
     if request.method == "POST":
         number = request.POST["number"].strip()
