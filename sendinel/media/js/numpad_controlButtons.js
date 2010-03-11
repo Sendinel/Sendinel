@@ -28,9 +28,15 @@ numpad.inputs.controlButtonsField = function(originalField) {
     
     this.setupSelector = numpad.utils.setupSelector;
     this.setupSelector(".subselectable");
-    this.selector.select(1);
+    var subselectables =  $(this.fieldElement).find(".subselectable")
     
-    $(this.fieldElement).find(".subselectable").each(function(index,element) {
+    if(subselectables.length == 1) {
+        this.selector.selected = 0;                
+    } else {
+        this.selector.selected = 1;        
+    }
+    
+    subselectables.each(function(index,element) {
         element.url = $(element).siblings("[name]").first().val();
     });
  
@@ -39,7 +45,7 @@ numpad.inputs.controlButtonsField = function(originalField) {
         return;
     };
     
-    // this.handleDeselected is not needed because selection stays on unfocus
+    this.handleDeselected = numpad.utils.handleDeselected;
     
     this.handleSelected = function() {
         var selected = this.selector.selected;

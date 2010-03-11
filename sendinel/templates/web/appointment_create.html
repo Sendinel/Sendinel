@@ -1,22 +1,14 @@
 {% extends "base.html" %}
 
 {% block script %}
-    <script src="{{ MEDIA_URL }}/js/numpad.js" type="text/javascript" charset="utf-8"></script>
-    <script src="{{ MEDIA_URL }}/js/numpad_utils.js" type="text/javascript" charset="utf-8"></script>
-    <script src="{{ MEDIA_URL }}/js/numpad_date.js" type="text/javascript" charset="utf-8"></script>
-    <script src="{{ MEDIA_URL }}/js/numpad_time.js" type="text/javascript" charset="utf-8"></script>
-    <script src="{{ MEDIA_URL }}/js/numpad_select.js" type="text/javascript" charset="utf-8"></script>    
-    <script src="{{ MEDIA_URL }}/js/numpad_controlButtons.js" type="text/javascript" charset="utf-8"></script>        
-    
-    <link rel="stylesheet" href="{{ MEDIA_URL }}/css/numpad.css" type="text/css" />
-    
+
 {% endblock %}
 
 {% block content %}
     <h3>Appointment</h3>
 	<p>Please enter the appointment details.</p>
     <p>
-        <form action="./" method="post" class="selectable_form">
+        <form action="./" method="post" class="selectable_container">
             <table>
                 {{ form.as_table }}
             </table>
