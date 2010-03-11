@@ -4,5 +4,4 @@ thumbs.db
 sendinel.db
 local_settings.py
 sendinel.tmproj
-media/knowledgebase/*
 fake_file_log
