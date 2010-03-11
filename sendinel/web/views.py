@@ -83,7 +83,8 @@ def send_appointment(request):
         appointment = request.session.get('appointment', None)
         mac_address = request.POST['device_mac'].strip()
         
-        logger.info("started send_appointment to mac_address: " + mac_address)
+        logger.info("sending appointment to mac_address: " + mac_address)
+        logger.info("appointment data: " + str(appointment))
         
         appointment.bluetooth_mac_address = mac_address
         output_data = appointment.get_data_for_sending()
@@ -96,6 +97,9 @@ def send_appointment(request):
     url = reverse("web_appointment_send")
     next = reverse("web_index")
     mac_address = request.GET['device_mac'].strip()
+    
+    logger.info("starting send_appointment to mac_address: " + mac_address)
+    
     return render_to_response('web/send_bluetooth_appointment.html',
                                 locals(),
                                 context_instance=RequestContext(request))

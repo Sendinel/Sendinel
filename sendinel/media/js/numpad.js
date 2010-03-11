@@ -1,6 +1,7 @@
 var numpad = {
     selector: null,
-
+    selectedClass: "selected",
+    
     handleKeydown: function(event) {
         switch(event.keyCode) {
             case 13: // Enter
@@ -47,6 +48,10 @@ var numpad = {
     },
         
     convert_forms: function() {
+        $("." + numpad.selectedClass).each(function(index, elem) {
+            $(elem).removeClass(numpad.selectedClass)
+        });
+        
         $(".selectable_container [name]").each(function() {
             if($(this).hasClass("vDateField")) {
                 new numpad.inputs.DateField(this);
@@ -82,7 +87,7 @@ var numpad = {
 ElementSelector = function(selectables) {
     this.selectables = selectables;
     this.selected = 0;
-    this.selectedClass = "selected";
+    this.selectedClass = numpad.selectedClass;
     
     this.getSelected = function() {
         return this.selectables[this.selected];

@@ -11,7 +11,7 @@ from sendinel.backend import texthelper, vcal
 from sendinel.backend.output import SMSOutputData, \
                                     VoiceOutputData, \
                                     BluetoothOutputData
-
+from sendinel.logger import logger
 
 class User(models.Model):
     """
@@ -124,8 +124,10 @@ class Sendable(models.Model):
         """
         Prepare OutputData for selected way_of_communication.
         Return an object of a subclass of OutputData.
-        """
-        return eval("self.get_data_for_%s()" % self.way_of_communication)
+        """    
+        call = "self.get_data_for_%s()" % self.way_of_communication      
+        logger.info("sendable.get_data_for_sending() calling method: " + call)        
+        return eval(call)
         
     def create_scheduled_event(self, send_time):
         """
@@ -146,6 +148,8 @@ class HospitalAppointment(Sendable):
     hospital = models.ForeignKey(Hospital)
     template = Template("Dear $name, please remember your appointment" + \
                          " at the $hospital at $date with doctor $doctor")
+    def __unicode__(self):
+        return "%s Doctor %s" % ((str(self.date) or ""), (str(self.doctor) or ""))
                          
     def get_data_for_bluetooth(self):
         """
@@ -154,9 +158,14 @@ class HospitalAppointment(Sendable):
         Return BluetoothOutputData for sending.
 
         """
+        logger.info("starting get_data_for_bluetooth() in HospitalAppointment")
+        
         data = BluetoothOutputData()
         data.bluetooth_mac_address = self.bluetooth_mac_address
         data.server_address = BLUETOOTH_SERVER_ADDRESS
+        
+        logger.info("Sending to Bluetooth Mac Address " + data.bluetooth_mac_address +
+                    " and Bluetooth Server " + data.server_address)
         
         try:
             self.hospital
@@ -172,6 +181,10 @@ class HospitalAppointment(Sendable):
                                             self.hospital, 
                                             content,
                                             uid)
+                                            
+        logger.info("Created vCal with uid %s" % str(uid))
+        logger.debug("Created vCal: " + data.data)
+        
         return data
 
  
