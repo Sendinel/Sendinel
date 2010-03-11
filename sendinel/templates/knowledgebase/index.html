@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Here you can find information</h3>
+    <p>
+        <ul id="filelist">
+        {% for file in files %}
+            <li><a href="{% url staff_list_infoservices %}">{{file}}</a></li>
+        {% endfor %}
+        </ul>
+    </p>
+{% endblock %}
