@@ -36,7 +36,7 @@ class Voicecall:
             process.communicate(input=text)
         else:
             pass
-        return "%s/%s" % (self.asterisk_festivalcache, hash)
+        return "%s/%s" % (self.asterisk_festivalcache, text_hash)
 
     def create_spool_content(self, number, voicefile, extension,
                             sip_account, context):
