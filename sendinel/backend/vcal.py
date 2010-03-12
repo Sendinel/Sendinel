@@ -1,6 +1,6 @@
 ﻿from datetime import datetime
 
-import settings
+from sendinel import settings
 
 def create_vcal_string(start_date, location, content, uid):
     """
