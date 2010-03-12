@@ -96,7 +96,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'sendinel.web',
     'sendinel.backend',
-    'sendinel.staff'
+    'sendinel.staff',
+    'sendinel.knowledgebase'
 )
 
 ####################################
@@ -107,6 +108,8 @@ DEFAULT_HOSPITAL_NAME = 'your hospital'
 
 COUNTRY_CODE_PHONE = "0049" #"0027"
 START_MOBILE_PHONE = "01" #"07"
+
+KNOWLEDGEBASE_DIRECTORY = PROJECT_PATH + "/media/knowledgebase"
 
 ASTERISK_USER = "hudson"
 ASTERISK_GROUP = "hudson"
