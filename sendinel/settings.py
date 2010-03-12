@@ -116,7 +116,7 @@ ASTERISK_GROUP = "hudson"
 ASTERISK_SPOOL_DIR = "/var/spool/asterisk/outgoing/"
 
 ASTERISK_EXTENSION = "s"
-ASTERISK_SIP_ACCOUNT = "ext-sip-account"
+ASTERISK_SIP_ACCOUNT = "datacard0"
 
 # Phonenumber to authenticate against the system
 # TODO move to local_settings on CI server
