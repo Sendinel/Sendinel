@@ -13,7 +13,8 @@ except ImportError:
     print "Warning: Linux operating system is required to run the voicecall functionality"
     
 import sendinel.backend.voicecall    
-    
+import sendinel.settings    
+
 class VoicecallTest(unittest.TestCase):
     def setUp(self):
         self.vc = sendinel.backend.voicecall.Voicecall()
@@ -23,7 +24,7 @@ class VoicecallTest(unittest.TestCase):
         
         number = "03315509256"
         voicefile = "helloworld"
-        
+        self.vc.asterisk_datacard = True 
         output_should = """
 Channel: Datacard/datacard0/03315509256
 MaxRetries: 3
