@@ -63,7 +63,7 @@ class Voicecall:
 	datacard = True
 	if(datacard):
             output = """
-Channel: Datacard/%s@%s
+Channel: Datacard/%s/%s
 MaxRetries: 3
 RetryTime: 20
 WaitTime: 30
