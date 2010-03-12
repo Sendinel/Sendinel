@@ -1,4 +1,4 @@
-import sendinel.settings
+from sendinel import settings
 
 linux_available = False
 
@@ -20,13 +20,14 @@ import time
 
 class Voicecall:
     def __init__(self):
-        self.asterisk_user = sendinel.settings.ASTERISK_USER
-        self.asterisk_group = sendinel.settings.ASTERISK_GROUP
-        self.asterisk_spool_dir = sendinel.settings.ASTERISK_SPOOL_DIR  
-        self.asterisk_extension = sendinel.settings.ASTERISK_EXTENSION
-        self.asterisk_sip_account = sendinel.settings.ASTERISK_SIP_ACCOUNT
-        self.asterisk_festivalcache = "/lib/init/rw"
-        
+        self.asterisk_user = settings.ASTERISK_USER
+        self.asterisk_group = settings.ASTERISK_GROUP
+        self.asterisk_spool_dir = settings.ASTERISK_SPOOL_DIR  
+        self.asterisk_extension = settings.ASTERISK_EXTENSION
+        self.asterisk_sip_account = settings.ASTERISK_SIP_ACCOUNT
+        self.asterisk_festivalcache = settings.FESTIVAL_CACHE
+        self.asterisk_datacard = settings.ASTERISK_DATACARD 
+
     def create_voicefile(self, text):
         text_hash = md5(text).hexdigest()
         filename = "%s/%s.ulaw" % (self.asterisk_festivalcache, text_hash)
@@ -60,8 +61,7 @@ class Voicecall:
             
             @return The text which can be put to a file, to make asterisk conduct the call
             """
-	datacard = True
-	if(datacard):
+	if(self.asterisk_datacard):
             output = """
 Channel: Datacard/%s/%s
 MaxRetries: 3
