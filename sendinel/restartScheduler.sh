@@ -13,7 +13,7 @@ else
     echo "Warning: Scheduler not running - no PID file found."
 fi
 
-python "$sendinelPath/backend/scheduler.py" &
+python "$sendinelPath/backend/scheduler.py" >> /tmp/sendinelScheduler.log 2>&1 &
 
 newPid=$!
 echo -n $newPid > $pidFile
