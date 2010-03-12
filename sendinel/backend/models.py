@@ -146,7 +146,7 @@ class HospitalAppointment(Sendable):
     date = models.DateTimeField()
     doctor = models.ForeignKey(Doctor)
     hospital = models.ForeignKey(Hospital)
-    template = Template("Dear $name, please remember your appointment" + \
+    template = Template("Hello, please remember your appointment" + \
                          " at the $hospital at $date with doctor $doctor")
     def __unicode__(self):
         return "%s Doctor %s" % ((str(self.date) or ""), (str(self.doctor) or ""))
