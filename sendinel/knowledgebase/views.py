@@ -28,7 +28,7 @@ def show(request, file_id):
 
     file_id = int(file_id)
     numbered_files = request.session['numbered_files']
-    file_name = numbered_files[file_id].lower()
+    file_name = numbered_files[file_id]
     
     if (len(numbered_files)-1 > file_id):
         nexturl = reverse('knowledgebase_show', kwargs={'file_id':(file_id+1)})
