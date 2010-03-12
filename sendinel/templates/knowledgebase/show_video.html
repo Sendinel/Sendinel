@@ -2,7 +2,7 @@
 
 {% block content %}
     <object type="application/x-shockwave-flash" 
-            data="/mediaweb/play_fla.swf" 
+            data="{{ MEDIA_URL }}play_fla.swf" 
             width="540" 
             height="420">
        <PARAM NAME="FlashVars" VALUE="flvFilename={{path_name}}">
