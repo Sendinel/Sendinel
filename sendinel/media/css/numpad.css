@@ -7,6 +7,9 @@
 .selected {
     background-color: #fcc533;
 }
+a.selected {
+    color: black;
+}
 
 .numpad_subselected {
     background-color: #f29400;

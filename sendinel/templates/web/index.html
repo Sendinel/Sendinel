@@ -3,13 +3,9 @@
 {% endblock %}
 {% block content %}
     <h3>Choose what you want to do:</h3>
-    <p>
-        <ul id="navlist">
+    <p class="navlist">
             <a href="{% url web_appointment_create %}" class="selectable">Add an appointment</a><br />
             <a href="{% url sendinel.knowledgebase.views.index %}" class="selectable">Look at Information Material</a>
-        </ul>
-    </p>
-    <p>
         <h4>Register for Information Services</h4>
         <ul id="informationservices">
             {% for service in informationservices %}
