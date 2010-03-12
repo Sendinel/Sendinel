@@ -3,7 +3,7 @@
 {% block script %}
     <script src="{{MEDIA_URL}}/js/knowledgebase.js" type="text/javascript"></script>
     <script type="text/javascript">
-        $(document).ready(Knowledgebase.resize_images);
+        $(window).load(Knowledgebase.resize_images);
     </script>
 {% endblock %}
 
