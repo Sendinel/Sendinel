@@ -30,12 +30,13 @@ def index(request):
 
 def create_appointment(request):
     admin_media_prefix = ADMIN_MEDIA_PREFIX
+    nexturl = ""
+    backurl = reverse('web_index')
     if request.method == "POST":
         form = HospitalAppointmentForm(request.POST)
-       
         if form.is_valid():
             appointment = form.save(commit=False)
-            patient = Patient(name = form.cleaned_data['recipient_name'])
+            patient = Patient()
             request.session['appointment'] = appointment
             request.session['patient'] = patient            
             
@@ -55,19 +56,14 @@ def create_appointment(request):
                                 locals(),
                                 context_instance=RequestContext(request))
     else:
-        #TODO: initiale Dateneintraege funktionieren noch nicht
-        # try:
-        #     initial_data = {'doctor': unicode(Doctor.objects.all().get())}
-        # except Doctor.DoesNotExist:
-        #     initial_data = {}
-        initial_data = {'way_of_communication': \
-                        Sendable.WAYS_OF_COMMUNICATION[0][1]}
-        form = HospitalAppointmentForm(initial = initial_data)
+        #TODO: initiale Dateneintraege
+        form = HospitalAppointmentForm()
         return render_to_response('web/appointment_create.html',
                                 locals(),
                                 context_instance=RequestContext(request))
   
 def save_appointment(request):
+    nexturl = reverse("web_index")
     appointment = request.session.get('appointment', None)
     patient = request.session.get('patient', None)
     if not appointment or not patient:
@@ -87,7 +83,8 @@ def send_appointment(request):
         appointment = request.session.get('appointment', None)
         mac_address = request.POST['device_mac'].strip()
         
-        logger.info("started send_appointment to mac_address: " + mac_address)
+        logger.info("sending appointment to mac_address: " + mac_address)
+        logger.info("appointment data: " + str(appointment))
         
         appointment.bluetooth_mac_address = mac_address
         output_data = appointment.get_data_for_sending()
@@ -100,30 +97,35 @@ def send_appointment(request):
     url = reverse("web_appointment_send")
     next = reverse("web_index")
     mac_address = request.GET['device_mac'].strip()
+    
+    logger.info("starting send_appointment to mac_address: " + mac_address)
+    
     return render_to_response('web/send_bluetooth_appointment.html',
                                 locals(),
                                 context_instance=RequestContext(request))
 
   
 def authenticate_phonenumber(request):
+    nexturl = ''
     next = ''
+    backurl = reverse('web_index')    
     if request.method == "POST":
-        number = fill_authentication_session_variable(request)
-        auth_number = AUTH_NUMBER
-        next = request.GET.get('next','')
-        return render_to_response('web/authenticate_phonenumber_call.html', 
+        backurl = reverse('web_authenticate_phonenumber')        
+        try:
+            number = fill_authentication_session_variable(request)
+            auth_number = AUTH_NUMBER
+            next = request.GET.get('next','')
+            return render_to_response('web/authenticate_phonenumber_call.html', 
                               locals(),
                               context_instance = RequestContext(request))
-        # TODO implement form validation
+        except ValueError as e:
+            error = e
         
     delete_timed_out_authentication_calls()
     
     patient = request.session.get('patient', None)
     if(patient):
         patient_name = patient.name
-   
-    # was macht die Zeile? next wird doch erst spaeter gefuellt   
-    locals().update({'next': next})
     return render_to_response('web/authenticate_phonenumber.html', 
                               locals(),
                               context_instance = RequestContext(request))
@@ -150,6 +152,7 @@ def check_call_received(request):
 
 def list_bluetooth_devices(request):
     next = request.GET.get('next','')
+    backurl = reverse("web_appointment_create")
     return render_to_response('web/list_devices.html',
                                 locals(),
                                 context_instance=RequestContext(request))
@@ -177,15 +180,19 @@ def register_infoservice(request, id):
     if request.method == "POST":
         request.session['way_of_communication'] = \
                                         request.POST['way_of_communication']
-        number = fill_authentication_session_variable(request) 
-        auth_number = AUTH_NUMBER
-        next = reverse('web_infoservice_register_save', kwargs = {'id': id})
-        url = reverse('web_check_call_received')
-        return render_to_response('web/authenticate_phonenumber_call.html', 
-            locals(),
-            context_instance = RequestContext(request))
+        try:                                
+            number = fill_authentication_session_variable(request) 
+            auth_number = AUTH_NUMBER
+            backurl = reverse('web_infoservice_register',  kwargs = {'id': id})        
+            next = reverse('web_infoservice_register_save', kwargs = {'id': id})
+            url = reverse('web_check_call_received')
+            return render_to_response('web/authenticate_phonenumber_call.html', 
+                locals(),
+                context_instance = RequestContext(request))
+        except ValueError as e:
+            error = e        
     infoservice = InfoService.objects.filter(pk = id)[0].name
-    
+    backurl = reverse("web_index")
     return render_to_response('web/infoservice_register.html', 
                               locals(),
                               context_instance = RequestContext(request))

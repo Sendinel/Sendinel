@@ -1,5 +1,7 @@
 import xmlrpclib
 
+from sendinel.logger import logger
+
 def set_connection_to_bluetooth(server_address):
     """
         Connect to the remote XML RPC server for bluetooth functionality
@@ -38,7 +40,8 @@ def send_vcal(server_address, mac, data):
         @param  data:   plain text vcal data to be sent
         @type   data:   String
     """
-    
+    logger.info("Sending vCal via Bluetooth to: " + mac)
     conn = set_connection_to_bluetooth(server_address)
     result = conn.Actions.sendVCalFile(mac, data, "reminder.vcs")
+    logger.info("Result of Sending: " + str(result))
     return (result == "done")

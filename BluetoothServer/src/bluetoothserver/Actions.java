@@ -54,6 +54,7 @@ public class Actions {
      * Sends a vCalender file via OBEX Push.
      */
     public String sendVCalFile(String mac, String data, String filename) throws Exception{
+        System.out.println(data);
         return sendFile(mac, data, filename, "text/x-vCalendar");
     }
 
@@ -80,9 +81,12 @@ public class Actions {
 
                 RemoteDeviceDiscovery.disable();
                 //Now Bluetooth is free
-
+                System.out.println(mac);
+                System.out.println(filename);
+                System.out.println(filetype);
                 //Send File to the Device
                 String url = ServicesSearch.searchServices(mac);
+                System.out.println(url);
                 ObexPutClient.send(url, data, filename, filetype);
                 return "done";
             }

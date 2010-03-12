@@ -10,12 +10,15 @@
 {% block content %}
     <h3>Available Bluetooth Devices</h3>
     <p>
-        <table id="bluetooth_devices"></table>
-        <div class="centered">
-            <img src="{{ MEDIA_URL }}/img/progress_bar.gif" /><br />
-            Looking for further devices
+        <div class="selectable_container">
+            <ul id="bluetooth_devices"></ul>
+            <div class="centered">
+                <img src="{{ MEDIA_URL }}/img/progress_bar.gif" /><br />
+                Looking for further devices
+            </div>
+            <span id="csrf">{% csrf_token %}</span>
+            <input type="hidden" id="next" value="{{ next }}">
+            {% include "web/control_buttons_back_only_widget.html" %}
         </div>
-        <span id="csrf">{% csrf_token %}</span>
-        <input type="hidden" id="next" value="{{ next }}">
     </p>
 {% endblock %}

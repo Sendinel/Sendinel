@@ -1,21 +1,18 @@
 {% extends "base.html" %}
 
 {% block script %}
-    <script type="text/javascript" src="{{ admin_media_prefix }}js/core.js"></script>
-    <script type="text/javascript" src="{% url admin:jsi18n %}"></script>
-    <link rel="stylesheet" href="{{ MEDIA_URL }}/css/datetimepicker.css" type="text/css" media="screen" charset="utf-8" />
-    {{ form.media }}
+
 {% endblock %}
 
 {% block content %}
     <h3>Appointment</h3>
 	<p>Please enter the appointment details.</p>
     <p>
-        <form action="./" method="post">
+        <form action="./" method="post" class="selectable_container">
             <table>
                 {{ form.as_table }}
             </table>
-            <input type="submit" name="submit" value="Save" id="id_submit" />
+            {% include "web/control_buttons_widget.html" %}
         </form>
     </p>
 {% endblock %}

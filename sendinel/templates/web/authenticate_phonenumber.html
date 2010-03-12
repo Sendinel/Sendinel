@@ -4,18 +4,17 @@
     <h3>Authenticate Phonenumber</h3>
 	<p>Hello {{ patient_name }}! Please enter your phone number.</p>
     <p>
-        <form method="post">
+        <form method="post" class="selectable_container" autocomplete="off">
             <table>
+                {% if error %}
+                <tr><td></td><td>{{ error }}</td></tr>
+                {% endif %}
                 <tr>
                   <td>Phone number</td>
-                  <td><input type="text" name="number" /></td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><input type="submit" name="submit" 
-                             value="Save" id="id_submit" /></td>
+                  <td><input type="text" name="number" class="selectable" /></td>
                 </tr>
 	         </table>
+            {% include "web/control_buttons_widget.html" %}	         
         </form>
     </p>
 {% endblock %}

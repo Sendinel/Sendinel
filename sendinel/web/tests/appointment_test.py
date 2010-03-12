@@ -21,7 +21,6 @@ class AppointmentViewTest(TestCase):
         self.assertContains(response, 'name="date_0"')
         self.assertContains(response, 'name="date_1"')
         self.assertContains(response, 'name="doctor"')
-        self.assertContains(response, 'name="recipient_name"')
         self.assertNotContains(response, 'name="recipient_type"')
         self.assertNotContains(response, 'name="recipient_id"')
         self.assertNotContains(response, 'name="hospital"')
@@ -31,12 +30,9 @@ class AppointmentViewTest(TestCase):
                     {'date_0': 'abc',
                     'date_1': 'def',
                     'doctor': '',
-                    'recipient_name': '',
                     'way_of_communication': 'xyz'  })
         self.failUnlessEqual(response.status_code, 200)
         self.assertFormError(response, 'form', 'doctor',
-                            'This field is required.')
-        self.assertFormError(response, 'form', 'recipient_name',
                             'This field is required.')
         self.assertFormError(response, 'form', 'date',
                             'Enter a valid date/time.')
@@ -91,20 +87,18 @@ class AppointmentViewTest(TestCase):
         self.assertTrue(self.client.session.has_key('appointment'))                                                          
                              
     def test_save_appointment_voice(self):
-        recipient_name = 'Shiko Taga'
+        phone_number = '0123455'
         self.client.post("/web/appointment/create/", 
                     {'date_0': '2012-08-12',
                     'date_1': '19:02:42',
                     'doctor': "1",
-                    'recipient_name': recipient_name,
                     'way_of_communication': 'voice'  })
         self.client.post(reverse('web_authenticate_phonenumber'),
-                    {'name': recipient_name,
-                     'number': '0123455'})
+                    {'number': phone_number})
         response = self.client.get(reverse("web_appointment_save"))
         self.failUnlessEqual(response.status_code, 200)  
         appoint = HospitalAppointment.objects.order_by("id").reverse()[:1][0]
-        self.assertEquals(unicode(appoint.recipient), recipient_name)
+        self.assertEquals(unicode(appoint.recipient.phone_number), phone_number)
         event = ScheduledEvent.objects.order_by("id").reverse()[:1][0]
         self.assertEquals(event.sendable, appoint)
                                                      

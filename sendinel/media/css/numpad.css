@@ -1,0 +1,42 @@
+.selectable {
+    background-color: yellow;
+}
+
+.subselectable {
+    background-color: yellow;
+}
+
+.selected {
+    background-color: red;
+}
+
+.numpad_subselected {
+    background-color: orange;
+}
+
+.twocharinput {
+    width: 2em;
+}
+.fourcharinput {
+    width: 4em;
+}
+
+.back-button {
+    float:left;
+}
+
+.next-button {
+    float:right;
+}
+
+.control-buttons {
+    height:20px;
+}
+
+.select-div {
+    overflow-x: auto; 
+    overflow-y: hidden; 
+    width: 500px; 
+    white-space: nowrap;
+}
+
