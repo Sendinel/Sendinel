@@ -1,16 +1,22 @@
 import time
+import sys
 
+from os.path import abspath, dirname
 from datetime import datetime
 from itertools import chain
 
 from django.core.management import setup_environ
 
+# fix paths for run from commandline
+project_path = dirname(abspath(__file__)) + "/../../"
+sys.path.insert(0, project_path)
 from sendinel import settings
+setup_environ(settings) # this must be run before any model etc imports
+
 from sendinel.backend.models import ScheduledEvent, InfoMessage,\
                                     HospitalAppointment
 from sendinel.logger import logger
 
-setup_environ(settings)
 
 def get_all_due_events():
     return ScheduledEvent.objects \
