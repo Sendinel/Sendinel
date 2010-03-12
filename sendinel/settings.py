@@ -129,7 +129,7 @@ AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = 3)
 SERIALPORTSMS = '/dev/rfcomm0'
 
 # IP address to bluetooth server
-BLUETOOTH_SERVER_ADDRESS = '172.16.22.40'
+BLUETOOTH_SERVER_ADDRESS = '127.0.0.1'
 
 # used for marking the vcal uid
 VCAL_UID_SLUG = 'sendinel.org'
