@@ -1,7 +1,7 @@
 import os
 from copy import copy
 
-from django.http import HttpResponse
+from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
@@ -14,7 +14,7 @@ from sendinel.logger import logger
 def index(request):
     files = os.listdir(KNOWLEDGEBASE_DIRECTORY)
     for file in copy(files):
-        if file.startswith('.'): files.remove(file)
+        if file.startswith('.') or file.endswith('.db'): files.remove(file)
         
     files = dict(zip(range(0,(len(files))), files))
     request.session['numbered_files'] = files
@@ -25,7 +25,14 @@ def index(request):
 
 def show(request, file_id):
 
-    file_name = request.session['numbered_files'][int(file_id)]
+    file_id = int(file_id)
+    numbered_files = request.session['numbered_files']
+    file_name = numbered_files[file_id].lower()
+    
+    if (len(numbered_files)-1 > file_id):
+        nexturl = reverse('knowledgebase_show', kwargs={'file_id':(file_id+1)})
+    if (file_id > 0):
+        backurl = reverse('knowledgebase_show', kwargs={'file_id':(file_id-1)})
     
     
     if file_name.endswith('.jpg') or file_name.endswith('.jpeg'):

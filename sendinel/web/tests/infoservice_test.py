@@ -52,10 +52,19 @@ class InfoServiceTest(TestCase):
                                    kwargs={'id': self.info.id}))
                           
                                       
-        self.assertEquals(Subscription.objects.all().count(), subscription_count + 1)
+        self.assertEquals(Subscription.objects.all().count(),
+                          subscription_count + 1)
         new_subscription = last(Subscription)
         self.assertEquals(new_subscription.patient.phone_number, "0123456")
         self.assertEquals(new_subscription.infoservice, self.info)
         self.assertEquals(new_subscription.way_of_communication, "sms")
-                                      
-                                      
+    
+    # def test_remove_subscription(self):
+        # subscription_count = Subscription.objects.all().count()
+        
+        # self.client.delete(reverse('web_index'))
+                            
+        # self.assertEquals(Subscription.objects.all().count(), 
+                          # subscription_count - 1)
+        # self.assertEquals(Suscription.objects.filter(pk = self.info.id), None)
+            
