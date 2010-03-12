@@ -31,6 +31,8 @@ def show(request, file_id):
     
     if (len(numbered_files)-1 > file_id):
         nexturl = reverse('knowledgebase_show', kwargs={'file_id':(file_id+1)})
+        
+    backurl = reverse('knowledgebase_index')
     if (file_id > 0):
         backurl = reverse('knowledgebase_show', kwargs={'file_id':(file_id-1)})
     

@@ -2,4 +2,13 @@
 
 {% block content %}
    {{text|linebreaksbr}}
+   
+    <div class="selectable_container">
+        {% if nexturl and backurl %}
+            {% include 'web/control_buttons_widget.html' %}
+        {% else %}
+            {% include 'web/control_buttons_back_only_widget.html' %}
+        {% endif %}
+    </div>
+   
 {% endblock %}

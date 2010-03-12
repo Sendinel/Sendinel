@@ -8,4 +8,15 @@
        <PARAM NAME="FlashVars" VALUE="flvFilename={{path_name}}">
        <param name="movie" value="play_fla.swf" />
     </object>
+    
+    <div class="selectable_container">
+        {% if nexturl and backurl %}
+            {% include 'web/control_buttons_widget.html' %}
+        {% else %}
+            {% include 'web/control_buttons_back_only_widget.html' %}
+        {% endif %}
+    </div>
+        
+    
 {% endblock %}
+
