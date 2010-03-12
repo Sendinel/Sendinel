@@ -1,4 +1,4 @@
-from django.test import TestCase
+﻿from django.test import TestCase
 from django.core.urlresolvers import reverse
 
 from sendinel.settings import PROJECT_PATH
@@ -40,14 +40,17 @@ class KnowledgeBaseTest(TestCase):
         self.assertTemplateUsed(response, "knowledgebase/show_txt.html")
         self.assertContains(response, "This is a text")
 
-    # def test_knowledgebase_show_video(self):
-        # response = self.client.get(reverse('knowledgebase_show',
-                                   # kwargs={'file_name':"this_is_a_video.flv"}))
-        # self.assertEquals(response.status_code, 200)
-        # self.assertTemplateUsed(response, "knowledgebase/show_video.html")
+    def test_knowledgebase_show_video(self):
+        response = self.client.get(reverse('knowledgebase_index'))
+        files = self.client.session['numbered_files']
+        file_id = get_key(files, 'this_is_a_video.flv')
+        
+        response = self.client.get(reverse('knowledgebase_show',
+                                   kwargs={'file_id':file_id}))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, "knowledgebase/show_video.html")
         
         
 def get_key(dic, value_string):
         for key, value in dic.iteritems():
-            if value == value_string:
-                return key        
+            if value == value_string: return key        

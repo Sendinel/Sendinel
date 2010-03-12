@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <object type="application/x-shockwave-flash" 
+            data="/mediaweb/play_fla.swf" 
+            width="320" 
+            height="240">
+       <PARAM NAME="FlashVars" VALUE="flvFilename={{path_name}}">
+       <param name="movie" value="play_fla.swf" />
+    </object>
+{% endblock %}

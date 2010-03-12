@@ -33,15 +33,19 @@ def show(request, file_id):
         return render_to_response('knowledgebase/show_jpg.html',
                               locals(),
                               context_instance=RequestContext(request))
+                              
     elif file_name.endswith('.flv'):
+        path_name = MEDIA_URL + "knowledgebase/" + file_name
         return render_to_response('knowledgebase/show_video.html',
                               locals(),
                               context_instance=RequestContext(request))
+                              
     elif file_name.endswith('.txt'):
         path_name = KNOWLEDGEBASE_DIRECTORY + '/' + file_name
         
         try:
             text = open(path_name).read()
+            text = text.encode('latin-1')
         except:
             logger.error('Could not open file' + file_name)
         
