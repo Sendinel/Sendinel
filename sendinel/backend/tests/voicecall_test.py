@@ -25,17 +25,17 @@ class VoicecallTest(unittest.TestCase):
         voicefile = "helloworld"
         
         output_should = """
-Channel: SIP/03315509256@ext-sip-account
+Channel: Datacard/datacard0/03315509256
 MaxRetries: 3
 RetryTime: 20
-WaitTime: 10
+WaitTime: 30
 Context: call-file-beispiel
 Extension: s
 Priority: 1
 Set: PassedInfo=helloworld
 """
         
-        output = self.vc.create_spool_content(number, voicefile, "s", "ext-sip-account", "call-file-beispiel")
+        output = self.vc.create_spool_content(number, voicefile, "s", "datacard0", "call-file-beispiel")
         
         self.assertEquals(output, output_should)
         
