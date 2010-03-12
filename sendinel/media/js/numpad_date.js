@@ -26,6 +26,17 @@ numpad.inputs.DateField = function(originalField) {
     this.setupSelector = numpad.utils.setupSelector;
     this.setupSelector("input");
         
+    this.handleKeydown = function(event) {
+        var fieldObject = event.target.fieldElement.fieldObject;
+        if($(event.target).attr("maxlength") && 
+           $(event.target).val().length >= $(event.target).attr("maxlength") - 1) {
+               // fieldObject.selector.selectNext();
+               // $(fieldObject.selector.getSelected()).focus();
+               return false;
+        };
+        return false;
+    },        
+        
     this.handleSubmit = function() {
         var fields = $(this.fieldElement).children("input");
         var date = $(fields[0]).val() + "-" + $(fields[1]).val()

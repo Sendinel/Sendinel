@@ -48,6 +48,7 @@ var numpad = {
     },
         
     convert_forms: function() {
+        // if we already have selected elements, deselect them
         $("." + numpad.selectedClass).each(function(index, elem) {
             $(elem).removeClass(numpad.selectedClass)
         });

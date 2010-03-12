@@ -107,9 +107,10 @@ def send_appointment(request):
   
 def authenticate_phonenumber(request):
     nexturl = ''
-    backurl = reverse('web_authenticate_phonenumber')
     next = ''
+    backurl = reverse('web_index')    
     if request.method == "POST":
+        backurl = reverse('web_authenticate_phonenumber')        
         try:
             number = fill_authentication_session_variable(request)
             auth_number = AUTH_NUMBER

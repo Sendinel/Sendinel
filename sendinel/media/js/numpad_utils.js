@@ -33,6 +33,9 @@ numpad.utils = {
                 $(fieldObject.selector.getSelected()).focus();
                 break;
             default:
+                if(fieldObject.handleKeydown) {
+                    fieldObject.handleKeydown(event);
+                }
                 return true;
         }
         return false;
