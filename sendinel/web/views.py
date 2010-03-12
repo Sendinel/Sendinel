@@ -178,6 +178,7 @@ def get_bluetooth_devices(request):
         return HttpResponse(status = 500)
         
 def register_infoservice(request, id):
+    ajax_url= reverse('web_check_call_received')    
     if request.method == "POST":
         request.session['way_of_communication'] = \
                                         request.POST['way_of_communication']
