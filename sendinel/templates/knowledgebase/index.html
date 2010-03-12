@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Here you can find information</h3>
+    <p>
+        <ul id="filelist">
+        {% for number, file in files.items %}
+            <li><a href="{% url knowledgebase_show file_id=number %}">{{file}}</a></li>
+        {% endfor %}
+        </ul>
+    </p>
+{% endblock %}

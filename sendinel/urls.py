@@ -9,6 +9,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', redirect_to, {'url': 'web/'}),
     (r'^web/', include('sendinel.web.urls')),
+    (r'^knowledgebase/', include('sendinel.knowledgebase.urls')),
     (r'^staff/', include('sendinel.staff.urls')),    
     (r'^admin/jsi18n/$', 'django.views.i18n.javascript_catalog'),
 
