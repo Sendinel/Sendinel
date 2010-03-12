@@ -1,5 +1,5 @@
 var check_for_call = function() {
-    var url = $("#url").val();
+    var url = $("#ajax_url").val();
     $.post(url,
         {
             number: $("#number").val()
@@ -30,6 +30,8 @@ var check_for_call = function() {
             }
         },
         "json");
+   
+        
 };
 
 $(document).ready(check_for_call);
