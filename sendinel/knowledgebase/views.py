@@ -13,6 +13,8 @@ from sendinel.logger import logger
 
 
 def index(request):
+    backurl = reverse('web_index')
+
     files = os.listdir(KNOWLEDGEBASE_DIRECTORY)
     for file in copy(files):
         if file.startswith('.') or file.endswith('.db'): files.remove(file)
@@ -28,7 +30,7 @@ def show(request, file_id):
 
     file_id = int(file_id)
     numbered_files = request.session['numbered_files']
-    file_name = numbered_files[file_id].lower()
+    file_name = numbered_files[file_id]
     
     if (len(numbered_files)-1 > file_id):
         nexturl = reverse('knowledgebase_show', kwargs={'file_id':(file_id+1)})
