@@ -4,6 +4,7 @@ from copy import copy
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.utils.http import urlquote
 
 from sendinel.settings import KNOWLEDGEBASE_DIRECTORY, \
                               MEDIA_URL
@@ -39,6 +40,7 @@ def show(request, file_id):
     
     if file_name.endswith('.jpg') or file_name.endswith('.jpeg'):
         path_name = MEDIA_URL + "knowledgebase/" + file_name
+        path_name = urlquote(path_name)
         return render_to_response('knowledgebase/show_jpg.html',
                               locals(),
                               context_instance=RequestContext(request))
