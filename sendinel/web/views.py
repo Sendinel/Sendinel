@@ -108,6 +108,7 @@ def send_appointment(request):
 def authenticate_phonenumber(request):
     nexturl = ''
     next = ''
+    ajax_url= reverse('web_check_call_received')
     backurl = reverse('web_index')    
     if request.method == "POST":
         backurl = reverse('web_authenticate_phonenumber')        
