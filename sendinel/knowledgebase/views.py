@@ -13,6 +13,8 @@ from sendinel.logger import logger
 
 
 def index(request):
+    backurl = reverse('web_index')
+
     files = os.listdir(KNOWLEDGEBASE_DIRECTORY)
     for file in copy(files):
         if file.startswith('.') or file.endswith('.db'): files.remove(file)
