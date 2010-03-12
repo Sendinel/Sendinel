@@ -215,7 +215,7 @@ class HospitalAppointment(Sendable):
         """
         data = VoiceOutputData()
         contents = {'date':str(self.date),
-                    'name': self.recipient.name,
+                    'name': self.recipient.name or '',
                     'doctor': self.doctor.name,
                     'hospital': self.hospital.name}
 

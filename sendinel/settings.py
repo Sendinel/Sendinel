@@ -114,9 +114,14 @@ KNOWLEDGEBASE_DIRECTORY = PROJECT_PATH + "/media/knowledgebase"
 ASTERISK_USER = "hudson"
 ASTERISK_GROUP = "hudson"
 ASTERISK_SPOOL_DIR = "/var/spool/asterisk/outgoing/"
+ASTERISK_DATACARD = False
 
 ASTERISK_EXTENSION = "s"
+#ASTERISK_SIP_ACCOUNT = "datacard0"
 ASTERISK_SIP_ACCOUNT = "ext-sip-account"
+
+#FESTIVAL_CACHE = "/lib/init/rw"
+FESTIVAL_CACHE = "/tmp"
 
 # Phonenumber to authenticate against the system
 # TODO move to local_settings on CI server

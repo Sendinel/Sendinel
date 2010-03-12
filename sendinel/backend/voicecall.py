@@ -1,4 +1,4 @@
-import sendinel.settings
+from sendinel import settings
 
 linux_available = False
 
@@ -20,13 +20,14 @@ import time
 
 class Voicecall:
     def __init__(self):
-        self.asterisk_user = sendinel.settings.ASTERISK_USER
-        self.asterisk_group = sendinel.settings.ASTERISK_GROUP
-        self.asterisk_spool_dir = sendinel.settings.ASTERISK_SPOOL_DIR  
-        self.asterisk_extension = sendinel.settings.ASTERISK_EXTENSION
-        self.asterisk_sip_account = sendinel.settings.ASTERISK_SIP_ACCOUNT
-        self.asterisk_festivalcache = "/var/lib/asterisk/festivalcache"
-        
+        self.asterisk_user = settings.ASTERISK_USER
+        self.asterisk_group = settings.ASTERISK_GROUP
+        self.asterisk_spool_dir = settings.ASTERISK_SPOOL_DIR  
+        self.asterisk_extension = settings.ASTERISK_EXTENSION
+        self.asterisk_sip_account = settings.ASTERISK_SIP_ACCOUNT
+        self.asterisk_festivalcache = settings.FESTIVAL_CACHE
+        self.asterisk_datacard = settings.ASTERISK_DATACARD 
+
     def create_voicefile(self, text):
         text_hash = md5(text).hexdigest()
         filename = "%s/%s.ulaw" % (self.asterisk_festivalcache, text_hash)
@@ -60,12 +61,24 @@ class Voicecall:
             
             @return The text which can be put to a file, to make asterisk conduct the call
             """
-            
-        output = """
+	if(self.asterisk_datacard):
+            output = """
+Channel: Datacard/%s/%s
+MaxRetries: 3
+RetryTime: 20
+WaitTime: 30
+Context: %s
+Extension: %s
+Priority: 1
+Set: PassedInfo=%s
+""" %(sip_account, number, context, extension, voicefile)
+     
+        else:
+            output = """
 Channel: SIP/%s@%s
 MaxRetries: 3
 RetryTime: 20
-WaitTime: 10
+WaitTime: 30
 Context: %s
 Extension: %s
 Priority: 1
@@ -73,7 +86,19 @@ Set: PassedInfo=%s
 """ %(number, sip_account, context, extension, voicefile)
 
         return output
-        
+       
+    def create_sms_spool_content(self, text, number, extension, context):
+        output = """
+Channel: Local/2000
+Context: %s
+Extension: %s
+Priority: 1
+Set: SmsNumber=%s
+Set: Text=%s
+""" %(context, extension, number, text)
+
+        return output
+ 
     def create_spool_file(self, filename, content):
         """
             Create the asterisk spool file
@@ -112,7 +137,13 @@ Set: PassedInfo=%s
             
         except:
             return False
-            
+           
+    def conduct_sms(self, number, text, context):
+        content = self.create_sms_spool_content(text, number, self.asterisk_extension, context)
+        self.create_spool_file("tmp", content)
+        return self.move_spool_file("tmp")
+
+ 
     def conduct_call(self, number, text, context): 
         """
             If Linux operating system is available, conduct a voice call
