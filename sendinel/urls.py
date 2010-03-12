@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import include, patterns, url
 from django.conf import settings
 from django.views.generic.simple import redirect_to
 
@@ -9,6 +9,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', redirect_to, {'url': 'web/'}),
     (r'^web/', include('sendinel.web.urls')),
+    (r'^knowledgebase/', include('sendinel.knowledgebase.urls')),
     (r'^staff/', include('sendinel.staff.urls')),    
     (r'^admin/jsi18n/$', 'django.views.i18n.javascript_catalog'),
 

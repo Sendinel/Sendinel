@@ -1,6 +1,5 @@
-import sendinel.settings
+from sendinel import settings
 
-global linux_available
 linux_available = False
 
 try:
@@ -15,31 +14,33 @@ try:
     linux_available = True
     
 except ImportError:
-    print "Warning: Linux operating system is required to run the voicecall functionality"
+    print "Warning: Linux is required for voicecall functionality"
     
 import time
 
 class Voicecall:
     def __init__(self):
-        self.asterisk_user = sendinel.settings.ASTERISK_USER
-        self.asterisk_group = sendinel.settings.ASTERISK_GROUP
-        self.asterisk_spool_dir = sendinel.settings.ASTERISK_SPOOL_DIR  
-        self.asterisk_extension = sendinel.settings.ASTERISK_EXTENSION
-        self.asterisk_sip_account = sendinel.settings.ASTERISK_SIP_ACCOUNT
-        self.asterisk_festivalcache = "/var/lib/asterisk/festivalcache"
-        
+        self.asterisk_user = settings.ASTERISK_USER
+        self.asterisk_group = settings.ASTERISK_GROUP
+        self.asterisk_spool_dir = settings.ASTERISK_SPOOL_DIR  
+        self.asterisk_extension = settings.ASTERISK_EXTENSION
+        self.asterisk_sip_account = settings.ASTERISK_SIP_ACCOUNT
+        self.asterisk_festivalcache = settings.FESTIVAL_CACHE
+        self.asterisk_datacard = settings.ASTERISK_DATACARD 
+
     def create_voicefile(self, text):
-        hash = md5(text).hexdigest()
-        filename = "%s/%s.ulaw" % (self.asterisk_festivalcache, hash)
+        text_hash = md5(text).hexdigest()
+        filename = "%s/%s.ulaw" % (self.asterisk_festivalcache, text_hash)
         if not os.path.exists(filename):
             args = "-o %s -otype ulaw -" % (filename)
-            p = Popen(["text2wave"] + args.split(" "),stdin=PIPE)
-            p.communicate(input=text)
+            process = Popen(["text2wave"] + args.split(" "), stdin=PIPE)
+            process.communicate(input=text)
         else:
             pass
-        return "%s/%s" % (self.asterisk_festivalcache, hash)
+        return "%s/%s" % (self.asterisk_festivalcache, text_hash)
 
-    def create_spool_content(self, number, voicefile, extension, sip_account, context):
+    def create_spool_content(self, number, voicefile, extension,
+                            sip_account, context):
         """
             Create the content for asterisk's spool file
             
@@ -60,12 +61,24 @@ class Voicecall:
             
             @return The text which can be put to a file, to make asterisk conduct the call
             """
-            
-        output = """
+	if(self.asterisk_datacard):
+            output = """
+Channel: Datacard/%s/%s
+MaxRetries: 3
+RetryTime: 20
+WaitTime: 30
+Context: %s
+Extension: %s
+Priority: 1
+Set: PassedInfo=%s
+""" %(sip_account, number, context, extension, voicefile)
+     
+        else:
+            output = """
 Channel: SIP/%s@%s
 MaxRetries: 3
 RetryTime: 20
-WaitTime: 10
+WaitTime: 30
 Context: %s
 Extension: %s
 Priority: 1
@@ -73,7 +86,19 @@ Set: PassedInfo=%s
 """ %(number, sip_account, context, extension, voicefile)
 
         return output
-        
+       
+    def create_sms_spool_content(self, text, number, extension, context):
+        output = """
+Channel: Local/2000
+Context: %s
+Extension: %s
+Priority: 1
+Set: SmsNumber=%s
+Set: Text=%s
+""" %(context, extension, number, text)
+
+        return output
+ 
     def create_spool_file(self, filename, content):
         """
             Create the asterisk spool file
@@ -100,7 +125,10 @@ Set: PassedInfo=%s
             @return True if the operating succeeded, if not False
         """
         try:
-            os.chown(filename, pwd.getpwnam(self.asterisk_user).pw_uid, grp.getgrnam(self.asterisk_group).gr_gid)
+            uid = pwd.getpwnam(self.asterisk_user).pw_uid
+            gid = grp.getgrnam(self.asterisk_group).gr_gid
+            
+            os.chown(filename, uid, gid)
             # set permissions to unix 666
             os.chmod(filename, 438)
             filepath = self.asterisk_spool_dir + str(time.time())
@@ -109,7 +137,13 @@ Set: PassedInfo=%s
             
         except:
             return False
-            
+           
+    def conduct_sms(self, number, text, context):
+        content = self.create_sms_spool_content(text, number, self.asterisk_extension, context)
+        self.create_spool_file("tmp", content)
+        return self.move_spool_file("tmp")
+
+ 
     def conduct_call(self, number, text, context): 
         """
             If Linux operating system is available, conduct a voice call
@@ -128,7 +162,11 @@ Set: PassedInfo=%s
         
         if linux_available:
             voicefile = self.create_voicefile(text)
-            content = self.create_spool_content(number, voicefile, self.asterisk_extension, self.asterisk_sip_account, context)
+            content = self.create_spool_content(number,
+                                                voicefile,
+                                                self.asterisk_extension,
+                                                self.asterisk_sip_account,
+                                                context)
             self.create_spool_file("tmp", content)
             return self.move_spool_file("tmp")
         else:

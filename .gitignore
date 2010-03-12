@@ -3,3 +3,5 @@ thumbs.db
 *.pyc
 sendinel.db
 local_settings.py
+sendinel.tmproj
+fake_file_log

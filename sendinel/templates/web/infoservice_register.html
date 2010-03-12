@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Register for the informationservice {{infoservice}}</h3>
+	<p>Please enter your phone number and the way you want to receive the messages</p>
+    <p>
+        <form method="post" class="selectable_container" action='#' 
+         autocomplete="off">
+            <table>
+                {% if error %}
+                <tr><td></td><td>{{ error }}</td></tr>
+                {% endif %}              
+                <tr>
+                  <td>Phone Number</td>
+                  <td><input type="text" name="number" class="selectable" /></td>
+                </tr>
+                <tr>
+                  <td>Way of Communication</td>
+                  <td>
+                    <select name="way_of_communication" >
+                     <option value='sms'>SMS</option>
+                     <option value='voice'>Voice Call</option>
+                    </select> 
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>{% include "web/control_buttons_widget.html" %}</td>
+                </tr>
+	         </table>
+        </form>
+    </p>
+{% endblock %}

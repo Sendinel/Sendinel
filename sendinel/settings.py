@@ -1,3 +1,4 @@
+import logging
 from datetime import timedelta
 from os.path import abspath, dirname
 # Django settings for sendinel project.
@@ -6,6 +7,8 @@ DEBUG = True        #for scheduling set to false
 TEMPLATE_DEBUG = DEBUG
 PROJECT_PATH = dirname(abspath(__file__))
 
+LOGGING_LEVEL = logging.INFO
+LOGGING_LEVEL_TEST = logging.CRITICAL
 
 ADMINS = (
 )
@@ -60,12 +63,21 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.load_template_source',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = ("django.core.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.contrib.messages.context_processors.messages")
+
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.csrf.middleware.CsrfMiddleware'
 )
+
+
 
 ROOT_URLCONF = 'sendinel.urls'
 
@@ -84,23 +96,32 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'sendinel.web',
     'sendinel.backend',
-    'sendinel.staff'
+    'sendinel.staff',
+    'sendinel.knowledgebase'
 )
 
 ####################################
 # Sendinel Configuration
 REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days = 1)
+DEFAULT_APPOINTMENT_DURATION = timedelta(minutes = 60)
 DEFAULT_HOSPITAL_NAME = 'your hospital'
 
 COUNTRY_CODE_PHONE = "0049" #"0027"
 START_MOBILE_PHONE = "01" #"07"
 
+KNOWLEDGEBASE_DIRECTORY = PROJECT_PATH + "/media/knowledgebase"
+
 ASTERISK_USER = "hudson"
 ASTERISK_GROUP = "hudson"
 ASTERISK_SPOOL_DIR = "/var/spool/asterisk/outgoing/"
+ASTERISK_DATACARD = False
 
 ASTERISK_EXTENSION = "s"
+#ASTERISK_SIP_ACCOUNT = "datacard0"
 ASTERISK_SIP_ACCOUNT = "ext-sip-account"
+
+#FESTIVAL_CACHE = "/lib/init/rw"
+FESTIVAL_CACHE = "/tmp"
 
 # Phonenumber to authenticate against the system
 # TODO move to local_settings on CI server
@@ -114,11 +135,13 @@ SERIALPORTSMS = '/dev/rfcomm0'
 
 # IP address to bluetooth server
 BLUETOOTH_SERVER_ADDRESS = '127.0.0.1'
+
+# used for marking the vcal uid
+VCAL_UID_SLUG = 'sendinel.org'
 ####################################
 
-
+# Setup Local_Settings if present
 try:
     from local_settings import *
 except ImportError:
     pass
-

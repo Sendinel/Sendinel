@@ -1,6 +1,5 @@
-import sms
-import bluetooth
-import voicecall
+from sendinel.backend import sms, bluetooth, voicecall
+from sendinel.logger import logger
 
 class OutputData(object):
     """
@@ -20,11 +19,15 @@ class BluetoothOutputData(OutputData):
     """
     Define necessary OutputData for sending via bluetooth.
     """
-    mac = None
-    addressServer = None
+    
+    bluetooth_mac_address = None
+    server_address = None
     
     def send(self):
-        bluetooth.send_vcal(self.addressServer, self.mac, self.data)
+        logger.info("Sending via Bluetooth")
+        return bluetooth.send_vcal(self.server_address, 
+                            self.bluetooth_mac_address,
+                            self.data)
 
 class SMSOutputData(OutputData):
     """

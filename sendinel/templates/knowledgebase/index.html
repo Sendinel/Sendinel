@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Here you can find information</h3>
+    <div class="selectable_container">
+    
+        <p>
+            <ul id="filelist">
+                {% for number, file in files.items %}
+                    <li><a href="{% url knowledgebase_show file_id=number %}" class="selectable">{{file}}</a></li>
+                {% endfor %}
+            </ul>
+        </p>
+        
+        {% include 'web/control_buttons_back_only_widget.html' %}
+    </div>
+        
+{% endblock %}

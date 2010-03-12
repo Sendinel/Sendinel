@@ -2,15 +2,23 @@
 
 {% block script %}
     <script src="{{MEDIA_URL}}/js/bluetooth.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(Bluetooth.check_for_devices);
+    </script>
 {% endblock %}
 
 {% block content %}
     <h3>Available Bluetooth Devices</h3>
     <p>
-        <table id="bluetooth_devices"></table>
-        <div id="loading">
-            <img src="{{ MEDIA_URL }}/img/progress_bar.gif" /><br />
-            Looking for further devices
+        <div class="selectable_container">
+            <ul id="bluetooth_devices"></ul>
+            <div class="centered">
+                <img src="{{ MEDIA_URL }}/img/progress_bar.gif" /><br />
+                Looking for further devices
+            </div>
+            <span id="csrf">{% csrf_token %}</span>
+            <input type="hidden" id="next" value="{{ next }}">
+            {% include "web/control_buttons_back_only_widget.html" %}
         </div>
     </p>
 {% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+   {{text|linebreaksbr}}
+   
+    <div class="selectable_container">
+    
+        <a href="{% url sendinel.knowledgebase.views.index %}" class="selectable">
+            Back to Knowledgebase
+        </a>
+    
+        {% if nexturl and backurl %}
+            {% include 'web/control_buttons_widget.html' %}
+        {% else %}
+            {% include 'web/control_buttons_back_only_widget.html' %}
+        {% endif %}
+    </div>
+   
+{% endblock %}

@@ -3,8 +3,9 @@
 {% block content %}
     <h3>Your are logged in as staff. Please choose what you want to do:</h3>
     <p>
-        <ul id="navlist">
-           <a href="{% url staff_list_infoservices %}">Manage all infoservices</a>
+        <ul class="navlist">
+            <li><a href="{% url staff_list_infoservices %}">Manage all infoservices</a></li>
+            <li><a href="{% url staff_infoservice_create %}">Create new infoservice</a></li>
         </ul>
     </p>
 {% endblock %}
