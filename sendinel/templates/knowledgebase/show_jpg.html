@@ -1,21 +1,9 @@
-{% extends "base.html" %}
+{% extends "knowledgebase/base_show.html" %}
 
 {% block script %}
     <script src="{{MEDIA_URL}}/js/knowledgebase.js" type="text/javascript"></script>
 {% endblock %}
 
-{% block content %}
+{% block content_show %}
    <img src="{{path_name}}" id="picture" />
-   
-    <div class="selectable_container">
-        <a href="{% url sendinel.knowledgebase.views.index %}" class="selectable">
-            Back to Knowledgebase
-        </a>
-        {% if nexturl and backurl %}
-            {% include 'web/control_buttons_widget.html' %}
-        {% else %}
-            {% include 'web/control_buttons_back_only_widget.html' %}
-        {% endif %}
-    </div>
-   
 {% endblock %}
