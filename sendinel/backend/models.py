@@ -174,7 +174,7 @@ class HospitalAppointment(Sendable):
         
         content = "Please remember your Appointment tomorrow at "\
                     + self.hospital.name\
-                    + " by doctor "\
+                    + " with doctor "\
                     + self.doctor.name
         uid = vcal.get_uid()
         data.data = vcal.create_vcal_string(self.date, 
