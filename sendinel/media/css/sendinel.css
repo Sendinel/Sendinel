@@ -1,8 +1,8 @@
 body{
-background:#FFFFFF;
-margin:9px;
-font: 10pt/16pt 'Lucida Grande', Verdana, Helvetica, sans-serif;
-color:#666666;
+    background:#FFFFFF;
+    margin:9px;
+    font: 14pt/20pt 'Lucida Grande', Verdana, Helvetica, sans-serif;
+    color:#666666;
 }
 
 A:link{ color:#999999; text-decoration:none; }
@@ -39,13 +39,13 @@ img { border: 0px; }
 h3{
     text-align:left;
     color:#fcc533;
-    font-size:1.3em;
+    font-size:1.4em;
     font-weight:bold;
 }
 
 #title{
     height:120px;
-    margin-top:30px;
+    margin-top:10px;
     border-bottom:#CCCCCC 1px solid;
     text-align:left;
     font-size:1em;
@@ -68,7 +68,7 @@ h3{
     padding: 0 1px 1px;
     margin-left: 0;
     font-size: 1.2em;
-    font: bold 12px Verdana, sans-serif;
+    font: bold Verdana, sans-serif;
     background:#F3F3F3;
     width:60%;
 }

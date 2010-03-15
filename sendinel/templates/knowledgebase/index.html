@@ -3,7 +3,6 @@
 {% block content %}
     <h3>Here you can find information</h3>
     <div class="selectable_container">
-    
         <p>
             <ul id="filelist">
                 {% for number, file in files.items %}
@@ -14,5 +13,4 @@
         
         {% include 'web/control_buttons_back_only_widget.html' %}
     </div>
-        
 {% endblock %}
