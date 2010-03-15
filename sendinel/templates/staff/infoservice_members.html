@@ -8,7 +8,6 @@
             <td>Phone Number</td>
             <td>Way of Communication</td>
             <td />
-
         </tr>
     {% for subscription in subscriptions %}
         
@@ -22,5 +21,7 @@
     {% endfor %}
     
     </table>
+
+    <p><a href="{% url staff_list_infoservices %}">Back to Infoservices</a></p>
     
 {% endblock %}
