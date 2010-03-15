@@ -9,6 +9,8 @@ numpad.inputs.TimeField = function(originalField) {
     '<p class="selectable dates">' +
         '<input type="text" maxlength="2" name="" class="subselectable twocharinput" />:' +
         '<input type="text" maxlength="2" name="" class="subselectable twocharinput" />' +
+        '<br />' + 
+        'for example 15:20' +
     '</p>';
     
     this.createField = numpad.utils.createField;

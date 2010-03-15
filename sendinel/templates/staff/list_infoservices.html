@@ -15,7 +15,7 @@
         <tr>
             <td>{{ infoservice.name }}</td>
             <td>{{ infoservice.count_members }}</td>
-            <td><a href="{% url staff_create_infomessage id=infoservice.id %}">Create message</a></td>
+            <td><a href="{% url staff_create_infomessage id=infoservice.id %}">Send message</a> | </td>
             <td><a href="{% url staff_infoservice_members id=infoservice.id %}">Manage members</a></td>
         </tr>
         

@@ -10,6 +10,8 @@ numpad.inputs.DateField = function(originalField) {
         '<input type="text" maxlength="4" name="" class="subselectable fourcharinput" />/' +
         '<input type="text" maxlength="2" name="" class="subselectable twocharinput" />/' +
         '<input type="text" maxlength="2" name="" class="subselectable twocharinput" />' +
+        '<br />' + 
+        'for example 2010/03/12 is March 12th 2010' +
     '</p>';
     
     this.createField = numpad.utils.createField;
