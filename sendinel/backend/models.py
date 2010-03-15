@@ -174,7 +174,7 @@ class HospitalAppointment(Sendable):
         
         content = "Please remember your Appointment tomorrow at "\
                     + self.hospital.name\
-                    + " with doctor "\
+                    + " by doctor "\
                     + self.doctor.name
         uid = vcal.get_uid()
         data.data = vcal.create_vcal_string(self.date, 
@@ -212,8 +212,10 @@ class HospitalAppointment(Sendable):
         Generate the message for an HospitalAppointment.
         Return VoiceOutputData for sending.
         """
+
+        spokenDate = texthelper.date_to_text(self.date.weekday()+1, self.date.day, self.date.month, self.date.hour, self.date.minute)
         data = VoiceOutputData()
-        contents = {'date':str(self.date),
+        contents = {'date':str(spokenDate),
                     'doctor': self.doctor.name,
                     'hospital': self.hospital.name}
 
