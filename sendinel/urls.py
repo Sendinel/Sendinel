@@ -10,7 +10,8 @@ urlpatterns = patterns('',
     url(r'^$', redirect_to, {'url': 'web/'}),
     (r'^web/', include('sendinel.web.urls')),
     (r'^knowledgebase/', include('sendinel.knowledgebase.urls')),
-    (r'^staff/', include('sendinel.staff.urls')),    
+    (r'^staff/', include('sendinel.staff.urls')),
+    (r'^i18n/', include('django.conf.urls.i18n')),
     (r'^admin/jsi18n/$', 'django.views.i18n.javascript_catalog'),
 
     # Example:

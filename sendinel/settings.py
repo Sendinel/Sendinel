@@ -1,6 +1,7 @@
 import logging
 from datetime import timedelta
 from os.path import abspath, dirname
+from django.utils.translation import ugettext as _
 # Django settings for sendinel project.
 
 DEBUG = True        #for scheduling set to false
@@ -73,6 +74,7 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.core.context_processors.auth",
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.csrf.middleware.CsrfMiddleware'
 )

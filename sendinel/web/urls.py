@@ -19,5 +19,7 @@ urlpatterns = patterns("",
     url(r"^infoservice/register/(?P<id>\d+)/$", 'sendinel.web.views.register_infoservice', 
        name = 'web_infoservice_register'),     
     url(r"^infoservice/register/save/(?P<id>\d+)/$", 'sendinel.web.views.save_registration_infoservice', 
-       name = 'web_infoservice_register_save')       
+        name = 'web_infoservice_register_save'),
+    url(r"^language_choose/$", 'sendinel.web.views.choose_language',
+        name = 'choose_language'),
     )
