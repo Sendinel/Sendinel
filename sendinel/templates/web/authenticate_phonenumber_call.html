@@ -9,12 +9,14 @@
     <div id="message" class="message"></div>
 
     <h3>Authenticate Phonenumber</h3>
-    <p>To register your phone number {{number}}</p>
     {% comment %}
         TODO Write number to local phone settings
     {% endcomment %}
-	<p>please call the following phone number: {{auth_number}}.</p>
-	<p>Your mobile's function send own number must be activated. This is the default on most phones. If the authentication does not work, your can try to enable it by calling the number *31#</p>
+    <p>Please ring <strong class="big">{{auth_number}}</strong>.</p>
+    <p>This will be <strong class="big">free.</strong></p>
+    {#  <p>{{number}}</p> #}
+    
+    {# <p>Your mobile's function send own number must be activated. This is the default on most phones. If the authentication does not work, your can try to enable it by calling the number *31#</p> #}
     <input type="hidden" id="number" value="{{number}}" />
     <input type="hidden" id="next" value="{{ next }}">
     <input type="hidden" id="ajax_url" value="{{ ajax_url }}">

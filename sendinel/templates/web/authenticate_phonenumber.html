@@ -2,12 +2,13 @@
 
 {% block content %}
     <h3>Authenticate Phonenumber</h3>
-	<p>Hello {{ patient_name }}! Please enter your phone number.</p>
+    <h4>The authentication is <strong class="big">FREE</strong>.</h4>
+	<p>Please enter your phone number:</p>
     <p>
         <form method="post" class="selectable_container" autocomplete="off">
             <table>
                 {% if error %}
-                <tr><td></td><td>{{ error }}</td></tr>
+                <tr><td></td><td class="errorlist">{{ error }}</td></tr>
                 {% endif %}
                 <tr>
                   <td>Phone number</td>
