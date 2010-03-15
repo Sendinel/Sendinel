@@ -92,6 +92,7 @@ Set: PassedInfo=%s
 Channel: Local/2000
 Context: %s
 Extension: %s
+WaitTime: 2
 Priority: 1
 Set: SmsNumber=%s
 Set: Text=%s
