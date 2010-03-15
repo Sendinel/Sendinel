@@ -147,7 +147,7 @@ class HospitalAppointment(Sendable):
     doctor = models.ForeignKey(Doctor)
     hospital = models.ForeignKey(Hospital)
     template = Template("Hello, please remember your appointment" + \
-                         " at the $hospital at $date with doctor $doctor")
+                         " at the $hospital at $date with $doctor")
     def __unicode__(self):
         return "%s Doctor %s" % ((str(self.date) or ""), (str(self.doctor) or ""))
                          
@@ -174,7 +174,7 @@ class HospitalAppointment(Sendable):
         
         content = "Please remember your Appointment tomorrow at "\
                     + self.hospital.name\
-                    + " by doctor "\
+                    + " with "\
                     + self.doctor.name
         uid = vcal.get_uid()
         data.data = vcal.create_vcal_string(self.date, 
