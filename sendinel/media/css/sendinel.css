@@ -44,10 +44,20 @@ h3{
 }
 
 #title{
+    float:left;
     height:120px;
-    margin-top:10px;
+
     border-bottom:#CCCCCC 1px solid;
     text-align:left;
+    font-size:1em;
+    letter-spacing:-1px;
+    color:#CCCCCC;
+}
+#hpiLogo{
+    height:120px;
+
+    border-bottom:#CCCCCC 1px solid;
+    text-align:right;
     font-size:1em;
     letter-spacing:-1px;
     color:#CCCCCC;
