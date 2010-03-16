@@ -9,6 +9,14 @@
         <script src="../media/js/jquery.js" type="text/javascript"></script>
         <script src="../media/js/jquery-ui.js" type="text/javascript"></script>
         
+        <script src="../media/js/numpad.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../media/js/numpad_utils.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../media/js/numpad_date.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../media/js/numpad_time.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../media/js/numpad_select.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../media/js/numpad_controlButtons.js" type="text/javascript" charset="utf-8"></script>
+        
         <link rel="stylesheet" href="../media/css/numpad.css" type="text/css" />
         <link rel="stylesheet" href="../media/css/jquery-ui.css" type="text/css" />
         <script type = "text/javascript">
@@ -32,7 +40,7 @@
             <div id="container">
 
                 <div id="title">
-                    <a href="#">
+                    <a href="index.html">
                         <img src="../media/logoSend.gif" alt="sendinel" />
                     </a>
                 </div>
@@ -44,18 +52,8 @@
                     <h3>Appointment</h3>
                     <p>Please enter the appointment details.</p>
                     <p>
-                        <form action="./" method="post" class="selectable_container"><div style='display:none;'><input type='hidden' id='csrfmiddlewaretoken' name='csrfmiddlewaretoken' value='597ca50f7b11e63662df45f7669c4f83' /></div>
+                        <form action="./" method="post" class="selectable_container" autocomplete="off"><div style='display:none;'><input type='hidden' id='csrfmiddlewaretoken' name='csrfmiddlewaretoken' value='597ca50f7b11e63662df45f7669c4f83' /></div>
                             <table>
-                                <tr>
-                                    <th>
-                                        <label for="id_name">Name:</label>
-                                    </th>
-                                    <td>
-                                        <p class="name">
-                                            <input id="id_name" type="text" class="vTextField" name="name" size="20" />
-                                        </p>                                        
-                                    </td>
-                                </tr>
                                 <tr>                                    
                                     <th>
                                         <label for="id_date">Date:</label>
@@ -107,9 +105,11 @@
                             <div name="control-buttons-widget" class="control-buttons selectable">
                                 <div class="back-button">
                                     <input type="button" class="subselectable" name="form_submit" value="&lt;- Back" id="id_back" onclick="window.location='menu_mouse_and_numpad.html'"/>
+                                    <input type="hidden" class="" name="back-button-link" value="menu_mouse_and_numpad.html" />
                                 </div>
                                 <div class="next-button">
                                     <input type="button" class="subselectable" name="form_submit" value="Next -&gt;" id="id_next" onclick="window.location='thank_you.html'"/>
+                                    <input type="hidden" class="" name="next-button-link" value="thank_you.html" />
                                 </div>
                             </div>
                         </form>
