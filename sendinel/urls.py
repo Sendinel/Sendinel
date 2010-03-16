@@ -1,4 +1,5 @@
-from django.conf.urls.defaults import include, patterns, url
+from django.conf.urls.defaults import handler404, handler500, include, \
+                                        patterns, url
 from django.conf import settings
 from django.views.generic.simple import redirect_to
 
