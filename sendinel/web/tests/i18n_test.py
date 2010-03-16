@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 
-class AppointmentViewTest(TestCase):
+class InternationalizationTest(TestCase):
     fixtures = ['backend']
     urls = 'sendinel.urls'
     
