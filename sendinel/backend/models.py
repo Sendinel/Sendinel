@@ -6,7 +6,8 @@ from django.contrib.contenttypes import generic
 
 from sendinel.settings import DEFAULT_HOSPITAL_NAME, \
                               REMINDER_TIME_BEFORE_APPOINTMENT, \
-                              BLUETOOTH_SERVER_ADDRESS  
+                              BLUETOOTH_SERVER_ADDRESS  , \
+							  LANGUAGE_CODE
 from sendinel.backend import texthelper, vcal
 from sendinel.backend.output import SMSOutputData, \
                                     VoiceOutputData, \
@@ -148,6 +149,9 @@ class HospitalAppointment(Sendable):
     hospital = models.ForeignKey(Hospital)
     template = Template("Hello, please remember your appointment" + \
                          " at the $hospital at $date with $doctor")
+    template_zulu = Template("Hello, please remember your appointment" + \
+                         " at the $hospital at $date with $doctor")
+                         
     def __unicode__(self):
         return "%s Doctor %s" % ((str(self.date) or ""), (str(self.doctor) or ""))
                          
@@ -200,8 +204,13 @@ class HospitalAppointment(Sendable):
                     'doctor': self.doctor.name,
                     'hospital': self.hospital.name}
                     
-        data.data = texthelper.generate_text(contents,
-                        HospitalAppointment.template)
+        if str(LANGUAGE_CODE) == "en-us":
+		    data.data = texthelper.generate_text(contents,
+                        HospitalAppointment.template, False)
+        elif str(LANGUAGE_CODE) == "zu-za":
+		    data.data = texthelper.generate_text(contents,
+                        HospitalAppointment.template_zulu, False)
+                        
         data.phone_number = self.recipient.phone_number
         
         return data
@@ -212,13 +221,26 @@ class HospitalAppointment(Sendable):
         Generate the message for an HospitalAppointment.
         Return VoiceOutputData for sending.
         """
+    
+        spokenDate = str(self.date)
+		
+        if str(LANGUAGE_CODE) == "en-us":
+		    spokenDate = texthelper.date_to_text(self.date.weekday()+1, self.date.day, self.date.month, self.date.hour, self.date.minute)
+        elif str(LANGUAGE_CODE) == "zu-za":
+		    spokenDate = texthelper.date_to_zulutext(self.date.weekday()+1, self.date.day, self.date.month, self.date.hour, self.date.minute)
 
-        spokenDate = texthelper.date_to_text(self.date.weekday()+1, self.date.day, self.date.month, self.date.hour, self.date.minute)
         data = VoiceOutputData()
         contents = {'date':str(spokenDate),
                     'doctor': self.doctor.name,
                     'hospital': self.hospital.name}
 
+        if str(LANGUAGE_CODE) == "en-us":
+		    data.data = texthelper.generate_text(contents,
+                        HospitalAppointment.template, False)
+        elif str(LANGUAGE_CODE) == "zu-za":
+		    data.data = texthelper.generate_text(contents,
+                        HospitalAppointment.template_zulu, False)
+                
         data.data = texthelper.generate_text(contents,
                         HospitalAppointment.template, False)
         data.phone_number = self.recipient.phone_number
