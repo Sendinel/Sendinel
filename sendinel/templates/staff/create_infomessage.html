@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block content %}
-    <h3>Send an Infomessage</h3>
+    <h3>{% trans "Send an Infomessage" %}</h3>
     <p>
         <form action="" method="post">
             <table>
@@ -10,5 +10,5 @@
             <input type="submit" name="submit" value="Send" id="id_submit" />
         </form>
     </p>
-    <p><a href="{% url staff_list_infoservices %}">Back to Infoservices</a></p>
+    <p><a href="{% url staff_list_infoservices %}">{% trans "Back to Infoservices" %}</a></p>
 {% endblock %}
