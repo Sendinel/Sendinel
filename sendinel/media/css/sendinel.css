@@ -62,7 +62,9 @@ h3{
     letter-spacing:-1px;
     color:#CCCCCC;
 }
-
+#bluetootLogo{
+    float:right;
+}
 
 #footer{
     text-align:center;
