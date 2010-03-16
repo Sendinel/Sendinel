@@ -9,6 +9,13 @@
 
 {% block content %}
     <h3>Available Bluetooth Devices</h3>
+    <div class="bluetootLogo">
+        <img src="{{ MEDIA_URL }}/img/bluetooth.png" alt="sendinel" width="40" />
+    </div>
+    <div>
+        {% trans "Please turn on your Bluetooth" %}
+    </div>
+    <br />
     <p>
         <div class="selectable_container">
             <ul id="bluetooth_devices"></ul>
