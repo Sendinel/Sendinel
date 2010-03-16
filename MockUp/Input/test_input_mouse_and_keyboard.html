@@ -52,7 +52,7 @@
                                     </th>
                                     <td>
                                         <p class="name">
-                                            <input id="id_name" type="text" class="vTextField" name="name" size="20" />
+                                            <input id="id_name" type="text" class="vTextField" name="name" size="20" tabindex="1" />
                                         </p>                                        
                                     </td>
                                 </tr>
@@ -70,7 +70,7 @@
                                     </th>
                                     <td>
                                         <p class="datetime">                                                                                
-                                            <input id="id_date_1" type="text" class="vTimeField" name="date_1" size="8" />
+                                            <input id="id_date_1" type="text" class="vTimeField" name="date_1" tabindex="2" size="8" />
                                         </p>                                        
                                     </td>
                                 </tr>
@@ -79,7 +79,7 @@
                                         <label for="id_doctor">Doctor:</label>
                                     </th>
                                     <td>
-                                        <select name="doctor" id="id_doctor">
+                                        <select name="doctor" tabindex="3" id="id_doctor">
                                             <option value="" selected="selected">---------</option>
                                             <option value="1">Dr. House</option>
                                             <option value="2">Dr. Sheppard</option>
@@ -95,7 +95,7 @@
                                         <label for="id_way_of_communication">Way of communication:</label>
                                     </th>
                                     <td>
-                                        <select name="way_of_communication" id="id_way_of_communication">
+                                        <select tabindex="4" name="way_of_communication" id="id_way_of_communication">
                                             <option value="" selected="selected">---------</option>
                                             <option value="sms">SMS</option>
                                             <option value="bluetooth">Bluetooth</option>
@@ -106,11 +106,11 @@
                             </table>
                             <div name="control-buttons-widget" class="control-buttons selectable">
                                 <div class="back-button">
-                                    <input type="button" class="subselectable" name="form_submit" value="&lt;- Back" id="id_back" onclick="window.location='menu_mouse_and_keyboard.html'"/>
+                                    <input type="button" tabindex="5" class="subselectable" name="form_submit" value="&lt;- Back" id="id_back" onclick="window.location='menu_mouse_and_keyboard.html'"/>
                                     <input type="hidden" class="" name="back-button-link" value="menu_mouse_and_keyboard.html" />
                                 </div>
                                 <div class="next-button">
-                                    <input type="button" class="subselectable" name="form_submit" value="Next -&gt;" id="id_next" onclick="window.location='thank_you.html'"/>
+                                    <input type="button" tabindex="6" class="subselectable" name="form_submit" value="Next -&gt;" id="id_next" onclick="window.location='thank_you.html'"/>
                                     <input type="hidden" class="" name="next-button-link" value="thank_you.html" />
                                 </div>
                             </div>

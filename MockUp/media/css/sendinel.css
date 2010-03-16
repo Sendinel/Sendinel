@@ -25,6 +25,7 @@ img { border: 0px; }
 }
 
 #container{
+    padding-left:20px;
     width:600px;
     border-left:#CCCCCC 1px solid;
 }
@@ -114,6 +115,13 @@ img {
 
 strong.big {
     font-size: 1.3em;
+}
+
+#error {
+    border: 1px solid red;
+    color: red;
+    display: none;
+    text-align: center;
 }
 
 .errorlist {
