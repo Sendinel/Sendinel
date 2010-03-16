@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
 
 from sendinel.settings import DEFAULT_HOSPITAL_NAME, \
                               REMINDER_TIME_BEFORE_APPOINTMENT, \
@@ -89,9 +90,9 @@ class Sendable(models.Model):
         abstract = True
 
     WAYS_OF_COMMUNICATION = (
-        ('sms', _('SMS')),
-        ('bluetooth', _('Bluetooth')),
-        ('voice', _('Voice Call')),
+        ('sms', ugettext_lazy('SMS')),
+        ('bluetooth', ugettext_lazy('Bluetooth')),
+        ('voice', ugettext_lazy('Voice Call')),
     )
     way_of_communication = models.CharField(max_length=9,
                                 choices=WAYS_OF_COMMUNICATION)

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-16 17:05+0100\n"
+"POT-Creation-Date: 2010-03-16 17:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,23 +30,23 @@ msgstr "#TRANSLATED#"
 msgid "Test Language"
 msgstr "#TRANSLATED#"
 
-#: backend/models.py:91 templates/web/infoservice_register.html:21
+#: backend/models.py:92 templates/web/infoservice_register.html:21
 msgid "SMS"
 msgstr "#TRANSLATED#"
 
-#: backend/models.py:92
+#: backend/models.py:93
 msgid "Bluetooth"
 msgstr "#TRANSLATED#"
 
-#: backend/models.py:93 templates/web/infoservice_register.html:22
+#: backend/models.py:94 templates/web/infoservice_register.html:22
 msgid "Voice Call"
 msgstr "#TRANSLATED#"
 
-#: backend/models.py:150
+#: backend/models.py:151
 msgid "Hello, please remember your appointment"
 msgstr "#TRANSLATED#"
 
-#: backend/models.py:177
+#: backend/models.py:178
 msgid "Please remember your Appointment tomorrow at the"
 msgstr "#TRANSLATED#"
 
