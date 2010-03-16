@@ -5,15 +5,17 @@
 #
 #, fuzzy
 msgid ""
-msgstr "#TRANSLATED#"
+msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-16 16:08+0100\n"
+"POT-Creation-Date: 2010-03-16 17:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"#TRANSLATED#Report-Msgid-Bugs-To: \n"
+"#TRANSLATED#Report-Msgid-Bugs-To: \n"
 "#TRANSLATED#Project-Id-Version: PACKAGE VERSION\n"
 
 #: settings.py:41
@@ -26,6 +28,26 @@ msgstr "#TRANSLATED#"
 
 #: settings.py:43
 msgid "Test Language"
+msgstr "#TRANSLATED#"
+
+#: backend/models.py:91 templates/web/infoservice_register.html:21
+msgid "SMS"
+msgstr "#TRANSLATED#"
+
+#: backend/models.py:92
+msgid "Bluetooth"
+msgstr "#TRANSLATED#"
+
+#: backend/models.py:93 templates/web/infoservice_register.html:22
+msgid "Voice Call"
+msgstr "#TRANSLATED#"
+
+#: backend/models.py:150
+msgid "Hello, please remember your appointment"
+msgstr "#TRANSLATED#"
+
+#: backend/models.py:177
+msgid "Please remember your Appointment tomorrow at the"
 msgstr "#TRANSLATED#"
 
 #: templates/404.html:5
@@ -63,7 +85,6 @@ msgid "Manage all infoservices"
 msgstr "#TRANSLATED#"
 
 #: templates/staff/infoservice_create.html:4
-#, fuzzy
 msgid "Create a new informationservice"
 msgstr "#TRANSLATED#"
 
@@ -193,21 +214,12 @@ msgid "Staff"
 msgstr "#TRANSLATED#"
 
 #: templates/web/infoservice_register.html:4
-#, fuzzy
 msgid "Register for the informationservice"
 msgstr "#TRANSLATED#"
 
 #: templates/web/infoservice_register.html:5
 msgid ""
 "Please enter your phone number and the way you want to receive the messages"
-msgstr "#TRANSLATED#"
-
-#: templates/web/infoservice_register.html:21
-msgid "SMS"
-msgstr "#TRANSLATED#"
-
-#: templates/web/infoservice_register.html:22
-msgid "Voice Call"
 msgstr "#TRANSLATED#"
 
 #: templates/web/list_devices.html:11
@@ -220,7 +232,6 @@ msgstr "#TRANSLATED#"
 
 #: templates/web/send_bluetooth_appointment.html:11
 #: templates/web/send_bluetooth_appointment.html:20
-#, fuzzy
 msgid "Sending your appointment"
 msgstr "#TRANSLATED#"
 

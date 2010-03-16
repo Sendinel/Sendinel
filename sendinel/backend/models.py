@@ -3,6 +3,7 @@ from string import Template
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.utils.translation import ugettext as _
 
 from sendinel.settings import DEFAULT_HOSPITAL_NAME, \
                               REMINDER_TIME_BEFORE_APPOINTMENT, \
@@ -88,9 +89,9 @@ class Sendable(models.Model):
         abstract = True
 
     WAYS_OF_COMMUNICATION = (
-        ('sms','SMS'),
-        ('bluetooth','Bluetooth'),
-        ('voice','Voice Call'),
+        ('sms', _('SMS')),
+        ('bluetooth', _('Bluetooth')),
+        ('voice', _('Voice Call')),
     )
     way_of_communication = models.CharField(max_length=9,
                                 choices=WAYS_OF_COMMUNICATION)
@@ -147,10 +148,8 @@ class HospitalAppointment(Sendable):
     date = models.DateTimeField()
     doctor = models.ForeignKey(Doctor)
     hospital = models.ForeignKey(Hospital)
-    template = Template("Hello, please remember your appointment" + \
-                         " at the $hospital at $date with $doctor")
-    template_zulu = Template("Hello, please remember your appointment" + \
-                         " at the $hospital at $date with $doctor")
+    template = Template(_("Hello, please remember your appointment" + \
+                         " at the $hospital at $date with $doctor"))
                          
     def __unicode__(self):
         return "%s Doctor %s" % ((str(self.date) or ""), (str(self.doctor) or ""))
@@ -176,10 +175,11 @@ class HospitalAppointment(Sendable):
         except Hospital.DoesNotExist:
             self.hospital = Hospital.get_current_hospital()
         
-        content = "Please remember your Appointment tomorrow at "\
-                    + self.hospital.name\
-                    + " with "\
-                    + self.doctor.name
+        content = _("Please remember your Appointment tomorrow at the" + \
+                    "%(hospital)s with %(doctor)s") \
+                    % {'hospital': self.hospital.name, \
+                       'doctor': self.doctor.name}
+
         uid = vcal.get_uid()
         data.data = vcal.create_vcal_string(self.date, 
                                             self.hospital, 
@@ -204,12 +204,9 @@ class HospitalAppointment(Sendable):
                     'doctor': self.doctor.name,
                     'hospital': self.hospital.name}
                     
-        if str(LANGUAGE_CODE) == "en-us":
-		    data.data = texthelper.generate_text(contents,
-                        HospitalAppointment.template, False)
-        elif str(LANGUAGE_CODE) == "zu-za":
-		    data.data = texthelper.generate_text(contents,
-                        HospitalAppointment.template_zulu, False)
+        data.data = texthelper.generate_text(contents,
+                    HospitalAppointment.template, False)
+
                         
         data.phone_number = self.recipient.phone_number
         
@@ -230,17 +227,10 @@ class HospitalAppointment(Sendable):
             spokenDate = texthelper.date_to_zulutext(self.date.weekday()+1, self.date.day, self.date.month, self.date.hour, self.date.minute)
 
         data = VoiceOutputData()
-        contents = {'date':str(spokenDate),
+        contents = {'date': str(spokenDate),
                     'doctor': self.doctor.name,
                     'hospital': self.hospital.name}
 
-        if str(LANGUAGE_CODE) == "en-us":
-            data.data = texthelper.generate_text(contents,
-                        HospitalAppointment.template, False)
-        elif str(LANGUAGE_CODE) == "zu-za":
-            data.data = texthelper.generate_text(contents,
-                        HospitalAppointment.template_zulu, False)
-                
         data.data = texthelper.generate_text(contents,
                         HospitalAppointment.template, False)
         data.phone_number = self.recipient.phone_number
