@@ -7,7 +7,7 @@ from django.contrib.contenttypes import generic
 from sendinel.settings import DEFAULT_HOSPITAL_NAME, \
                               REMINDER_TIME_BEFORE_APPOINTMENT, \
                               BLUETOOTH_SERVER_ADDRESS  , \
-							  LANGUAGE_CODE
+                              LANGUAGE_CODE
 from sendinel.backend import texthelper, vcal
 from sendinel.backend.output import SMSOutputData, \
                                     VoiceOutputData, \
@@ -223,11 +223,11 @@ class HospitalAppointment(Sendable):
         """
     
         spokenDate = str(self.date)
-		
+
         if str(LANGUAGE_CODE) == "en-us":
-		    spokenDate = texthelper.date_to_text(self.date.weekday()+1, self.date.day, self.date.month, self.date.hour, self.date.minute)
+            spokenDate = texthelper.date_to_text(self.date.weekday()+1, self.date.day, self.date.month, self.date.hour, self.date.minute)
         elif str(LANGUAGE_CODE) == "zu-za":
-		    spokenDate = texthelper.date_to_zulutext(self.date.weekday()+1, self.date.day, self.date.month, self.date.hour, self.date.minute)
+            spokenDate = texthelper.date_to_zulutext(self.date.weekday()+1, self.date.day, self.date.month, self.date.hour, self.date.minute)
 
         data = VoiceOutputData()
         contents = {'date':str(spokenDate),
@@ -235,10 +235,10 @@ class HospitalAppointment(Sendable):
                     'hospital': self.hospital.name}
 
         if str(LANGUAGE_CODE) == "en-us":
-		    data.data = texthelper.generate_text(contents,
+            data.data = texthelper.generate_text(contents,
                         HospitalAppointment.template, False)
         elif str(LANGUAGE_CODE) == "zu-za":
-		    data.data = texthelper.generate_text(contents,
+            data.data = texthelper.generate_text(contents,
                         HospitalAppointment.template_zulu, False)
                 
         data.data = texthelper.generate_text(contents,

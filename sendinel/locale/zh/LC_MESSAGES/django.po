@@ -6,15 +6,15 @@
 #, fuzzy
 msgid ""
 msgstr "#TRANSLATED#"
-"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-16 14:33+0100\n"
+"POT-Creation-Date: 2010-03-16 16:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"#TRANSLATED#Project-Id-Version: PACKAGE VERSION\n"
 
 #: settings.py:41
 msgid "German"
@@ -32,6 +32,95 @@ msgstr "#TRANSLATED#"
 msgid "Sorry, this page does not exist"
 msgstr "#TRANSLATED#"
 
+#: templates/knowledgebase/base_show.html:10
+msgid "Back to Knowledgebase"
+msgstr "#TRANSLATED#"
+
+#: templates/knowledgebase/index.html:4
+msgid "Here you can find information"
+msgstr "#TRANSLATED#"
+
+#: templates/registration/login.html:6
+msgid "Your username and password didn't match. Please try again."
+msgstr "#TRANSLATED#"
+
+#: templates/staff/create_infomessage.html:4
+msgid "Send an Infomessage"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/create_infomessage.html:13
+#: templates/staff/infoservice_create.html:12
+#: templates/staff/infoservice_members.html:25
+msgid "Back to Infoservices"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/index.html:4
+msgid "Your are logged in as staff. Please choose what you want to do:"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/index.html:7
+msgid "Manage all infoservices"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/infoservice_create.html:4
+#, fuzzy
+msgid "Create a new informationservice"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/infoservice_create.html:5
+msgid "Please the name of the information service you want to create"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/infoservice_create.html:9
+msgid "Save"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/infoservice_members.html:4
+msgid "Members of "
+msgstr "#TRANSLATED#"
+
+#: templates/staff/infoservice_members.html:8
+#: templates/web/infoservice_register.html:14
+msgid "Phone Number"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/infoservice_members.html:9
+#: templates/web/infoservice_register.html:18
+msgid "Way of Communication"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/infoservice_members.html:18
+msgid "Remove Patient from Group"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/list_infoservices.html:4
+msgid "Available Infoservices"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/list_infoservices.html:8
+msgid "Service"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/list_infoservices.html:9
+msgid "Members"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/list_infoservices.html:18
+msgid "Send message"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/list_infoservices.html:19
+msgid "Manage members"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/list_infoservices.html:25
+msgid "Create infoservice"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/list_infoservices.html:27
+msgid "Back to Staff Menu"
+msgstr "#TRANSLATED#"
+
 #: templates/web/appointment_create.html:8
 msgid "Appointment"
 msgstr "#TRANSLATED#"
@@ -46,6 +135,41 @@ msgstr "#TRANSLATED#"
 
 #: templates/web/appointment_saved.html:5
 msgid "You will be informed on time."
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber.html:4
+#: templates/web/authenticate_phonenumber_call.html:11
+msgid "Authenticate Phonenumber"
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber.html:5
+msgid "The authentication is <strong class=\"big\">FREE</strong>."
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber.html:6
+msgid "Please enter your phone number:"
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber.html:14
+msgid "Phone number"
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber_call.html:13
+msgid "Please ring "
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber_call.html:14
+msgid "This will be <strong class=\"big\">free.</strong>"
+msgstr "#TRANSLATED#"
+
+#: templates/web/control_buttons_back_only_widget.html:4
+#: templates/web/control_buttons_widget.html:4
+msgid "Back"
+msgstr "#TRANSLATED#"
+
+#: templates/web/control_buttons_next_only_widget.html:4
+#: templates/web/control_buttons_widget.html:8
+msgid "Next"
 msgstr "#TRANSLATED#"
 
 #: templates/web/index.html:6
@@ -66,4 +190,40 @@ msgstr "#TRANSLATED#"
 
 #: templates/web/index.html:19
 msgid "Staff"
+msgstr "#TRANSLATED#"
+
+#: templates/web/infoservice_register.html:4
+#, fuzzy
+msgid "Register for the informationservice"
+msgstr "#TRANSLATED#"
+
+#: templates/web/infoservice_register.html:5
+msgid ""
+"Please enter your phone number and the way you want to receive the messages"
+msgstr "#TRANSLATED#"
+
+#: templates/web/infoservice_register.html:21
+msgid "SMS"
+msgstr "#TRANSLATED#"
+
+#: templates/web/infoservice_register.html:22
+msgid "Voice Call"
+msgstr "#TRANSLATED#"
+
+#: templates/web/list_devices.html:11
+msgid "Available Bluetooth Devices"
+msgstr "#TRANSLATED#"
+
+#: templates/web/list_devices.html:17
+msgid "Looking for further devices"
+msgstr "#TRANSLATED#"
+
+#: templates/web/send_bluetooth_appointment.html:11
+#: templates/web/send_bluetooth_appointment.html:20
+#, fuzzy
+msgid "Sending your appointment"
+msgstr "#TRANSLATED#"
+
+#: templates/web/send_bluetooth_appointment.html:12
+msgid "Please accept the file on your mobile"
 msgstr "#TRANSLATED#"
