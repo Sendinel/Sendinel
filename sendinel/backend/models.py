@@ -172,7 +172,7 @@ class HospitalAppointment(Sendable):
         except Hospital.DoesNotExist:
             self.hospital = Hospital.get_current_hospital()
         
-        content = "Please remember your Appointment tomorrow at "\
+        content = "Please remember your Appointment tomorrow at the"\
                     + self.hospital.name\
                     + " with "\
                     + self.doctor.name

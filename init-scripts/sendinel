@@ -10,7 +10,7 @@
 ### END INIT INFO
 
 PROJDIR="/media/sdcard/sendinel/Sendinel"
-PIDFILE="$PROJDIR/sendinelDevelop.pid"
+PIDFILE="/tmp/sendinel.pid"
 
 cd $PROJDIR
 
