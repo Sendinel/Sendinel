@@ -10,9 +10,7 @@ var numpad = {
             case 38: // Arrow up
                 numpad.selector.selectPrevious();
                 break;
-            case 39: //Arrow right
-                numpad.clickOnSelected(numpad.selector.getSelected());
-                break;
+            
             case 40: // Arrow down
                 numpad.selector.selectNext();
                 break;
