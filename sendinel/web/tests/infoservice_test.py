@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from sendinel.backend.models import InfoService, Subscription, Patient
 from sendinel.utils import last
 
-class InfoServiceTest(TestCase):
+class WebInfoServiceTest(TestCase):
     def setUp(self):
         self.info = InfoService(name = "testinfoservice")
         self.info.save()

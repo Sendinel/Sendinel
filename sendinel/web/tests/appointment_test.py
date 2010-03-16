@@ -9,7 +9,7 @@ from sendinel import settings
 
 class AppointmentViewTest(TestCase):
     fixtures = ['backend']
-    urls = 'urls'
+    urls = 'sendinel.urls'
     
     def setUp (self):
         self.hospital = Hospital.objects.get(current_hospital = True)

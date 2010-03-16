@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from sendinel.backend.models import ScheduledEvent, InfoService, InfoMessage, \
                                     Subscription, Patient, Subscription
 
-class InfoserviceTest(TestCase):
+class StaffInfoServiceTest(TestCase):
     
     client = Client()
     

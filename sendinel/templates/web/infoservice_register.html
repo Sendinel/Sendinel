@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-
+{% load i18n %} 
 {% block content %}
-    <h3>Register for the informationservice {{infoservice}}</h3>
-	<p>Please enter your phone number and the way you want to receive the messages</p>
+    <h3>{% trans "Register for the informationservice" %} {{infoservice}}</h3>
+	<p>{% trans "Please enter your phone number and the way you want to receive the messages" %}</p>
     <p>
         <form method="post" class="selectable_container" action='#' 
          autocomplete="off">
@@ -11,15 +11,15 @@
                 <tr><td></td><td>{{ error }}</td></tr>
                 {% endif %}              
                 <tr>
-                  <td>Phone Number</td>
+                  <td>{% trans "Phone Number" %}</td>
                   <td><input type="text" name="number" class="selectable" /></td>
                 </tr>
                 <tr>
-                  <td>Way of Communication</td>
+                  <td>{% trans "Way of Communication" %}</td>
                   <td>
                     <select name="way_of_communication" >
-                     <option value='sms'>SMS</option>
-                     <option value='voice'>Voice Call</option>
+                     <option value='sms'>{% trans "SMS" %}</option>
+                     <option value='voice'>{% trans "Voice Call" %}</option>
                     </select> 
                   </td>
                 </tr>
