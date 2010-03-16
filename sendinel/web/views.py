@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils import simplejson
+from django.views.i18n import javascript_catalog
 
 
 from sendinel.backend.authhelper import check_and_delete_authentication_call, \
@@ -32,6 +33,12 @@ def choose_language(request):
     return render_to_response('web/language_choose.html',
                               locals(),
                               context_instance = RequestContext(request))
+
+def jsi18n(request):
+    js_info_web = {
+        'packages': ('sendinel')
+    }
+    return javascript_catalog(request, packages = js_info_web)
 
 def create_appointment(request):
     admin_media_prefix = ADMIN_MEDIA_PREFIX

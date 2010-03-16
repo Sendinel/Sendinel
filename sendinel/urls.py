@@ -6,16 +6,19 @@ from django.views.generic.simple import redirect_to
 from django.contrib import admin
 admin.autodiscover()
 
+js_info_web = {
+    'packages': ('sendinel')
+}
+
 urlpatterns = patterns('',
     url(r'^$', redirect_to, {'url': 'web/'}),
     (r'^web/', include('sendinel.web.urls')),
     (r'^knowledgebase/', include('sendinel.knowledgebase.urls')),
     (r'^staff/', include('sendinel.staff.urls')),
     (r'^i18n/', include('django.conf.urls.i18n')),
-    (r'^admin/jsi18n/$', 'django.views.i18n.javascript_catalog'),
-
-    # Example:
-    # (r'^sendinel/', include('sendinel.foo.urls')),
+    url(r'^jsi18n/', 'django.views.i18n.javascript_catalog', js_info_web,
+        name = "jsi18n"),
+    # (r'^admin/jsi18n/$', 'django.views.i18n.javascript_catalog'),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:
