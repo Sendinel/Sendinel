@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form action="/i18n/setlang/" method="post">
+    <form action="{% url django.views.i18n.set_language %}" method="post">
     {% csrf_token %}
     <input name="next" type="hidden" value="{% url web_index %}" />
     <select name="language">

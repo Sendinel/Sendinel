@@ -29,19 +29,13 @@ var Bluetooth = {
             },
             error: function() {
                 $("#loading").hide();
-            
-                var deviceTable = $("#bluetooth_devices")[0];
-                    
-                deviceTable.innerHTML = "";
-            
-                var tr = document.createElement("tr");
-                var td = document.createElement("td");
+                var text = gettext("The Bluetooth device doesn't work correctly. Please inform the clerk.");
+                var element = '<tr><td>' + text + '</td></tr>'
                 
-                td.innerHTML = "The Bluetooth device doesn't work correctly. ";
-                td.innerHTML += "Please inform the clerk.";
-
-                tr.appendChild(td);
-                deviceTable.appendChild(tr);
+                var deviceTable = $("#bluetooth_devices");
+                deviceTable.empty();
+                deviceTable.append(element);
+                $("#spinner").hide();
             }
         });
     },
@@ -61,7 +55,7 @@ var Bluetooth = {
             },
             success: Bluetooth.redirect_to_next,
             error: function() {
-                $("#spinner")[0].innerHTML = "Failed to send appointment";
+                $("#spinner")[0].innerHTML = gettext("Failed to send appointment");
                 window.setTimeout("Bluetooth.redirect_to_next()", 20000);
             }
         });
