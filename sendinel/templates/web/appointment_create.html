@@ -1,12 +1,12 @@
 {% extends "base.html" %}
-
+{% load i18n %} 
 {% block script %}
 
 {% endblock %}
 
 {% block content %}
-    <h3>Appointment</h3>
-	<p>Please enter the appointment details.</p>
+    <h3>{% trans "Appointment" %}</h3>
+	<p>{% trans "Please enter the appointment details." %}</p>
     <p>
         <form action="./" method="post" class="selectable_container">
             <table>

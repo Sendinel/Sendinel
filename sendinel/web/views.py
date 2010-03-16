@@ -26,7 +26,12 @@ def index(request):
     informationservices = InfoService.objects.all()
     return render_to_response('web/index.html',
                               locals(),  
-                              context_instance=RequestContext(request))
+                              context_instance = RequestContext(request))
+
+def choose_language(request):
+    return render_to_response('web/language_choose.html',
+                              locals(),
+                              context_instance = RequestContext(request))
 
 def create_appointment(request):
     admin_media_prefix = ADMIN_MEDIA_PREFIX
