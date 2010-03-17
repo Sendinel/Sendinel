@@ -17,6 +17,8 @@ numpad.inputs.DateField = function(originalField) {
     
     this.createField = numpad.utils.createField;
     this.createField(htmlBlock);
+    // remove <br> from django following the date field
+    $(this.fieldElement).next("br").remove()
         
     this.copyOriginalValues = function() {
         var originalValues = $(this.originalField).val().split("-");
