@@ -6,11 +6,11 @@ body{
 }
 
 A:link{ color:#999999; text-decoration:none; }
-A:hover{ color:#fcc533; text-decoration:underline; }
+A:hover{ color:#000; text-decoration:underline; }
 A:active{ color:#999999; text-decoration:none; }
-A:active:hover{ color:#fcc533; text-decoration:underline; }
+A:active:hover{ color:#000; text-decoration:underline; }
 A:visited{ color:#999999; text-decoration:none; }
-A:visited:hover{ color:#fcc533; text-decoration:underline; }
+A:visited:hover{ color:#000; text-decoration:underline; }
 
 img { border: 0px; }
 
