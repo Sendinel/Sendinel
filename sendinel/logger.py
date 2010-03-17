@@ -25,7 +25,8 @@ def log_request(viewfunc):
         get_data = dict(request.GET, **request.POST) # merge both dicts
         
          # args[0] should be request
-        logger.info("%s %s %s %s" % (args[0].method,
+        logger.info("%s %s.%s %s %s" % (args[0].method,
+                                    viewfunc.__module__,
                                     viewfunc.__name__,
                                     str(kwargs),
                                     str(get_data)))
