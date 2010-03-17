@@ -29,6 +29,7 @@ numpad.utils = {
                 $(fieldObject.selector.getSelected()).focus();
                 break;
             case 39: // Arrow right
+            case 9:  // Tab
                 fieldObject.selector.selectNext();
                 $(fieldObject.selector.getSelected()).focus();
                 break;
