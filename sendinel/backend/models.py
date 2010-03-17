@@ -153,7 +153,8 @@ class HospitalAppointment(Sendable):
                          " at the $hospital at $date with $doctor"))
                          
     def __unicode__(self):
-        return "%s Doctor %s" % ((str(self.date) or ""), (str(self.doctor) or ""))
+        return "HospitalAppointment<%s Doctor: %s>" \
+                    % ((str(self.date) or ""), (str(self.doctor) or ""))
                          
     def get_data_for_bluetooth(self):
         """
