@@ -1,6 +1,6 @@
 var Knowledgebase = {
     resize_images: function(){
-        var width = window.innerWidth - 300;
+        var width = window.innerWidth - 400;
         var height = window.innerHeight - 150;
         
         var image = $('#picture');

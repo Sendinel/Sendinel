@@ -39,6 +39,7 @@ h3{
     right: 0;
     top: 0;
     height: 100%;
+    max-width: 390px;
     text-align: center;
     background-color: #EEE;
 }
@@ -110,4 +111,5 @@ strong.big {
 
 .errorlist {
     color: red;
+    margin: 5px 0;
 }
