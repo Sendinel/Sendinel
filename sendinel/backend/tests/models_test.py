@@ -120,7 +120,7 @@ class InfoMessageTest(TestCase):
         self.assertEquals(output_data.phone_number, "012345678")
         self.assertEquals(type(output_data.data), unicode)
     
-class InfoServiceTest(TestCase):
+class InfoServiceModelTest(TestCase):
     def setUp(self):
         self.infoservice = InfoService(name = "Gruppe")
         self.infoservice.save()

@@ -33,6 +33,13 @@ class Voicecall:
         filename = "%s/%s.ulaw" % (self.asterisk_festivalcache, text_hash)
         if not os.path.exists(filename):
             args = "-o %s -otype ulaw -" % (filename)
+            
+            if str(LANGUAGE_CODE) == "en-us":
+                pass
+            elif str(LANGUAGE_CODE) == "zu-za":
+                args = args + ' -eval "(voice_csir_isizulu_buhle_multisyn)"'
+                
+             
             process = Popen(["text2wave"] + args.split(" "), stdin=PIPE)
             process.communicate(input=text)
         else:

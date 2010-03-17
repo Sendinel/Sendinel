@@ -44,15 +44,27 @@ h3{
 }
 
 #title{
+    float:left;
     height:120px;
-    margin-top:10px;
+
     border-bottom:#CCCCCC 1px solid;
     text-align:left;
     font-size:1em;
     letter-spacing:-1px;
     color:#CCCCCC;
 }
+#hpiLogo{
+    height:120px;
 
+    border-bottom:#CCCCCC 1px solid;
+    text-align:right;
+    font-size:1em;
+    letter-spacing:-1px;
+    color:#CCCCCC;
+}
+#bluetootLogo{
+    float:right;
+}
 
 #footer{
     text-align:center;
@@ -70,7 +82,7 @@ h3{
     font-size: 1.2em;
     font: bold Verdana, sans-serif;
     background:#F3F3F3;
-    width:60%;
+    width:100%;
 }
 
 .navlist ul {

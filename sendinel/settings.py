@@ -1,7 +1,7 @@
 import logging
 from datetime import timedelta
 from os.path import abspath, dirname
-from django.utils.translation import ugettext as _
+
 # Django settings for sendinel project.
 
 DEBUG = True        #for scheduling set to false
@@ -33,6 +33,15 @@ TIME_ZONE = 'Europe/Berlin'
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
+
+
+_ = lambda s: s
+
+LANGUAGES = (
+  ('de', _('German')),
+  ('en', _('English')),
+  ('zh', _('Test Language')),
+)
 
 SITE_ID = 1
 
@@ -96,6 +105,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'sendinel',
     'sendinel.web',
     'sendinel.backend',
     'sendinel.staff',

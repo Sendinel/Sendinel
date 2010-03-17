@@ -1,12 +1,12 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block content %}
-    <h3>Members of {{infoservice}}</h3>
+    <h3>{% trans "Members of " %}{{infoservice}}</h3>
     
     <table cellspacing="0" cellpadding="3">
         <tr>   
-            <td>Phone Number</td>
-            <td>Way of Communication</td>
+            <td>{% trans "Phone Number" %}</td>
+            <td>{% trans "Way of Communication" %}</td>
             <td />
         </tr>
     {% for subscription in subscriptions %}
@@ -15,13 +15,13 @@
             <td>{{ subscription.patient.phone_number }}</td>
             <td>{{ subscription.way_of_communication }}</td>
             <td><a href="{% url staff_infoservice_members_delete id=infoservice.id, patient_id=subscription.patient.id%}">
-                                Remove Patient from Group</a></td>
+                                {% trans "Remove Patient from Group" %}</a></td>
         </tr>
         
     {% endfor %}
     
     </table>
 
-    <p><a href="{% url staff_list_infoservices %}">Back to Infoservices</a></p>
+    <p><a href="{% url staff_list_infoservices %}">{% trans "Back to Infoservices" %}</a></p>
     
 {% endblock %}

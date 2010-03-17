@@ -1,0 +1,48 @@
+#! /bin/bash
+
+### BEGIN INIT INFO
+# Provides:          sendinel
+# Required-Start:    $remote_fs $syslog sdcard-mount
+# Required-Stop:     $remote_fs $syslog sdcard-mount
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Sendinel web application server
+### END INIT INFO
+
+PROJDIR="/media/sdcard/sendinel/Sendinel"
+PIDFILE="/tmp/sendinel.pid"
+
+cd $PROJDIR
+
+case "$1" in
+ start)
+       echo -n "Starting Sendinel"
+       if [ -f $PIDFILE ]; then
+         echo -n "Sendinel is already running."
+       else
+         exec /usr/bin/env - \
+           PYTHONPATH="../python:.." \
+           sendinel/manage.py runfcgi host=127.0.0.1 port=3034  pidfile=$PIDFILE
+         echo "."
+       fi
+       ;;
+ stop)
+       echo -n "Stopping Sendinel"
+       if [ -f $PIDFILE ]; then
+         kill `cat -- $PIDFILE`
+         rm -f -- $PIDFILE
+         echo "."
+       else
+           echo "Warning: Sendinel not running - no PID file found."
+       fi
+
+       ;;
+ *)
+       N=/etc/init.d/$NAME
+       echo "Usage: $N {start|stop}" >&2
+       exit 1
+       ;;
+esac
+
+exit 0
+

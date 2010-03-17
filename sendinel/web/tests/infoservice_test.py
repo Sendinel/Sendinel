@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from sendinel.backend.models import InfoService, Subscription, Patient
 from sendinel.utils import last
 
-class InfoServiceTest(TestCase):
+class WebInfoServiceTest(TestCase):
     def setUp(self):
         self.info = InfoService(name = "testinfoservice")
         self.info.save()
@@ -18,7 +18,7 @@ class InfoServiceTest(TestCase):
      
     def test_infoservices_on_main_page(self):
         response = self.client.get(reverse('web_index'))
-        self.assertContains(response, "Register for Information Services")
+        self.assertContains(response, "Inform me about")
         infoservices = InfoService.objects.all()
         for infoservice in infoservices:
             self.assertContains(response, infoservice.name)

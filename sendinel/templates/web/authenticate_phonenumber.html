@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-
+{% load i18n %} 
 {% block content %}
-    <h3>Authenticate Phonenumber</h3>
-    <h4>The authentication is <strong class="big">FREE</strong>.</h4>
-	<p>Please enter your phone number:</p>
+    <h3>{% trans "Authenticate Phonenumber" %}</h3>
+    <h4>{% trans 'The authentication is <strong class="big">FREE</strong>.' %}</h4>
+	<p>{% trans "Please enter your phone number:" %}</p>
     <p>
         <form method="post" class="selectable_container" autocomplete="off">
             <table>
@@ -11,7 +11,7 @@
                 <tr><td></td><td class="errorlist">{{ error }}</td></tr>
                 {% endif %}
                 <tr>
-                  <td>Phone number</td>
+                  <td>{% trans "Phone number" %}</td>
                   <td><input type="text" name="number" class="selectable" /></td>
                 </tr>
 	         </table>
