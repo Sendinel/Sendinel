@@ -8,10 +8,10 @@ from django.utils.http import urlquote
 
 from sendinel.settings import KNOWLEDGEBASE_DIRECTORY, \
                               MEDIA_URL
-from sendinel.logger import logger
+from sendinel.logger import logger, log_request
 
 
-
+@log_request
 def index(request):
     backurl = reverse('web_index')
 
@@ -26,8 +26,8 @@ def index(request):
                               locals(),
                               context_instance=RequestContext(request))
 
+@log_request
 def show(request, file_id):
-
     file_id = int(file_id)
     numbered_files = request.session['numbered_files']
     file_name = numbered_files[file_id]
@@ -65,4 +65,4 @@ def show(request, file_id):
         return render_to_response('knowledgebase/show_txt.html',
                               locals(),
                               context_instance=RequestContext(request))    
-    
+

@@ -10,15 +10,19 @@ from sendinel.backend.models import InfoService, InfoMessage, \
                                     Subscription, Patient
 
 from sendinel.staff.forms import InfoMessageForm
+from sendinel.logger import logger, log_request
 
+
+@log_request
 @login_required
 def index(request):
     return render_to_response('staff/index.html',
                               context_instance=RequestContext(request))
-  
+
+@log_request
 @login_required
 def create_infomessage(request, id):
-       
+    
     if(request.method == "GET"):
         form = InfoMessageForm()
     
@@ -48,7 +52,7 @@ def create_infomessage(request, id):
         
         return HttpResponseRedirect(reverse("staff_list_infoservices"))
 
-    
+@log_request
 @login_required
 def list_infoservices(request):
 
@@ -66,7 +70,8 @@ def list_infoservices(request):
     return render_to_response("staff/list_infoservices.html",
                                 locals(),
                                 context_instance = RequestContext(request))
-                                
+
+@log_request
 def create_infoservice(request):
     if request.method == "POST":
         infoservice = InfoService(name = request.POST["name"])
@@ -75,7 +80,8 @@ def create_infoservice(request):
     return render_to_response("staff/infoservice_create.html",
                                 locals(),
                                 context_instance = RequestContext(request))    
-                                
+
+@log_request
 def list_members_of_infoservice(request, id):   
     infoservice = InfoService.objects.filter(pk = id)[0]
     subscriptions = Subscription.objects.filter(infoservice = id)
@@ -83,6 +89,7 @@ def list_members_of_infoservice(request, id):
                                 locals(),
                                 context_instance = RequestContext(request))  
 
+@log_request
 def delete_members_of_infoservice(request, id, patient_id):
     patient = Patient.objects.filter(pk = patient_id)[0]
     infoservice = InfoService.objects.filter(pk = id)[0]

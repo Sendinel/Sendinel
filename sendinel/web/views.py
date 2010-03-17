@@ -20,15 +20,16 @@ from sendinel.settings import   AUTH_NUMBER, \
                                 COUNTRY_CODE_PHONE, START_MOBILE_PHONE, \
                                 ADMIN_MEDIA_PREFIX
 from sendinel.backend import bluetooth
-from sendinel.logger import logger
+from sendinel.logger import logger, log_request
 
-
+@log_request
 def index(request):
     informationservices = InfoService.objects.all()
     return render_to_response('web/index.html',
                               locals(),  
                               context_instance = RequestContext(request))
 
+@log_request
 def choose_language(request):
     return render_to_response('web/language_choose.html',
                               locals(),
@@ -40,6 +41,7 @@ def jsi18n(request):
     }
     return javascript_catalog(request, packages = js_info_web)
 
+@log_request
 def create_appointment(request):
     admin_media_prefix = ADMIN_MEDIA_PREFIX
     nexturl = ""
@@ -52,6 +54,8 @@ def create_appointment(request):
             request.session['appointment'] = appointment
             request.session['patient'] = patient            
             
+            logger.info("Create appointment via %s" %
+                            appointment.way_of_communication)
             if appointment.way_of_communication == 'bluetooth':
                 return HttpResponseRedirect(reverse("web_list_devices") + \
                                 "?next=" + reverse("web_appointment_send"))
@@ -60,10 +64,12 @@ def create_appointment(request):
                     reverse("web_authenticate_phonenumber") + "?next=" + \
                     reverse("web_appointment_save"))
             else:
+                logger.error("Unknown way of communication selected.")
                 raise Exception ("Unknown way of communication %s " \
                                    %appointment.way_of_communication) +\
                                 "(this is neither bluetooth nor sms or voice)"
         else:
+            logger.info("create_appointment: Invalid form.")
             return render_to_response('web/appointment_create.html',
                                 locals(),
                                 context_instance=RequestContext(request))
@@ -73,15 +79,22 @@ def create_appointment(request):
         return render_to_response('web/appointment_create.html',
                                 locals(),
                                 context_instance=RequestContext(request))
-  
+
+@log_request
 def save_appointment(request):
     nexturl = reverse("web_index")
     appointment = request.session.get('appointment', None)
     patient = request.session.get('patient', None)
     if not appointment or not patient:
+        logger.warning("save_appointment: no appointment/patient in session")
         return HttpResponseRedirect(reverse(create_appointment))
+
     # TODO Rueckgabe testen, Fehlerbehandlung
     patient.phone_number = request.session['authenticate_phonenumber']['number']
+    
+    logger.info("Saving appointment: %s with patient: %s"
+                    % (appointment, patient.phone_number))
+    
     
     appointment.save_with_patient(patient)
 
@@ -89,9 +102,9 @@ def save_appointment(request):
                             locals(),
                             context_instance=RequestContext(request))
 
+@log_request
 def send_appointment(request):
     if (request.method == "POST"):
-       
         appointment = request.session.get('appointment', None)
         mac_address = request.POST['device_mac'].strip()
         
@@ -109,14 +122,12 @@ def send_appointment(request):
     url = reverse("web_appointment_send")
     next = reverse("web_index")
     mac_address = request.GET['device_mac'].strip()
-    
-    logger.info("starting send_appointment to mac_address: " + mac_address)
-    
+
     return render_to_response('web/send_bluetooth_appointment.html',
                                 locals(),
                                 context_instance=RequestContext(request))
 
-  
+@log_request
 def authenticate_phonenumber(request):
     nexturl = ''
     next = ''
@@ -126,6 +137,7 @@ def authenticate_phonenumber(request):
         backurl = reverse('web_authenticate_phonenumber')        
         try:
             number = fill_authentication_session_variable(request)
+            logger.info("Starting authentication with %s" % AUTH_NUMBER)
             auth_number = AUTH_NUMBER
             next = request.GET.get('next','')
             return render_to_response('web/authenticate_phonenumber_call.html', 
@@ -133,16 +145,15 @@ def authenticate_phonenumber(request):
                               context_instance = RequestContext(request))
         except ValueError as e:
             error = e
-        
+
+    logger.info("Deleting timed out authentication calls.")
     delete_timed_out_authentication_calls()
-    
-    patient = request.session.get('patient', None)
-    if(patient):
-        patient_name = patient.name
+
     return render_to_response('web/authenticate_phonenumber.html', 
                               locals(),
                               context_instance = RequestContext(request))
 
+@log_request
 def check_call_received(request):
     response_dict = {}
 
@@ -151,10 +162,11 @@ def check_call_received(request):
 
         number = request.session['authenticate_phonenumber']['number']
         start_time = request.session['authenticate_phonenumber']['start_time']
-    
+
         if (start_time + AUTHENTICATION_CALL_TIMEOUT) >= datetime.now():
             if check_and_delete_authentication_call(number):
                 response_dict["status"] = "received"
+                logger.info("check_call_received: call received.")
             else:
                 response_dict["status"] = "waiting"
     except KeyError:
@@ -163,13 +175,15 @@ def check_call_received(request):
     return HttpResponse(content = simplejson.dumps(response_dict),
                         content_type = "application/json")
 
+@log_request
 def list_bluetooth_devices(request):
-    next = request.GET.get('next','')
+    next = request.GET.get('next', '')
     backurl = reverse("web_appointment_create")
     return render_to_response('web/list_devices.html',
                                 locals(),
                                 context_instance=RequestContext(request))
 
+@log_request
 def get_bluetooth_devices(request):
     response_dict = {}
     devices_list = []
@@ -183,12 +197,17 @@ def get_bluetooth_devices(request):
             devices_list.append(device_dict)
         response_dict["devices"] = devices_list
         
+        logger.debug("Got Bluetooth Devices: %s"% str(devices_list))
+        
         return HttpResponse(content = simplejson.dumps(response_dict),
                             content_type = "application/json")
-    except:
+    except Exception as e:
+        logger.error("get_bluetooth_devices from %s failed: %s" %
+                        (BLUETOOTH_SERVER_ADDRESS, str(e)))
         # TODO write bluetooth error to log file
         return HttpResponse(status = 500)
-        
+
+@log_request
 def register_infoservice(request, id):
     ajax_url= reverse('web_check_call_received')    
     if request.method == "POST":
@@ -204,16 +223,14 @@ def register_infoservice(request, id):
                 locals(),
                 context_instance = RequestContext(request))
         except ValueError as e:
-            error = e        
+            error = e
     infoservice = InfoService.objects.filter(pk = id)[0].name
     backurl = reverse("web_index")
     return render_to_response('web/infoservice_register.html', 
                               locals(),
                               context_instance = RequestContext(request))
 
-  
-                              
-                              
+@log_request
 def save_registration_infoservice(request, id):
     patient = Patient(phone_number = \
                       request.session['authenticate_phonenumber']['number'])
@@ -224,10 +241,12 @@ def save_registration_infoservice(request, id):
                                 way_of_communication = way_of_communication,
                                 infoservice = infoservice)
     subscription.save()
+    logger.info("Saved subscription %s.", str(subscription))
     
     return HttpResponseRedirect(reverse('web_index'))
-        
 
+
+@log_request
 def fill_authentication_session_variable(request):
     number = request.POST["number"].strip()
     number = format_phonenumber(number, COUNTRY_CODE_PHONE, START_MOBILE_PHONE)
