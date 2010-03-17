@@ -43,10 +43,10 @@ END:VCALENDAR""" % {\
     'uid': uid,
     'content': content,
     'location': location,
-    'start': start_date.strftime("%Y%m%dT%H%M%SZ"),
-    'end': end_date.strftime("%Y%m%dT%H%M%SZ"),
-    'stamp': datetime.now().strftime("%Y%m%dT%H%M%SZ"),    
-    'alarm': alarm_time.strftime("%Y%m%dT%H%M%SZ")}
+    'start': start_date.strftime("%Y%m%dT%H%M%S"),
+    'end': end_date.strftime("%Y%m%dT%H%M%S"),
+    'stamp': datetime.now().strftime("%Y%m%dT%H%M%S"),    
+    'alarm': alarm_time.strftime("%Y%m%dT%H%M%S")}
     
     return vcal_data
     

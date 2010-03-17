@@ -61,7 +61,12 @@ var numpad = {
                 new numpad.inputs.TimeField(this);
             }
             else if(this.tagName.toLowerCase() == "select") {
-                new numpad.inputs.SelectField(this);
+                if(this.id === "id_way_of_communication"){
+                    new numpad.inputs.SelectFieldWoc(this);
+                }
+                else {
+                    new numpad.inputs.SelectField(this);
+                }
             }
             else if($(this).hasClass("control-buttons")) {
                 new numpad.inputs.controlButtonsField(this);
