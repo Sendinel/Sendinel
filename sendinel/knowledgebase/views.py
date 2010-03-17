@@ -56,11 +56,8 @@ def show(request, file_id):
     elif file_name.endswith('.txt'):
         path_name = KNOWLEDGEBASE_DIRECTORY + '/' + file_name
         
-        try:
-            text = open(path_name).read()
-            text = text.encode('latin-1')
-        except:
-            logger.error('Could not open file' + file_name)
+        # TODO detect text encoding
+        text = open(path_name).read()
         
         return render_to_response('knowledgebase/show_txt.html',
                               locals(),
