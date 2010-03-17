@@ -7,7 +7,7 @@
     <p class="navlist">
             <a href="{% url web_appointment_create %}" class="selectable">{% trans "Remind me of the next time I have to be at the clinic" %}</a><br />
             <a href="{% url sendinel.knowledgebase.views.index %}" class="selectable">{% trans "Let me look at Information Material" %}</a>
-        <h4>{% trans "Inform me about:" %}</h4>
+        <h4>{% trans "Inform me regularly on my mobile phone about" %}</h4>
         <ul id="informationservices">
             {% for service in informationservices %}
                 <li><a href="{% url web_infoservice_register id=service.id %}" class="selectable">{{service}}</a></li>
