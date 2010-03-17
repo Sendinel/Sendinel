@@ -32,6 +32,8 @@ def show(request, file_id):
     numbered_files = request.session['numbered_files']
     file_name = numbered_files[file_id]
     
+    logger.info("knowledgebase show file: %s", file_name)
+    
     if (len(numbered_files)-1 > file_id):
         nexturl = reverse('knowledgebase_show', kwargs={'file_id':(file_id+1)})
         
@@ -46,13 +48,13 @@ def show(request, file_id):
         return render_to_response('knowledgebase/show_jpg.html',
                               locals(),
                               context_instance=RequestContext(request))
-                              
+
     elif file_name.endswith('.flv'):
         path_name = MEDIA_URL + "knowledgebase/" + file_name
         return render_to_response('knowledgebase/show_video.html',
                               locals(),
                               context_instance=RequestContext(request))
-                              
+
     elif file_name.endswith('.txt'):
         path_name = KNOWLEDGEBASE_DIRECTORY + '/' + file_name
         
