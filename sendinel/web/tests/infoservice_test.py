@@ -18,7 +18,7 @@ class WebInfoServiceTest(TestCase):
      
     def test_infoservices_on_main_page(self):
         response = self.client.get(reverse('web_index'))
-        self.assertContains(response, "Register for Information Services")
+        self.assertContains(response, "Inform me about")
         infoservices = InfoService.objects.all()
         for infoservice in infoservices:
             self.assertContains(response, infoservice.name)
