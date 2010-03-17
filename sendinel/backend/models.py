@@ -270,6 +270,12 @@ class InfoMessage(Sendable):
     # TODO restrict text to 160? but not good for voice calls
     text = models.TextField()
     
+    def __unicode__(self):
+        return "InfoMessage to %s: '%s' via %s" % \
+                                        (self.recipient.phone_number,
+                                         self.text,
+                                         self.way_of_communication)
+    
     def get_data_for_sms(self):
         """
         Prepare OutputData for sms.

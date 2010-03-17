@@ -18,6 +18,8 @@ except ImportError:
     
 import time
 
+# TODO Test this!
+
 class Voicecall:
     def __init__(self):
         self.asterisk_user = settings.ASTERISK_USER
