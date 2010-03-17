@@ -1,2 +1,3 @@
-java -jar BluetoothServer.jar
+java -jar BluetoothServer.jar 
+
 pause
