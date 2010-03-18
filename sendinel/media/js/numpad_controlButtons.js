@@ -18,10 +18,13 @@ numpad.inputs.controlButtonsField = function(originalField) {
     
     subselectables.each(function(index,element) {
         element.url = $(element).siblings("[name]").first().val();
+        $(element).click(function(event) {
+            window.location = element.url;
+        })
     });
- 
+
     this.handleSubmit = function() {
-        // this.originalField.selectedIndex = this.selector.selected;
+        this.originalField.selectedIndex = this.selector.selected;
         return;
     };
     

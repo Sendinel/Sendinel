@@ -119,7 +119,7 @@ DEFAULT_APPOINTMENT_DURATION = timedelta(minutes = 60)
 DEFAULT_HOSPITAL_NAME = 'your hospital'
 
 COUNTRY_CODE_PHONE = "0049" #"0027" for South Africa
-START_MOBILE_PHONE = "01" # "0" for South Africa (07/08..)
+START_MOBILE_PHONE = "0" # "0" for South Africa (07/08..), "01" for Germany
 # see http://en.wikipedia.org/wiki/Telephone_numbers_in_South_Africa
 # TODO multiple mobile prefixes
 
