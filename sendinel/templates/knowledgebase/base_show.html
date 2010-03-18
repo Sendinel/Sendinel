@@ -6,14 +6,23 @@
     -content-
    {% endblock %}
     <div class="selectable_container">
-        <a href="{% url sendinel.knowledgebase.views.index %}" class="selectable">
-            {% trans "Back to Knowledgebase" %}
-        </a>
-        {% if nexturl and backurl %}
-            {% include 'web/control_buttons_widget.html' %}
-        {% else %}
-            {% include 'web/control_buttons_back_only_widget.html' %}
-        {% endif %}
+        <div name="control-buttons-widget" id="control_buttons" class="control-buttons selectable">
+            {% if backurl %}
+                <div class="back-button">
+                  <input type="button" class="subselectable" name="form_submit" value="&lt;- {% trans 'Show previous' %}" id="id_back" />
+                  <input type="hidden" class="" name="back-button-link" value="{{ backurl }}" />
+                </div>
+            {% endif %}
+            {% if nexturl %}
+                <div class="next-button">
+                  <input type="submit" class="subselectable" name="form_submit" value="{% trans 'Show next' %} -&gt;" id="id_next" />
+                  <input type="hidden" class="" name="next-button-link" value="{{ nexturl }}" />
+                </div>
+            {% endif %}
+        </div>
+        <p><a href="{% url sendinel.knowledgebase.views.index %}" class="selectable">
+            {% trans "Back to overview" %}
+        </a></p>
     </div>
    
 {% endblock %}
