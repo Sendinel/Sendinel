@@ -1,8 +1,17 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% block script %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            numpad.selector.selectNext();
+        })
+    </script>
+{% endblock %}
+
 {% block content %}
     <h3>{% trans "Here you can find information" %}</h3>
     <div class="selectable_container">
+        {% include 'web/control_buttons_back_only_widget.html' %}
         <p>
             <ul id="filelist">
                 {% for number, file in files.items %}
@@ -10,7 +19,6 @@
                 {% endfor %}
             </ul>
         </p>
-        
         {% include 'web/control_buttons_back_only_widget.html' %}
     </div>
 {% endblock %}
