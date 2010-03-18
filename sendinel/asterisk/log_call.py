@@ -22,22 +22,16 @@ def log_call():
     #      permission problems
     
     # read all data from stdin - should be less than 25 lines
-    data = sys.stdin.readlines()
-    
-    number = None
-    
-    for line in data:
+    while True:
+        line = sys.stdin.readline()
+        if not line:
+            break
         (key, value) = line.split(":", 1)
         if key == "agi_callerid":
-            number = value
+            number = value.strip()
+            AuthenticationCall(number = number).save()
             break
 
-    if not number:
-        raise ValueError("agi_callerid not found in stdin data.")
-
-    number = number.strip()
-    AuthenticationCall(number = number).save()
-    
 
 if __name__ == "__main__":
     log_call()

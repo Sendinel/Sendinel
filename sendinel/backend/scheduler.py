@@ -45,7 +45,8 @@ def run(run_only_one_time = False):
             try:
                 logger.info("  sending: %s" % str(data))
                 data.send()
-		time.sleep(20)
+                if not run_only_one_time:
+                    time.sleep(20)
             except Exception as e:
                 logger.error("Failed to send: " + str(data) + \
                              " exception " + str(e))

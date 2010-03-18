@@ -28,8 +28,8 @@ class AuthTest(unittest.TestCase):
         
     def test_asterisk_log_call(self):
         class MockFile:
-            def readlines(input):
-                fake_data = """agi_request: call_log.agi
+            counter = 0
+            fake_data = """agi_request: call_log.agi
 agi_channel: SIP/ext-sip-account-b50d4dc8
 agi_language: en
 agi_type: SIP
@@ -50,8 +50,10 @@ agi_enhanced: 0.0
 agi_accountcode: 
 agi_threadid: -1258067088
 """
-                return fake_data.splitlines()
-
+            def readline(input):
+                data = MockFile.fake_data.splitlines()[MockFile.counter]
+                MockFile.counter += 1
+                return data
 
         real_stdin = log_call.sys.stdin
         fake_stdin = MockFile()
@@ -68,6 +70,7 @@ agi_threadid: -1258067088
         self.assertEquals(call.number, "01601234567")
 
         log_call.sys.stdin = real_stdin
+        MockFile.counter = 0
     
     def test_check_and_delete_authentication_call(self):
         AuthenticationCall.objects.all().delete()
