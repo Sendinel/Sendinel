@@ -18,6 +18,8 @@ except ImportError:
     
 import time
 
+# TODO Test this!
+
 class Voicecall:
     def __init__(self):
         self.asterisk_user = settings.ASTERISK_USER
@@ -34,9 +36,9 @@ class Voicecall:
         if not os.path.exists(filename):
             args = "-o %s -otype ulaw -" % (filename)
             
-            if str(LANGUAGE_CODE) == "en-us":
+            if str(settings.LANGUAGE_CODE) == "en-us":
                 pass
-            elif str(LANGUAGE_CODE) == "zu-za":
+            elif str(settings.LANGUAGE_CODE) == "zu-za":
                 args = args + ' -eval "(voice_csir_isizulu_buhle_multisyn)"'
                 
              

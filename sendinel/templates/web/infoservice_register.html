@@ -1,5 +1,22 @@
 {% extends "base.html" %}
-{% load i18n %} 
+{% load i18n %}
+
+{% block script %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#id_phone_input").keydown(function(event){
+                if(event.keyCode === 37){
+                    var phone_input = $("#id_phone_input");
+                    var string = phone_input.val();
+                    string = string.substr(0, (string.length - 1));
+                    phone_input.val(string);                    
+                    return false;
+                }
+            });
+        });
+    </script>
+{% endblock %}
+ 
 {% block content %}
     <h3>{% trans "Register for the informationservice" %} {{infoservice}}</h3>
 	<p>{% trans "Please enter your phone number and the way you want to receive the messages" %}</p>
@@ -12,7 +29,7 @@
                 {% endif %}              
                 <tr>
                   <td>{% trans "Phone Number" %}</td>
-                  <td><input type="text" name="number" class="selectable" /></td>
+                  <td><input id="id_phone_input" type="text" name="number" class="selectable" /></td>
                 </tr>
                 <tr>
                   <td>{% trans "Way of Communication" %}</td>

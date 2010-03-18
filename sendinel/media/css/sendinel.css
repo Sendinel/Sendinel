@@ -19,20 +19,11 @@ img { border: 0px; }
     text-align: center;
 }
 
-#wrap{
-    width:601px;
-    margin-right:auto;
-}
-
-#container{
-    width:600px;
-    border-left:#CCCCCC 1px solid;
-}
-
 #content1{
-    width:100%;
-    padding:20px;
+    padding-top: 20px;
+    padding-left: 20px;
     text-align: left;
+    float: left;
 }
 
 
@@ -43,37 +34,28 @@ h3{
     font-weight:bold;
 }
 
-#title{
-    float:left;
-    height:120px;
-
-    border-bottom:#CCCCCC 1px solid;
-    text-align:left;
-    font-size:1em;
-    letter-spacing:-1px;
-    color:#CCCCCC;
+#rightbar {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    max-width: 390px;
+    text-align: center;
+    background-color: #EEE;
 }
-#hpiLogo{
-    height:120px;
 
-    border-bottom:#CCCCCC 1px solid;
-    text-align:right;
-    font-size:1em;
-    letter-spacing:-1px;
-    color:#CCCCCC;
+#rightbar div {
+    padding:20px;
 }
+
+#rightbar img {
+    margin-bottom: 50px;
+}
+
 #bluetootLogo{
     float:right;
 }
 
-#footer{
-    text-align:center;
-    font-size:10px;
-    height:30px;
-    margin-top:10px;
-    border-top:#CCCCCC 1px solid;
-    text-transform:lowercase;
-}
 
 .navlist
 {
@@ -82,7 +64,6 @@ h3{
     font-size: 1.2em;
     font: bold Verdana, sans-serif;
     background:#F3F3F3;
-    width:100%;
 }
 
 .navlist ul {
@@ -130,4 +111,9 @@ strong.big {
 
 .errorlist {
     color: red;
+    margin: 5px 0;
+}
+
+.success {
+    color: green;
 }

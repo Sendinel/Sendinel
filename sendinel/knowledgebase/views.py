@@ -8,10 +8,10 @@ from django.utils.http import urlquote
 
 from sendinel.settings import KNOWLEDGEBASE_DIRECTORY, \
                               MEDIA_URL
-from sendinel.logger import logger
+from sendinel.logger import logger, log_request
 
 
-
+@log_request
 def index(request):
     backurl = reverse('web_index')
 
@@ -26,11 +26,13 @@ def index(request):
                               locals(),
                               context_instance=RequestContext(request))
 
+@log_request
 def show(request, file_id):
-
     file_id = int(file_id)
     numbered_files = request.session['numbered_files']
     file_name = numbered_files[file_id]
+    
+    logger.info("knowledgebase show file: %s", file_name)
     
     if (len(numbered_files)-1 > file_id):
         nexturl = reverse('knowledgebase_show', kwargs={'file_id':(file_id+1)})
@@ -46,23 +48,20 @@ def show(request, file_id):
         return render_to_response('knowledgebase/show_jpg.html',
                               locals(),
                               context_instance=RequestContext(request))
-                              
+
     elif file_name.endswith('.flv'):
         path_name = MEDIA_URL + "knowledgebase/" + file_name
         return render_to_response('knowledgebase/show_video.html',
                               locals(),
                               context_instance=RequestContext(request))
-                              
+
     elif file_name.endswith('.txt'):
         path_name = KNOWLEDGEBASE_DIRECTORY + '/' + file_name
         
-        try:
-            text = open(path_name).read()
-            text = text.encode('latin-1')
-        except:
-            logger.error('Could not open file' + file_name)
+        # TODO detect text encoding
+        text = open(path_name).read()
         
         return render_to_response('knowledgebase/show_txt.html',
                               locals(),
                               context_instance=RequestContext(request))    
-    
+

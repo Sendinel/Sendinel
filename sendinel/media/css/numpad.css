@@ -45,10 +45,11 @@ a.subselectable {
 .select-div {
     overflow-x: auto; 
     overflow-y: hidden; 
-    width: 500px; 
+    width: 400px; 
     white-space: nowrap;
 }
 
 .dates {
-    margin: 5px 0px;
+    margin: 0px 0px;
+    padding: 0px 2px;
 }

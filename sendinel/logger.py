@@ -17,3 +17,18 @@ else:
         formatter = logging.Formatter(LOG_MSG_FORMAT)
         handler.setFormatter(formatter)
         logger.addHandler(handler)
+
+# logging decorator for views
+def log_request(viewfunc):
+    def do_log_request(*args, **kwargs):
+        request = args[0]
+        get_data = dict(request.GET, **request.POST) # merge both dicts
+        
+         # args[0] should be request
+        logger.info("%s %s.%s %s %s" % (args[0].method,
+                                    viewfunc.__module__,
+                                    viewfunc.__name__,
+                                    str(kwargs),
+                                    str(get_data)))
+        return viewfunc(*args, **kwargs)
+    return do_log_request
