@@ -139,7 +139,7 @@ def authenticate_phonenumber(request):
             number = fill_authentication_session_variable(request)
             logger.info("Starting authentication with %s" % AUTH_NUMBER)
             auth_number = AUTH_NUMBER
-            next = request.GET.get('next','')
+            nexturl = reverse('web_index')
             return render_to_response('web/authenticate_phonenumber_call.html', 
                               locals(),
                               context_instance = RequestContext(request))
