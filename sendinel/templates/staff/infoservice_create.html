@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+    <h3>{% trans "Create a new informationservice" %}</h3>
+	<p>{% trans "Please enter the name of the information service you want to create" %}</p>	
+    <p>
+        <form method="post" action='#'>
+            Inform me about: <input type="text" name="name" />
+            <input type="submit" name="submit" value='{% trans "Save" %}' id="id_submit" />
+        </form>
+    </p>
+    <p><a href="{% url staff_list_infoservices %}">{% trans "Back to Infoservices" %}</a></p>
+    
+{% endblock %}

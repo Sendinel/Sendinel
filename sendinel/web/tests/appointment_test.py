@@ -9,34 +9,30 @@ from sendinel import settings
 
 class AppointmentViewTest(TestCase):
     fixtures = ['backend']
-    urls = 'web.urls'
+    urls = 'sendinel.urls'
     
     def setUp (self):
         self.hospital = Hospital.objects.get(current_hospital = True)
         #self.client = Client()
     
     def test_create_appointment_form(self):
-        response = self.client.get("/appointment/create/")
+        response = self.client.get("/web/appointment/create/")
         self.failUnlessEqual(response.status_code, 200)
         self.assertContains(response, 'name="date_0"')
         self.assertContains(response, 'name="date_1"')
         self.assertContains(response, 'name="doctor"')
-        self.assertContains(response, 'name="recipient_name"')
         self.assertNotContains(response, 'name="recipient_type"')
         self.assertNotContains(response, 'name="recipient_id"')
         self.assertNotContains(response, 'name="hospital"')
 
     def test_create_appointment_submit_validations(self):
-        response = self.client.post("/appointment/create/", 
+        response = self.client.post("/web/appointment/create/", 
                     {'date_0': 'abc',
                     'date_1': 'def',
                     'doctor': '',
-                    'recipient_name': '',
                     'way_of_communication': 'xyz'  })
         self.failUnlessEqual(response.status_code, 200)
         self.assertFormError(response, 'form', 'doctor',
-                            'This field is required.')
-        self.assertFormError(response, 'form', 'recipient_name',
                             'This field is required.')
         self.assertFormError(response, 'form', 'date',
                             'Enter a valid date/time.')
@@ -51,18 +47,18 @@ class AppointmentViewTest(TestCase):
                 'recipient_name': 'Shiko Taga',
                 'way_of_communication': 'sms'}
         number_of_appointments = HospitalAppointment.objects.count()
-        response = self.client.post("/appointment/create/", data)
+        response = self.client.post("/web/appointment/create/", data)
         self.assertRedirects(response, 
                              reverse('web_authenticate_phonenumber') + \
                              "?next=" + \
                              reverse('web_appointment_save'))
-        response = self.client.post("/appointment/create/", data, follow=True)
+        response = self.client.post("/web/appointment/create/", data, follow=True)
         self.assertTrue(self.client.session.has_key('patient'))
         self.assertTrue(self.client.session.has_key('appointment'))        
  
     def test_create_appointment_submit_redirect_voice(self):
         number_of_appointments = HospitalAppointment.objects.count()
-        response = self.client.post("/appointment/create/", 
+        response = self.client.post("/web/appointment/create/", 
                     {'date_0': '2012-08-12',
                     'date_1': '19:02:42',
                     'doctor': "1",
@@ -77,7 +73,7 @@ class AppointmentViewTest(TestCase):
 
     def test_create_appointment_submit_redirect_bluetooth(self):
         number_of_appointments = HospitalAppointment.objects.count()
-        response = self.client.post("/appointment/create/", 
+        response = self.client.post("/web/appointment/create/", 
                     {'date_0': '2012-08-12',
                     'date_1': '19:02:42',
                     'doctor': "1",
@@ -91,20 +87,20 @@ class AppointmentViewTest(TestCase):
         self.assertTrue(self.client.session.has_key('appointment'))                                                          
                              
     def test_save_appointment_voice(self):
-        recipient_name = 'Shiko Taga'
-        self.client.post("/appointment/create/", 
+        phone_number = '0123455'
+        self.client.post("/web/appointment/create/", 
                     {'date_0': '2012-08-12',
                     'date_1': '19:02:42',
                     'doctor': "1",
-                    'recipient_name': recipient_name,
                     'way_of_communication': 'voice'  })
         self.client.post(reverse('web_authenticate_phonenumber'),
-                    {'name': recipient_name,
-                     'number': '0123455'})
+                    {'number': phone_number})
         response = self.client.get(reverse("web_appointment_save"))
         self.failUnlessEqual(response.status_code, 200)  
         appoint = HospitalAppointment.objects.order_by("id").reverse()[:1][0]
-        self.assertEquals(unicode(appoint.recipient), recipient_name)
+        self.assertEquals(unicode(appoint.recipient.phone_number), phone_number)
+        event = ScheduledEvent.objects.order_by("id").reverse()[:1][0]
+        self.assertEquals(event.sendable, appoint)
                                                      
             
                 #                              

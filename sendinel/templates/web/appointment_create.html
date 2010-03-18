@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %} 
+{% block script %}
+
+{% endblock %}
+
+{% block content %}
+    <h3>{% trans "Appointment" %}</h3>
+	<p>{% trans "Please enter the appointment details." %}</p>
+    <p>
+        <form action="./" method="post" class="selectable_container">
+            <table>
+                {{ form.as_table }}
+            </table>
+            {% include "web/control_buttons_widget.html" %}
+        </form>
+        
+        <input id="media_url" type="hidden" value="{{MEDIA_URL}}" />
+        
+    </p>
+{% endblock %}

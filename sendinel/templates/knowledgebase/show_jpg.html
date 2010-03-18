@@ -1,0 +1,9 @@
+{% extends "knowledgebase/base_show.html" %}
+
+{% block script %}
+    <script src="{{MEDIA_URL}}/js/knowledgebase.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block content_show %}
+   <img src="{{path_name}}" id="picture" />
+{% endblock %}

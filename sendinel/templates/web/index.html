@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %} 
+{% block script %}
+{% endblock %}
+{% block content %}
+    <h3>{% trans "Choose what you want to do:" %}</h3>
+    <p class="navlist">
+            <a href="{% url web_appointment_create %}" class="selectable">{% trans "Remind me of the next time I have to be at the clinic" %}</a><br />
+            <a href="{% url sendinel.knowledgebase.views.index %}" class="selectable">{% trans "Let me look at Information Material" %}</a>
+        <h4>{% trans "Inform me regularly on my mobile phone about" %}</h4>
+        <ul id="informationservices">
+            {% for service in informationservices %}
+                <li><a href="{% url web_infoservice_register id=service.id %}" class="selectable">{{service}}</a></li>
+            {% endfor %}
+        </ul>
+    </p>
+
+    <p>
+        <a href="{% url sendinel.staff.views.index %}">{% trans "Staff" %}</a>
+    </p>
+{% endblock %}

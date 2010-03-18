@@ -1,5 +1,11 @@
 .DS_Store
 thumbs.db
 *.pyc
+*.mo
+logs/**
 sendinel.db
 local_settings.py
+sendinel.tmproj
+fake_file_log
+
+/sendinel/media/knowledgebase/*.*

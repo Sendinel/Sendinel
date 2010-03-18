@@ -1,11 +1,15 @@
+import logging
 from datetime import timedelta
 from os.path import abspath, dirname
+
 # Django settings for sendinel project.
 
 DEBUG = True        #for scheduling set to false
 TEMPLATE_DEBUG = DEBUG
 PROJECT_PATH = dirname(abspath(__file__))
 
+LOGGING_LEVEL = logging.INFO
+LOGGING_LEVEL_TEST = logging.CRITICAL
 
 ADMINS = (
 )
@@ -29,6 +33,15 @@ TIME_ZONE = 'Europe/Berlin'
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
+
+
+_ = lambda s: s
+
+LANGUAGES = (
+  ('de', _('German')),
+  ('en', _('English')),
+  ('zh', _('Test Language')),
+)
 
 SITE_ID = 1
 
@@ -60,15 +73,27 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.load_template_source',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = ("django.core.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.contrib.messages.context_processors.messages")
+
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.csrf.middleware.CsrfMiddleware'
 )
+
+
 
 ROOT_URLCONF = 'sendinel.urls'
 
-TEMPLATE_DIRS = (PROJECT_PATH + "/web/templates"
+TEMPLATE_DIRS = (
+    PROJECT_PATH + "/templates",
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -80,21 +105,35 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'sendinel',
     'sendinel.web',
-    'sendinel.backend'
+    'sendinel.backend',
+    'sendinel.staff',
+    'sendinel.knowledgebase'
 )
 
 ####################################
 # Sendinel Configuration
 REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days = 1)
+DEFAULT_APPOINTMENT_DURATION = timedelta(minutes = 60)
 DEFAULT_HOSPITAL_NAME = 'your hospital'
 
-ASTERISK_USER = "hudson"
-ASTERISK_GROUP = "hudson"
+COUNTRY_CODE_PHONE = "0049" #"0027"
+START_MOBILE_PHONE = "01" #"07"
+
+KNOWLEDGEBASE_DIRECTORY = PROJECT_PATH + "/media/knowledgebase"
+
+ASTERISK_USER = "root"
+ASTERISK_GROUP = "root"
 ASTERISK_SPOOL_DIR = "/var/spool/asterisk/outgoing/"
+ASTERISK_DATACARD = True
 
 ASTERISK_EXTENSION = "s"
-ASTERISK_SIP_ACCOUNT = "ext-sip-account"
+ASTERISK_SIP_ACCOUNT = "datacard0"
+#ASTERISK_SIP_ACCOUNT = "ext-sip-account"
+
+FESTIVAL_CACHE = "/lib/init/rw"
+#FESTIVAL_CACHE = "/tmp"
 
 # Phonenumber to authenticate against the system
 # TODO move to local_settings on CI server
@@ -108,11 +147,13 @@ SERIALPORTSMS = '/dev/rfcomm0'
 
 # IP address to bluetooth server
 BLUETOOTH_SERVER_ADDRESS = '127.0.0.1'
+
+# used for marking the vcal uid
+VCAL_UID_SLUG = 'sendinel.org'
 ####################################
 
-
+# Setup Local_Settings if present
 try:
     from local_settings import *
 except ImportError:
     pass
-

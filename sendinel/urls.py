@@ -1,4 +1,5 @@
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import handler404, handler500, include, \
+                                        patterns, url
 from django.conf import settings
 from django.views.generic.simple import redirect_to
 
@@ -6,13 +7,19 @@ from django.views.generic.simple import redirect_to
 from django.contrib import admin
 admin.autodiscover()
 
+js_info_web = {
+    'packages': ('sendinel')
+}
+
 urlpatterns = patterns('',
     url(r'^$', redirect_to, {'url': 'web/'}),
     (r'^web/', include('sendinel.web.urls')),
-    (r'^admin/jsi18n/$', 'django.views.i18n.javascript_catalog'),
-
-    # Example:
-    # (r'^sendinel/', include('sendinel.foo.urls')),
+    (r'^knowledgebase/', include('sendinel.knowledgebase.urls')),
+    (r'^staff/', include('sendinel.staff.urls')),
+    (r'^i18n/', include('django.conf.urls.i18n')),
+    url(r'^jsi18n/', 'django.views.i18n.javascript_catalog', js_info_web,
+        name = "jsi18n"),
+    # (r'^admin/jsi18n/$', 'django.views.i18n.javascript_catalog'),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:
@@ -20,6 +27,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)), 
+    (r'^accounts/login/$', 'django.contrib.auth.views.login'),
 )
 if settings.DEBUG:
     urlpatterns += patterns('',
