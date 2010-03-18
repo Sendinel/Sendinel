@@ -1,5 +1,15 @@
+var input_token = function() {
+    $("#content1").html("");
+    $("#auth_step_2").html("");
+    numpad.convert_forms();
+    $("#auth_step_3").show();
+    $("#sms_token").focus();
+    
+};
+
 $(document).ready(function() {
     $("#auth_step_2").hide();
+    $("#auth_step_3").hide();
     
     var submit_code = function() {
         if ( $("#sms_token").val() === SMS_TOKEN ){
@@ -12,12 +22,12 @@ $(document).ready(function() {
         }
     };
     
+
+    
     $("#form_submit").click( function() {
-        $("#content1").html("");
-        numpad.convert_forms();
+        $("#content1").hide();
         $("#auth_step_2").show();
-        $("#sms_token").focus();
-        
+        window.setTimeout("this.input_token()", 5000);
     });
     
     $("#sms_token").keydown(function(e) {

@@ -20,6 +20,20 @@
 
         <link rel="stylesheet" href="../media/css/numpad.css" type="text/css" />
 
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#number").keydown(function(event){
+                    if(event.keyCode === 37){
+                        var phone_input = $("#number");
+                        var string = phone_input.val();
+                        string = string.substr(0, (string.length - 1));
+                        phone_input.val(string);                    
+                        return false;
+                    }
+                });
+            });
+        </script>
+        
     </head>
 
     <body>
