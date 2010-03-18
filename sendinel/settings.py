@@ -118,8 +118,10 @@ REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days = 1)
 DEFAULT_APPOINTMENT_DURATION = timedelta(minutes = 60)
 DEFAULT_HOSPITAL_NAME = 'your hospital'
 
-COUNTRY_CODE_PHONE = "0049" #"0027"
-START_MOBILE_PHONE = "01" #"07"
+COUNTRY_CODE_PHONE = "0049" #"0027" for South Africa
+START_MOBILE_PHONE = "01" # "0" for South Africa (07/08..)
+# see http://en.wikipedia.org/wiki/Telephone_numbers_in_South_Africa
+# TODO multiple mobile prefixes
 
 KNOWLEDGEBASE_DIRECTORY = PROJECT_PATH + "/media/knowledgebase"
 
