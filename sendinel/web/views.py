@@ -118,7 +118,8 @@ def send_appointment(request):
             return HttpResponse(status = 200)
         else:
             return HttpResponse(status = 500)
-            
+           
+    backurl = reverse("web_list_devices")
     url = reverse("web_appointment_send")
     next = reverse("web_index")
     mac_address = request.GET['device_mac'].strip()
@@ -139,7 +140,7 @@ def authenticate_phonenumber(request):
             number = fill_authentication_session_variable(request)
             logger.info("Starting authentication with %s" % AUTH_NUMBER)
             auth_number = AUTH_NUMBER
-            nexturl = reverse('web_index')
+            next = reverse('web_index')
             return render_to_response('web/authenticate_phonenumber_call.html', 
                               locals(),
                               context_instance = RequestContext(request))
