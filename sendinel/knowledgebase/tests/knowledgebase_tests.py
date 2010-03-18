@@ -53,4 +53,4 @@ class KnowledgeBaseTest(TestCase):
         
 def get_key(dic, value_string):
         for key, value in dic.iteritems():
-            if value == value_string: return key        
+            if value == value_string: return key

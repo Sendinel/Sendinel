@@ -18,7 +18,7 @@ var check_for_call = function() {
                 switch(json.status) {                
                     case "waiting":                        
                         statusText.text(gettext("Waiting for your call"));
-                        window.setTimeout("check_for_call()",1000);
+                        window.setTimeout("check_for_call()", 1000);
                     break;
                     
                     case "received":
@@ -26,13 +26,13 @@ var check_for_call = function() {
                         $("#auth_spinner").hide();
                         var next = $("#next").val();
                         statusText.addClass("success");
-                        statusText.text(gettext("Thank you! Your telephone number has been authenticated."));                        
+                        statusText.text(gettext("Thank you! We have received your call, please hang up now."));                        
                         var next_button = $("<div class='next-button'>" +
                             "<input type='submit' id='id_next' value='Next -&gt;' name='form_submit' class='subselectable' />" +
                             '<input type="hidden" value="' + next +'" name="next-button-link" /></div>');
                         $("#control_buttons").append(next_button);
                         numpad.convert_forms();
-                        //window.setTimeout("toNext()", 10000);
+                        window.setTimeout("toNext()", 5000);
                     break;
                     
                     case "failed":
