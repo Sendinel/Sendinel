@@ -32,6 +32,7 @@ var check_for_call = function() {
                             '<input type="hidden" value="' + next +'" name="next-button-link" /></div>');
                         $("#control_buttons").append(next_button);
                         numpad.convert_forms();
+                        $("#id_back").hide();
                         window.setTimeout("toNext()", 5000);
                     break;
                     
