@@ -1,6 +1,8 @@
 .DS_Store
 thumbs.db
 *.pyc
+*.mo
+logs/**
 sendinel.db
 local_settings.py
 sendinel.tmproj
