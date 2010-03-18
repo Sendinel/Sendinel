@@ -135,7 +135,8 @@ def authenticate_phonenumber(request):
     ajax_url= reverse('web_check_call_received')
     backurl = reverse('web_index')    
     if request.method == "POST":
-        backurl = reverse('web_authenticate_phonenumber')        
+        backurl = reverse('web_authenticate_phonenumber') + \
+                            "?" + request.META['QUERY_STRING']
         try:
             number = fill_authentication_session_variable(request)
             logger.info("Starting authentication with %s" % AUTH_NUMBER)
