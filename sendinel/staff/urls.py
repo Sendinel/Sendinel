@@ -2,6 +2,7 @@ from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns("",
     url(r"^$", 'sendinel.staff.views.index', name = 'staff_index'),
+    url(r"^logout/$", 'sendinel.staff.views.logout_staff', name = 'staff_logout'),
     url(r"^list_infoservices/$", 'sendinel.staff.views.list_infoservices', 
         name = 'staff_list_infoservices'),
     url(r"^infoservice/create/$", 'sendinel.staff.views.create_infoservice', 
