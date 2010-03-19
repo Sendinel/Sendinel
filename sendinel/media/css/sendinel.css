@@ -19,6 +19,13 @@ img { border: 0px; }
     text-align: center;
 }
 
+.logout{
+    border: 1px solid #7d7d7d;
+    background-color: #fdfdfd;
+    width: 200px;
+    text-align: center;
+}
+
 #content1{
     padding-top: 20px;
     padding-left: 20px;

@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
 
 from sendinel.backend.models import InfoService, InfoMessage, \
@@ -18,6 +19,14 @@ from sendinel.logger import logger, log_request
 def index(request):
     return render_to_response('staff/index.html',
                               context_instance=RequestContext(request))
+
+@log_request                              
+def logout_staff(request):
+    logout(request)
+    
+    logger.info("logged out staff member")
+    
+    return HttpResponseRedirect(reverse("web_index"))
 
 @log_request
 @login_required
