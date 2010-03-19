@@ -24,7 +24,7 @@
 
 <body>
 <noscript>
-    <h1>This page needs JavaScript to work.</h1>
+    <h1>{% trans "This page needs JavaScript to work." %}</h1>
 </noscript>
 
 <div id="container">
@@ -37,16 +37,14 @@
                 <img src="{{ MEDIA_URL }}/img/sendinel-300px.png" alt="sendinel" />
             </a><br />
             <img src="{{ MEDIA_URL }}/img/hpi-logo-250px.png" alt="HPI" />
-            <h3>Sendinel is free for you.</h3>
+            <h3>{% trans "Sendinel is free for you." %}</h3>
         </div>
         
         <div id="infotext">
           <img src="{{ MEDIA_URL }}/img/info_sign.png" />
           {% block infotext %}
             <p>
-              Sendinel is a system to improve the communication between hospitals and patients.
-              Sendinel is a system to improve the communication between hospitals and patients.
-              Sendinel is a system to improve the communication between hospitals and patients.
+              {% trans "Sendinel allows hospitals and patients to communicate better. If you are lost in the menu, use the the arrow keys  ←↑→↓ in front of you. Go to "Back" and push the "Enter" key in front of you." %}
             </p>
           {% endblock %}
           
