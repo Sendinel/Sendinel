@@ -6,7 +6,8 @@ from sendinel.backend.models import Doctor, Patient, Hospital, \
                                     InfoService, \
                                     ScheduledEvent, \
                                     AuthenticationCall, \
-                                    Subscription
+                                    Subscription, \
+                                    InfoService
 
 admin.site.register(Doctor)
 admin.site.register(Patient)
@@ -17,3 +18,4 @@ admin.site.register(InfoService)
 admin.site.register(ScheduledEvent)
 admin.site.register(AuthenticationCall)
 admin.site.register(Subscription)
+admin.site.register(InfoService)

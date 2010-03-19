@@ -19,6 +19,13 @@ img { border: 0px; }
     text-align: center;
 }
 
+.logout{
+    border: 1px solid #7d7d7d;
+    background-color: #fdfdfd;
+    width: 200px;
+    text-align: center;
+}
+
 #content1{
     padding-top: 20px;
     padding-left: 20px;
@@ -39,7 +46,7 @@ h3{
     right: 0;
     top: 0;
     height: 100%;
-    max-width: 390px;
+    width: 360px;
     text-align: center;
     background-color: #EEE;
 }
@@ -49,7 +56,38 @@ h3{
 }
 
 #rightbar img {
-    margin-bottom: 50px;
+    margin-bottom: 25px;
+}
+
+#rightbar #infotext {
+    border: 2px solid #B3B2B2; 
+    padding: 5px;
+    margin: 10px;
+    position: fixed;
+    bottom: 0px;
+}
+
+#rightbar #infotext img{
+    float: left;
+    margin: 5px 10px 5px 0px;
+}
+
+#rightbar #infotext p {
+    font-size: 0.8em; 
+    text-align: left;
+    margin: 0px;
+    padding-top: 5px;
+}
+
+#rightbar #infotext .contact {
+    font-size: 0.5em; 
+    text-align: center;
+    margin-bottom: -15px;    
+}
+
+#rightbar #infotext .contact-last {
+    font-size: 0.5em; 
+    margin-bottom: 0px;
 }
 
 #bluetootLogo{
@@ -59,11 +97,37 @@ h3{
 
 .navlist
 {
-    padding: 0 1px 1px;
+    padding: 10px;
     margin-left: 0;
     font-size: 1.2em;
     font: bold Verdana, sans-serif;
     background:#F3F3F3;
+}
+
+.navlist img
+{
+    float: left;
+    padding-top: 3px;
+}
+
+.navlist .next-to-big-arrow 
+{
+    padding-left: 80px;
+    padding-right: 30px;    
+}
+
+.navlist .next-to-small-arrow 
+{
+    padding-left: 80px;
+    padding-right: 30px;    
+}
+
+#informationservices li {
+    list-style-type: none;
+}
+
+#informationservices .navlist {
+    padding: 1px 1px 1px 10px;
 }
 
 .navlist ul {

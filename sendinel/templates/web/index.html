@@ -4,18 +4,43 @@
 {% endblock %}
 {% block content %}
     <h3>{% trans "Choose what you want to do:" %}</h3>
-    <p class="navlist">
-            <a href="{% url web_appointment_create %}" class="selectable">{% trans "Remind me of the next time I have to be at the clinic" %}</a><br />
+    <div class="navlist">
+        <img src="{{MEDIA_URL}}/img/arrow_right_orange.png" />
+        <p class="next-to-big-arrow"> 
+            <a href="{% url web_appointment_create %}" class="selectable">{% trans "Remind me of my next appointment" %}</a>
+        </p>
+    </div>
+    <br />
+    <div class="navlist">
+        <img src="{{MEDIA_URL}}/img/arrow_right_orange.png" />  
+        <p class="next-to-big-arrow">         
             <a href="{% url sendinel.knowledgebase.views.index %}" class="selectable">{% trans "Let me look at Information Material" %}</a>
+        </p>
+    </div>
+    <br />
         <h4>{% trans "Inform me regularly on my mobile phone about" %}</h4>
         <ul id="informationservices">
             {% for service in informationservices %}
-                <li><a href="{% url web_infoservice_register id=service.id %}" class="selectable">{{service}}</a></li>
+                <li> 
+                  <div class="navlist">
+                    <img src="{{MEDIA_URL}}/img/arrow_right_small_orange.png" />
+                      <p class="next-to-small-arrow">
+                        <a href="{% url web_infoservice_register id=service.id %}" class="selectable">{{service}}</a>
+                      </p>
+                  </div>  
+                </li>
             {% endfor %}
         </ul>
-    </p>
+
 
     <p>
         <a href="{% url sendinel.staff.views.index %}">{% trans "Staff" %}</a>
     </p>
+{% endblock %}
+
+{% block infotext %}
+  <p>This is the main menu. 
+     Press the arrow keys  ←↑→↓ in front of you to choose menu items.
+     Use the 'Enter' key to select.
+  </p>
 {% endblock %}
