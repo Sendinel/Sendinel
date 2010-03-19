@@ -11,7 +11,7 @@
     <h3>Available Bluetooth Devices</h3>
 
     <div>
-        {% trans "Please turn on your Bluetooth" %}
+        {% trans "Please turn on your Bluetooth now. Please assure that it is in the Bluetooth visibility mode." %}
     </div>
     <br />
     <p>
@@ -26,4 +26,10 @@
             {% include "web/control_buttons_back_only_widget.html" %}
         </div>
     </p>
+{% endblock %}
+
+{% block infotext %}
+  <p>Most Mobile Phones have a Bluetooth sub-menu in the settings or connections menu. 
+     There you can adjust your settings as needed. 
+  </p>
 {% endblock %}
