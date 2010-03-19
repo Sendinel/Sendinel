@@ -19,8 +19,7 @@
 <link rel="stylesheet" href="{{ MEDIA_URL }}/css/numpad.css" type="text/css" />
 
 {% load i18n %} 
-{% block script %}    
-{% endblock %}
+{% block script %}{% endblock %}
 </head>
 
 <body>
@@ -39,6 +38,19 @@
             </a><br />
             <img src="{{ MEDIA_URL }}/img/hpi-logo-250px.png" alt="HPI" />
             <h3>Sendinel is free for you.</h3>
+        </div>
+        
+        <div id="infotext">
+          <img src="{{ MEDIA_URL }}/img/info_sign.png" />
+          {% block infotext %}
+            <p>
+              Sendinel is a system to improve the communication between hospitals and patients.
+              Sendinel is a system to improve the communication between hospitals and patients.
+              Sendinel is a system to improve the communication between hospitals and patients.
+            </p>
+          {% endblock %}
+          
+          <p class="contact">Feel free to contact us at contact@sendinel.org</p>
         </div>
     </div>
 </div>

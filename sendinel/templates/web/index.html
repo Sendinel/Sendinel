@@ -7,7 +7,7 @@
     <div class="navlist">
         <img src="{{MEDIA_URL}}/img/arrow_right.png" />
         <p class="next-to-big-arrow"> 
-            <a href="{% url web_appointment_create %}" class="selectable">{% trans "Remind me of the next time I have to be at the clinic" %}</a>
+            <a href="{% url web_appointment_create %}" class="selectable">{% trans "Remind me of my next appointment" %}</a>
         </p>
     </div>
     <br />
@@ -36,4 +36,9 @@
     <p>
         <a href="{% url sendinel.staff.views.index %}">{% trans "Staff" %}</a>
     </p>
+{% endblock %}
+
+{% block infotext %}
+  <p style="font-size: 0.8em; text-align: left;">With Sendinel you can send totally awesome stuff!. I am extremely amazed
+  </p>
 {% endblock %}
