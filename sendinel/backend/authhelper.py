@@ -35,12 +35,12 @@ def format_phonenumber(number, country_code, start_mobile_number):
     try:
         int(number)
     except ValueError:
-        raise ValueError('Please enter a phonenumber like 0181238723.')
+        raise ValueError('Please enter a valid phonenumber.')
     
     if number.startswith(start_mobile_number):
         return number
     else:
-        raise ValueError('Please enter a phonenumber like 0181238723.')    
+        raise ValueError('Please enter a valid phonenumber.')    
 
 def check_and_delete_authentication_call(number):
     """
