@@ -36,7 +36,7 @@
         <div>
             <a href="{% url web_index %}">
                 <img src="{{ MEDIA_URL }}/img/sendinel-300px.png" alt="sendinel" />
-            </a><br />
+            </a><br /><br />
             <img src="{{ MEDIA_URL }}/img/hpi-logo-250px.png" alt="HPI" />
             <h3>{% trans "Sendinel is free for you." %}</h3>
         </div>
@@ -45,12 +45,12 @@
           <img src="{{ MEDIA_URL }}/img/info_sign.png" />
           {% block infotext %}
             <p>
-              {% trans "Sendinel allows hospitals and patients to communicate better. If you are lost in the menu, use the the arrow keys  ←↑→↓ in front of you. Go to 'Back' and push on the 'Enter' key." %}
+              {% trans "If you want to return to the main menu, press the arrow keys  ←↑→↓ in front of you to go to the 'Back' button and press the 'Enter' key." %}
             </p>
           {% endblock %}
           
           <p class="contact">Bachelorprojekt M2 Hasso-Plattner-Institut Potsdam Germany</p>
-          <p class="contact contact-last">contact@sendinel.org +493315509256</p>
+          <p class="contact contact-last">contact@sendinel.org</p>
         </div>
     </div>
 </div>
