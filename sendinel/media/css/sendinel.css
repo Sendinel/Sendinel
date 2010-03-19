@@ -59,11 +59,37 @@ h3{
 
 .navlist
 {
-    padding: 0 1px 1px;
+    padding: 10px;
     margin-left: 0;
     font-size: 1.2em;
     font: bold Verdana, sans-serif;
     background:#F3F3F3;
+}
+
+.navlist img
+{
+    float: left;
+    padding-top: 3px;
+}
+
+.navlist .next-to-big-arrow 
+{
+    padding-left: 80px;
+    padding-right: 30px;    
+}
+
+.navlist .next-to-small-arrow 
+{
+    padding-left: 80px;
+    padding-right: 30px;    
+}
+
+#informationservices li {
+    list-style-type: none;
+}
+
+#informationservices .navlist {
+    padding: 1px 1px 1px 10px;
 }
 
 .navlist ul {
