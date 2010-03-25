@@ -15,7 +15,6 @@ from sendinel.logger import logger, log_request
 
 
 @log_request
-@login_required
 def index(request):
     return render_to_response('staff/index.html',
                               context_instance=RequestContext(request))
@@ -29,7 +28,6 @@ def logout_staff(request):
     return HttpResponseRedirect(reverse("web_index"))
 
 @log_request
-@login_required
 def create_infomessage(request, id):
     
     if(request.method == "GET"):
@@ -64,7 +62,6 @@ def create_infomessage(request, id):
         return HttpResponseRedirect(reverse("staff_list_infoservices"))
 
 @log_request
-@login_required
 def list_infoservices(request):
 
     all_infoservices = InfoService.objects.all()
@@ -111,4 +108,4 @@ def delete_members_of_infoservice(request, id, patient_id):
                                                infoservice = infoservice)
     subscription.delete()
     return HttpResponseRedirect(reverse("staff_infoservice_members", 
-                                   kwargs={"id": infoservice.id}))
+                                   kwargs={"id": infoservice.id}))  

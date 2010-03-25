@@ -33,6 +33,9 @@ class Doctor(User):
     """
     pass
 
+    class Meta:
+        verbose_name = "Reason"
+
 class Patient(User):
     """
     Represent a patient.

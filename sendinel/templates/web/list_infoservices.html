@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %} 
+{% block script %}
+{% endblock %}
+{% block content %}
+    <h3>{% trans "Register a patient to receive regular information." %}</h3>
+        <ul id="informationservices">
+            {% for service in informationservices %}
+                <li> 
+                  <div class="navlist">
+                    <img src="{{MEDIA_URL}}/img/arrow_right_small_orange.png" />
+                      <p class="next-to-small-arrow">
+                        <a href="{% url web_infoservice_register id=service.id %}" class="selectable">{{service}}</a>
+                      </p>
+                  </div>  
+                </li>
+            {% endfor %} 
+        </ul>
+    <div class="selectable_container">
+       {% include "web/control_buttons_back_only_widget.html" %}
+    </div>
+
+{% endblock %}
+
+{% block infotext %}
+  <p>This is the main menu. 
+     Press the arrow keys  ←↑→↓ in front of you to choose menu items.
+     Use the 'Enter' key to select.
+  </p>
+{% endblock %}
+
+

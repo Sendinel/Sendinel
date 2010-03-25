@@ -33,7 +33,7 @@ var check_for_call = function() {
                         $("#control_buttons").append(next_button);
                         numpad.convert_forms();
                         $("#id_back").hide();
-                        window.setTimeout("toNext()", 5000);
+                        toNext();
                     break;
                     
                     case "failed":
