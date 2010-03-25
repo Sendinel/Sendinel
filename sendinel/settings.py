@@ -37,11 +37,12 @@ LANGUAGE_CODE = 'en-us'
 
 _ = lambda s: s
 
-LANGUAGES = (
-  ('de', _('German')),
-  ('en', _('English')),
-  ('zh', _('Test Language')),
-)
+#LANGUAGES = (
+#  ('de', _('German')),
+#  ('en', _('English')),
+#  ('ts', _('Shangaan')),
+#  ('zh', _('Test Language')),
+#)
 
 SITE_ID = 1
 

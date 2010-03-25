@@ -256,3 +256,19 @@ def fill_authentication_session_variable(request):
                             { 'number': number,
                               'start_time': datetime.now() }
     return number
+
+@log_request
+def not_implemented(request):
+    backurl = reverse("web_index")
+    return render_to_response('web/not_implemented.html', 
+                              locals(),
+                              context_instance = RequestContext(request))
+
+@log_request
+def list_infoservices(request):
+    backurl = reverse("web_index")
+    informationservices = InfoService.objects.all()
+    return render_to_response('web/list_infoservices.html', 
+                              locals(),
+                              context_instance = RequestContext(request))
+
