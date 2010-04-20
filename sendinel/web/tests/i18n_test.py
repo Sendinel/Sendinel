@@ -7,7 +7,7 @@ class InternationalizationTest(TestCase):
     urls = 'sendinel.urls'
     
     def setUp (self):
-        # we're using Chinese as Test language
+        # we're using Traditional Chinese as Test language
         data = {'language': 'zh'}
         url = reverse("django.views.i18n.set_language")
         self.client.post(url, data)
