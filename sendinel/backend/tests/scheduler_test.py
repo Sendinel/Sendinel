@@ -52,7 +52,7 @@ class SchedulerTest(TestCase):
         sendable.recipient = patient
         sendable.save()
         
-        self.assertEquals(scheduler.get_all_due_events().count(),1)
+        self.assertEquals(scheduler.get_all_due_events().count(),2)
         
         schedule1 = ScheduledEvent(sendable=sendable, send_time=datetime.now())
         schedule1.save()
@@ -65,7 +65,7 @@ class SchedulerTest(TestCase):
                                    send_time=(datetime.now() + timedelta(days=1)))
         schedule3.save()
         
-        self.assertEquals(scheduler.get_all_due_events().count(), 3)
+        self.assertEquals(scheduler.get_all_due_events().count(), 4)
         self.assertTrue(schedule1 in scheduler.get_all_due_events())
         self.assertTrue(schedule2 in scheduler.get_all_due_events())
         self.assertFalse(schedule3 in scheduler.get_all_due_events())
@@ -80,7 +80,7 @@ class SchedulerTest(TestCase):
                                    state = "sent")
         schedule5.save()
         
-        self.assertEquals(scheduler.get_all_due_events().count(), 3)
+        self.assertEquals(scheduler.get_all_due_events().count(), 4)
         
         schedule1.delete()
         schedule2.delete()
