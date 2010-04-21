@@ -4,44 +4,38 @@
 {% endblock %}
 {% block content %}
     <h3>{% trans "Choose what you want to do:" %}</h3>
-    <div class="navlist">
-        <img src="{{MEDIA_URL}}/img/arrow_right_orange.png" />
-        <p class="next-to-big-arrow"> 
+    <div class="menulist">
+        <div>
             <a href="{% url web_appointment_create %}" class="selectable">{% trans "Remind of Vaccination" %}</a>
-        </p>
-    </div>
-    <br />
-    <div class="navlist">
-        <img src="{{MEDIA_URL}}/img/arrow_right_orange.png" />  
-        <p class="next-to-big-arrow">         
+        </div>
+        <div>
             <a href="{% url web_appointment_create %}" class="selectable">{% trans "Remind of Follow-Up Consultation" %}</a>
-        </p>
-    </div>
-    <br />
+        </div>
 
-    <div class="navlist">
-        <img src="{{MEDIA_URL}}/img/arrow_right_orange.png" />  
-        <p class="next-to-big-arrow">         
+        <div>
             <a href="{% url not_implemented %}" class="selectable">{% trans "Inform about Arrival of Medication" %}</a>
-        </p>
-    </div>
-    <br />
+        </div>
 
-    <div class="navlist">
-        <img src="{{MEDIA_URL}}/img/arrow_right_orange.png" />  
-        <p class="next-to-big-arrow">         
+        <div>
             <a href="{% url list_infoservices %}" class="selectable">{% trans "Register patient to get regular information" %}</a>
-        </p>
-    </div>
-    <br />
+        </div>
+        {#      #}
+        {# {% for service in information_services %} #}
+        {#     <li><a href="{% url web_infoservice_register id=service.id %}" class="selectable">{{service}}</a></li> #}
+        {# {% endfor %} #}
+        {#      #}
+        <div>
+            <a href="{% url staff_list_infoservices %}" class="selectable">{% trans "Register patient for morning prayer" %}</a>
+        </div>
 
-    <div class="navlist">
-        <img src="{{MEDIA_URL}}/img/arrow_right_orange.png" />  
-        <p class="next-to-big-arrow">         
-            <a href="{% url staff_list_infoservices %}" class="selectable">{% trans "Send information to registered patients" %}</a>
-        </p>
+        <div>
+            <a href="{% url staff_list_infoservices %}" class="selectable">{% trans "Register patient for HIV news" %}</a>
+        </div>
+    
+        <div>
+            <a href="{% url staff_list_infoservices %}" class="selectable">{% trans "Register patient for hospital news" %}</a>
+        </div>
     </div>
-    <br />
 
 {% endblock %}
 
