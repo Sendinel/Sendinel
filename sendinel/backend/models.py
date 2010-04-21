@@ -1,5 +1,6 @@
 from string import Template
 
+from datetime import datetime
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
@@ -145,6 +146,65 @@ class Sendable(models.Model):
         scheduled_event = ScheduledEvent(sendable = self,
                                          send_time = send_time)
         scheduled_event.save()
+        
+class LabResult(Sendable):
+    """
+    Define a HospitalAppointment.
+    """
+    text = "Your lab results are arrived at the clinic. Please come to the clinic."
+                         
+    def __unicode__(self):
+        return "LabResult< Text: %s>" \
+                    % ((str(self.date) or ""))
+ 
+    def get_data_for_sms(self):
+        """
+        Prepare OutputData for sms.
+        Generate the message for an LabResult.
+        Return SMSOutputData for sending.
+        """
+
+        data = SMSOutputData()                 
+        data.data = self.text                        
+        data.phone_number = self.recipient.phone_number
+        
+        return data
+
+    def get_data_for_voice(self): 
+        """
+        Prepare OutputData for voice.
+        Generate the message for an LabResult.
+        Return VoiceOutputData for sending.
+        """
+
+        data = VoiceOutputData()
+        data.data = self.text                        
+        data.phone_number = self.recipient.phone_number
+
+        return data
+
+    def create_scheduled_event(self, send_time=None):
+        """
+        Create a scheduled event for sending a a lab result information message. 
+        @param send_time: Datetime object with the time of the reminder
+        If send_time is not give, now is used
+        Call Sendable.create_scheduled_event() to create the ScheduledEvent
+        """
+        if not send_time:      
+            send_time = datetime.now()
+        super(LabResult, self).create_scheduled_event(send_time)
+       
+    def save_with_patient(self, patient):
+        """
+        Save appointment with patient & hospital and create a scheduled event
+        """
+        patient.save()
+        self.recipient = patient
+                
+        self.save()
+        self.create_scheduled_event()    
+        return self
+        
 
 class HospitalAppointment(Sendable):
     """
