@@ -60,7 +60,9 @@ def create_appointment(request):
     nexturl = ""
     backurl = reverse('web_index')
     if request.method == "POST":
-        attributes = request.
+        attributes = { "recipient" :request.POST['recipient'].strip(),
+                        "date" :request.POST['date'].strip(),
+                        "wayofcommunication":request.POST['wayofcommunication'].strip() }
         if is_valid_appointment(attributes):
             appointment = HospitalAppointment()
             patient = Patient()
