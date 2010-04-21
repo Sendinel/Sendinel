@@ -8,7 +8,7 @@ class InternationalizationTest(TestCase):
     
     def setUp (self):
         # we're using Traditional Chinese as Test language
-        data = {'language': 'zh'}
+        data = {'language': 'zh-tw'}
         url = reverse("django.views.i18n.set_language")
         self.client.post(url, data)
     
