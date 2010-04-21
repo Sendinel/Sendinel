@@ -94,71 +94,29 @@ h3{
     float:right;
 }
 
-
-.navlist
+.menulist div
 {
-    padding: 10px;
-    margin-left: 0;
+    min-height: 2em;
+    padding-top: 0.8em;
+    padding-bottom: 10px;
+    margin: 10px 0px;
     font-size: 1.2em;
     font: bold Verdana, sans-serif;
-    background:#F3F3F3;
-}
-
-.navlist img
-{
-    float: left;
-    padding-top: 3px;
-}
-
-.navlist .next-to-big-arrow 
-{
-    padding-left: 80px;
-    padding-right: 30px;    
-}
-
-.navlist .next-to-small-arrow 
-{
-    padding-left: 80px;
-    padding-right: 30px;    
-}
-
-#informationservices li {
-    list-style-type: none;
-}
-
-#informationservices .navlist {
-    padding: 1px 1px 1px 10px;
-}
-
-.navlist ul {
-    list-style-type: none;
-}
-
-.navlist li
-{
-    list-style: none;
-    margin: 0;
-    border-top:#CCCCCC 1px solid;
-    text-align: left;
-}
-
-.navlist li a
-{
-    display: block;
-    padding: 0.25em 0.5em 0.25em 0.75em;
     background: #F3F3F3;
-    text-decoration: none;
+    background-image: url(../img/arrow_right_orange.png);
+    background-repeat: no-repeat;
 }
-
-.navlist li a:link { color: #fcc533; }
-.navlist li a:visited { color: #999999; }
-
-.navlist li a:hover
+.menulist div a
 {
-    border-color: #FE3;
-    color: #666666;
-    background: #FFFFFF;
+    padding-left: 80px;
 }
+
+.menulist div a.menu_secondlink
+{
+    padding-left: 10px;
+    margin-left: 10px;
+}
+
 
 /* Forms */
 th {

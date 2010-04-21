@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-    <h3>{% trans "Send an Infomessage" %}</h3>
+    <h3>{% blocktrans with infoservice.name as infoservice %}Send a message to {{ infoservice }}{% endblocktrans %}</h3>
     <p>
         <form action="" method="post">
             <table>

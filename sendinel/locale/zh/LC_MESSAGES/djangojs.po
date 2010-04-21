@@ -36,11 +36,3 @@ msgstr "#TRANSLATED#"
 #: media/js/bluetooth.js:58
 msgid "Failed to send appointment"
 msgstr "#TRANSLATED#"
-
-#: media/js/numpad_date.js:14
-msgid "for example 2010/03/12 is March 12th 2010"
-msgstr "#TRANSLATED#"
-
-#: media/js/numpad_time.js:13
-msgid "for example 15:20"
-msgstr "#TRANSLATED#"

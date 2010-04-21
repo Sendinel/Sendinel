@@ -10,18 +10,8 @@
 <link rel="stylesheet" href="{{ MEDIA_URL }}/css/datetimepicker.css" type="text/css" />
 <script src="{{MEDIA_URL}}/js/jquery.js" type="text/javascript"></script>
 <script src="{% url django.views.i18n.javascript_catalog %}" type="text/javascript" charset="utf-8"></script>
-
-<script src="{{ MEDIA_URL }}/js/numpad.js" type="text/javascript" charset="utf-8"></script>
-<script src="{{ MEDIA_URL }}/js/numpad_utils.js" type="text/javascript" charset="utf-8"></script>
-<script src="{{ MEDIA_URL }}/js/numpad_date.js" type="text/javascript" charset="utf-8"></script>
-<script src="{{ MEDIA_URL }}/js/numpad_time.js" type="text/javascript" charset="utf-8"></script>
-<script src="{{ MEDIA_URL }}/js/numpad_select.js" type="text/javascript" charset="utf-8"></script>
-<script src="{{ MEDIA_URL }}/js/numpad_woc.js" type="text/javascript" charset="utf-8"></script>    
-<script src="{{ MEDIA_URL }}/js/numpad_controlButtons.js" type="text/javascript" charset="utf-8"></script>        
+      
 <script src="{{ MEDIA_URL }}/js/window_resize.js" type="text/javascript" charset="utf-8"></script>        
-<script src="{{ MEDIA_URL }}/js/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
-<link rel="stylesheet" href="{{ MEDIA_URL }}/css/numpad.css" type="text/css" />
-
 {% load i18n %} 
 {% block script %}{% endblock %}
 </head>
@@ -48,7 +38,7 @@
           <img src="{{ MEDIA_URL }}/img/info_sign.png" />
           {% block infotext %}
             <p>
-              {% trans "If you want to return to the main menu, press the arrow keys  ←↑→↓ in front of you to go to the 'Back' button and press the 'Enter' key." %}
+              {% trans "If you want to return to the main menu, press the arrow keys  �?↑→↓ in front of you to go to the 'Back' button and press the 'Enter' key." %}
             </p>
           {% endblock %}
           

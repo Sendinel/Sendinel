@@ -23,7 +23,6 @@ var Bluetooth = {
                         $(deviceList).append($(deviceHTML));                        
                     });
                 }
-                numpad.convert_forms();
                 
                 window.setTimeout("Bluetooth.check_for_devices()", 3000);
             },
@@ -67,7 +66,6 @@ var Bluetooth = {
                             "<input type='submit' id='id_next' value='Next -&gt;' name='form_submit' class='subselectable' />" +
                             '<input type="hidden" value="' + next +'" name="next-button-link" /></div>');
                 $("#control_buttons").append(next_button);
-                numpad.convert_forms();
     
                 window.setTimeout("Bluetooth.redirect_to_next()", 10000);
             },

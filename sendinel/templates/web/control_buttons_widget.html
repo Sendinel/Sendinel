@@ -1,11 +1,11 @@
 {% load i18n %}
-<div name="control-buttons-widget" id="control_buttons" class="control-buttons selectable">
+<div name="control-buttons-widget" id="control_buttons" class="control-buttons">
   <div class="back-button">
-    <input type="button" class="subselectable" name="form_submit" value="&lt;- {% trans 'Back' %}" id="id_back" />
-    <input type="hidden" class="" name="back-button-link" value="{{ backurl }}" />
+    <input type="button" name="form_submit" value="&lt;- {% trans 'Back' %}" id="id_back" onclick="javascript:location.href='{{ backurl }}'" />
+    <input type="hidden" name="back-button-link" value="{{ backurl }}" />
   </div>
   <div class="next-button">
-    <input type="submit" class="subselectable" name="form_submit" value="{% trans 'Next' %} -&gt;" id="id_next" />
-    <input type="hidden" class="" name="next-button-link" value="{{ nexturl }}" />
+    <input type="submit" name="form_submit" value="{% trans 'Next' %} -&gt;" id="id_next" />
+    <input type="hidden" name="next-button-link" value="{{ nexturl }}" />
   </div>
 </div>
