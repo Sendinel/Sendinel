@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from sendinel.backend.models import Doctor, Patient, Hospital, \
+from sendinel.backend.models import AppointmentType, Patient, Hospital, \
                                     HospitalAppointment, \
                                     InfoMessage, \
                                     InfoService, \
@@ -9,7 +9,7 @@ from sendinel.backend.models import Doctor, Patient, Hospital, \
                                     Subscription, \
                                     InfoService
 
-admin.site.register(Doctor)
+admin.site.register(AppointmentType)
 admin.site.register(Patient)
 admin.site.register(Hospital)
 admin.site.register(HospitalAppointment)

@@ -27,14 +27,16 @@ class User(models.Model):
     def __unicode__(self):
         return self.name or "unnamed user"
     
-class Doctor(User):
+class AppointmentType(models.Model):
     """
-    Represent a doctor.
+    Represent an appointment type like follow-up consultation.
     """
-    pass
+    name = models.CharField(max_length = 255)
+    verbose_name = models.CharField(max_length = 255)
+    template = models.CharField(max_length = 255)
 
-    class Meta:
-        verbose_name = "Reason"
+    def __unicode__(self):
+        return self.verbose_name
 
 class Patient(User):
     """
@@ -52,7 +54,7 @@ class Hospital(models.Model):
     """
     Represent a Hospital.
     """
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length = 255)
     current_hospital = models.BooleanField()
     
     def __unicode__(self):
@@ -150,15 +152,25 @@ class HospitalAppointment(Sendable):
     """
     
     date = models.DateTimeField()
-    doctor = models.ForeignKey(Doctor)
+    appointment_type = models.ForeignKey(AppointmentType)
     hospital = models.ForeignKey(Hospital)
-    template = Template(_("Hello, please remember your appointment" + \
-                         " at the $hospital at $date with $doctor"))
                          
     def __unicode__(self):
-        return "HospitalAppointment<%s Doctor: %s>" \
-                    % ((str(self.date) or ""), (str(self.doctor) or ""))
-                         
+        return "HospitalAppointment<%s>" \
+                    % ((str(self.date) or ""))
+
+    @property
+    def template(self):
+        return Template(self.appointment_type.template)
+        
+    def reminder_text(self, contents = False):
+        if not contents:
+            contents = {'date': str(self.date),
+                        'hospital': self.hospital.name}
+
+        return texthelper.generate_text(contents,
+                                        self.template, False)
+
     def get_data_for_bluetooth(self):
         """
         Prepare OutputData for voice.
@@ -180,10 +192,7 @@ class HospitalAppointment(Sendable):
         except Hospital.DoesNotExist:
             self.hospital = Hospital.get_current_hospital()
         
-        content = _("Please remember your Appointment tomorrow at the" + \
-                    "%(hospital)s with %(doctor)s") \
-                    % {'hospital': self.hospital.name, \
-                       'doctor': self.doctor.name}
+        content = self.reminder_text()
 
         uid = vcal.get_uid()
         data.data = vcal.create_vcal_string(self.date, 
@@ -205,14 +214,7 @@ class HospitalAppointment(Sendable):
         """
 
         data = SMSOutputData()
-        contents = {'date':str(self.date),
-                    'doctor': self.doctor.name,
-                    'hospital': self.hospital.name}
-                    
-        data.data = texthelper.generate_text(contents,
-                    HospitalAppointment.template, False)
-
-                        
+        data.data = self.reminder_text()
         data.phone_number = self.recipient.phone_number
         
         return data
@@ -224,20 +226,13 @@ class HospitalAppointment(Sendable):
         Return VoiceOutputData for sending.
         """
     
-        spokenDate = str(self.date)
-
-        if str(LANGUAGE_CODE) == "en-us":
-            spokenDate = texthelper.date_to_text(self.date.weekday()+1, self.date.day, self.date.month, self.date.hour, self.date.minute)
-        elif str(LANGUAGE_CODE) == "zu-za":
-            spokenDate = texthelper.date_to_zulutext(self.date.weekday()+1, self.date.day, self.date.month, self.date.hour, self.date.minute)
+        spokenDate = texthelper.date_to_text(self.date.weekday() + 1, \
+            self.date.day, self.date.month, self.date.hour, self.date.minute)
 
         data = VoiceOutputData()
         contents = {'date': str(spokenDate),
-                    'doctor': self.doctor.name,
                     'hospital': self.hospital.name}
-
-        data.data = texthelper.generate_text(contents,
-                        HospitalAppointment.template, False)
+        data.data = self.reminder_text(contents)
         data.phone_number = self.recipient.phone_number
 
         return data

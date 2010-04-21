@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 
 from sendinel.backend.models import ScheduledEvent, HospitalAppointment
-from sendinel.backend.models import Hospital, Patient, Doctor
+from sendinel.backend.models import Hospital, Patient, AppointmentType
 from sendinel import settings
 
 class AppointmentViewTest(TestCase):
@@ -20,7 +20,6 @@ class AppointmentViewTest(TestCase):
         self.failUnlessEqual(response.status_code, 200)
         self.assertContains(response, 'name="date_0"')
         self.assertContains(response, 'name="date_1"')
-        self.assertContains(response, 'name="doctor"')
         self.assertNotContains(response, 'name="recipient_type"')
         self.assertNotContains(response, 'name="recipient_id"')
         self.assertNotContains(response, 'name="hospital"')
@@ -29,116 +28,82 @@ class AppointmentViewTest(TestCase):
         response = self.client.post("/web/appointment/create/", 
                     {'date_0': 'abc',
                     'date_1': 'def',
-                    'doctor': '',
+                    'appointment_type': '',
                     'way_of_communication': 'xyz'  })
         self.failUnlessEqual(response.status_code, 200)
-        self.assertFormError(response, 'form', 'doctor',
-                            'This field is required.')
         self.assertFormError(response, 'form', 'date',
                             'Enter a valid date/time.')
         self.assertFormError(response, 'form', 'way_of_communication',
                             'Select a valid choice. xyz' \
                             + ' is not one of the available choices.')
 
-    def test_create_appointment_submit_redirect_sms(self):
+    def create_appointment(self, way_of_communication):
         data = {'date_0': '2012-08-12',
                 'date_1': '19:02:42',
-                'doctor': "1",
-                'recipient_name': 'Shiko Taga',
-                'way_of_communication': 'sms'}
-        number_of_appointments = HospitalAppointment.objects.count()
-        response = self.client.post("/web/appointment/create/", data)
-        self.assertRedirects(response, 
-                             reverse('web_authenticate_phonenumber') + \
-                             "?next=" + \
-                             reverse('web_appointment_save'))
-        response = self.client.post("/web/appointment/create/", data, follow=True)
-        self.assertTrue(self.client.session.has_key('patient'))
-        self.assertTrue(self.client.session.has_key('appointment'))        
- 
-    def test_create_appointment_submit_redirect_voice(self):
-        number_of_appointments = HospitalAppointment.objects.count()
-        response = self.client.post("/web/appointment/create/", 
-                    {'date_0': '2012-08-12',
-                    'date_1': '19:02:42',
-                    'doctor': "1",
-                    'recipient_name': 'Shiko Taga',
-                    'way_of_communication': 'voice'  })
-        self.assertRedirects(response, 
-                             reverse('web_authenticate_phonenumber') + \
-                             "?next=" + \
-                             reverse('web_appointment_save'))
-        self.assertTrue(self.client.session.has_key('patient'))
-        self.assertTrue(self.client.session.has_key('appointment'))                             
+                'appointment_type': "1",
+                'way_of_communication': way_of_communication}
 
-    def test_create_appointment_submit_redirect_bluetooth(self):
-        number_of_appointments = HospitalAppointment.objects.count()
-        response = self.client.post("/web/appointment/create/", 
-                    {'date_0': '2012-08-12',
-                    'date_1': '19:02:42',
-                    'doctor': "1",
-                    'recipient_name': 'Shiko Taga',
-                    'way_of_communication': 'bluetooth'  })
-        self.assertRedirects(response, 
-                             reverse('web_list_devices') + \
-                             "?next=" + \
-                             reverse('web_appointment_send'))
-        self.assertTrue(self.client.session.has_key('patient'))
-        self.assertTrue(self.client.session.has_key('appointment'))                                                          
-                             
-    def test_save_appointment_voice(self):
-        phone_number = '0123455'
-        self.client.post("/web/appointment/create/", 
-                    {'date_0': '2012-08-12',
-                    'date_1': '19:02:42',
-                    'doctor': "1",
-                    'way_of_communication': 'voice'  })
+        return self.client.post("/web/appointment/create/", data)
+        
+    def create_and_save_appointment(self, way_of_communication, phone_number):
+        self.create_appointment(way_of_communication)
+        
+        # fake authentication
         self.client.post(reverse('web_authenticate_phonenumber'),
                     {'number': phone_number})
-        response = self.client.get(reverse("web_appointment_save"))
-        self.failUnlessEqual(response.status_code, 200)  
+
+        return self.client.get(reverse("web_appointment_save"))
+
+    def create_appointment_woc(self, way_of_communication):
+        response = self.create_appointment(way_of_communication)
+        self.assertRedirects(response, 
+                             reverse('web_authenticate_phonenumber') + \
+                             "?next=" + \
+                             reverse('web_appointment_save'))
+
+        self.assertTrue(self.client.session.has_key('patient'))
+        self.assertTrue(self.client.session.has_key('appointment'))
+        
+
+    def save_appointment_woc(self, way_of_communication):
+        number_of_appointments = HospitalAppointment.objects.count()
+        number_of_events = ScheduledEvent.objects.count()
+        
+        phone_number = "08765934"
+        response = self.create_and_save_appointment(way_of_communication, \
+                                                    phone_number)
+        
+        self.failUnlessEqual(response.status_code, 200)
+        
         appoint = HospitalAppointment.objects.order_by("id").reverse()[:1][0]
         self.assertEquals(unicode(appoint.recipient.phone_number), phone_number)
+        # test that exactly one HospitalAppointment was created
+        self.assertEquals(HospitalAppointment.objects.count(),
+                            number_of_appointments + 1)
+        
         event = ScheduledEvent.objects.order_by("id").reverse()[:1][0]
         self.assertEquals(event.sendable, appoint)
-                                                     
-            
-                #                              
-                # self.assertEquals(HospitalAppointment.objects.count(),
-                #                     number_of_appointments + 1)
-                # appointment = HospitalAppointment.objects \
-                #     .order_by("id").reverse()[:1][0]
-                # self.assertEquals(appointment.doctor.id, 1)
-                # self.assertEquals(appointment.recipient.name, 'Shiko Taga')
-                # self.assertEquals(appointment.date, datetime(2012, 8, 12, 19, 02, 42))
-                # self.assertEquals(appointment.way_of_communication, "sms")
-                # self.assertEquals(appointment.hospital, self.hospital)
-                #     
+        # test that exactly one ScheduledEvent was created
+        self.assertEquals(ScheduledEvent.objects.count(),
+                            number_of_events + 1)
 
-                            
-    # def test_create_appointment_scheduled_event_sms(self):
-    #     number_of_events = ScheduledEvent.objects.count()
-    #     self.client.post("/appointment/create/", 
-    #                 {'date_0': '2012-08-12',
-    #                 'date_1': '19:02:42',
-    #                 'doctor': "1",
-    #                 'recipient_name': 'Shiko Taga',
-    #                 'way_of_communication': 'sms'  })
-    #     self.assertEquals(ScheduledEvent.objects.count(),
-    #                         number_of_events + 1)
-    # 
-    #     
-    # def test_create_appointment_scheduled_event_bluetooth(self):
-    #     number_of_events = ScheduledEvent.objects.count()
-    #     self.client.post("/appointment/create/", 
-    #                 {'date_0': '2012-08-12',
-    #                 'date_1': '19:02:42',
-    #                 'doctor': "1",
-    #                 'recipient_name': 'Shiko Taga',
-    #                 'way_of_communication': 'bluetooth'  })
-    #     self.assertEquals(ScheduledEvent.objects.count(),
-    #                         number_of_events)
-
-
-
+    def test_create_appointment_sms(self):
+        self.create_appointment_woc('sms')
         
+    def test_create_appointment_voice(self):
+        self.create_appointment_woc('voice')
+        
+    def test_create_appointment_bluetooth(self):
+         response = self.create_appointment('bluetooth')
+         self.assertRedirects(response, 
+                              reverse('web_list_devices') + \
+                              "?next=" + \
+                              reverse('web_appointment_send'))
+         self.assertTrue(self.client.session.has_key('patient'))
+         self.assertTrue(self.client.session.has_key('appointment'))
+         
+    def test_save_appointment_sms(self):
+         self.save_appointment_woc('sms')
+
+    def test_save_appointment_voice(self):
+         self.save_appointment_woc('voice')

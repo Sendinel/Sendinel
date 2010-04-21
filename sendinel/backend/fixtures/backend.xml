@@ -1,7 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <django-objects version="1.0">
-    <object pk="1" model="backend.doctor">
-        <field type="CharField" name="name">Dr. Meinel</field>
+    <object pk="1" model="backend.appointmenttype">
+        <field type="CharField" name="name">vaccination</field>
+        <field type="CharField" name="verbose_name">Vaccination</field>
+        <field type="CharField" name="template">Hello, please remember the vaccination at the $hospital at $date</field>
+    </object>
+    <object pk="2" model="backend.appointmenttype">
+        <field type="CharField" name="name">consultation</field>
+        <field type="CharField" name="verbose_name">Follow-Up Consultation</field>
+        <field type="CharField" name="template">Hello, please remember your consultation at the $hospital at $date</field>
     </object>
     <object pk="1" model="backend.patient">
         <field type="CharField" name="name">Daniel</field>
@@ -42,7 +49,7 @@
     <object pk="1" model="backend.hospitalappointment">
         <field type="CharField" name="way_of_communication">sms</field>
         <field type="DateTimeField" name="date">2010-02-08 18:43:07</field>       
-        <field to="backend.doctor" name="doctor" rel="ManyToOneRel">1</field>
+        <field to="backend.appointmenttype" name="appointment_type" rel="ManyToOneRel">1</field>
         <field to="backend.hospital" name="hospital" rel="ManyToOneRel">1</field>
         <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
     </object>

@@ -7,7 +7,8 @@ from django.db import IntegrityError
 from sendinel import settings
 from sendinel.backend.models import Hospital, HospitalAppointment, \
                                     InfoMessage, InfoService,  Patient, \
-                                    Doctor, ScheduledEvent, Subscription
+                                    AppointmentType, ScheduledEvent, \
+                                    Subscription
 from sendinel.backend.output import VoiceOutputData, SMSOutputData, \
                                     BluetoothOutputData
 
@@ -71,7 +72,7 @@ class HospitalAppointmentTest(TestCase):
         #create new appointment without saving
         appointment = HospitalAppointment()        
         appointment.date = datetime(2010, 4, 4)
-        appointment.doctor = Doctor.objects.get(pk = 1)
+        appointment.appointment_type = AppointmentType.objects.get(pk = 1)
         appointment.bluetooth_mac_address = "00AA11BB22"
                 
         output_data = appointment.get_data_for_bluetooth()

@@ -6,7 +6,7 @@ from django.test.client import Client
 
 from sendinel.web.views import get_bluetooth_devices
 from sendinel.backend import bluetooth
-from sendinel.backend.models import Doctor
+from sendinel.backend.models import AppointmentType
 
 class BluetoothViewTest(TestCase):
     client = Client()
@@ -50,12 +50,12 @@ class BluetoothViewTest(TestCase):
         bluetooth.get_discovered_devices = get_discovered_devices_old
         
     def test_send_appointment(self):   
-        doctor = Doctor(name = "Giese")
-        doctor.save()
+        appointment_type = AppointmentType(name = "vaccination")
+        appointment_type.save()
     
         data = {'date_0': '2012-02-22',
                 'date_1': '19:02:42',
-                'doctor': doctor.id,
+                'appointment_type': appointment_type.id,
                 'recipient_name': 'Shiko Taga',
                 'way_of_communication': 'bluetooth'}
                 
