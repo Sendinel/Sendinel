@@ -22,12 +22,12 @@ class WebInfoServiceTest(TestCase):
         # TODO Adapt this to new menu structure
         # self.assertContains(response, "Inform me")
         
-        # infoservices = InfoService.objects.all()
-        # for infoservice in infoservices:
-        #     self.assertContains(response, infoservice.name)
-        #     self.assertContains(response, 
-        #                         reverse('web_infoservice_register',
-        #                                  kwargs={'id': infoservice.id}))
+        infoservices = InfoService.objects.all()
+        for infoservice in infoservices:
+            self.assertContains(response, infoservice.name)
+            self.assertContains(response, 
+                                reverse('web_infoservice_register',
+                                         kwargs={'id': infoservice.id}))
 
         
     def test_register_infoservice(self):

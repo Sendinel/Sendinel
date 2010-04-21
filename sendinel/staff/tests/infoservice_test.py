@@ -27,7 +27,7 @@ class StaffInfoServiceTest(TestCase):
             "date" : "2010-01-01 00:00:00"
         })
                 
-        self.assertRedirects(response, reverse("staff_list_infoservices"))
+        self.assertRedirects(response, reverse("web_index"))
         
         offset = infoservice.members.all().count()
         
@@ -61,7 +61,7 @@ class StaffInfoServiceTest(TestCase):
                                     way_of_communication = "voice")
         subscription.save()
         response = self.client.get(reverse("staff_list_infoservices"))
-        self.assertContains(response, "Manage members")
+        self.assertContains(response, "Group members")
         response = self.client.get(reverse("staff_infoservice_members", 
                                            kwargs={"id": info.id}))
         self.assertContains(response, patient.phone_number)

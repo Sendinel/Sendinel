@@ -94,23 +94,27 @@ h3{
     float:right;
 }
 
-
 .menulist div
 {
     min-height: 2em;
     padding-top: 0.8em;
     padding-bottom: 10px;
-    padding-left: 10px;
-    margin-left: 0;
+    margin: 10px 0px;
     font-size: 1.2em;
     font: bold Verdana, sans-serif;
-    background:#F3F3F3;
+    background: #F3F3F3;
     background-image: url(../img/arrow_right_orange.png);
     background-repeat: no-repeat;
 }
 .menulist div a
 {
-    padding-left: 70px;
+    padding-left: 80px;
+}
+
+.menulist div a.menu_secondlink
+{
+    padding-left: 10px;
+    margin-left: 10px;
 }
 
 

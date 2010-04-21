@@ -1,29 +1,28 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-    <h3>{% trans "Available Infoservices" %}</h3>
+    <h3>{% trans "Information Groups" %}</h3>
     
-    <table cellspacing="0" cellpadding="3">
+    <table>
         <tr>   
-            <td>{% trans "Service" %}</td>
-            <td>{% trans "Members" %}</td>
+            <th>{% trans "Group" %}</th>
+            <th>{% trans "Members" %}</th>
             <td />
             <td />
         </tr>
     {% for infoservice in infoservices %}
-        
         <tr>
             <td>{{ infoservice.name }}</td>
             <td>{{ infoservice.count_members }}</td>
-            <td><a href="{% url staff_create_infomessage id=infoservice.id %}">{% trans "Send message" %}</a> | </td>
-            <td><a href="{% url staff_infoservice_members id=infoservice.id %}">{% trans "Manage members" %}</a></td>
+            <td><a href="{% url not_implemented %}">{% trans "Remove group" %}</a> | </td>
+            <td><a href="{% url staff_infoservice_members id=infoservice.id %}">{% trans "Group members" %}</a></td>
         </tr>
         
     {% endfor %}
     
     </table>
-    <a href="{% url staff_infoservice_create %}">+ {% trans "Create infoservice" %}</a>
+    <a href="{% url staff_infoservice_create %}">+ {% trans "Create information group" %}</a>
     
-    <p><a href="{% url sendinel.staff.views.index %}">{% trans "Back to Staff Menu" %}</a></p>
+    <p><a href="{% url web_index %}">{% trans "Back to Main Menu" %}</a></p>
     
 {% endblock %}

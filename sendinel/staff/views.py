@@ -29,6 +29,7 @@ def logout_staff(request):
 
 @log_request
 def create_infomessage(request, id):
+    infoservice = InfoService.objects.filter(pk = id)[0]
     
     if(request.method == "GET"):
         form = InfoMessageForm()
@@ -38,7 +39,6 @@ def create_infomessage(request, id):
                                     context_instance = RequestContext(request))
     elif(request.method == "POST"):
         
-        infoservice = InfoService.objects.filter(pk = id)[0]
         
         for patient in infoservice.members.all():
         
@@ -59,7 +59,7 @@ def create_infomessage(request, id):
             
             logger.info("Created %s", str(info_message))
         
-        return HttpResponseRedirect(reverse("staff_list_infoservices"))
+        return HttpResponseRedirect(reverse("web_index"))
 
 @log_request
 def list_infoservices(request):
