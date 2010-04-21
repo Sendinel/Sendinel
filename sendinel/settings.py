@@ -139,8 +139,7 @@ FESTIVAL_CACHE = "/lib/init/rw"
 #FESTIVAL_CACHE = "/tmp"
 
 # Phonenumber to authenticate against the system
-# TODO move to local_settings on CI server
-AUTH_NUMBER = "0331-27975256"
+AUTH_NUMBER = "CHANGE ME"
 # time a user has to call the system to authenticate
 AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = 3)
 
