@@ -7,7 +7,7 @@ from django.db import IntegrityError
 from sendinel import settings
 from sendinel.backend.models import AppointmentType, Hospital, \
                                     HospitalAppointment, \
-                                    InfoMessage, InfoService, LabResult, \
+                                    InfoMessage, InfoService,  \
                                     Patient, ScheduledEvent, Subscription 
 from sendinel.backend.output import VoiceOutputData, SMSOutputData, \
                                     BluetoothOutputData
@@ -121,25 +121,6 @@ class InfoMessageTest(TestCase):
         self.assertEquals(output_data.phone_number, "012345678")
         self.assertEquals(type(output_data.data), unicode)
         
-class LabResultTest(TestCase):
-    fixtures = ['backend']
-    
-    def setUp(self):
-        self.lab_result = LabResult.objects.get(pk = 1)
-    
-    def test_get_data_for_sms(self):
-        self.lab_result.recipient.phone_number = "012345678"        
-        labresult_output = self.lab_result.get_data_for_sms()
-
-        self.assertEquals(type(labresult_output), SMSOutputData)
-        self.assertEquals(labresult_output.phone_number, "012345678")
-        
-    def test_get_data_for_voice(self):
-        self.lab_result.recipient.phone_number = "012345678"
-        labresult_output = self.lab_result.get_data_for_voice()
-        
-        self.assertEquals(type(labresult_output), VoiceOutputData)
-        self.assertEquals(labresult_output.phone_number, "012345678")
         
 class InfoServiceModelTest(TestCase):
     def setUp(self):

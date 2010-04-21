@@ -2,12 +2,16 @@
 {% load i18n %} 
 {% block script %}
     <script type="text/javascript">
+    
     $(document).ready(function() {
-        $("#id_date_1").parent().contents()[3].nodeValue = "";
-        $(".selectable.dates:eq(1)").hide().children()
-            .first().val("12")
-            .next().val("00");
-    });    
+        $("#datepicker").datepicker({
+            dateFormat: "yy-mm-dd",
+            onSelect: function(dateText) {
+                $("#date").val(dateText);
+            }
+        });
+    });
+
     </script>
 {% endblock %}
 
@@ -17,8 +21,37 @@
     <p>
         <form action="./" method="post" class="selectable_container">
             <table>
-                {{ form.as_table }}
+                <tr>
+                    <th>
+                        <label for="id_phone_number">Phone number:</label>
+                    </th>
+                    <td>
+                        <input id="id_phone_input" type="text" name="number" class="selectable" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="id_date_0">Date:</label>
+                    </th>
+                    <td>
+                        <div id="datepicker"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="id_way_of_communication">Way of communication:</label>
+                    </th>
+                    <td>
+                        <select name="way_of_communication" id="id_way_of_communication">
+                            <option value="" selected="selected">---------</option>
+                            <option value="sms">SMS</option>
+                            <option value="bluetooth">Bluetooth</option>
+                            <option value="voice">Voice Call</option>
+                        </select>
+                    </td>
+                </tr>
             </table>
+
             {% include "web/control_buttons_widget.html" %}
         </form>
         
