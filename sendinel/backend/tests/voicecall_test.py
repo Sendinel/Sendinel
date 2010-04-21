@@ -69,4 +69,8 @@ Set: PassedInfo=helloworld
     def test_conduct_call(self):
         #TODO: find some way to test the file-copy procedure
         pass
-        
+
+    def test_replace_special_characters(self):
+        self.assertEquals(self.vc.replace_special_characters("T\xffst"), "T_st")
+        self.assertEquals(self.vc.replace_special_characters("Test"), "Test")
+        self.assertNotEquals(self.vc.replace_special_characters("T\xffst"), "T\xffst")

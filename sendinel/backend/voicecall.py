@@ -17,6 +17,7 @@ except ImportError:
     print "Warning: Linux is required for voicecall functionality"
     
 import time
+import re
 
 class Voicecall:
     def __init__(self):
@@ -138,7 +139,19 @@ Set: Text=%s
         except:
             return False
            
+    def replace_special_characters(self, text):
+        """
+           Replace all special characters in the passed string by '_'
+
+           @param  text:      text to be freed from special characters
+           @type   text:      String
+
+           @return text without special characters
+        """
+        return re.sub('[^\x00-\x8f]', "_", text) 
+
     def conduct_sms(self, number, text, context):
+        text = self.replace_special_characters(text)
         content = self.create_sms_spool_content(text, number, self.asterisk_extension, context)
         self.create_spool_file("tmp", content)
         return self.move_spool_file("tmp")
