@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-16 17:14+0100\n"
+"POT-Creation-Date: 2010-04-21 15:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,49 +18,35 @@ msgstr ""
 "#TRANSLATED#Report-Msgid-Bugs-To: \n"
 "#TRANSLATED#Project-Id-Version: PACKAGE VERSION\n"
 
-#: settings.py:41
-msgid "German"
-msgstr "#TRANSLATED#"
-
-#: settings.py:42
-msgid "English"
-msgstr "#TRANSLATED#"
-
-#: settings.py:43
-msgid "Test Language"
-msgstr "#TRANSLATED#"
-
-#: backend/models.py:92 templates/web/infoservice_register.html:21
+#: backend/models.py:99 templates/web/infoservice_register.html:38
 msgid "SMS"
 msgstr "#TRANSLATED#"
 
-#: backend/models.py:93
+#: backend/models.py:100
 msgid "Bluetooth"
 msgstr "#TRANSLATED#"
 
-#: backend/models.py:94 templates/web/infoservice_register.html:22
+#: backend/models.py:101 templates/web/infoservice_register.html:39
 msgid "Voice Call"
-msgstr "#TRANSLATED#"
-
-#: backend/models.py:151
-msgid "Hello, please remember your appointment"
-msgstr "#TRANSLATED#"
-
-#: backend/models.py:178
-msgid "Please remember your Appointment tomorrow at the"
 msgstr "#TRANSLATED#"
 
 #: templates/404.html:5
 msgid "Sorry, this page does not exist"
 msgstr "#TRANSLATED#"
 
-#: templates/knowledgebase/base_show.html:10
-msgid "Back to Knowledgebase"
-msgstr "#TRANSLATED#"
+#: templates/base.html:28
+msgid "This page needs JavaScript to work."
+msgstr ""
 
-#: templates/knowledgebase/index.html:4
-msgid "Here you can find information"
-msgstr "#TRANSLATED#"
+#: templates/base.html:41
+msgid "Sendinel is free for you."
+msgstr ""
+
+#: templates/base.html:48
+msgid ""
+"If you want to return to the main menu, press the arrow keys  ←↑→↓ in front "
+"of you to go to the 'Back' button and press the 'Enter' key."
+msgstr ""
 
 #: templates/registration/login.html:6
 msgid "Your username and password didn't match. Please try again."
@@ -76,11 +62,11 @@ msgstr "#TRANSLATED#"
 msgid "Back to Infoservices"
 msgstr "#TRANSLATED#"
 
-#: templates/staff/index.html:4
+#: templates/staff/index.html:5
 msgid "Your are logged in as staff. Please choose what you want to do:"
 msgstr "#TRANSLATED#"
 
-#: templates/staff/index.html:7
+#: templates/staff/index.html:8
 msgid "Manage all infoservices"
 msgstr "#TRANSLATED#"
 
@@ -89,7 +75,8 @@ msgid "Create a new informationservice"
 msgstr "#TRANSLATED#"
 
 #: templates/staff/infoservice_create.html:5
-msgid "Please the name of the information service you want to create"
+#, fuzzy
+msgid "Please enter the name of the information service you want to create"
 msgstr "#TRANSLATED#"
 
 #: templates/staff/infoservice_create.html:9
@@ -101,12 +88,12 @@ msgid "Members of "
 msgstr "#TRANSLATED#"
 
 #: templates/staff/infoservice_members.html:8
-#: templates/web/infoservice_register.html:14
+#: templates/web/infoservice_register.html:31
 msgid "Phone Number"
 msgstr "#TRANSLATED#"
 
 #: templates/staff/infoservice_members.html:9
-#: templates/web/infoservice_register.html:18
+#: templates/web/infoservice_register.html:35
 msgid "Way of Communication"
 msgstr "#TRANSLATED#"
 
@@ -142,37 +129,40 @@ msgstr "#TRANSLATED#"
 msgid "Back to Staff Menu"
 msgstr "#TRANSLATED#"
 
-#: templates/web/appointment_create.html:8
+#: templates/web/appointment_create.html:15
 msgid "Appointment"
 msgstr "#TRANSLATED#"
 
-#: templates/web/appointment_create.html:9
+#: templates/web/appointment_create.html:16
 msgid "Please enter the appointment details."
 msgstr "#TRANSLATED#"
 
-#: templates/web/appointment_saved.html:4
-msgid "Thank you for creating the appointment!"
+#: templates/web/appointment_saved.html:16
+msgid "The appointment has been created."
+msgstr ""
+
+#: templates/web/appointment_saved.html:17
+msgid ""
+"Please tell the patient that he/she will be reminded one day before the "
+"appointment."
+msgstr ""
+
+#: templates/web/authenticate_phonenumber.html:23
+#, fuzzy
+msgid "Patient phone number"
 msgstr "#TRANSLATED#"
 
-#: templates/web/appointment_saved.html:5
-msgid "You will be informed on time."
+#: templates/web/authenticate_phonenumber.html:24
+#, fuzzy
+msgid "Please enter the patient's phone number:"
 msgstr "#TRANSLATED#"
 
-#: templates/web/authenticate_phonenumber.html:4
+#: templates/web/authenticate_phonenumber.html:32
+msgid "Phone number"
+msgstr "#TRANSLATED#"
+
 #: templates/web/authenticate_phonenumber_call.html:11
 msgid "Authenticate Phonenumber"
-msgstr "#TRANSLATED#"
-
-#: templates/web/authenticate_phonenumber.html:5
-msgid "The authentication is <strong class=\"big\">FREE</strong>."
-msgstr "#TRANSLATED#"
-
-#: templates/web/authenticate_phonenumber.html:6
-msgid "Please enter your phone number:"
-msgstr "#TRANSLATED#"
-
-#: templates/web/authenticate_phonenumber.html:14
-msgid "Phone number"
 msgstr "#TRANSLATED#"
 
 #: templates/web/authenticate_phonenumber_call.html:13
@@ -180,7 +170,8 @@ msgid "Please ring "
 msgstr "#TRANSLATED#"
 
 #: templates/web/authenticate_phonenumber_call.html:14
-msgid "This will be <strong class=\"big\">free.</strong>"
+#, fuzzy
+msgid "This will be <strong>free</strong>."
 msgstr "#TRANSLATED#"
 
 #: templates/web/control_buttons_back_only_widget.html:4
@@ -197,38 +188,58 @@ msgstr "#TRANSLATED#"
 msgid "Choose what you want to do:"
 msgstr "#TRANSLATED#"
 
-#: templates/web/index.html:8
-msgid "Add an appointment"
-msgstr "#TRANSLATED#"
-
-#: templates/web/index.html:9
-msgid "Look at Information Material"
-msgstr "#TRANSLATED#"
-
 #: templates/web/index.html:10
-msgid "Register for Information Services"
+msgid "Remind of Vaccination"
+msgstr ""
+
+#: templates/web/index.html:17
+msgid "Remind of Follow-Up Consultation"
+msgstr ""
+
+#: templates/web/index.html:25
+msgid "Inform about Arrival of Medication"
+msgstr ""
+
+#: templates/web/index.html:33
+#, fuzzy
+msgid "Register patient to get regular information"
 msgstr "#TRANSLATED#"
 
-#: templates/web/index.html:19
-msgid "Staff"
-msgstr "#TRANSLATED#"
+#: templates/web/index.html:41
+msgid "Send information to registered patients"
+msgstr ""
 
-#: templates/web/infoservice_register.html:4
+#: templates/web/infoservice_register.html:21
 msgid "Register for the informationservice"
 msgstr "#TRANSLATED#"
 
-#: templates/web/infoservice_register.html:5
+#: templates/web/infoservice_register.html:22
 msgid ""
 "Please enter your phone number and the way you want to receive the messages"
 msgstr "#TRANSLATED#"
 
-#: templates/web/list_devices.html:11
-msgid "Available Bluetooth Devices"
-msgstr "#TRANSLATED#"
+#: templates/web/list_devices.html:14
+msgid ""
+"Please turn on your Bluetooth now. Please assure that it is in the Bluetooth "
+"visibility mode."
+msgstr ""
 
-#: templates/web/list_devices.html:17
+#: templates/web/list_devices.html:22
 msgid "Looking for further devices"
 msgstr "#TRANSLATED#"
+
+#: templates/web/list_infoservices.html:6
+msgid "Register a patient to receive regular information."
+msgstr ""
+
+#: templates/web/not_implemented.html:6
+#, fuzzy
+msgid "Sorry, but this does not work yet"
+msgstr "#TRANSLATED#"
+
+#: templates/web/not_implemented.html:7
+msgid "We are working on that and hope to get it running until June 2010."
+msgstr ""
 
 #: templates/web/send_bluetooth_appointment.html:11
 #: templates/web/send_bluetooth_appointment.html:20
@@ -238,3 +249,42 @@ msgstr "#TRANSLATED#"
 #: templates/web/send_bluetooth_appointment.html:12
 msgid "Please accept the file on your mobile"
 msgstr "#TRANSLATED#"
+
+#~ msgid "German"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "English"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Test Language"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Hello, please remember your appointment"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Please remember your Appointment tomorrow at the"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Thank you for creating the appointment!"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "You will be informed on time."
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "The authentication is <strong class=\"big\">FREE</strong>."
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Add an appointment"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Look at Information Material"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Register for Information Services"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Staff"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Available Bluetooth Devices"
+#~ msgstr "#TRANSLATED#"

@@ -110,7 +110,6 @@ INSTALLED_APPS = (
     'sendinel.web',
     'sendinel.backend',
     'sendinel.staff',
-    'sendinel.knowledgebase'
 )
 
 ####################################
@@ -123,8 +122,6 @@ COUNTRY_CODE_PHONE = "0049" #"0027" for South Africa
 START_MOBILE_PHONE = "0" # "0" for South Africa (07/08..), "01" for Germany
 # see http://en.wikipedia.org/wiki/Telephone_numbers_in_South_Africa
 # TODO multiple mobile prefixes
-
-KNOWLEDGEBASE_DIRECTORY = PROJECT_PATH + "/media/knowledgebase"
 
 ASTERISK_USER = "root"
 ASTERISK_GROUP = "root"
