@@ -24,7 +24,7 @@ from sendinel.logger import logger, log_request
 
 @log_request
 def index(request):
-    informationservices = InfoService.objects.all()
+    information_services = InfoService.objects.all()
     return render_to_response('web/index.html',
                               locals(),  
                               context_instance = RequestContext(request))
