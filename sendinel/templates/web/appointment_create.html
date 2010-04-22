@@ -26,7 +26,7 @@
                         <label for="id_phone_number">Phone number:</label>
                     </th>
                     <td>
-                        <input id="id_phone_input" type="text" name="number" class="selectable" />
+                        <input id="id_phone_input" type="text" name="recipient" class="selectable" />
                     </td>
                 </tr>
                 <tr>
@@ -35,14 +35,14 @@
                     </th>
                     <td>
                         <div id="datepicker"></div>
+                        <input id="date" type="hidden" name="date" />
                     </td>
                 </tr>
                 <tr>
                     <th>
                         <label for="id_way_of_communication">Way of communication:</label>
                     </th>
-                    <td>
-                        <input id="date" type="text" name="date" />
+                    <td> 
                         <select name="way_of_communication" id="id_way_of_communication">
                             <option value="" selected="selected">---------</option>
                             <option value="sms">SMS</option>
