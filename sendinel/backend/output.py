@@ -10,7 +10,7 @@ class OutputData(object):
     
     data = None
     def __str__(self):
-        return str(self.data)
+        return unicode(self.data)
         
     def send(self):
         raise NotImplementedError("send() needs to be overridden.")

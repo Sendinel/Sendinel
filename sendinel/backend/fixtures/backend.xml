@@ -23,7 +23,8 @@
         <field type="CharField" name="phone_number">03315509256</field>
     </object>
     <object pk="1" model="backend.hospital">
-        <field type="CharField" name="name">Hassos Clinic</field>
+        <!-- it's important to have UTF8 umlauts in here-->
+        <field type="CharField" name="name">Hassos Töst-Clinic</field>
         <field type="BooleanField" name="current_hospital">True</field>
     </object>
     <object pk="2" model="backend.hospital">

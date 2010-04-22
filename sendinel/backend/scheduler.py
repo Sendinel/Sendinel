@@ -32,10 +32,10 @@ def run(run_only_one_time = False):
         for event in dueEvents:
             try:
                 data = event.sendable.get_data_for_sending()
-                logger.info("Trying to send: %s" % str(event.sendable))
+                logger.info("Trying to send: %s" % unicode(event.sendable))
             except Exception as e:
-                logger.error("Failed to get data for " + str(event) + \
-                             " exception " + str(e))
+                logger.error("Failed to get data for " + unicode(event) + \
+                             " exception " + unicode(e))
                 
                 event.state = "failed"
                 event.save()
@@ -43,13 +43,13 @@ def run(run_only_one_time = False):
             
             # TODO error handling
             try:
-                logger.info("  sending: %s" % str(data))
+                logger.info("  sending: %s" % unicode(data))
                 data.send()
                 if not run_only_one_time:
                     time.sleep(20)
             except Exception as e:
-                logger.error("Failed to send: " + str(data) + \
-                             " exception " + str(e))
+                logger.error("Failed to send: " + unicode(data) + \
+                             " exception " + unicode(e))
                 event.state = "failed"
                 event.save()
                     
