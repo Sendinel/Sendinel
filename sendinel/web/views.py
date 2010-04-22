@@ -19,7 +19,8 @@ from sendinel.settings import   AUTH_NUMBER, \
                                 BLUETOOTH_SERVER_ADDRESS, \
                                 AUTHENTICATION_CALL_TIMEOUT, \
                                 COUNTRY_CODE_PHONE, START_MOBILE_PHONE, \
-                                ADMIN_MEDIA_PREFIX
+                                ADMIN_MEDIA_PREFIX, \
+                                AUTH
 from sendinel.backend import bluetooth
 from sendinel.logger import logger, log_request
 
@@ -90,9 +91,13 @@ def create_appointment(request, appointment_type = None):
                                 "?next=" + reverse("web_appointment_send"))
             elif appointment.way_of_communication in ('sms', 'voice' ):
 
+                if AUTH:
+                    return HttpResponseRedirect( \
+                        reverse("web_authenticate_phonenumber") + "?next=" + \
+                        reverse("web_appointment_save"))
                 return HttpResponseRedirect( \
-                    reverse("web_authenticate_phonenumber") + "?next=" + \
-                    reverse("web_appointment_save"))
+                        reverse("web_appointment_save"))
+                    
             else:
                 logger.error("Unknown way of communication selected.")
                 raise Exception ("Unknown way of communication %s " \
@@ -256,9 +261,14 @@ def register_infoservice(request, id):
             next = reverse('web_infoservice_register_save', kwargs = {'id': id})
             url = reverse('web_check_call_received')
             
-            return render_to_response('web/authenticate_phonenumber_call.html', 
-                locals(),
-                context_instance = RequestContext(request))
+            if AUTH:
+                return render_to_response('web/authenticate_phonenumber_call.html', 
+                    locals(),
+                    context_instance = RequestContext(request))
+                
+            return HttpResponseRedirect(
+                reverse('web_infoservice_register_save', kwargs = {'id': id}))
+            
         except ValueError as e:
             error = e
        
