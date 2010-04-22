@@ -15,6 +15,7 @@
             });
         });
     </script>
+    <script src="{{ MEDIA_URL }}/js/way_of_communication.js" type="text/javascript" charset="utf-8"></script>
 {% endblock %}
  
 {% block content %}
@@ -34,7 +35,7 @@
                 <tr>
                   <td>{% trans "Way of Communication" %}</td>
                   <td>
-                    <select name="way_of_communication" >
+                    <select name="way_of_communication" id="id_way_of_communication">
                      <option value='sms'>{% trans "SMS" %}</option>
                      <option value='voice'>{% trans "Voice Call" %}</option>
                     </select> 

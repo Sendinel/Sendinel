@@ -1,7 +1,7 @@
 
 $(document).ready(function() {
     var target = $("<div></div>");
-    var img_path = $("#media_url").val() + "img/";
+    var img_path = media_url + "img/";
 
     $("#id_way_of_communication")
     .hide()
