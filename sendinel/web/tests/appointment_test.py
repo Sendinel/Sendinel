@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from sendinel.web.views import is_valid_appointment
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 
@@ -14,6 +14,23 @@ class AppointmentViewTest(TestCase):
     def setUp (self):
         self.hospital = Hospital.objects.get(current_hospital = True)
         #self.client = Client()
+        
+    def test_is_valid_appointment(self):
+        data = { "date" : "2010-08-12",
+                 "recipient" : "0123456789" }
+                 
+        self.assertTrue(is_valid_appointment(data))
+        
+        data = { "date" : "2010-08-45",
+                 "recipient" : "0123456789" }
+                 
+        self.assertFalse(is_valid_appointment(data))
+        
+        data = { "date" : "2010-08-12",
+                 "recipient" : "012sdfsdf3456789" }
+                 
+        self.assertFalse(is_valid_appointment(data))
+    
     
     def test_create_appointment_form(self):
         response = self.client.get("/web/appointment/create/")

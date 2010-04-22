@@ -2,29 +2,33 @@ import unittest
 
 from datetime import datetime
 
-from sendinel.settings import COUNTRY_CODE_PHONE, START_MOBILE_PHONE
 from sendinel.backend.authhelper import check_and_delete_authentication_call, \
                                         format_phonenumber, \
                                         delete_timed_out_authentication_calls
+from sendinel.backend import authhelper 
 from sendinel.backend.models import AuthenticationCall
 from sendinel.asterisk import log_call
+from sendinel import settings
 
 class AuthTest(unittest.TestCase):
 
     def test_number_formating(self):
+        
+        authhelper.COUNTRY_CODE_PHONE = "0027"
+        authhelper.START_MOBILE_PHONE = "07"
+    
         number = "+27723456789"
-        self.assertEquals(format_phonenumber(number, "0027", "07"), "0723456789")          
+        self.assertEquals(authhelper.format_phonenumber(number), "0723456789")          
         number = "+277 234/567 89"
-        self.assertEquals(format_phonenumber(number, "0027", "07"), "0723456789")    
+        self.assertEquals(authhelper.format_phonenumber(number), "0723456789")    
         number = "07 234-56789"
-        self.assertEquals(format_phonenumber(number, "0027", "07"), "0723456789")
+        self.assertEquals(authhelper.format_phonenumber(number), "0723456789")
         number = "0123a45678"
-        self.assertRaises(ValueError, format_phonenumber, number, "0027", "07")
+        self.assertRaises(ValueError, authhelper.format_phonenumber, number)
         number = "0049123456789"
-        self.assertRaises(ValueError, format_phonenumber, number, "0027", "07")
+        self.assertRaises(ValueError, authhelper.format_phonenumber, number)
         number = "030123456789"
-        self.assertRaises(ValueError, format_phonenumber, number, "0027", "07")          
-
+        self.assertRaises(ValueError, authhelper.format_phonenumber, number)          
         
     def test_asterisk_log_call(self):
         class MockFile:

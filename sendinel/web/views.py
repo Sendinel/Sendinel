@@ -1,5 +1,5 @@
 ﻿from datetime import datetime
-
+import time
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
@@ -12,7 +12,7 @@ from sendinel.backend.authhelper import check_and_delete_authentication_call, \
                                     delete_timed_out_authentication_calls, \
                                     format_phonenumber
 from sendinel.backend.models import Patient, Sendable, \
-                                    InfoService, Subscription
+                                    InfoService, Subscription, HospitalAppointment
 from sendinel.web.forms import HospitalAppointmentForm
 from sendinel.settings import   AUTH_NUMBER, \
                                 BLUETOOTH_SERVER_ADDRESS, \
@@ -41,16 +41,39 @@ def jsi18n(request):
     }
     return javascript_catalog(request, packages = js_info_web)
 
+def is_valid_appointment(post_vars):
+    if not post_vars.has_key("date") or \
+       not post_vars.has_key("recipient"):
+        return False
+        
+    try:
+        appointment_date = time.strptime(post_vars["date"], "%Y-%m-%d")
+        format_phonenumber(post_vars["recipient"])
+    except ValueError:
+        return False
+        
+    return True
+
 @log_request
 def create_appointment(request):
     admin_media_prefix = ADMIN_MEDIA_PREFIX
     nexturl = ""
     backurl = reverse('web_index')
     if request.method == "POST":
-        form = HospitalAppointmentForm(request.POST)
-        if form.is_valid():
-            appointment = form.save(commit=False)
+        attributes = { "recipient" : request.POST['recipient'].strip(),
+                        "date" : request.POST['date'].strip(),
+                        "way_of_communication" : request.POST['way_of_communication'].strip() }
+        if is_valid_appointment(attributes):
+            appointment = HospitalAppointment()
+            appointment.date = attributes['date'] 
             patient = Patient()
+            patient.phone_number = attributes['recipient'] 
+            appointment.recipient = patient
+            appointment.way_of_communication = way_of_communication
+            
+            
+            
+            
             request.session['appointment'] = appointment
             request.session['patient'] = patient            
             
@@ -75,7 +98,6 @@ def create_appointment(request):
                                 context_instance=RequestContext(request))
     else:
         #TODO: initiale Dateneintraege
-        form = HospitalAppointmentForm()
         return render_to_response('web/appointment_create.html',
                                 locals(),
                                 context_instance=RequestContext(request))
@@ -251,7 +273,7 @@ def save_registration_infoservice(request, id):
 @log_request
 def fill_authentication_session_variable(request):
     number = request.POST["number"].strip()
-    number = format_phonenumber(number, COUNTRY_CODE_PHONE, START_MOBILE_PHONE)
+    number = format_phonenumber(number)
     request.session['authenticate_phonenumber'] = \
                             { 'number': number,
                               'start_time': datetime.now() }
