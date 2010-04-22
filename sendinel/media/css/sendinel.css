@@ -139,3 +139,11 @@ strong.big {
 .success {
     color: green;
 }
+
+/* Way of communication selector */
+.clickable {
+    cursor: pointer;
+}
+.selected {
+    background-color: #FCC533;
+}
