@@ -3,6 +3,12 @@ $(document).ready(function() {
     var target = $("<div></div>");
     var img_path = media_url + "img/";
 
+    var selectItem = function(item, value) {
+        $("#id_way_of_communication").val(value)
+            .next().children("").removeClass('selected');
+        $(item).addClass("selected")
+    }
+
     $("#id_way_of_communication")
     .hide()
     .after(target)
@@ -15,11 +21,15 @@ $(document).ready(function() {
         var value = $(this).val()
         img.addClass("clickable")
             .click(function() {
-                $("#id_way_of_communication").val(value)
-                    .next().children("").removeClass('selected');
-                $(this).addClass("selected")
+                selectItem(this, value);
             });
+        this.img = img[0];
+            
         target.append(img);
+    }).first().each(function() {
+        // select first item
+        selectItem(this.img, $(this).val())
     })
+    
 });
 
