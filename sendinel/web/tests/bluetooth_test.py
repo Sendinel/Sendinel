@@ -52,14 +52,16 @@ class BluetoothViewTest(TestCase):
     def test_send_appointment(self):   
         appointment_type = AppointmentType(name = "vaccination")
         appointment_type.save()
-    
-        data = {'date_0': '2012-02-22',
-                'date_1': '19:02:42',
-                'appointment_type': appointment_type.id,
-                'recipient_name': 'Shiko Taga',
+        
+        appointment_type = AppointmentType.objects.get(pk=1)
+        
+        self.client.get(reverse('web_appointment_create', \
+                kwargs={"appointment_type": appointment_type.name })) 
+        data = {'date': '2012-02-22',
+                'recipient': '0175685444',
                 'way_of_communication': 'bluetooth'}
-                
-        self.client.post("/web/appointment/create/", data)
+        self.client.post(reverse('web_appointment_create', \
+                kwargs = {"appointment_type": appointment_type.name }), data)
         
         self.assertTrue(self.client.session.has_key("appointment"))
     
