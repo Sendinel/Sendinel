@@ -5,6 +5,7 @@ from django.test import TestCase, Client
 
 from sendinel.backend.models import ScheduledEvent, HospitalAppointment
 from sendinel.backend.models import Hospital, Patient, AppointmentType
+from sendinel.settings import AUTH
 from sendinel import settings
 
 class AppointmentViewTest(TestCase):
@@ -81,7 +82,9 @@ class AppointmentViewTest(TestCase):
 
     def create_appointment_woc(self, way_of_communication):
         response = self.create_appointment(way_of_communication)
-        self.assertRedirects(response, 
+       
+        if AUTH:
+            self.assertRedirects(response, 
                              reverse('web_authenticate_phonenumber') + \
                              "?next=" + \
                              reverse('web_appointment_save'))
