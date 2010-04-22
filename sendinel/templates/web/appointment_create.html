@@ -22,6 +22,7 @@
     });
 
     </script>
+    <script src="{{ MEDIA_URL }}/js/way_of_communication.js" type="text/javascript" charset="utf-8"></script>
 {% endblock %}
 
 {% block content %}
@@ -63,9 +64,6 @@
             </table>
 
             {% include "web/control_buttons_widget.html" %}
-        </form>
-        
-        <input id="media_url" type="hidden" value="{{MEDIA_URL}}" />
-        
+        </form>        
     </p>
 {% endblock %}
