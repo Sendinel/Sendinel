@@ -1,14 +1,14 @@
 import copy
 from datetime import datetime, timedelta
-
+from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from sendinel.backend.models import AuthenticationCall
+from sendinel.backend.models import AuthenticationCall, AppointmentType
 from sendinel.web import views
 
 
 class AuthenticateViewTests(TestCase):
-    
+    fixtures = ['backend']
     urls = "urls"
 
     def test_authenticate_phonenumber_messages(self):
@@ -24,13 +24,18 @@ class AuthenticateViewTests(TestCase):
         pass
         
     def test_authenticate_phonenumber(self):
-        response = self.client.get("/web/authenticate_phonenumber/")
         
-        self.failUnlessEqual(response.status_code, 200)
-        self.assertContains(response, 'name="number"')
+        appointment_type = AppointmentType.objects.get(pk=1)
         
-        response = self.client.post("/web/authenticate_phonenumber/", 
-                                    {'number':'01234 / 56789012'})
+        self.client.get(reverse('web_appointment_create', \
+                kwargs={"appointment_type": appointment_type.name })) 
+        data = {'date': '2012-08-12',
+                'recipient': '01733685224',
+                'way_of_communication': 'sms'}
+        self.client.post(reverse('web_appointment_create', \
+                kwargs = {"appointment_type": appointment_type.name }), data)
+     
+        response = self.client.post(reverse("web_authenticate_phonenumber"))
 
         self.failUnlessEqual(response.status_code, 200)
         self.assertEquals(response.template[0].name,
@@ -39,7 +44,7 @@ class AuthenticateViewTests(TestCase):
         self.assertContains(response, "<noscript>")
         
         session_data = self.client.session['authenticate_phonenumber']
-        self.assertEquals(session_data['number'], "0123456789012")
+        self.assertEquals(session_data['number'], "01733685224")
         self.assertTrue(isinstance(session_data['start_time'], datetime))
 
         # TODO check delete_timed_out_authentication_calls gets called

@@ -101,8 +101,8 @@ def create_appointment(request, appointment_type = None):
             else:
                 logger.error("Unknown way of communication selected.")
                 raise Exception ("Unknown way of communication %s " \
-                                   %appointment.way_of_communication) +\
-                                "(this is neither bluetooth nor sms or voice)"
+                                   %appointment.way_of_communication + "(this is neither bluetooth nor sms or voice)") 
+                                
         else:
             logger.info("create_appointment: Invalid form.")
             return render_to_response('web/appointment_create.html',
@@ -215,7 +215,7 @@ def check_call_received(request):
 @log_request
 def list_bluetooth_devices(request):
     next = request.GET.get('next', '')
-    backurl = reverse("web_appointment_create")
+    backurl = reverse("web_appointment_create", kwargs= {"appointment_type": request.session["appointment_type"].name})
     return render_to_response('web/list_devices.html',
                                 locals(),
                                 context_instance=RequestContext(request))

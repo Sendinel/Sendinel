@@ -17,57 +17,65 @@ class AppointmentViewTest(TestCase):
         
     def test_is_valid_appointment(self):
         data = { "date" : "2010-08-12",
-                 "recipient" : "0123456789" }
+                 "recipient" : "0123456789",
+                 "way_of_communication" : "Bluetooth"}
                  
         self.assertTrue(is_valid_appointment(data))
         
         data = { "date" : "2010-08-45",
-                 "recipient" : "0123456789" }
+                 "recipient" : "0123456789",
+                 "way_of_communication" : "Bluetooth" }
                  
         self.assertFalse(is_valid_appointment(data))
         
         data = { "date" : "2010-08-12",
-                 "recipient" : "012sdfsdf3456789" }
+                 "recipient" : "012sdfsdf3456789",
+                 "way_of_communication" : "Bluetooth" }
                  
         self.assertFalse(is_valid_appointment(data))
     
     
     def test_create_appointment_form(self):
-        response = self.client.get("/web/appointment/create/")
+        appointment_type = AppointmentType.objects.get(pk=1)
+        response = self.client.get(reverse('web_appointment_create', \
+                kwargs={"appointment_type": appointment_type.name }))
         self.failUnlessEqual(response.status_code, 200)
-        self.assertContains(response, 'name="date_0"')
-        self.assertContains(response, 'name="date_1"')
-        self.assertNotContains(response, 'name="recipient_type"')
-        self.assertNotContains(response, 'name="recipient_id"')
-        self.assertNotContains(response, 'name="hospital"')
+        self.assertContains(response, 'name="date"')
+        self.assertContains(response, 'name="recipient"')
+        self.assertContains(response, 'name="way_of_communication"')
 
     def test_create_appointment_submit_validations(self):
-        response = self.client.post("/web/appointment/create/", 
-                    {'date_0': 'abc',
-                    'date_1': 'def',
-                    'appointment_type': '',
-                    'way_of_communication': 'xyz'  })
-        self.failUnlessEqual(response.status_code, 200)
-        self.assertFormError(response, 'form', 'date',
-                            'Enter a valid date/time.')
-        self.assertFormError(response, 'form', 'way_of_communication',
-                            'Select a valid choice. xyz' \
-                            + ' is not one of the available choices.')
+        appointment_type = AppointmentType.objects.get(pk=1)
+        self.client.get(reverse('web_appointment_create', \
+                kwargs={"appointment_type": appointment_type.name }))
+    
+        self.assertRaises(Exception, self.client.post, reverse('web_appointment_create', \
+                kwargs={"appointment_type": appointment_type.name }), 
+                    {'date': '2012-08-12',
+                        'recipient': '01733685224',
+                        'way_of_communication':'xyz'  })
+        
+        
 
     def create_appointment(self, way_of_communication):
-        data = {'date_0': '2012-08-12',
-                'date_1': '19:02:42',
-                'appointment_type': "1",
+        appointment_type = AppointmentType.objects.get(pk=1)
+        self.client.get(reverse('web_appointment_create', \
+                kwargs={"appointment_type": appointment_type.name }))
+        
+        data = {'date': '2012-08-12',
+                'recipient': '01733685224',
                 'way_of_communication': way_of_communication}
-
-        return self.client.post("/web/appointment/create/", data)
+        return self.client.post(reverse('web_appointment_create', \
+                kwargs = {"appointment_type": appointment_type.name }), data)
         
     def create_and_save_appointment(self, way_of_communication, phone_number):
         self.create_appointment(way_of_communication)
         
+        patient = Patient()
+        patient.phone_number = phone_number
         # fake authentication
-        self.client.post(reverse('web_authenticate_phonenumber'),
-                    {'number': phone_number})
+        self.client.post(reverse('web_authenticate_phonenumber'), \
+                    {'patient': patient})
 
         return self.client.get(reverse("web_appointment_save"))
 
@@ -83,10 +91,11 @@ class AppointmentViewTest(TestCase):
         
 
     def save_appointment_woc(self, way_of_communication):
+        
         number_of_appointments = HospitalAppointment.objects.count()
         number_of_events = ScheduledEvent.objects.count()
         
-        phone_number = "08765934"
+        phone_number = "01733685224"
         response = self.create_and_save_appointment(way_of_communication, \
                                                     phone_number)
         
