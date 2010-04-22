@@ -108,7 +108,7 @@ class Sendable(models.Model):
     WAYS_OF_COMMUNICATION = (
         ('sms', ugettext_lazy('SMS')),
         ('bluetooth', ugettext_lazy('Bluetooth')),
-        ('voice', ugettext_lazy('Voice Call')),
+        ('voice', ugettext_lazy('Phone Call')),
     )
     way_of_communication = models.CharField(max_length=9,
                                 choices=WAYS_OF_COMMUNICATION)
