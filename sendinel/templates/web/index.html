@@ -6,14 +6,14 @@
     <h3>{% trans "Notifications" %}</h3>
     <div class="menulist">
         <div>
-            <a href="{% url web_appointment_create %}">{% trans "Remind of Vaccination" %}</a>
+            <a href="{% url web_appointment_create appointment_type='vaccination' %}">{% trans "Remind of Vaccination" %}</a>
         </div>
         <div>
-            <a href="{% url web_appointment_create %}">{% trans "Remind of Follow-Up Consultation" %}</a>
+            <a href="{% url web_appointment_create appointment_type='followup' %}">{% trans "Remind of Follow-Up Consultation" %}</a>
         </div>
 
         <div>
-            <a href="{% url not_implemented %}">{% trans "Inform about Arrival of Medication" %}</a>
+            <a href="{% url web_appointment_create appointment_type='followup' %}">{% trans "Inform about Arrival of Medication" %}</a>
         </div>
     </div>
     <h3>{% trans "Groups" %}</h3>

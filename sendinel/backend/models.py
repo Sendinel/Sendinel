@@ -38,6 +38,16 @@ class AppointmentType(models.Model):
 
     def __unicode__(self):
         return self.verbose_name
+    
+    @classmethod
+    def get_appointment_type(cls, type_name):
+        """
+        Return the given AppointmentType
+        """
+        
+        appointment_type = AppointmentType.objects.get(name = type_name)
+        
+        return appointment_type   
 
 class Patient(User):
     """
