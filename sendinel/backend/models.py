@@ -267,9 +267,8 @@ class HospitalAppointment(Sendable):
         Save appointment with patient & hospital and create a scheduled event
         """
         patient.save()
-        self.hospital = Hospital.get_current_hospital()
+
         self.recipient = patient
-                
         self.save()
         self.create_scheduled_event()    
         return self

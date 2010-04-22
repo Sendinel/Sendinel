@@ -5,15 +5,15 @@
 {% block content %}
     <h3>{% trans "Notifications" %}</h3>
     <div class="menulist">
+    
+        {% for appointment_type in appointment_types %}
+            <div>
+                <a href="{% url web_appointment_create appointment_type=appointment_type.name %}">{% trans "Remind of " %}{{ appointment_type.verbose_name }}</a>
+            </div>
+        {% endfor %}     
+        
         <div>
-            <a href="{% url web_appointment_create appointment_type='vaccination' %}">{% trans "Remind of Vaccination" %}</a>
-        </div>
-        <div>
-            <a href="{% url web_appointment_create appointment_type='followup' %}">{% trans "Remind of Follow-Up Consultation" %}</a>
-        </div>
-
-        <div>
-            <a href="{% url web_appointment_create appointment_type='followup' %}">{% trans "Inform about Arrival of Medication" %}</a>
+            <a href="{% url not_implemented %}">{% trans "Inform about Arrival of Medication" %}</a>
         </div>
     </div>
     <h3>{% trans "Groups" %}</h3>

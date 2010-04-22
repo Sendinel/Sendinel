@@ -7,12 +7,13 @@ from django.template import RequestContext
 from django.utils import simplejson
 from django.views.i18n import javascript_catalog
 
-
 from sendinel.backend.authhelper import check_and_delete_authentication_call, \
                                     delete_timed_out_authentication_calls, \
                                     format_phonenumber
 from sendinel.backend.models import Patient, Sendable, \
-                                    InfoService, Subscription, HospitalAppointment, Hospital
+                                    InfoService, Subscription, \
+                                    HospitalAppointment, Hospital, \
+                                    AppointmentType
 from sendinel.web.forms import HospitalAppointmentForm
 from sendinel.settings import   AUTH_NUMBER, \
                                 BLUETOOTH_SERVER_ADDRESS, \
@@ -25,6 +26,7 @@ from sendinel.logger import logger, log_request
 @log_request
 def index(request):
     information_services = InfoService.objects.all()
+    appointment_types = AppointmentType.objects.all()
     return render_to_response('web/index.html',
                               locals(),  
                               context_instance = RequestContext(request))
@@ -43,11 +45,15 @@ def jsi18n(request):
 
 def is_valid_appointment(post_vars):
     if not post_vars.has_key("date") or \
+       not post_vars.has_key("way_of_communication") or \
        not post_vars.has_key("recipient"):
         return False
         
+    if not post_vars["way_of_communication"]:
+        return False
+    
     try:
-        appointment_date = time.strptime(post_vars["date"], "%Y-%m-%d")
+        appointment_date = datetime.strptime(post_vars["date"] , "%Y-%m-%d")
         format_phonenumber(post_vars["recipient"])
     except ValueError:
         return False
@@ -60,18 +66,17 @@ def create_appointment(request, appointment_type = None):
     nexturl = ""
     backurl = reverse('web_index')
     if request.method == "POST":
-        attributes = { "recipient" : request.POST['recipient'].strip(),
-                        "date" : request.POST['date'].strip(),
-                        "way_of_communication" : request.POST['way_of_communication'].strip() }
-        if is_valid_appointment(attributes):
+
+        if is_valid_appointment(request.POST):
+            
             appointment = HospitalAppointment()
-            appointment.date = attributes['date'] 
             patient = Patient()
-            patient.phone_number = attributes['recipient'] 
-            appointment.recipient = patient
-            appointment.appointment_type = AppointmentType.get_appointment_type()
-            appointment.hospital = Hospital.get_current_hospital( request.session['appointment_type'])
-            appointment.way_of_communication = attributes['way_of_communication']             
+            patient.phone_number = request.POST['recipient']
+            
+            appointment.date = datetime.strptime(request.POST['date'] , "%Y-%m-%d")
+            appointment.appointment_type = request.session['appointment_type']
+            appointment.hospital = Hospital.get_current_hospital()
+            appointment.way_of_communication = request.POST['way_of_communication']             
     
             
             
@@ -84,6 +89,7 @@ def create_appointment(request, appointment_type = None):
                 return HttpResponseRedirect(reverse("web_list_devices") + \
                                 "?next=" + reverse("web_appointment_send"))
             elif appointment.way_of_communication in ('sms', 'voice' ):
+
                 return HttpResponseRedirect( \
                     reverse("web_authenticate_phonenumber") + "?next=" + \
                     reverse("web_appointment_save"))
@@ -100,7 +106,9 @@ def create_appointment(request, appointment_type = None):
     else:
         #TODO: initiale Dateneintraege
         if appointment_type != None:
-            request.session['appointment_type'] = appointment_type
+            request.session['appointment_type'] = AppointmentType.get_appointment_type(appointment_type)
+            
+        appointment_type = request.session['appointment_type']
         
         return render_to_response('web/appointment_create.html',
                                 locals(),
@@ -157,27 +165,25 @@ def authenticate_phonenumber(request):
     nexturl = ''
     next = ''
     ajax_url= reverse('web_check_call_received')
-    backurl = reverse('web_index')    
-    if request.method == "POST":
-        backurl = reverse('web_authenticate_phonenumber') + \
-                            "?" + request.META['QUERY_STRING']
-        try:
-            number = fill_authentication_session_variable(request)
-            logger.info("Starting authentication with %s" % AUTH_NUMBER)
-            auth_number = AUTH_NUMBER
-            next = request.GET.get('next', reverse('web_appointment_save'))
-            return render_to_response('web/authenticate_phonenumber_call.html', 
-                              locals(),
-                              context_instance = RequestContext(request))
-        except ValueError as e:
-            error = e
-
+    backurl = reverse('web_index')
+    
+   
     logger.info("Deleting timed out authentication calls.")
     delete_timed_out_authentication_calls()
+    
+    try:
+        number = fill_authentication_session_variable(request)
+        logger.info("Starting authentication with %s" % AUTH_NUMBER)
+        auth_number = AUTH_NUMBER
+        next = request.GET.get('next', reverse('web_appointment_save'))
+        return render_to_response('web/authenticate_phonenumber_call.html', 
+                          locals(),
+                          context_instance = RequestContext(request))
+    except ValueError as e:
+        error = e
 
-    return render_to_response('web/authenticate_phonenumber.html', 
-                              locals(),
-                              context_instance = RequestContext(request))
+
+
 
 @log_request
 def check_call_received(request):
@@ -235,31 +241,37 @@ def get_bluetooth_devices(request):
 
 @log_request
 def register_infoservice(request, id):
-    ajax_url= reverse('web_check_call_received')    
+    ajax_url= reverse('web_check_call_received')
+    
     if request.method == "POST":
         request.session['way_of_communication'] = \
                                         request.POST['way_of_communication']
+        patient = Patient()
+        patient.phone_number = request.POST['number']
+        request.session['patient'] = patient
         try:                                
             number = fill_authentication_session_variable(request) 
             auth_number = AUTH_NUMBER
             backurl = reverse('web_infoservice_register',  kwargs = {'id': id})        
             next = reverse('web_infoservice_register_save', kwargs = {'id': id})
             url = reverse('web_check_call_received')
+            
             return render_to_response('web/authenticate_phonenumber_call.html', 
                 locals(),
                 context_instance = RequestContext(request))
         except ValueError as e:
             error = e
+       
     infoservice = InfoService.objects.filter(pk = id)[0].name
     backurl = reverse("web_index")
+    
     return render_to_response('web/infoservice_register.html', 
                               locals(),
                               context_instance = RequestContext(request))
 
 @log_request
 def save_registration_infoservice(request, id):
-    patient = Patient(phone_number = \
-                      request.session['authenticate_phonenumber']['number'])
+    patient = request.session['patient']
     patient.save()
     way_of_communication = request.session['way_of_communication']
     infoservice = InfoService.objects.filter(pk = id)[0]
@@ -274,7 +286,7 @@ def save_registration_infoservice(request, id):
 
 @log_request
 def fill_authentication_session_variable(request):
-    number = request.POST["number"].strip()
+    number = request.session["patient"].phone_number
     number = format_phonenumber(number)
     request.session['authenticate_phonenumber'] = \
                             { 'number': number,
