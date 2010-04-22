@@ -10,6 +10,11 @@
         <field type="CharField" name="verbose_name">Follow-Up Consultation</field>
         <field type="CharField" name="template">Hello, please remember your consultation at the $hospital at $date</field>
     </object>
+    <object pk="3" model="backend.appointmenttype">
+        <field type="CharField" name="name">labresult</field>
+        <field type="CharField" name="verbose_name">Lab Result</field>
+        <field type="CharField" name="template">Hello, your lab results arrived at $date at the $hospital</field>
+    </object>
     <object pk="1" model="backend.patient">
         <field type="CharField" name="name">Daniel</field>
         <field type="CharField" name="phone_number">01621785295</field>
@@ -54,18 +59,8 @@
         <field to="backend.hospital" name="hospital" rel="ManyToOneRel">1</field>
         <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
     </object>
-    <object pk="1" model="backend.labresult">
-        <field type="CharField" name="way_of_communication">sms</field>
-        <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
-    </object>
     <object pk="1" model="backend.scheduledevent">
         <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>backend</natural><natural>hospitalappointment</natural></field>
-        <field type="PositiveIntegerField" name="sendable_id">1</field>
-        <field type="DateTimeField" name="send_time">2010-02-08 18:43:07</field>
-        <field type="CharField" name="state">new</field>
-    </object>
-    <object pk="2" model="backend.scheduledevent">
-        <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>backend</natural><natural>labresult</natural></field>
         <field type="PositiveIntegerField" name="sendable_id">1</field>
         <field type="DateTimeField" name="send_time">2010-02-08 18:43:07</field>
         <field type="CharField" name="state">new</field>

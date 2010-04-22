@@ -38,6 +38,16 @@ class AppointmentType(models.Model):
 
     def __unicode__(self):
         return self.verbose_name
+    
+    @classmethod
+    def get_appointment_type(cls, type_name):
+        """
+        Return the given AppointmentType
+        """
+        
+        appointment_type = AppointmentType.objects.get(name = type_name)
+        
+        return appointment_type   
 
 class Patient(User):
     """
@@ -98,7 +108,7 @@ class Sendable(models.Model):
     WAYS_OF_COMMUNICATION = (
         ('sms', ugettext_lazy('SMS')),
         ('bluetooth', ugettext_lazy('Bluetooth')),
-        ('voice', ugettext_lazy('Voice Call')),
+        ('voice', ugettext_lazy('Phone Call')),
     )
     way_of_communication = models.CharField(max_length=9,
                                 choices=WAYS_OF_COMMUNICATION)
@@ -147,63 +157,7 @@ class Sendable(models.Model):
                                          send_time = send_time)
         scheduled_event.save()
         
-class LabResult(Sendable):
-    """
-    Define a HospitalAppointment.
-    """
-    text = "Your lab results are arrived at the clinic. Please come to the clinic."
-                         
-    def __unicode__(self):
-        return "LabResult< Text: %s>" \
-                    % ((str(self.date) or ""))
- 
-    def get_data_for_sms(self):
-        """
-        Prepare OutputData for sms.
-        Generate the message for an LabResult.
-        Return SMSOutputData for sending.
-        """
 
-        data = SMSOutputData()                 
-        data.data = self.text                        
-        data.phone_number = self.recipient.phone_number
-        
-        return data
-
-    def get_data_for_voice(self): 
-        """
-        Prepare OutputData for voice.
-        Generate the message for an LabResult.
-        Return VoiceOutputData for sending.
-        """
-
-        data = VoiceOutputData()
-        data.data = self.text                        
-        data.phone_number = self.recipient.phone_number
-
-        return data
-
-    def create_scheduled_event(self, send_time=None):
-        """
-        Create a scheduled event for sending a a lab result information message. 
-        @param send_time: Datetime object with the time of the reminder
-        If send_time is not give, now is used
-        Call Sendable.create_scheduled_event() to create the ScheduledEvent
-        """
-        if not send_time:      
-            send_time = datetime.now()
-        super(LabResult, self).create_scheduled_event(send_time)
-       
-    def save_with_patient(self, patient):
-        """
-        Save appointment with patient & hospital and create a scheduled event
-        """
-        patient.save()
-        self.recipient = patient
-                
-        self.save()
-        self.create_scheduled_event()    
-        return self
         
 
 class HospitalAppointment(Sendable):
@@ -313,9 +267,8 @@ class HospitalAppointment(Sendable):
         Save appointment with patient & hospital and create a scheduled event
         """
         patient.save()
-        self.hospital = Hospital.get_current_hospital()
+
         self.recipient = patient
-                
         self.save()
         self.create_scheduled_event()    
         return self

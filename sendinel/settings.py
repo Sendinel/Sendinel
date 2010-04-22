@@ -140,6 +140,10 @@ AUTH_NUMBER = "CHANGE ME"
 # time a user has to call the system to authenticate
 AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = 3)
 
+
+# True or False to turn authentication on or off
+AUTH = True
+
 # Specify a COM Port for SMS
 # for windows maybe it starts at 0
 SERIALPORTSMS = '/dev/rfcomm0'
