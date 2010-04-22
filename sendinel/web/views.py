@@ -12,7 +12,7 @@ from sendinel.backend.authhelper import check_and_delete_authentication_call, \
                                     delete_timed_out_authentication_calls, \
                                     format_phonenumber
 from sendinel.backend.models import Patient, Sendable, \
-                                    InfoService, Subscription, HospitalAppointment
+                                    InfoService, Subscription, HospitalAppointment, Hospital
 from sendinel.web.forms import HospitalAppointmentForm
 from sendinel.settings import   AUTH_NUMBER, \
                                 BLUETOOTH_SERVER_ADDRESS, \
@@ -55,7 +55,7 @@ def is_valid_appointment(post_vars):
     return True
 
 @log_request
-def create_appointment(request):
+def create_appointment(request, appointment_type = None):
     admin_media_prefix = ADMIN_MEDIA_PREFIX
     nexturl = ""
     backurl = reverse('web_index')
@@ -69,9 +69,10 @@ def create_appointment(request):
             patient = Patient()
             patient.phone_number = attributes['recipient'] 
             appointment.recipient = patient
-            appointment.way_of_communication = way_of_communication
-            
-            
+            appointment.appointment_type = AppointmentType.get_appointment_type()
+            appointment.hospital = Hospital.get_current_hospital( request.session['appointment_type'])
+            appointment.way_of_communication = attributes['way_of_communication']             
+    
             
             
             request.session['appointment'] = appointment
@@ -98,6 +99,9 @@ def create_appointment(request):
                                 context_instance=RequestContext(request))
     else:
         #TODO: initiale Dateneintraege
+        if appointment_type != None:
+            request.session['appointment_type'] = appointment_type
+        
         return render_to_response('web/appointment_create.html',
                                 locals(),
                                 context_instance=RequestContext(request))
@@ -111,8 +115,6 @@ def save_appointment(request):
         logger.warning("save_appointment: no appointment/patient in session")
         return HttpResponseRedirect(reverse(create_appointment))
 
-    # TODO Rueckgabe testen, Fehlerbehandlung
-    patient.phone_number = request.session['authenticate_phonenumber']['number']
     
     logger.info("Saving appointment: %s with patient: %s"
                     % (appointment, patient.phone_number))
