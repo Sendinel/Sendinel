@@ -14,6 +14,9 @@ class AuthTest(unittest.TestCase):
 
     def test_number_formating(self):
         
+        country_code_phone = authhelper.COUNTRY_CODE_PHONE
+        start_mobile_phone = authhelper.START_MOBILE_PHONE
+        
         authhelper.COUNTRY_CODE_PHONE = "0027"
         authhelper.START_MOBILE_PHONE = "07"
     
@@ -29,6 +32,10 @@ class AuthTest(unittest.TestCase):
         self.assertRaises(ValueError, authhelper.format_phonenumber, number)
         number = "030123456789"
         self.assertRaises(ValueError, authhelper.format_phonenumber, number)          
+        
+        
+        authhelper.COUNTRY_CODE_PHONE = country_code_phone
+        authhelper.START_MOBILE_PHONE = start_mobile_phone
         
     def test_asterisk_log_call(self):
         class MockFile:
