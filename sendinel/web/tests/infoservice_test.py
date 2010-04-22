@@ -3,6 +3,7 @@ from datetime import datetime
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from sendinel.backend.models import InfoService, Subscription, Patient
+from sendinel.settings import AUTH
 from sendinel.utils import last
 
 class WebInfoServiceTest(TestCase):
@@ -41,7 +42,11 @@ class WebInfoServiceTest(TestCase):
 
         self.assertTrue(self.client.session.has_key('way_of_communication'))
         self.assertTrue(self.client.session.has_key('authenticate_phonenumber'))
-        self.assertEquals(response.status_code, 200)
+        
+        if AUTH:
+            self.assertEquals(response.status_code, 200)
+        else:
+            self.assertEquals(response.status_code, 302)
       
     def test_save_registration_infoservice(self):
         subscription_count = Subscription.objects.all().count()
