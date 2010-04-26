@@ -18,35 +18,38 @@ var check_for_call = function() {
                 switch(json.status) {                
                     case "waiting":                        
                         statusText.text(gettext("Waiting for your call"));
+                       
                         window.setTimeout("check_for_call()", 1000);
                     break;
                     
-                    case "received":
-                    
+                    case "received":                    
                         $("#auth_spinner").hide();
+                        
                         var next = $("#next").val();
+                        
                         statusText.addClass("success");
                         statusText.text(gettext("Thank you! We have received your call, please hang up now."));                        
+                        
                         var next_button = $("<div class='next-button'>" +
                             "<input type='submit' id='id_next' value='Next -&gt;' name='form_submit' class='subselectable' />" +
                             '<input type="hidden" value="' + next +'" name="next-button-link" /></div>');
+                        
                         $("#control_buttons").append(next_button);
-                        numpad.convert_forms();
                         $("#id_back").hide();
+                        
                         window.setTimeout("toNext()", 5000);
                     break;
                     
                     case "failed":
                         statusText.addClass("errorlist");
                         statusText.text(gettext("Sorry, the authentication of your telephone number failed. Please try again."));
-                        $("#auth_spinner").hide();
-                                                
+                        
+                        $("#auth_spinner").hide();                                                
                     break;
                 }
             }
         },
-        "json");
-        
+        "json");        
 };
 
 $(document).ready(check_for_call);
