@@ -282,14 +282,19 @@ def reduce_contents(contents, chars_left):
     the inserted fields are shortened, 
     so that the sms will in total not ecceed 160 characters
     """
-    #DATE FIELD IS HARD CODED NOW
-    if 'date' in contents:
-        chars_left -= len(contents ['date'])
-        cut_length = int(floor(float(chars_left)/(len(contents) - 1)))
-        # because date is not shortened, len(contents) must be one shorter
-    else:
-        cut_length = int(ceil(float(chars_left)/len(contents)))
+    important_content = ['date', 'time']
+    
+    important_content_counter = 0
+    for field in important_content:
+        if field in contents:
+            chars_left -= len(contents[field])
+            # because date is not shortened, len(contents) must be one shorter
+            important_content_counter += 1    
+    
+    cut_length = int(chars_left/(len(contents)-important_content_counter))
+    
     for key in contents.iterkeys():
-        if key != 'date':
+        if not key in important_content:
             contents[key] = contents[key][0:cut_length]
+            
     return contents
