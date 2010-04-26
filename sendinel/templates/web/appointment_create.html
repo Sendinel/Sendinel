@@ -39,13 +39,16 @@
                         {% endif %}
                     </th>
                     <td>
-            
                         <input id="id_phone_input" type="text" name="recipient" class="selectable" />                       
                     </td>
                 </tr>
                 <tr>
                     <th>
                         <label for="id_date_0">Date:</label>
+                        {% if form.date.errors %}
+                            {{ form.date.errors }}
+                        {% endif %}
+
                     </th>
                     <td>
                         <div id="datepicker"></div>
@@ -55,6 +58,9 @@
                 <tr>
                     <th>
                         <label for="id_way_of_communication">Way of communication:</label>
+                        {% if form.way_of_communication.errors %}
+                            {{ form.way_of_communication.errors }}
+                        {% endif %}
                     </th>
                     <td> 
                         <select name="way_of_communication" id="id_way_of_communication">

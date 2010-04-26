@@ -54,7 +54,7 @@ def create_appointment(request, appointment_type = None):
     backurl = reverse('web_index')
     if request.method == "POST":
         data = deepcopy(request.POST)
-        data['date'] += ' ' + DEFAULT_SEND_TIME
+        data['date'] = data.get('date', '') + ' ' + DEFAULT_SEND_TIME
         form = NotificationValidationForm(data)
         if form.is_valid():
             appointment = HospitalAppointment()
