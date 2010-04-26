@@ -1,5 +1,8 @@
 ﻿from copy import deepcopy
-from datetime import datetime
+
+from datetime import datetime, date
+
+
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
@@ -46,20 +49,26 @@ def jsi18n(request):
 
 
 @log_request
-def create_appointment(request, appointment_type = None):
+def create_appointment(request, appointment_type_name = None):
+    appointment_type = AppointmentType.objects. \
+                              filter(name = appointment_type_name)[0]
     admin_media_prefix = ADMIN_MEDIA_PREFIX
     nexturl = ""
     backurl = reverse('web_index')
     if request.method == "POST":
         data = deepcopy(request.POST)
-        data['date'] = data.get('date', '') + ' ' + DEFAULT_SEND_TIME
+        if appointment_type.notify_immediately:
+            data['date'] = date.today().strftime('%Y-%m-%d') + \
+                            ' ' + DEFAULT_SEND_TIME
+        else:
+            data['date'] = data.get('date', '') + ' ' + DEFAULT_SEND_TIME
         form = NotificationValidationForm(data)
         if form.is_valid():
             appointment = HospitalAppointment()
             patient = Patient()
             patient.phone_number = form.cleaned_data['recipient']
             appointment.date = form.cleaned_data['date']
-            appointment.appointment_type = AppointmentType.objects.filter(name = appointment_type)[0]
+            appointment.appointment_type = appointment_type
             appointment.hospital = Hospital.get_current_hospital()
             appointment.way_of_communication = form.cleaned_data['way_of_communication']             
     
@@ -94,10 +103,6 @@ def create_appointment(request, appointment_type = None):
                                 context_instance=RequestContext(request))
     else:
         #TODO: initiale Dateneintraege
-        if appointment_type != None:
-            request.session['appointment_type'] = AppointmentType.get_appointment_type(appointment_type)
-            
-        appointment_type = request.session['appointment_type']
         
         return render_to_response('web/appointment_create.html',
                                 locals(),
@@ -199,7 +204,9 @@ def check_call_received(request):
 @log_request
 def list_bluetooth_devices(request):
     next = request.GET.get('next', '')
-    backurl = reverse("web_appointment_create", kwargs= {"appointment_type": request.session["appointment_type"].name})
+    backurl = reverse("web_appointment_create", kwargs=
+                       {"appointment_type_name":
+                           request.session["appointment"].appointment_type.name})
     return render_to_response('web/list_devices.html',
                                 locals(),
                                 context_instance=RequestContext(request))

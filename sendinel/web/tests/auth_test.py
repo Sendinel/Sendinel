@@ -28,12 +28,12 @@ class AuthenticateViewTests(TestCase):
         appointment_type = AppointmentType.objects.get(pk=1)
         
         self.client.get(reverse('web_appointment_create', \
-                kwargs={"appointment_type": appointment_type.name })) 
+                kwargs={"appointment_type_name": appointment_type.name })) 
         data = {'date': '2012-08-12',
                 'recipient': '01733685224',
                 'way_of_communication': 'sms'}
         self.client.post(reverse('web_appointment_create', \
-                kwargs = {"appointment_type": appointment_type.name }), data)
+                kwargs = {"appointment_type_name": appointment_type.name }), data)
      
         response = self.client.post(reverse("web_authenticate_phonenumber"))
 
