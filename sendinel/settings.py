@@ -143,7 +143,7 @@ AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = 3)
 
 
 # True or False to turn authentication on or off
-AUTH = True
+AUTH = False
 
 # Specify a COM Port for SMS
 # for windows maybe it starts at 0
