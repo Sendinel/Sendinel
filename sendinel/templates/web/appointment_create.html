@@ -8,7 +8,10 @@
             dateFormat: "yy-mm-dd",
             onSelect: function(dateText) {
                 $("#date").val(dateText);
-            }
+            },
+            navigationAsDateFormat: true,
+            nextText: 'MM',
+            prevText: 'MM',
         });
 
         var today = new Date();

@@ -2,11 +2,11 @@ from django.forms import CharField, ChoiceField, DateTimeField, Form
 from django.utils.translation import ugettext as _
 
 from sendinel.backend.models import Sendable
-from sendinel.backend.authhelper import format_phonenumber
+from sendinel.backend.authhelper import format_and_validate_phonenumber
 
 
 class NotificationValidationForm(Form):
-    recipient = CharField(validators = [format_phonenumber],
+    recipient = CharField(validators = [format_and_validate_phonenumber],
             error_messages={'required':_('Please enter a phone number')})
                 
     date = DateTimeField(error_messages={ \
