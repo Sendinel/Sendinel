@@ -31,8 +31,9 @@ var check_for_call = function() {
                             "<input type='submit' id='id_next' value='Next -&gt;' name='form_submit' class='subselectable' />" +
                             '<input type="hidden" value="' + next +'" name="next-button-link" /></div>');
                         $("#control_buttons").append(next_button);
+                        numpad.convert_forms();
                         $("#id_back").hide();
-                        toNext();
+                        window.setTimeout("toNext()", 5000);
                     break;
                     
                     case "failed":
