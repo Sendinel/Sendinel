@@ -48,12 +48,11 @@ def check_and_delete_authentication_call(number):
     The last seven digits are compared to identify the call.
     """
     number = format_phonenumber(number)
-    return True # This disables the authentication TODO make this right!
+    
     last_seven_digits = number[-7:]
     calls = AuthenticationCall.objects.filter( \
                                     number__endswith = last_seven_digits)
     
-    return True
     if calls.count() == 1:
         calls.delete()
         return True
