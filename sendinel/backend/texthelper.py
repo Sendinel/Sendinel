@@ -1,3 +1,5 @@
+from sendinel.settings import SALUTATION
+
 def date_to_text(weekday, day, month, hour, minutes):
     """
         Use:
@@ -125,13 +127,15 @@ def generate_text(contents, template, reduce = True):
     """
     creates an sms text from a given template that is not longer than 160 characters
     """
+    max_chars = 160 - len(SALUTATION)
+    
     contents = replace_dollar_signs(contents)
     sms = template.substitute(contents)
     if reduce:
-        if len(sms) > 160:
+        if len(sms) > max_chars:
             template_length = len(sms)-get_content_length(contents)
-            new_contents = reduce_contents(contents, 160 - template_length)
-            sms = template.substitute(new_contents)
+            new_contents = reduce_contents(contents, max_chars - template_length)
+            sms = SALUTATION + template.substitute(new_contents)
     return sms
     
 def get_content_length(contents):

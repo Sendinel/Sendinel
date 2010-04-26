@@ -1,5 +1,6 @@
 from sendinel.backend.texthelper import *
 import unittest
+from sendinel.settings import SALUTATION
 from string import Template
 
 
@@ -9,18 +10,18 @@ class TesthelperTest(unittest.TestCase):
                             'hospital': "hodpiel hospital at the " +\
                             "lake with the frog and the tree",\
                             'name': "mr jameson-bitterall-wertifial"},\
-                             Template("Dear $name, please remember your appointment" + \
+                             Template(" $name, please remember your appointment" + \
                                 " at the $hospital at $date, $time with doctor $doctor"))  
-        should_text = "Dear mr jameson-bitterall-wertif, please remember " +\
+        should_text = SALUTATION + "mr jameson-bitterall-wertif, please remember " +\
                         "your appointment at the hodpiel hospital at the " + \
                         "lak at 13.2.98, 3:39 with doctor ms daily-binnessy-dayteewar"
         self.assertTrue(len(text) <= 160)
         self.assertEquals (text, should_text)
 
     def test_generate_text_message(self):
-        text = generate_text({'free_text':"Hello Mrs. Joirie, your medication is there. " \
+        text = generate_text({'free_text':"Mrs. Joirie, your medication is there. " \
                                 + "Please remember to pay 2 $."}, Template("$free_text"))
-        should_text = "Hello Mrs. Joirie, your medication is there. Please remember to pay 2 $."
+        should_text = SALUTATION + "Mrs. Joirie, your medication is there. Please remember to pay 2 $."
         self.assertEquals (text, should_text)
         self.assertTrue(len(text) <= 160)
         
@@ -30,7 +31,7 @@ class TesthelperTest(unittest.TestCase):
                              "since my last holidays are ages ago and i think a " + \
                              "little bit less stress would be fun to have"}, \
                              Template ('What an interesting text :$text'))
-        should_text = "What an interesting text :Hello my name is james I am 22 " + \
+        should_text = SALUTATION + "What an interesting text :Hello my name is james I am 22 " + \
                         "years old and i really want to go to bali and make " + \
                         "holidays since my last holidays are ages ago and i t"
         self.assertTrue(len(text) <= 160)

@@ -248,7 +248,11 @@ class HospitalAppointment(Sendable):
         data = VoiceOutputData()
         contents = {'date': str(spokenDate),
                     'hospital': self.hospital.name}
-        data.data = self.reminder_text(contents)
+                    
+        #data.data = self.reminder_text(contents)
+        #TODO not sure if no problems occur (testing?)
+        data.data = self.template.substitute(contents)
+        
         data.phone_number = self.recipient.phone_number
 
         return data
