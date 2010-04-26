@@ -1,6 +1,5 @@
 ﻿from copy import deepcopy
 from datetime import datetime
-import time
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
@@ -13,7 +12,7 @@ from sendinel.backend import bluetooth
 from sendinel.backend.authhelper import check_and_delete_authentication_call, \
                                     delete_timed_out_authentication_calls, \
                                     format_phonenumber
-from sendinel.backend.models import Patient, Sendable, \
+from sendinel.backend.models import Patient, \
                                     InfoService, Subscription, \
                                     HospitalAppointment, Hospital, \
                                     AppointmentType
@@ -21,7 +20,6 @@ from sendinel.settings import   ADMIN_MEDIA_PREFIX, \
                                 AUTH, AUTH_NUMBER, \
                                 AUTHENTICATION_CALL_TIMEOUT, \
                                 BLUETOOTH_SERVER_ADDRESS, \
-                                COUNTRY_CODE_PHONE, START_MOBILE_PHONE, \
                                 DEFAULT_SEND_TIME
 from sendinel.logger import logger, log_request
 from sendinel.web.forms import NotificationValidationForm
