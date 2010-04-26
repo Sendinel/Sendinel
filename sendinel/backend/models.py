@@ -35,6 +35,7 @@ class AppointmentType(models.Model):
     name = models.CharField(max_length = 255)
     verbose_name = models.CharField(max_length = 255)
     template = models.CharField(max_length = 255)
+    notify_immediately = models.BooleanField()
 
     def __unicode__(self):
         return self.verbose_name

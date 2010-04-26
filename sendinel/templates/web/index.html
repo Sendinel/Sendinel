@@ -8,7 +8,7 @@
     
         {% for appointment_type in appointment_types %}
             <div>
-                <a href="{% url web_appointment_create appointment_type=appointment_type.name %}">{% trans "Remind of " %}{{ appointment_type.verbose_name }}</a>
+                <a href="{% url web_appointment_create appointment_type_name=appointment_type.name %}">{% trans "Remind of " %}{{ appointment_type.verbose_name }}</a>
             </div>
         {% endfor %}     
         
