@@ -1,5 +1,7 @@
-﻿from datetime import datetime
+﻿from copy import deepcopy
+from datetime import datetime
 import time
+
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
@@ -7,6 +9,7 @@ from django.template import RequestContext
 from django.utils import simplejson
 from django.views.i18n import javascript_catalog
 
+from sendinel.backend import bluetooth
 from sendinel.backend.authhelper import check_and_delete_authentication_call, \
                                     delete_timed_out_authentication_calls, \
                                     format_phonenumber
@@ -14,15 +17,14 @@ from sendinel.backend.models import Patient, Sendable, \
                                     InfoService, Subscription, \
                                     HospitalAppointment, Hospital, \
                                     AppointmentType
-from sendinel.web.forms import HospitalAppointmentForm
-from sendinel.settings import   AUTH_NUMBER, \
-                                BLUETOOTH_SERVER_ADDRESS, \
+from sendinel.settings import   ADMIN_MEDIA_PREFIX, \
+                                AUTH, AUTH_NUMBER, \
                                 AUTHENTICATION_CALL_TIMEOUT, \
+                                BLUETOOTH_SERVER_ADDRESS, \
                                 COUNTRY_CODE_PHONE, START_MOBILE_PHONE, \
-                                ADMIN_MEDIA_PREFIX, \
-                                AUTH
-from sendinel.backend import bluetooth
+                                DEFAULT_SEND_TIME
 from sendinel.logger import logger, log_request
+from sendinel.web.forms import NotificationValidationForm
 
 @log_request
 def index(request):
@@ -44,22 +46,6 @@ def jsi18n(request):
     }
     return javascript_catalog(request, packages = js_info_web)
 
-def is_valid_appointment(post_vars):
-    if not post_vars.has_key("date") or \
-       not post_vars.has_key("way_of_communication") or \
-       not post_vars.has_key("recipient"):
-        return False
-        
-    if not post_vars["way_of_communication"]:
-        return False
-    
-    try:
-        appointment_date = datetime.strptime(post_vars["date"] , "%Y-%m-%d")
-        format_phonenumber(post_vars["recipient"])
-    except ValueError:
-        return False
-        
-    return True
 
 @log_request
 def create_appointment(request, appointment_type = None):
@@ -67,17 +53,17 @@ def create_appointment(request, appointment_type = None):
     nexturl = ""
     backurl = reverse('web_index')
     if request.method == "POST":
-
-        if is_valid_appointment(request.POST):
-            
+        data = deepcopy(request.POST)
+        data['date'] = data.get('date', '') + ' ' + DEFAULT_SEND_TIME
+        form = NotificationValidationForm(data)
+        if form.is_valid():
             appointment = HospitalAppointment()
             patient = Patient()
-            patient.phone_number = request.POST['recipient']
-            
-            appointment.date = datetime.strptime(request.POST['date'] , "%Y-%m-%d")
-            appointment.appointment_type = request.session['appointment_type']
+            patient.phone_number = form.cleaned_data['recipient']
+            appointment.date = form.cleaned_data['date']
+            appointment.appointment_type = AppointmentType.objects.filter(name = appointment_type)[0]
             appointment.hospital = Hospital.get_current_hospital()
-            appointment.way_of_communication = request.POST['way_of_communication']             
+            appointment.way_of_communication = form.cleaned_data['way_of_communication']             
     
             
             

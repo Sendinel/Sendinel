@@ -1,6 +1,7 @@
 import unittest
-
 from datetime import datetime
+
+from django.core.exceptions import ValidationError
 
 from sendinel.backend.authhelper import check_and_delete_authentication_call, \
                                         format_phonenumber, \
@@ -27,11 +28,11 @@ class AuthTest(unittest.TestCase):
         number = "07 234-56789"
         self.assertEquals(authhelper.format_phonenumber(number), "0723456789")
         number = "0123a45678"
-        self.assertRaises(ValueError, authhelper.format_phonenumber, number)
+        self.assertRaises(ValidationError, authhelper.format_phonenumber, number)
         number = "0049123456789"
-        self.assertRaises(ValueError, authhelper.format_phonenumber, number)
+        self.assertRaises(ValidationError, authhelper.format_phonenumber, number)
         number = "030123456789"
-        self.assertRaises(ValueError, authhelper.format_phonenumber, number)          
+        self.assertRaises(ValidationError, authhelper.format_phonenumber, number)          
         
         
         authhelper.COUNTRY_CODE_PHONE = country_code_phone

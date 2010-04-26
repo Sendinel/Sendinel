@@ -117,6 +117,10 @@ h3{
     margin-left: 10px;
 }
 
+.cells_align_top td
+{
+    vertical-align: top;
+}
 
 /* Forms */
 th {
@@ -132,8 +136,13 @@ strong.big {
 }
 
 .errorlist {
-    color: red;
+    color: #af0037;
+    border: 1px solid #af0037;
     margin: 5px 0;
+    padding: 0;
+    list-style-type: none;
+    background-color: #FCC533;
+    
 }
 
 .success {
