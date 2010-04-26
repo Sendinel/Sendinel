@@ -1,6 +1,9 @@
 import re
 from datetime import datetime
 
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext as _
+
 from sendinel.backend.models import AuthenticationCall
 from sendinel.settings import AUTHENTICATION_CALL_TIMEOUT, \
                               COUNTRY_CODE_PHONE, \
@@ -35,12 +38,12 @@ def format_phonenumber(number):
     try:
         int(number)
     except ValueError:
-        raise ValueError('Please enter a valid phonenumber.')
+        raise ValidationError(_('Please enter numbers only.'))
     
     if number.startswith(START_MOBILE_PHONE):
         return number
     else:
-        raise ValueError('Please enter a valid phonenumber.')    
+        raise ValidationError(_('Please enter a cell phone number.'))
 
 def check_and_delete_authentication_call(number):
     """

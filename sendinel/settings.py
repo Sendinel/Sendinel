@@ -117,6 +117,7 @@ INSTALLED_APPS = (
 REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days = 1)
 DEFAULT_APPOINTMENT_DURATION = timedelta(minutes = 60)
 DEFAULT_HOSPITAL_NAME = 'your hospital'
+DEFAULT_SEND_TIME = '12:00' #hh:mm in 24-hours format
 
 COUNTRY_CODE_PHONE = "0049" #"0027" for South Africa
 START_MOBILE_PHONE = "0" # "0" for South Africa (07/08..), "01" for Germany

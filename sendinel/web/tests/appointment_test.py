@@ -1,11 +1,12 @@
 from datetime import datetime
-from sendinel.web.views import is_valid_appointment
+
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 
 from sendinel.backend.models import ScheduledEvent, HospitalAppointment
 from sendinel.backend.models import Hospital, Patient, AppointmentType
 from sendinel.settings import AUTH
+from sendinel.web.forms import NotificationValidationForm
 from sendinel import settings
 
 class AppointmentViewTest(TestCase):
@@ -16,24 +17,22 @@ class AppointmentViewTest(TestCase):
         self.hospital = Hospital.objects.get(current_hospital = True)
         #self.client = Client()
         
-    def test_is_valid_appointment(self):
-        data = { "date" : "2010-08-12",
+    def test_notification_form_validation(self):
+        data = { "date" : "2010-08-12 12:00",
                  "recipient" : "0123456789",
-                 "way_of_communication" : "Bluetooth"}
-                 
-        self.assertTrue(is_valid_appointment(data))
+                 "way_of_communication" : "bluetooth"}
+        form = NotificationValidationForm(data)       
+        self.assertTrue(form.is_valid())
         
-        data = { "date" : "2010-08-45",
-                 "recipient" : "0123456789",
+        data = { "date" : "2010-08-45 12:00",
+                 "recipient" : "0123456rttddbh789",
                  "way_of_communication" : "Bluetooth" }
-                 
-        self.assertFalse(is_valid_appointment(data))
+        form = NotificationValidationForm(data)
+        self.assertFalse(form.is_valid())
+        self.assertEquals(len(form['date'].errors), 1)
+        self.assertEquals(len(form['recipient'].errors), 1)
+        self.assertEquals(len(form['way_of_communication'].errors), 1)
         
-        data = { "date" : "2010-08-12",
-                 "recipient" : "012sdfsdf3456789",
-                 "way_of_communication" : "Bluetooth" }
-                 
-        self.assertFalse(is_valid_appointment(data))
     
     
     def test_create_appointment_form(self):
@@ -47,15 +46,28 @@ class AppointmentViewTest(TestCase):
 
     def test_create_appointment_submit_validations(self):
         appointment_type = AppointmentType.objects.get(pk=1)
-        self.client.get(reverse('web_appointment_create', \
-                kwargs={"appointment_type": appointment_type.name }))
-    
-        self.assertRaises(Exception, self.client.post, reverse('web_appointment_create', \
+        response = self.client.post(reverse('web_appointment_create', \
+            kwargs={"appointment_type": appointment_type.name }), 
+                {'date': '2012-08-12',
+                 'recipient': '01733685224',
+                 'way_of_communication':'sms'  })
+        self.assertEquals(response.status_code, 302)
+            
+        response = self.client.post(reverse('web_appointment_create', \
                 kwargs={"appointment_type": appointment_type.name }), 
                     {'date': '2012-08-12',
-                        'recipient': '01733685224',
-                        'way_of_communication':'xyz'  })
-        
+                        'recipient': '01733assr685224',
+                        'way_of_communication':'spoois'  })
+        self.assertContains(response, 'Please enter numbers only')
+
+        response = self.client.post(reverse('web_appointment_create', \
+            kwargs={"appointment_type": appointment_type.name }), 
+                {'date': '2012-08-12',
+                    'recipient': '685224',
+                    'way_of_communication':'sms'  })
+        self.assertContains(response, 'Please enter a cell phone number.')
+
+
         
 
     def create_appointment(self, way_of_communication):
