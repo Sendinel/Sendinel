@@ -178,14 +178,14 @@ class HospitalAppointment(Sendable):
     def template(self):
         return Template(self.appointment_type.template)
         
-    def reminder_text(self, contents = False):
+    def reminder_text(self, contents = False, reduce = True):
         if not contents:
             contents = {'date': unicode(self.date.date()),
                         'time': unicode(self.date.time()),
                         'hospital': self.hospital.name}
 
         return texthelper.generate_text(contents,
-                                        self.template, False)
+                                        self.template, reduce)
 
     def get_data_for_bluetooth(self):
         """
@@ -249,10 +249,7 @@ class HospitalAppointment(Sendable):
         contents = {'date': str(spokenDate),
                     'hospital': self.hospital.name}
                     
-        #data.data = self.reminder_text(contents)
-        #TODO not sure if no problems occur (testing?)
-        data.data = self.template.substitute(contents)
-        
+        data.data = self.reminder_text(contents, False)
         data.phone_number = self.recipient.phone_number
 
         return data

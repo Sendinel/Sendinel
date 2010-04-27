@@ -146,7 +146,7 @@ AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = 3)
 AUTH = False
 
 #Salutation for SMS Template
-SALUTATION = 'Hello, '
+SMS_SALUTATION = 'Hello, '
 
 # Specify a COM Port for SMS
 # for windows maybe it starts at 0
