@@ -135,7 +135,7 @@ def send_appointment(request):
         mac_address = request.POST['device_mac'].strip()
         
         logger.info("sending appointment to mac_address: " + mac_address)
-        logger.info("appointment data: " + str(appointment))
+        logger.info("appointment data: " + unicode(appointment))
         
         appointment.bluetooth_mac_address = mac_address
         output_data = appointment.get_data_for_sending()
@@ -280,7 +280,7 @@ def save_registration_infoservice(request, id):
                                 way_of_communication = way_of_communication,
                                 infoservice = infoservice)
     subscription.save()
-    logger.info("Saved subscription %s.", str(subscription))
+    logger.info("Saved subscription %s.", unicode(subscription))
     
     return HttpResponseRedirect(reverse('web_index'))
 

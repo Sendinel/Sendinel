@@ -5,12 +5,12 @@ from string import Template
 
 class TesthelperTest(unittest.TestCase):
     def test_generate_text_appointment(self):
-        text = generate_text({'date': "13.2.98, 3:39", 'doctor': "ms daily-binnessy-dayteewart", \
+        text = generate_text({'date': "13.2.98", 'time': "3:39", 'doctor': "ms daily-binnessy-dayteewart", \
                             'hospital': "hodpiel hospital at the " +\
                             "lake with the frog and the tree",\
                             'name': "mr jameson-bitterall-wertifial"},\
                              Template("Dear $name, please remember your appointment" + \
-                                " at the $hospital at $date with doctor $doctor"))  
+                                " at the $hospital at $date, $time with doctor $doctor"))  
         should_text = "Dear mr jameson-bitterall-wertif, please remember " +\
                         "your appointment at the hodpiel hospital at the " + \
                         "lak at 13.2.98, 3:39 with doctor ms daily-binnessy-dayteewar"

@@ -180,7 +180,8 @@ class HospitalAppointment(Sendable):
         
     def reminder_text(self, contents = False):
         if not contents:
-            contents = {'date': str(self.date),
+            contents = {'date': unicode(self.date.date()),
+                        'time': unicode(self.date.time()),
                         'hospital': self.hospital.name}
 
         return texthelper.generate_text(contents,

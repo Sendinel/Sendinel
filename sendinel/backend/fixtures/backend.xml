@@ -15,7 +15,7 @@
     <object pk="3" model="backend.appointmenttype">
         <field type="CharField" name="name">labresult</field>
         <field type="CharField" name="verbose_name">Lab Result</field>
-        <field type="CharField" name="template">Hello, your lab results arrived at $date at the $hospital</field>
+        <field type="CharField" name="template">Hello, your lab results have arrived at the $hospital</field>
         <field type="BooleanField" name="notify_immediately">True</field>
     </object>
     <object pk="1" model="backend.patient">
