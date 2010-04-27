@@ -186,6 +186,7 @@ Set: Text=%s
         """
         
         if linux_available:
+            text = self.replace_special_characters(text)
             voicefile = self.create_voicefile(text)
             content = self.create_spool_content(number,
                                                 voicefile,
