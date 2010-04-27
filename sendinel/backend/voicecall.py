@@ -1,3 +1,5 @@
+from random import random
+
 from sendinel import settings
 
 linux_available = False
@@ -32,7 +34,7 @@ class Voicecall:
         self.asterisk_datacard = settings.ASTERISK_DATACARD 
 
     def create_voicefile(self, text):
-        text_hash = md5(text).hexdigest()
+        text_hash = md5(str(random())).hexdigest()
         filename = "%s/%s.ulaw" % (self.asterisk_festivalcache, text_hash)
         if not os.path.exists(filename):
             args = "-o %s -otype ulaw -" % (filename)
