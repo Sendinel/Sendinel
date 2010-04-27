@@ -4,12 +4,13 @@
         <field type="CharField" name="name">vaccination</field>
         <field type="CharField" name="verbose_name">Vaccination</field>
         <field type="CharField" name="template">Hello, please remember the vaccination at the $hospital at $date</field>
+        <field type="CharField" name="template">Hello, please remember the vaccination at the $hospital on $date</field>
         <field type="BooleanField" name="notify_immediately">False</field> 
     </object>
     <object pk="2" model="backend.appointmenttype">
         <field type="CharField" name="name">consultation</field>
         <field type="CharField" name="verbose_name">Follow-Up Consultation</field>
-        <field type="CharField" name="template">Hello, please remember your consultation at the $hospital at $date</field>
+        <field type="CharField" name="template">Hello, please remember your consultation at the $hospital on $date</field>
         <field type="BooleanField" name="notify_immediately">False</field>
     </object>
     <object pk="3" model="backend.appointmenttype">
