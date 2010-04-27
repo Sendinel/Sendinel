@@ -84,23 +84,32 @@ class HospitalAppointmentTest(TestCase):
         self.assertEquals(type(output_data.data).__name__, "unicode") 
     
     def test_get_data_for_sms(self):
-        self.appointment.appointment_type.template = "This is a very long template with a $date " + \
-            "for the $hospital and also has a $time and is much longer than 160 characters, " + \
+        self.appointment.appointment_type.template = "This is a template with a $date " + \
+            "for the $hospital and a $time and, " + \
             "we use this long template to check if it is reduced before sending it via SMS"
         self.appointment.recipient.phone_number = "012345678"
+        self.appointment.hospital.name = "HospitalnameIsLoooooooooooooooooooooooooong"
         output_data = self.appointment.get_data_for_sms()
         
         self.assertEquals(type(output_data), SMSOutputData)
         self.assertEquals(output_data.phone_number, "012345678")
         self.assertEquals(type(output_data.data), unicode)
         
+        self.assertTrue(len(output_data.data) <= 160)
+        
     def test_get_data_for_voice(self):
+        self.appointment.appointment_type.template = "This is a very long template with a $date " + \
+            "for the $hospital and also has a $time and is much longer than 160 characters, " + \
+            "we use this long template to check if it is reduced before sending it via SMS"
         self.appointment.recipient.phone_number = "012345678"
         output_data = self.appointment.get_data_for_voice()
         
         self.assertEquals(type(output_data), VoiceOutputData)
         self.assertEquals(output_data.phone_number, "012345678")
         self.assertEquals(type(output_data.data), unicode)
+        
+        self.assertTrue(len(output_data.data) > \
+            len(self.appointment.appointment_type.template))
         
 class InfoMessageTest(TestCase):
     fixtures = ['backend']

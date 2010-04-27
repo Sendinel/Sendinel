@@ -4,7 +4,7 @@ def date_to_text(weekday, day, month, hour, minutes):
     """
         Use:
         >>> date_to_text(3, 18, 3, 11, 40)
-        'Wednesday, eighteenth of March at eleven forty'
+        {"date" : 'Wednesday, eighteenth of March', "time" : 'eleven forty'}
         
     """
     months = {1: "January",
@@ -121,7 +121,10 @@ def date_to_text(weekday, day, month, hour, minutes):
                 58: "fifty-eigth",
                 59: "fifty-nine"}
     
-    return days[weekday] + ", " + order[day] + " of " + months[month] + " at " + numbers[hour] + " " + numbers[minutes]
+    text = {"date" : days[weekday] + ", " + order[day] + " of " + months[month],
+            "time" : numbers[hour] + " " + numbers[minutes]}
+    
+    return  text 
 
 def generate_text(contents, template, is_sms = True):
     """
@@ -131,7 +134,7 @@ def generate_text(contents, template, is_sms = True):
     
     contents = replace_dollar_signs(contents)
     sms = template.substitute(contents)
-    #import pdb; pdb.set_trace()
+    
     if is_sms:
         if len(sms) > max_chars:
             template_length = len(sms)-get_content_length(contents)

@@ -178,14 +178,14 @@ class HospitalAppointment(Sendable):
     def template(self):
         return Template(self.appointment_type.template)
         
-    def reminder_text(self, contents = False, reduce = True):
+    def reminder_text(self, contents = False, is_sms = True):
         if not contents:
             contents = {'date': unicode(self.date.date()),
                         'time': unicode(self.date.time()),
                         'hospital': self.hospital.name}
 
         return texthelper.generate_text(contents,
-                                        self.template, reduce)
+                                        self.template, is_sms)
 
     def get_data_for_bluetooth(self):
         """
@@ -242,11 +242,13 @@ class HospitalAppointment(Sendable):
         Return VoiceOutputData for sending.
         """
     
-        spokenDate = texthelper.date_to_text(self.date.weekday() + 1, \
+        spoken_date = texthelper.date_to_text(self.date.weekday() + 1, \
             self.date.day, self.date.month, self.date.hour, self.date.minute)
 
         data = VoiceOutputData()
-        contents = {'date': str(spokenDate),
+        
+        contents = {'date': unicode(spoken_date["date"]),
+                    'time' : unicode(spoken_date["time"]),
                     'hospital': self.hospital.name}
                     
         data.data = self.reminder_text(contents, False)

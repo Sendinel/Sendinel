@@ -15,6 +15,12 @@ class TesthelperTest(unittest.TestCase):
         
         texthelper.SMS_SALUTATION = self.salutation
 
+    def test_date_to_text(self): 
+        date = texthelper.date_to_text(3, 18, 3, 11, 40)
+        
+        self.assertEquals(date["date"], 'Wednesday, eighteenth of March')
+        self.assertEquals(date["time"], "eleven forty")
+        
     def test_generate_text_appointment(self):
         text = texthelper.generate_text({'date': "13.2.98", 'time': "3:39", 'doctor': "ms daily-binnessy-dayteewart", \
                             'hospital': "hodpiel hospital at the " +\
