@@ -141,6 +141,7 @@ AUTH_NUMBER = "CHANGE ME"
 # time a user has to call the system to authenticate
 AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = 3)
 
+CALL_SALUTATION = "This is an automated call from your clinic"
 
 # True or False to turn authentication on or off
 AUTH = False
