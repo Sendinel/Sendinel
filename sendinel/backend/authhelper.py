@@ -9,7 +9,7 @@ from sendinel.settings import AUTHENTICATION_CALL_TIMEOUT, \
                               COUNTRY_CODE_PHONE, \
                               START_MOBILE_PHONE
 
-def format_phonenumber(number):
+def format_and_validate_phonenumber(number):
     """
     Replaces all number specific characters like
     "+", "-" and "/" and checks that there are no
@@ -50,7 +50,7 @@ def check_and_delete_authentication_call(number):
     Try to find an AuthenticationCall for the given phone numner.
     The last seven digits are compared to identify the call.
     """
-    number = format_phonenumber(number)
+    number = format_and_validate_phonenumber(number)
     
     last_seven_digits = number[-7:]
     calls = AuthenticationCall.objects.filter( \

@@ -145,6 +145,9 @@ AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = 3)
 # True or False to turn authentication on or off
 AUTH = False
 
+#Salutation for SMS Template
+SMS_SALUTATION = 'Hello, '
+
 # Specify a COM Port for SMS
 # for windows maybe it starts at 0
 SERIALPORTSMS = '/dev/rfcomm0'

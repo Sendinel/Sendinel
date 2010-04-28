@@ -14,7 +14,7 @@ from django.views.i18n import javascript_catalog
 from sendinel.backend import bluetooth
 from sendinel.backend.authhelper import check_and_delete_authentication_call, \
                                     delete_timed_out_authentication_calls, \
-                                    format_phonenumber
+                                    format_and_validate_phonenumber
 from sendinel.backend.models import Patient, \
                                     InfoService, Subscription, \
                                     HospitalAppointment, Hospital, \
@@ -288,7 +288,7 @@ def save_registration_infoservice(request, id):
 @log_request
 def fill_authentication_session_variable(request):
     number = request.session["patient"].phone_number
-    number = format_phonenumber(number)
+    number = format_and_validate_phonenumber(number)
     request.session['authenticate_phonenumber'] = \
                             { 'number': number,
                               'start_time': datetime.now() }
