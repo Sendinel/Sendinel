@@ -10,7 +10,7 @@ from sendinel.web.forms import NotificationValidationForm
 from sendinel import settings
 
 class AppointmentViewTest(TestCase):
-    fixtures = ['backend']
+    fixtures = ['backend_test']
     urls = 'sendinel.urls'
     
     def setUp (self):

@@ -3,7 +3,7 @@ from django.test import TestCase
 
 
 class InternationalizationTest(TestCase):
-    fixtures = ['backend']
+    fixtures = ['backend_test']
     urls = 'sendinel.urls'
     
     def setUp (self):

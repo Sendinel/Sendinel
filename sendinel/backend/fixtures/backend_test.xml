@@ -53,7 +53,7 @@
         <field type="CharField" name="way_of_communication">voice</field>
     </object>
     <object pk="2" model="backend.infoservice">
-        <field type="CharField" name="name">Morning Prayer</field>
+        <field type="CharField" name="name">Sendinel-Tester</field>
     </object>
     <object pk="1" model="backend.hospitalappointment">
         <field type="CharField" name="way_of_communication">sms</field>
@@ -66,7 +66,7 @@
         <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>backend</natural><natural>hospitalappointment</natural></field>
         <field type="PositiveIntegerField" name="sendable_id">1</field>
         <field type="DateTimeField" name="send_time">2010-02-08 18:43:07</field>
-        <field type="CharField" name="state">sent</field>
+        <field type="CharField" name="state">new</field>
     </object>
     <object pk="1" model="backend.infomessage">
         <field type="CharField" name="way_of_communication">sms</field>
