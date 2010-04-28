@@ -60,36 +60,49 @@ class AuthenticateViewTests(TestCase):
         # 
         # self.assertContains(response, 'name="name"')
         
-    def test_check_call_received(self):
-        # make sure there are no AuthenticationCall objects in the db
-        print "Pending: web/auth_test.py test_check_call_received"
-        # AuthenticationCall.objects.all().delete()
-        # 
-        # self.client.post("/web/authenticate_phonenumber/", 
-        #                 {'number':'01234 / 56789012'})
-        # 
-        # response = self.client.post("/web/check_call_received/")
-        # 
-        # self.failUnlessEqual(response.status_code, 200)
-        # self.assertContains(response, "waiting")
-        # 
-        # AuthenticationCall(number = "0123456789012").save()
-        # 
-        # response = self.client.post("/web/check_call_received/")
-        #     
-        # self.failUnlessEqual(response.status_code, 200)
-        # self.assertContains(response, "received")
-        # 
-        # # make sure timeout is over
-        # real_timeout = views.AUTHENTICATION_CALL_TIMEOUT
-        # views.AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = -1)
-        # 
-        # response = self.client.post("/web/check_call_received/")  
-        # 
-        # self.failUnlessEqual(response.status_code, 200)
-        # self.assertContains(response, "failed")      
-        # 
-        # views.AUTHENTICATION_CALL_TIMEOUT = real_timeout
+    def test_check_call_received(self):        
+        # settings up the environment
         
-
-
+        appointment_type = AppointmentType.objects.get(pk=1)
+        
+        self.client.get(reverse('web_appointment_create', \
+                kwargs={"appointment_type_name": appointment_type.name })) 
+        data = {'date': '2012-08-12',
+                'phone_number': '0123456789012',
+                'way_of_communication': 'sms'}
+        self.client.post(reverse('web_appointment_create', \
+                kwargs = {"appointment_type_name": appointment_type.name }), data)
+                
+        # make sure there are no AuthenticationCall objects in the db
+        AuthenticationCall.objects.all().delete()
+               
+        auth_save = views.AUTH
+        views.AUTH = True
+                
+        self.client.post("/web/authenticate_phonenumber/", 
+            {'number':'01234 / 56789012'})
+    
+        response = self.client.post("/web/check_call_received/")
+    
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertContains(response, "waiting")
+    
+        AuthenticationCall(number = "0123456789012").save()
+    
+        response = self.client.post("/web/check_call_received/")
+        
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertContains(response, "received")
+    
+        # make sure timeout is over
+        real_timeout = views.AUTHENTICATION_CALL_TIMEOUT
+        views.AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = -1)
+    
+        response = self.client.post("/web/check_call_received/")  
+    
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertContains(response, "failed")      
+    
+        views.AUTHENTICATION_CALL_TIMEOUT = real_timeout
+        
+        views.AUTH = auth_save
