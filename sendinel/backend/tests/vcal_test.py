@@ -11,7 +11,7 @@ class VcalTest(TestCase):
     """
     """
     
-    fixtures = ['backend']
+    fixtures = ['backend_test']
 
     class FakeDatetime:
         def now(self):

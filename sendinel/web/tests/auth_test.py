@@ -8,7 +8,7 @@ from sendinel.web import views
 
 
 class AuthenticateViewTests(TestCase):
-    fixtures = ['backend']
+    fixtures = ['backend_test']
     urls = "urls"
 
     def test_authenticate_phonenumber_messages(self):

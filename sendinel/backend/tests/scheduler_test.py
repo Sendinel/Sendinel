@@ -9,7 +9,7 @@ from sendinel.backend import output
 class SchedulerTest(TestCase):    
     
     counter = 0
-    fixtures = ['backend']
+    fixtures = ['backend_test']
     
     def test_scheduler(self):     
         

@@ -10,7 +10,7 @@ class StaffInfoServiceTest(TestCase):
     
     client = Client()
     
-    fixtures = ['backend']
+    fixtures = ['backend_test']
     
     def setUp(self):
         User.objects.create_user('john', 'l@example.com', 'passwd')

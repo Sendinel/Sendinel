@@ -15,7 +15,7 @@ from sendinel.backend.output import VoiceOutputData, SMSOutputData, \
 
 class SendableTest(TestCase):
 
-    fixtures = ['backend']
+    fixtures = ['backend_test']
 
     def setUp(self):
         self.sendable = InfoMessage()
@@ -26,7 +26,7 @@ class SendableTest(TestCase):
         pass
 
 class HospitalTest(TestCase):
-    fixtures = ['backend']
+    fixtures = ['backend_test']
     
     def test_get_hospital_no_hospital(self):
         Hospital.objects.all().delete()
@@ -40,7 +40,7 @@ class HospitalTest(TestCase):
         self.assertEquals(Hospital.get_current_hospital(), hospital)
 
 class HospitalAppointmentTest(TestCase):
-    fixtures = ['backend']
+    fixtures = ['backend_test']
     
     def setUp(self):
         self.appointment = HospitalAppointment.objects.get(id = 1)
@@ -112,7 +112,7 @@ class HospitalAppointmentTest(TestCase):
             len(self.appointment.appointment_type.template))
         
 class InfoMessageTest(TestCase):
-    fixtures = ['backend']
+    fixtures = ['backend_test']
     
     def setUp(self):
         self.info_message = InfoMessage.objects.get(pk = 1)
