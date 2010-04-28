@@ -30,13 +30,13 @@
             <table class="cells_align_top">
                 <tr>
                     <th>
-                        <label for="id_phone_number">Phone number:</label>
-                        {% if form.recipient.errors %}
-                            {{ form.recipient.errors }}
+                        <label for="id_phone_input">Phone number:</label>
+                        {% if form.phone_number.errors %}
+                            {{ form.phone_number.errors }}
                         {% endif %}
                     </th>
                     <td>
-                        <input id="id_phone_input" type="text" name="recipient" class="selectable" />                       
+                        <input id="id_phone_input" type="text" name="phone_number" class="selectable" />                       
                     </td>
                 </tr>
                 {% if not appointment_type.notify_immediately %}
