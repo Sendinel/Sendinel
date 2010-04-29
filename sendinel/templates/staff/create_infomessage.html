@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% load i18n %}
+
+{% block script %}
+    <script src="{{ MEDIA_URL }}/js/infomessage.js" type="text/javascript"></script>
+{% endblock %}
+
 {% block content %}
     <h3>{% blocktrans with infoservice.name as infoservice %}Send a message to {{ infoservice }}{% endblocktrans %}</h3>
     <p>
@@ -9,6 +14,8 @@
             </table>
             <input type="submit" name="submit" value="Send" id="id_submit" />
         </form>
+        
+        <div id="chars-left">{% trans "Chars left:" %}</div>
     </p>
     <p><a href="{% url staff_list_infoservices %}">{% trans "List Inforservices" %}</a> |
         <a href="{% url web_index %}">{% trans "Back to Main Menu" %}</a></p>
