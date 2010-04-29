@@ -85,7 +85,8 @@ if __name__ == "__main__":
     
         context = daemon.DaemonContext(
                     working_directory = working_directory,
-                    pidfile = pidlockfile.PIDLockFile(pid_file))
+                    pidfile = pidlockfile.PIDLockFile(pid_file),
+                    detach_process = True)
     
         with context:
             run()

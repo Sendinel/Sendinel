@@ -9,7 +9,7 @@ logFile="/tmp/sendinelScheduler.log"
 start() {
     echo -n "Starting Sendinel scheduler"
     cd $sendinelPath && \
-    python "$sendinelPath/backend/scheduler.py" $pidFile >> "$logFile" 2>&1
+    python "$sendinelPath/backend/scheduler.py" $pidFile
     echo "."
 }
 
