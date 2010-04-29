@@ -19,7 +19,7 @@ class WebInfoServiceTest(TestCase):
      
     def test_infoservices_on_main_page(self):
         response = self.client.get(reverse('web_index'))
-        print "Pending: web/infoservice_test.py test_infoservices_on_main_page"
+        # print "Pending: web/infoservice_test.py test_infoservices_on_main_page"
         # TODO Adapt this to new menu structure
         # self.assertContains(response, "Inform me")
         

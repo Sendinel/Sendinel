@@ -19,18 +19,18 @@ class AppointmentViewTest(TestCase):
         
     def test_notification_form_validation(self):
         data = { "date" : "2010-08-12 12:00",
-                 "recipient" : "0123456789",
+                 "phone_number" : "0123456789",
                  "way_of_communication" : "bluetooth"}
         form = NotificationValidationForm(data)       
         self.assertTrue(form.is_valid())
         
         data = { "date" : "2010-08-45 12:00",
-                 "recipient" : "0123456rttddbh789",
+                 "phone_number" : "0123456rttddbh789",
                  "way_of_communication" : "Bluetooth" }
         form = NotificationValidationForm(data)
         self.assertFalse(form.is_valid())
         self.assertEquals(len(form['date'].errors), 1)
-        self.assertEquals(len(form['recipient'].errors), 1)
+        self.assertEquals(len(form['phone_number'].errors), 1)
         self.assertEquals(len(form['way_of_communication'].errors), 1)
         
     
@@ -42,7 +42,7 @@ class AppointmentViewTest(TestCase):
         response = self.client.get(reverse('web_appointment_create', \
                 kwargs={"appointment_type_name": appointment_type.name }))
         self.failUnlessEqual(response.status_code, 200)
-        self.assertContains(response, 'name="recipient"')
+        self.assertContains(response, 'name="phone_number"')
         self.assertContains(response, 'name="way_of_communication"')
         return response
 
@@ -66,21 +66,22 @@ class AppointmentViewTest(TestCase):
         response = self.client.post(reverse('web_appointment_create', \
             kwargs={"appointment_type_name": appointment_type.name }), 
                 {'date': '2012-08-12',
-                 'recipient': '01733685224',
+                 'phone_number': '01733685224',
                  'way_of_communication':'sms'  })
         self.assertEquals(response.status_code, 302)
             
         response = self.client.post(reverse('web_appointment_create', \
                 kwargs={"appointment_type_name": appointment_type.name }), 
                     {'date': '2012-08-12',
-                        'recipient': '01733assr685224',
-                        'way_of_communication':'spoois'  })
+                     'phone_number': '01733assr685224',
+                      'way_of_communication':'spoois' })
+
         self.assertContains(response, 'Please enter numbers only')
 
         response = self.client.post(reverse('web_appointment_create', \
             kwargs={"appointment_type_name": appointment_type.name }), 
                 {'date': '2012-08-12',
-                    'recipient': '685224',
+                    'phone_number': '685224',
                     'way_of_communication':'sms'  })
         self.assertContains(response, 'Please enter a cell phone number.')
 
@@ -93,7 +94,7 @@ class AppointmentViewTest(TestCase):
                 kwargs={"appointment_type_name": appointment_type.name }))
         
         data = {'date': '2012-08-12',
-                'recipient': '01733685224',
+                'phone_number': '01733685224',
                 'way_of_communication': way_of_communication}
         return self.client.post(reverse('web_appointment_create', \
                 kwargs = {"appointment_type_name": appointment_type.name }), data)
@@ -170,7 +171,7 @@ class AppointmentViewTest(TestCase):
         appointment_type = AppointmentType.objects.get(pk=3) #labresults
         response = self.client.post(reverse('web_appointment_create', \
             kwargs={"appointment_type_name": appointment_type.name }), 
-                {'recipient': '01733685224',
+                {'phone_number': '01733685224',
                  'way_of_communication':'sms'  })
         # validations test if date is correct. 
         # If not, there will be no 302 status code
