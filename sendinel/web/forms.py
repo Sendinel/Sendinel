@@ -6,7 +6,7 @@ from sendinel.backend.authhelper import format_and_validate_phonenumber
 
 
 class NotificationValidationForm(Form):
-    recipient = CharField(validators = [format_and_validate_phonenumber],
+    phone_number = CharField(validators = [format_and_validate_phonenumber],
             error_messages={'required':_('Please enter a phone number')})
                 
     date = DateTimeField(error_messages={ \

@@ -1,5 +1,15 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% block script %}
+    <script type="text/javascript">
+        var confirmFunction = function(url) {
+            var confirmed = confirm("Do you really want to delete the patient?");
+            if (confirmed){
+                window.location = url;
+            }
+        };
+    </script>
+{% endblock %}
 {% block content %}
     <h3>{% trans "Members of " %}{{infoservice}}</h3>
     
@@ -14,7 +24,7 @@
         <tr>
             <td>{{ subscription.patient.phone_number }}</td>
             <td>{{ subscription.way_of_communication }}</td>
-            <td><a href="{% url staff_infoservice_members_delete id=infoservice.id, patient_id=subscription.patient.id%}">
+            <td><a onclick=" confirmFunction('{% url staff_infoservice_members_delete id=infoservice.id, patient_id=subscription.patient.id%}')">
                                 {% trans "Remove Patient from Group" %}</a></td>
         </tr>
         

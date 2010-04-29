@@ -105,6 +105,7 @@ h3{
     background: #F3F3F3;
     background-image: url(../img/arrow_right_orange.png);
     background-repeat: no-repeat;
+    background-position: 10px 0px;
 }
 .menulist div a
 {

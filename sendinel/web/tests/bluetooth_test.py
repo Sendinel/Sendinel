@@ -58,7 +58,7 @@ class BluetoothViewTest(TestCase):
         self.client.get(reverse('web_appointment_create', \
                 kwargs={"appointment_type_name": appointment_type.name })) 
         data = {'date': '2012-02-22',
-                'recipient': '0175685444',
+                'phone_number': '0175685444',
                 'way_of_communication': 'bluetooth'}
         self.client.post(reverse('web_appointment_create', \
                 kwargs = {"appointment_type_name": appointment_type.name }), data)

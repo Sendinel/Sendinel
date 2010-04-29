@@ -66,13 +66,11 @@ def create_appointment(request, appointment_type_name = None):
         if form.is_valid():
             appointment = HospitalAppointment()
             patient = Patient()
-            patient.phone_number = form.cleaned_data['recipient']
+            patient.phone_number = form.cleaned_data['phone_number']
             appointment.date = form.cleaned_data['date']
             appointment.appointment_type = appointment_type
             appointment.hospital = Hospital.get_current_hospital()
-            appointment.way_of_communication = form.cleaned_data['way_of_communication']             
-    
-            
+            appointment.way_of_communication = form.cleaned_data['way_of_communication']
             
             request.session['appointment'] = appointment
             request.session['patient'] = patient            
@@ -90,7 +88,6 @@ def create_appointment(request, appointment_type_name = None):
                         reverse("web_appointment_save"))
                 return HttpResponseRedirect( \
                         reverse("web_appointment_save"))
-                    
             else:
                 logger.error("Unknown way of communication selected.")
                 raise Exception ("Unknown way of communication %s " \
