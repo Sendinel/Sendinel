@@ -19,7 +19,11 @@
         {% trans " notification has been created." %}
     </h3>
     
-    <p class="success">{% trans "Please tell the patient that he/she will be reminded one day before the appointment." %}</p>
+    {% if appointment.appointment_type.notify_immediately %}
+        <p class="success">{% trans "The patient will be informed immediately." %}</p>
+    {% else %}
+        <p class="success">{% trans "Please tell the patient that he/she will be reminded one day before the appointment." %}</p>
+    {% endif %}
     
     <form action="{{ nexturl }}" method="post">
         {% include "web/control_buttons_widget.html" %}	      
