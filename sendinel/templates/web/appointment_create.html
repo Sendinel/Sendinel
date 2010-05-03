@@ -65,9 +65,12 @@
                         <select name="way_of_communication" id="id_way_of_communication">
                             <option value="" selected="selected">---------</option>
                             <option value="sms">SMS</option>
+                {% comment %} 
+                        bluetooth as a way of communication is comming soon    
                             {% if not appointment_type.notify_immediately %}
                                 <option value="bluetooth">Bluetooth</option>
                             {% endif %}
+                {% endcomment %}
                             <option value="voice">Voice Call</option>
                         </select>
                     </td>
