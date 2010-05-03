@@ -1,98 +1,104 @@
-body{
-    background:#FFFFFF;
-    margin:9px;
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height:100%;
+   
     font: 14pt/20pt 'Lucida Grande', Verdana, Helvetica, sans-serif;
     color:#666666;
 }
 
-A:link{ color:#999999; text-decoration:none; }
-A:hover{ color:#000; text-decoration:underline; }
-A:active{ color:#999999; text-decoration:none; }
-A:active:hover{ color:#000; text-decoration:underline; }
-A:visited{ color:#999999; text-decoration:none; }
-A:visited:hover{ color:#000; text-decoration:underline; }
-
-img { border: 0px; }
-
-.centered {
-    width: 100%;
-    text-align: center;
+a {
+    text-decoration: none;
+    color: #000000;
 }
 
-.logout{
-    border: 1px solid #7d7d7d;
-    background-color: #fdfdfd;
-    width: 200px;
-    text-align: center;
+#page {
+    margin: 0 auto;
+    position: relative;
+    min-height: 100%;
+    height: 100%;	
 }
 
-#content1{
+
+#header{
+    width:100%;
+    background-color: #eeeeee;
+    height:120px;
+}
+
+#sendinelDIV{
+
+    text-align: left;
+    float: left;
+    padding-left: 30px;
     padding-top: 20px;
-    padding-left: 20px;
-    text-align: left;
-    float: left;
+    
 }
 
-
-h3{
-    text-align:left;
-    color:#fcc533;
-    font-size:1.4em;
-    font-weight:bold;
+#hpiDIV{
+    text-align: right;
+    padding-right: 30px;
+    padding-top: 20px;
 }
 
-#rightbar {
+#footer{
+    background-color: #eeeeee;
     position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 360px;
-    text-align: center;
-    background-color: #EEE;
+    bottom:0px;
+    height:120px;
+    width:100%;
+
+}
+#content{
+    overflow:hidden;
+    background:#ffffff;
 }
 
-#rightbar div {
+#notifications{
+    float:left;
     padding:20px;
+
+    background:#ffffff;
+    border-right: 10px solid #eeeeee;    
+    display:block;
 }
 
-#rightbar img {
-    margin-bottom: 25px;
+#groups{
+    float:left;
+
+    background:#ffffff;
+    padding:20px;
+    display:block;
 }
 
-#rightbar #infotext {
-    border: 2px solid #B3B2B2; 
-    padding: 5px;
-    margin: 10px;
-    position: fixed;
-    bottom: 0px;
+#infotext{
+    position:absolute;
+    left:40px;
+    float:left;
+    min-width:300px;
+    max-width:500px;
+    max-height: 100px;
+    padding: 10px;
+    padding-left: 80px;
+    background-position:20px 20px;
+    background-image: url(../img/info_sign.png);
+    background-repeat: no-repeat;
+}
+#contact{
+    position:absolute;
+    right:40px;
+    float:left;
+    text-align:right;
+    padding:10px;
 }
 
-#rightbar #infotext img{
-    float: left;
-    margin: 5px 10px 5px 0px;
-}
-
-#rightbar #infotext p {
-    font-size: 0.8em; 
-    text-align: left;
-    margin: 0px;
-    padding-top: 5px;
-}
-
-#rightbar #infotext .contact {
-    font-size: 0.5em; 
-    text-align: center;
-    margin-bottom: -15px;    
-}
-
-#rightbar #infotext .contact-last {
-    font-size: 0.5em; 
-    margin-bottom: 0px;
-}
-
-#bluetootLogo{
-    float:right;
-}
 
 .menulist div
 {
@@ -146,4 +152,11 @@ strong.big {
 }
 .selected {
     background-color: #FCC533;
+}
+
+h3{
+    text-align:left;
+    color:#fcc533;
+    font-size:1.4em;
+    font-weight:bold;
 }
