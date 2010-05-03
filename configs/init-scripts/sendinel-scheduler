@@ -12,6 +12,10 @@
 sendinelPath="/media/sdcard/sendinel/Sendinel/sendinel"
 pidFile="/tmp/sendinelScheduler.pid"
 
+#################################
+# TODO update this for release - see sendinel/scheduler.sh
+#################################
+
 case "$1" in
  start)
        echo -n "Starting Sendinel scheduler"
