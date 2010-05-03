@@ -13,7 +13,7 @@
 			return this; // chainable
 		$.fn.jVal.defaults = $.extend($.fn.jVal.defaults, options);
 		$(this).stop().find('.jfVal,.jValCover').stop().remove();
-		var passVal = true, dm = $.fn.jVal.defaults.message, ds = $.fn.jVal.defaults.style;
+		var passVal = true, dm = $.fn.jVal.defaults.message, ds = $.fn.jVal.defaults.jvalstyle;
 		$(this).find('.jVal,[jVal]:not(:disabled):visible').each(
 			function () {
 				var cmd = $(this).data('jVal');
@@ -84,7 +84,7 @@
 				$(par).find('.jValSpacer:first').clone().css({clip:clips[si]}) );
 		// autoHide = set spacer width + add autohide function to fx queue
 		if ( autoHide )
-			$(par).data( 'autoHide', setTimeout(function () { $(par).find('.jfVal').animate({left:lPos,opacity:0}, 200, function () { $.fn.jVal.clean(par); }); }, 2000) )
+			$(par).data( 'autoHide', setTimeout(function () { $(par).find('.jfVal').animate({left:lPos,opacity:0}, 200, function () { $.fn.jVal.clean(par); }); }, 10000) )
 				.find('.jfVal').css({'left':rPos});
 		else
 			$(par).find('.jfVal').css({opacity:0}).animate({left:rPos,opacity:1}, 200);
@@ -128,7 +128,7 @@
 		});
 		var keyFunc = function (e) {
 			eval( 'var cmd = ' + ( $(this).data('jValKey') || $(this).attr('jValKey') || $(this).data('jValKeyUp') || $(this).attr('jValKeyUp') ) + ';' );
-			var keyTest, ds = $.fn.jVal.defaults.style, dkm = $.fn.jVal.defaults.keyMessage,
+			var keyTest, ds = $.fn.jVal.defaults.jvalstyle, dkm = $.fn.jVal.defaults.keyMessage,
 				autoHide = typeof(cmd.autoHide) != 'undefined' ? cmd.autoHide : true;
 			if ( cmd instanceof Object && cmd.valid instanceof Function ) {
 				keyTest = cmd.valid( e, this );
@@ -159,7 +159,7 @@
 	$.fn.jVal.defaults = {
 		blurCheck: false,
 		message: 'Invalid entry',
-		style: 'pod',
+		jvalstyle: 'cover',
 		keyMessage: '"%c" Invalid character',
 		padding: 3,
 		border: 1,
