@@ -3,6 +3,16 @@
 
 {% block script %}
     <script src="{{ MEDIA_URL }}/js/infomessage.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    
+    $(document).ready(function() {
+    $("#id_text").attr("jVal", "{valid:function (val) { if (val.length < 10) return false; else return true; }, message:'This message seems to be too short.'}");
+    $("#id_text").attr("jValKey", "{valid:/[ a-zA-Z0-9._%+-@:,#*]/, message:'&quot;%c&quot; Invalid Character - No Special Characters Allowed', cFunc:'$(\\'#formContainer\\').jVal()'}");
+    });
+    
+    </script>
+     <script src="{{ MEDIA_URL }}/js/jVal.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/jval/jVal.css">
 {% endblock %}
 
 {% block content %}

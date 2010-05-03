@@ -61,11 +61,12 @@ def create_infomessage(request, id):
         
         nexturl = reverse('web_index')
         
-        success_title = _("Message created")
-        success_message = _("All members of the %s service will get your message.") \
+        success = True
+        title = _("Message created")
+        message = _("All members of the %s service will get your message.") \
                             % infoservice.name
     
-        return render_to_response('web/success.html', 
+        return render_to_response('web/status_message.html', 
                                   locals(),
                                   context_instance = RequestContext(request))
 
@@ -97,10 +98,11 @@ def create_infoservice(request):
         
         nexturl = reverse('staff_list_infoservices')
         
-        success_title = _("Creation successful")
-        success_message = _("The %s service has been created.") % infoservice.name
+        success = True
+        title = _("Creation successful")
+        message = _("The %s service has been created.") % infoservice.name
     
-        return render_to_response('web/success.html', 
+        return render_to_response('web/status_message.html', 
                                   locals(),
                                   context_instance = RequestContext(request))
         

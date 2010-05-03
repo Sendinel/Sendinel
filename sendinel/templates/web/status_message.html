@@ -14,15 +14,18 @@
 {% endblock %}
 
 {% block content %}
-    <h3>
-        {{ success_title }}
-    </h3>
+    <div id="content-padding">
     
-    <p class="success">
-        {{ success_message }}
-    </p>
-    
-    <form action="{{ nexturl }}" method="post">
-        {% include "web/control_buttons_widget.html" %}	      
-    </form>
+        <h3>
+            {{ title }}
+        </h3>
+        
+        <div class="status {% if success %}success {% else %} error {% endif %}">
+            {{ message }}
+        </div>
+        
+        <form action="{{ nexturl }}" method="post">
+            {% include "web/control_buttons_widget.html" %}	      
+        </form>
+    </div>
 {% endblock %}

@@ -1,0 +1,83 @@
+.jfVal {
+	position: absolute;
+	z-index: 1110;
+}
+.jValSpacer {
+	position: absolute;
+	width: 0px;
+	float: left;
+}
+.jValSpacercover {
+	background: #eee url(eeGrad2.gif) bottom repeat-x;
+	border: 1px solid #ccc;
+	border-right: 0px;
+}
+.jValSpacerpod {
+	background: #f0f2f5 url(f0f2f5grad.gif) bottom repeat-x;
+	border: 1px solid #ccc;
+	border-right: 0px;
+}
+.jValSpacerblank {
+	height: 16px !important;
+	opacity: 0.6;
+}
+.jfVal .icon {
+	float: left;
+}
+.jfVal .iconcover {
+	background: #eee url(eeGrad2.gif) bottom repeat-x;
+	border: 1px solid #ccc;
+	border-width: 1px 0px;
+	width: 20px;
+	text-align: left;
+}
+.jfVal .iconpod {
+	background: #f0f2f5 url(f0f2f5grad.gif) bottom repeat-x;
+	border: 1px solid #ccc;
+	border-left: 0px;
+	-moz-border-radius-topright: 3px;
+	-moz-border-radius-bottomright: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	width: 20px;
+	text-align: left;
+}
+.jfVal .iconblank {
+	background: #fff;
+	margin-top: -4px;
+	height: 20px !important;
+	padding-left: 5px;
+}
+.jfVal .icon .iconbg {
+	background: url(warning.gif) center left no-repeat;
+	height: 100%;
+	width: 16px;
+}
+.jfVal .content {
+	color: red;
+	vertical-align: middle;
+	white-space: nowrap;
+	float: left;
+	padding-right: 5px;
+}
+.jfVal .contentcover {
+	background: #eee url(eeGrad2.gif) bottom repeat-x;
+	border: 1px solid #ccc;
+	border-left: 0px;
+	-moz-border-radius-topright: 3px;
+	-moz-border-radius-bottomright: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+}
+.jfVal .messagepod {
+	opacity: 0.8;
+	background: #fff;
+	padding: 2px 5px;
+}
+.jfVal .messageblank {
+	background: #fff;
+	padding: 2px 5px;
+}
+#form_blank input[type=text], #form_blank [jVal] {
+	padding-top:3px;
+}

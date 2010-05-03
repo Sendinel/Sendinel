@@ -126,15 +126,16 @@ def save_appointment(request):
     
     appointment.save_with_patient(patient)
         
-    success_title = _("The %s notification has been created.") \
+    
+    title = _("The %s notification has been created.") \
                         % appointment.appointment_type.verbose_name
     if appointment.appointment_type.notify_immediately:
-        success_message = _("The patient will be informed immediately.")
+        message = _("The patient will be informed immediately.")
     else:
-        success_message = _("Please tell the patient that he/she will be reminded"\
+        message = _("Please tell the patient that he/she will be reminded"\
                             " one day before the appointment.")
 
-    return render_to_response('web/success.html', 
+    return render_to_response('web/status_message.html', 
                               locals(),
                               context_instance = RequestContext(request))
 
@@ -295,11 +296,12 @@ def save_registration_infoservice(request, id):
     subscription.save()
     logger.info("Saved subscription %s.", unicode(subscription))
     
-    success_title = _("Registration successful")
-    success_message = _("The patient will now receive all messages from the "
+    success = True
+    title = _("Registration successful")
+    message = _("The patient will now receive all messages from the "
                         " %s service.") % infoservice.name
     
-    return render_to_response('web/success.html', 
+    return render_to_response('web/status_message.html', 
                               locals(),
                               context_instance = RequestContext(request))
 
