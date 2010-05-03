@@ -25,6 +25,7 @@
 {% endblock %}
 
 {% block content %}
+    <div id="content-padding">
     <h3>{{ appointment_type.verbose_name }}</h3>
 	<p>{% trans "Please enter the appointment details." %}</p>
     <p>
@@ -86,5 +87,6 @@
             {% include "web/control_buttons_widget.html" %}
         </form>        
     </p>
+    </div>
     </div>
 {% endblock %}
