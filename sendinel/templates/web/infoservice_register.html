@@ -16,6 +16,8 @@
         });
     </script>
     <script src="{{ MEDIA_URL }}/js/way_of_communication.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ MEDIA_URL }}/js/jVal.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/jval/jVal.css">
 {% endblock %}
  
 {% block content %}
@@ -30,7 +32,11 @@
                 {% endif %}              
                 <tr>
                   <td>{% trans "Phone Number" %}</td>
-                  <td><input id="id_phone_input" type="text" name="number" class="selectable" /></td>
+                  <td>
+			<input id="id_phone_input" type="text" name="number" class="selectable" 
+			    jVal="{valid:function (val) { if (val.length < 6) return false; else return true; }, message:'Please enter a valid phone number'}"
+                            jValKey="{valid:/[+0-9]/, message:'&quot;%c&quot; Please only enter digits for the phone number', cFunc:'$(\'#submitButton\').click();'}"/>
+		</td>
                 </tr>
                 <tr>
                   <td>{% trans "Way of Communication" %}</td>

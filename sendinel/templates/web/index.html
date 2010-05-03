@@ -3,9 +3,10 @@
 {% block script %}
 {% endblock %}
 {% block content %}
-    <h3>{% trans "Notifications" %}</h3>
-    <div class="menulist">
-    
+
+ 
+    <div class="menulist" id="notifications">
+      <h3>{% trans "Notifications" %}</h3>
         {% for appointment_type in appointment_types %}
             <div>
                 <a href="{% url web_appointment_create appointment_type_name=appointment_type.name %}">{% trans "Remind of " %}{{ appointment_type.verbose_name }}</a>
@@ -16,8 +17,9 @@
             <a href="{% url not_implemented %}">{% trans "Inform about Arrival of Medication" %}</a>
         </div>
     </div>
+   
+    <div class="menulist" id="groups">
     <h3>{% trans "Groups" %}</h3>
-    <div class="menulist">
         {% for service in information_services %}
             <div>
                 <a href="{% url web_infoservice_register id=service.id %}">{{service}}{% trans ": Register" %}</a>
@@ -30,8 +32,9 @@
         </div>
     </div>
 
-{% endblock %}
 
+
+{% endblock %}
 {% block infotext %}
   <p>This is the main menu. 
      Press the arrow keys  ←↑→↓ in front of you to choose menu items.
