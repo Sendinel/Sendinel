@@ -3,35 +3,58 @@
 {% block script %}
 {% endblock %}
 {% block content %}
-    <h3>{% trans "Notifications" %}</h3>
-    <div class="menulist">
-    
+
+ 
+    <div class="menulist" id="notifications">
+      <h3>{% trans "Notifications" %}</h3>
         {% for appointment_type in appointment_types %}
-            <div>
-                <a href="{% url web_appointment_create appointment_type_name=appointment_type.name %}">{% trans "Remind of " %}{{ appointment_type.verbose_name }}</a>
-            </div>
+        <div class="menulistNotificationItem">
+             <a href="{% url web_appointment_create appointment_type_name=appointment_type.name %}">
+                <div id="notificationName">
+                   {% trans "Remind of " %}{{ appointment_type.verbose_name }}
+                </div>
+            </a>
+        </div>
         {% endfor %}     
         
-        <div>
-            <a href="{% url not_implemented %}">{% trans "Inform about Arrival of Medication" %}</a>
+        <div class="menulistNotificationItem">
+                <div id="notificationName">
+                   {% trans "Inform about Arrival of Medication" %}
+                </div>
         </div>
     </div>
+   
+    <div id="groups">
     <h3>{% trans "Groups" %}</h3>
-    <div class="menulist">
         {% for service in information_services %}
-            <div>
-                <a href="{% url web_infoservice_register id=service.id %}">{{service}}{% trans ": Register" %}</a>
-                <a href="{% url staff_create_infomessage id=service.id %}" class="menu_secondlink">{% trans "Send Message" %}</a>
+            <div class="menulistGroupsItem">
+                <div class="groupName"><strong>{{ service }}</strong></div>
+                <div class="links">
+                <a href="{% url web_infoservice_register id=service.id %}">
+                    <div class="groupRegister">
+                        {% trans "Register Patient" %}
+                    </div>
+                </a>
+                <a href="{% url staff_create_infomessage id=service.id %}" class="menu_secondlink">
+                    <div class="groupSend">
+                        {% trans "Send Message" %}
+                    </div>
+                </a>
+                </div>
+                <div style="clear:both"></div>
+    
             </div>
         {% endfor %}
-        
-        <div>
-            <a href="{% url staff_list_infoservices %}">{% trans "Add or remove information group" %}</a>
-        </div>
+         <a href="{% url staff_list_infoservices %}">
+            <div  class="menulistManageGroups">
+               {% trans "Manage Information Groups" %}
+            </div>
+        </a>
     </div>
 
-{% endblock %}
 
+
+{% endblock %}
 {% block infotext %}
   <p>This is the main menu. 
      Press the arrow keys  ←↑→↓ in front of you to choose menu items.

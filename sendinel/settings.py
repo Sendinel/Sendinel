@@ -127,7 +127,11 @@ START_MOBILE_PHONE = "0" # "0" for South Africa (07/08..), "01" for Germany
 ASTERISK_USER = "root"
 ASTERISK_GROUP = "root"
 ASTERISK_SPOOL_DIR = "/var/spool/asterisk/outgoing/"
-ASTERISK_DATACARD = True
+
+# to or of authentication
+# and to turn it on and off again ss
+ASTERISK_DATACARD = True 
+
 
 ASTERISK_EXTENSION = "s"
 ASTERISK_SIP_ACCOUNT = "datacard0"

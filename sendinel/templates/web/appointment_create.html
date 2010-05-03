@@ -17,12 +17,15 @@
         $(".ui-state-active").removeClass("ui-state-active")
                              .removeClass("ui-state-hover");    
     });
-
     </script>
     <script src="{{ MEDIA_URL }}/js/way_of_communication.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ MEDIA_URL }}/js/jVal.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/jval/jVal.css">
+
 {% endblock %}
 
 {% block content %}
+    <div id="content-padding">
     <h3>{{ appointment_type.verbose_name }}</h3>
 	<p>{% trans "Please enter the appointment details." %}</p>
     <p>
@@ -30,13 +33,17 @@
             <table class="cells_align_top">
                 <tr>
                     <th>
+                    <tr>
+                        <th>
                         <label for="id_phone_input">Phone number:</label>
                         {% if form.phone_number.errors %}
                             {{ form.phone_number.errors }}
                         {% endif %}
                     </th>
                     <td>
-                        <input id="id_phone_input" type="text" name="phone_number" class="selectable" />                       
+                        <input id="id_phone_input" type="text" name="phone_number" class="selectable" 
+                            jVal="{valid:function (val) { if (val.length < 6) return false; else return true; }, message:'Please enter a valid phone number'}"
+                            jValKey="{valid:/[+0-9]/, message:'&quot;%c&quot; Please only enter digits for the phone number', cFunc:'$(\'#submitButton\').click();'}"></input>                       
                     </td>
                 </tr>
                 {% if not appointment_type.notify_immediately %}
@@ -65,9 +72,12 @@
                         <select name="way_of_communication" id="id_way_of_communication">
                             <option value="" selected="selected">---------</option>
                             <option value="sms">SMS</option>
+                {% comment %} 
+                        bluetooth as a way of communication is comming soon    
                             {% if not appointment_type.notify_immediately %}
                                 <option value="bluetooth">Bluetooth</option>
                             {% endif %}
+                {% endcomment %}
                             <option value="voice">Voice Call</option>
                         </select>
                     </td>
@@ -77,4 +87,6 @@
             {% include "web/control_buttons_widget.html" %}
         </form>        
     </p>
+    </div>
+    </div>
 {% endblock %}

@@ -1,11 +1,18 @@
 {% load i18n %}
 <div name="control-buttons-widget" id="control_buttons" class="control-buttons">
+<table width="100%">
+<tr>
+<td align="left">
   <div class="back-button">
     <input type="button" name="form_submit" value="&lt;- {% trans 'Back' %}" id="id_back" onclick="javascript:location.href='{{ backurl }}'" />
     <input type="hidden" name="back-button-link" value="{{ backurl }}" />
   </div>
+</td>
+<td align="right">
   <div class="next-button">
     <input type="submit" name="form_submit" value="{% trans 'Next' %} -&gt;" id="id_next" />
-    <input type="hidden" name="next-button-link" value="{{ nexturl }}" />
+    <input type="hidden" id="next-button-link" name="next-button-link" value="{{ nexturl }}" />
   </div>
 </div>
+</td></tr>
+</table>
