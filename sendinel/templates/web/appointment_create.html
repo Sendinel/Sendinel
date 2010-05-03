@@ -8,17 +8,14 @@
             dateFormat: "yy-mm-dd",
             onSelect: function(dateText) {
                 $("#date").val(dateText);
-            }
+            },
+            navigationAsDateFormat: true,
+            nextText: 'MM',
+            prevText: 'MM',
         });
-
-        var today = new Date();
-        var month = today.getMonth()+1;
-        var year = today.getFullYear();
-        var day = today.getDate();
-        if(day<10) day = "0" + day;
-        if(month<10) month= "0" + month;
-        var datestring = year + "-" + month + "-" + day
-        $("#date").val(datestring);
+        
+        $(".ui-state-active").removeClass("ui-state-active")
+                             .removeClass("ui-state-hover");    
     });
     </script>
     <script src="{{ MEDIA_URL }}/js/way_of_communication.js" type="text/javascript" charset="utf-8"></script>
@@ -28,34 +25,51 @@
     <h3>{{ appointment_type.verbose_name }}</h3>
 	<p>{% trans "Please enter the appointment details." %}</p>
     <p>
-        <form action="./" method="post" class="selectable_container">
-            <table>
+        <form action="./" method="post">
+            <table class="cells_align_top">
                 <tr>
                     <th>
-                        <label for="id_phone_number">Phone number:</label>
+                        <label for="id_phone_input">Phone number:</label>
+                        {% if form.phone_number.errors %}
+                            {{ form.phone_number.errors }}
+                        {% endif %}
                     </th>
                     <td>
-                        <input id="id_phone_input" type="text" name="recipient" class="selectable" />
+                        <input id="id_phone_input" type="text" name="phone_number" class="selectable" />                       
                     </td>
                 </tr>
-                <tr>
-                    <th>
-                        <label for="id_date_0">Date:</label>
-                    </th>
-                    <td>
-                        <div id="datepicker"></div>
-                        <input id="date" type="hidden" name="date" />
-                    </td>
-                </tr>
+                {% if not appointment_type.notify_immediately %}
+                    <tr>
+                        <th>
+                            <label for="id_date_0">Date:</label>
+                            {% if form.date.errors %}
+                                {{ form.date.errors }}
+                            {% endif %}
+
+                        </th>
+                        <td>
+                            <div id="datepicker"></div>
+                            <input id="date" type="hidden" name="date" />
+                        </td>
+                    </tr>
+                {% endif %}
                 <tr>
                     <th>
                         <label for="id_way_of_communication">Way of communication:</label>
+                        {% if form.way_of_communication.errors %}
+                            {{ form.way_of_communication.errors }}
+                        {% endif %}
                     </th>
                     <td> 
                         <select name="way_of_communication" id="id_way_of_communication">
                             <option value="" selected="selected">---------</option>
                             <option value="sms">SMS</option>
-                            <option value="bluetooth">Bluetooth</option>
+                {% comment %} 
+                        bluetooth as a way of communication is comming soon    
+                            {% if not appointment_type.notify_immediately %}
+                                <option value="bluetooth">Bluetooth</option>
+                            {% endif %}
+                {% endcomment %}
                             <option value="voice">Voice Call</option>
                         </select>
                     </td>

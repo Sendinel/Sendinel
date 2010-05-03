@@ -1,14 +1,23 @@
-from django.contrib.admin.widgets import AdminSplitDateTime
-from django.forms import CharField, DateTimeField, ModelForm
+from django.forms import CharField, ChoiceField, DateTimeField, Form
+from django.utils.translation import ugettext as _
 
-from sendinel.backend.models import HospitalAppointment
+from sendinel.backend.models import Sendable
+from sendinel.backend.authhelper import format_and_validate_phonenumber
 
 
-class HospitalAppointmentForm(ModelForm):
-    date = DateTimeField(widget = AdminSplitDateTime())
+class NotificationValidationForm(Form):
+    phone_number = CharField(validators = [format_and_validate_phonenumber],
+            error_messages={'required':_('Please enter a phone number')})
+                
+    date = DateTimeField(error_messages={ \
+                            'required': _('Please choose a date'), \
+                            'invalid': _('Please choose a date')})
+    way_of_communication = ChoiceField(
+                        choices = Sendable.WAYS_OF_COMMUNICATION,
+                        error_messages={'required': \
+                                _('Please choose a way of communication')}) 
+                        
     
-    class Meta:
-        model = HospitalAppointment
-        exclude = ['recipient_type', 'recipient_id', 'hospital']
-        fields = ['date', 'appointment_type', 'way_of_communication']
-        
+
+
+

@@ -1,3 +1,5 @@
+from random import random
+
 from sendinel import settings
 
 linux_available = False
@@ -30,9 +32,10 @@ class Voicecall:
         self.asterisk_sip_account = settings.ASTERISK_SIP_ACCOUNT
         self.asterisk_festivalcache = settings.FESTIVAL_CACHE
         self.asterisk_datacard = settings.ASTERISK_DATACARD 
+        self.salutation = settings.CALL_SALUTATION
 
     def create_voicefile(self, text):
-        text_hash = md5(text).hexdigest()
+        text_hash = md5(str(random())).hexdigest()
         filename = "%s/%s.ulaw" % (self.asterisk_festivalcache, text_hash)
         if not os.path.exists(filename):
             args = "-o %s -otype ulaw -" % (filename)
@@ -49,7 +52,7 @@ class Voicecall:
             pass
         return "%s/%s" % (self.asterisk_festivalcache, text_hash)
 
-    def create_spool_content(self, number, voicefile, extension,
+    def create_spool_content(self, number, voicefile, salutation, extension,
                             sip_account, context):
         """
             Create the content for asterisk's spool file
@@ -81,7 +84,8 @@ Context: %s
 Extension: %s
 Priority: 1
 Set: PassedInfo=%s
-""" %(sip_account, number, context, extension, voicefile)
+Set: Salutation=%s
+""" %(sip_account, number, context, extension, voicefile, salutation)
      
         else:
             output = """
@@ -93,7 +97,8 @@ Context: %s
 Extension: %s
 Priority: 1
 Set: PassedInfo=%s
-""" %(number, sip_account, context, extension, voicefile)
+Set: Salutation=%s
+""" %(number, sip_account, context, extension, voicefile, salutation)
 
         return output
        
@@ -184,9 +189,12 @@ Set: Text=%s
         """
         
         if linux_available:
+            text = self.replace_special_characters(text)
+	    salutation = self.create_voicefile(self.salutation)
             voicefile = self.create_voicefile(text)
             content = self.create_spool_content(number,
                                                 voicefile,
+                                                salutation,
                                                 self.asterisk_extension,
                                                 self.asterisk_sip_account,
                                                 context)

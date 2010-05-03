@@ -27,9 +27,9 @@ def get_all_due_events():
 def run(run_only_one_time = False):
     while True:        
                  
-        dueEvents = get_all_due_events()
+        due_events = get_all_due_events()
                          
-        for event in dueEvents:
+        for event in due_events:
             try:
                 data = event.sendable.get_data_for_sending()
                 logger.info("Trying to send: %s" % unicode(event.sendable))
@@ -57,11 +57,42 @@ def run(run_only_one_time = False):
             event.state = 'sent'
             event.save()
             del data
-        del dueEvents
+        del due_events
             #TODO Exception Handling
         if run_only_one_time: break
         time.sleep(5)
 
 
 if __name__ == "__main__":
-    run()
+    if len(sys.argv) == 1:
+        print "Warning: Sendinel scheduler not running in daemon mode. " + \
+                "Usage for daemon mode: %s <pid file>" % sys.argv[0]
+        run()
+    
+    elif len(sys.argv) == 2:
+        try:
+            import daemon
+            from daemon import pidlockfile
+            import lockfile
+        except ImportError:
+            print "Error: daemon and lockfile libraries are needed for" + \
+                    " running the scheduler. " + \
+                    " Install with: easy_install daemon; easy_install lockfile"
+            exit(1)
+    
+        pid_file = sys.argv[1]
+        working_directory = settings.PROJECT_PATH
+    
+        context = daemon.DaemonContext(
+                    working_directory = working_directory,
+                    pidfile = pidlockfile.PIDLockFile(pid_file),
+                    detach_process = True)
+    
+        with context:
+            run()
+    
+    else:
+        print "Usage: %s [pid file]\n  without pid file the scheduler " + \
+                "won't run as daemon"
+
+    

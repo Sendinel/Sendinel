@@ -1,12 +1,15 @@
 import re
 from datetime import datetime
 
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext as _
+
 from sendinel.backend.models import AuthenticationCall
 from sendinel.settings import AUTHENTICATION_CALL_TIMEOUT, \
                               COUNTRY_CODE_PHONE, \
                               START_MOBILE_PHONE
 
-def format_phonenumber(number):
+def format_and_validate_phonenumber(number):
     """
     Replaces all number specific characters like
     "+", "-" and "/" and checks that there are no
@@ -35,25 +38,24 @@ def format_phonenumber(number):
     try:
         int(number)
     except ValueError:
-        raise ValueError('Please enter a valid phonenumber.')
+        raise ValidationError(_('Please enter numbers only.'))
     
     if number.startswith(START_MOBILE_PHONE):
         return number
     else:
-        raise ValueError('Please enter a valid phonenumber.')    
+        raise ValidationError(_('Please enter a cell phone number.'))
 
 def check_and_delete_authentication_call(number):
     """
     Try to find an AuthenticationCall for the given phone numner.
     The last seven digits are compared to identify the call.
     """
-    number = format_phonenumber(number)
-    return True # This disables the authentication TODO make this right!
+    number = format_and_validate_phonenumber(number)
+    
     last_seven_digits = number[-7:]
     calls = AuthenticationCall.objects.filter( \
                                     number__endswith = last_seven_digits)
     
-    return True
     if calls.count() == 1:
         calls.delete()
         return True

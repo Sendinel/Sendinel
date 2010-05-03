@@ -28,7 +28,7 @@ def log_request(viewfunc):
         logger.info("%s %s.%s %s %s" % (args[0].method,
                                     viewfunc.__module__,
                                     viewfunc.__name__,
-                                    str(kwargs),
-                                    str(get_data)))
+                                    unicode(kwargs),
+                                    unicode(get_data)))
         return viewfunc(*args, **kwargs)
     return do_log_request

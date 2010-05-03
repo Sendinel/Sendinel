@@ -117,6 +117,7 @@ INSTALLED_APPS = (
 REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days = 1)
 DEFAULT_APPOINTMENT_DURATION = timedelta(minutes = 60)
 DEFAULT_HOSPITAL_NAME = 'your hospital'
+DEFAULT_SEND_TIME = '12:00' #hh:mm in 24-hours format
 
 COUNTRY_CODE_PHONE = "0049" #"0027" for South Africa
 START_MOBILE_PHONE = "0" # "0" for South Africa (07/08..), "01" for Germany
@@ -144,9 +145,13 @@ AUTH_NUMBER = "CHANGE ME"
 # time a user has to call the system to authenticate
 AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = 3)
 
+CALL_SALUTATION = "This is an automated call from your clinic"
 
 # True or False to turn authentication on or off
-AUTH = True
+AUTH = False
+
+#Salutation for SMS Template
+SMS_SALUTATION = 'Hello, '
 
 # Specify a COM Port for SMS
 # for windows maybe it starts at 0

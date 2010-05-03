@@ -1,5 +1,9 @@
-﻿from datetime import datetime
-import time
+﻿from copy import deepcopy
+
+from datetime import datetime, date
+
+
+
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
@@ -7,22 +11,21 @@ from django.template import RequestContext
 from django.utils import simplejson
 from django.views.i18n import javascript_catalog
 
+from sendinel.backend import bluetooth
 from sendinel.backend.authhelper import check_and_delete_authentication_call, \
                                     delete_timed_out_authentication_calls, \
-                                    format_phonenumber
-from sendinel.backend.models import Patient, Sendable, \
+                                    format_and_validate_phonenumber
+from sendinel.backend.models import Patient, \
                                     InfoService, Subscription, \
                                     HospitalAppointment, Hospital, \
                                     AppointmentType
-from sendinel.web.forms import HospitalAppointmentForm
-from sendinel.settings import   AUTH_NUMBER, \
-                                BLUETOOTH_SERVER_ADDRESS, \
+from sendinel.settings import   ADMIN_MEDIA_PREFIX, \
+                                AUTH, AUTH_NUMBER, \
                                 AUTHENTICATION_CALL_TIMEOUT, \
-                                COUNTRY_CODE_PHONE, START_MOBILE_PHONE, \
-                                ADMIN_MEDIA_PREFIX, \
-                                AUTH
-from sendinel.backend import bluetooth
+                                BLUETOOTH_SERVER_ADDRESS, \
+                                DEFAULT_SEND_TIME
 from sendinel.logger import logger, log_request
+from sendinel.web.forms import NotificationValidationForm
 
 @log_request
 def index(request):
@@ -44,42 +47,30 @@ def jsi18n(request):
     }
     return javascript_catalog(request, packages = js_info_web)
 
-def is_valid_appointment(post_vars):
-    if not post_vars.has_key("date") or \
-       not post_vars.has_key("way_of_communication") or \
-       not post_vars.has_key("recipient"):
-        return False
-        
-    if not post_vars["way_of_communication"]:
-        return False
-    
-    try:
-        appointment_date = datetime.strptime(post_vars["date"] , "%Y-%m-%d")
-        format_phonenumber(post_vars["recipient"])
-    except ValueError:
-        return False
-        
-    return True
 
 @log_request
-def create_appointment(request, appointment_type = None):
+def create_appointment(request, appointment_type_name = None):
+    appointment_type = AppointmentType.objects. \
+                              filter(name = appointment_type_name)[0]
     admin_media_prefix = ADMIN_MEDIA_PREFIX
     nexturl = ""
     backurl = reverse('web_index')
     if request.method == "POST":
-
-        if is_valid_appointment(request.POST):
-            
+        data = deepcopy(request.POST)
+        if appointment_type.notify_immediately:
+            data['date'] = date.today().strftime('%Y-%m-%d') + \
+                            ' ' + DEFAULT_SEND_TIME
+        else:
+            data['date'] = data.get('date', '') + ' ' + DEFAULT_SEND_TIME
+        form = NotificationValidationForm(data)
+        if form.is_valid():
             appointment = HospitalAppointment()
             patient = Patient()
-            patient.phone_number = request.POST['recipient']
-            
-            appointment.date = datetime.strptime(request.POST['date'] , "%Y-%m-%d")
-            appointment.appointment_type = request.session['appointment_type']
+            patient.phone_number = form.cleaned_data['phone_number']
+            appointment.date = form.cleaned_data['date']
+            appointment.appointment_type = appointment_type
             appointment.hospital = Hospital.get_current_hospital()
-            appointment.way_of_communication = request.POST['way_of_communication']             
-    
-            
+            appointment.way_of_communication = form.cleaned_data['way_of_communication']
             
             request.session['appointment'] = appointment
             request.session['patient'] = patient            
@@ -97,7 +88,6 @@ def create_appointment(request, appointment_type = None):
                         reverse("web_appointment_save"))
                 return HttpResponseRedirect( \
                         reverse("web_appointment_save"))
-                    
             else:
                 logger.error("Unknown way of communication selected.")
                 raise Exception ("Unknown way of communication %s " \
@@ -110,10 +100,6 @@ def create_appointment(request, appointment_type = None):
                                 context_instance=RequestContext(request))
     else:
         #TODO: initiale Dateneintraege
-        if appointment_type != None:
-            request.session['appointment_type'] = AppointmentType.get_appointment_type(appointment_type)
-            
-        appointment_type = request.session['appointment_type']
         
         return render_to_response('web/appointment_create.html',
                                 locals(),
@@ -146,7 +132,7 @@ def send_appointment(request):
         mac_address = request.POST['device_mac'].strip()
         
         logger.info("sending appointment to mac_address: " + mac_address)
-        logger.info("appointment data: " + str(appointment))
+        logger.info("appointment data: " + unicode(appointment))
         
         appointment.bluetooth_mac_address = mac_address
         output_data = appointment.get_data_for_sending()
@@ -215,7 +201,9 @@ def check_call_received(request):
 @log_request
 def list_bluetooth_devices(request):
     next = request.GET.get('next', '')
-    backurl = reverse("web_appointment_create", kwargs= {"appointment_type": request.session["appointment_type"].name})
+    backurl = reverse("web_appointment_create", kwargs=
+                       {"appointment_type_name":
+                           request.session["appointment"].appointment_type.name})
     return render_to_response('web/list_devices.html',
                                 locals(),
                                 context_instance=RequestContext(request))
@@ -289,7 +277,7 @@ def save_registration_infoservice(request, id):
                                 way_of_communication = way_of_communication,
                                 infoservice = infoservice)
     subscription.save()
-    logger.info("Saved subscription %s.", str(subscription))
+    logger.info("Saved subscription %s.", unicode(subscription))
     
     return HttpResponseRedirect(reverse('web_index'))
 
@@ -297,7 +285,7 @@ def save_registration_infoservice(request, id):
 @log_request
 def fill_authentication_session_variable(request):
     number = request.session["patient"].phone_number
-    number = format_phonenumber(number)
+    number = format_and_validate_phonenumber(number)
     request.session['authenticate_phonenumber'] = \
                             { 'number': number,
                               'start_time': datetime.now() }
