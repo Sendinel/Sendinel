@@ -107,9 +107,12 @@ def create_appointment(request, appointment_type_name = None):
 
 @log_request
 def save_appointment(request):
-    nexturl = reverse("web_index")
     appointment = request.session.get('appointment', None)
     patient = request.session.get('patient', None)
+    
+    nexturl = reverse("web_index")
+    backurl = reverse("web_appointment_create", kwargs={'appointment_type_name' : appointment.appointment_type.name })
+    
     if not appointment or not patient:
         logger.warning("save_appointment: no appointment/patient in session")
         return HttpResponseRedirect(reverse(create_appointment))

@@ -148,6 +148,12 @@ strong.big {
 
 .success {
     color: green;
+    width: 500px;
+    border: 1px solid green;
+    margin: 5px 0;
+    padding: 0;
+    background-color: #FCC533;
+    text-align: center;
 }
 
 /* Way of communication selector */
