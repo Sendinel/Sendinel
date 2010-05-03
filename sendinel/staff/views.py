@@ -119,8 +119,7 @@ def list_members_of_infoservice(request, id):
                                 context_instance = RequestContext(request))
 
 @log_request
-def delete_members_of_infoservice(request, id, patient_id):
-    patient = Patient.objects.filter(pk = patient_id)[0]
+def delete_members_of_infoservice(request, id):
     infoservice = InfoService.objects.filter(pk = id)[0]
     subscription = Subscription.objects.filter(patient = patient, 
                                                infoservice = infoservice)
