@@ -1,5 +1,6 @@
 var div_resize = function() {
     // content1 - (#rightbar + body.margin)
+        
     $("#content1").width($(window).width() - 
         ($("#rightbar").outerWidth() + 
          ((parseInt($("body").css("margin-left"), 10) * 4) + 
@@ -9,10 +10,5 @@ var div_resize = function() {
      );
 };
 
-$(window).resize(function() {
-    div_resize();
-}); 
-
-$(document).ready(function() {
-    div_resize();
-});
+$(window).resize(div_resize)
+         .ready(div_resize); 
