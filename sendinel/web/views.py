@@ -10,6 +10,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils import simplejson
 from django.views.i18n import javascript_catalog
+from django.utils.translation import ugettext as _
 
 from sendinel.backend import bluetooth
 from sendinel.backend.authhelper import check_and_delete_authentication_call, \
@@ -111,7 +112,8 @@ def save_appointment(request):
     patient = request.session.get('patient', None)
     
     nexturl = reverse("web_index")
-    backurl = reverse("web_appointment_create", kwargs={'appointment_type_name' : appointment.appointment_type.name })
+    backurl = reverse("web_appointment_create", 
+                kwargs={'appointment_type_name' : appointment.appointment_type.name })
     
     if not appointment or not patient:
         logger.warning("save_appointment: no appointment/patient in session")
@@ -123,10 +125,18 @@ def save_appointment(request):
     
     
     appointment.save_with_patient(patient)
+        
+    success_title = _("The %s notification has been created.") \
+                        % appointment.appointment_type.verbose_name
+    if appointment.appointment_type.notify_immediately:
+        success_message = _("The patient will be informed immediately.")
+    else:
+        success_message = _("Please tell the patient that he/she will be reminded"\
+                            " one day before the appointment.")
 
-    return render_to_response('web/appointment_saved.html',
-                            locals(),
-                            context_instance=RequestContext(request))
+    return render_to_response('web/success.html', 
+                              locals(),
+                              context_instance = RequestContext(request))
 
 @log_request
 def send_appointment(request):
@@ -272,6 +282,9 @@ def register_infoservice(request, id):
 
 @log_request
 def save_registration_infoservice(request, id):
+    backurl = reverse('web_infoservice_register',  kwargs = {'id': id})        
+    nexturl = reverse('web_index')
+    
     patient = request.session['patient']
     patient.save()
     way_of_communication = request.session['way_of_communication']
@@ -282,7 +295,13 @@ def save_registration_infoservice(request, id):
     subscription.save()
     logger.info("Saved subscription %s.", unicode(subscription))
     
-    return HttpResponseRedirect(reverse('web_index'))
+    success_title = _("Registration successful")
+    success_message = _("The patient will now receive all messages from the "
+                        " %s service.") % infoservice.name
+    
+    return render_to_response('web/success.html', 
+                              locals(),
+                              context_instance = RequestContext(request))
 
 
 @log_request

@@ -6,7 +6,7 @@ $(document).ready(function() {
     textarea.bind("keydown", function(e) {
         e.stopPropagation();
         
-        // text_length have to be incremented because current key would be added to length
+        // currently pressed key has to be added to length
         var text_length = $(this).val().length + 1;
     
     
@@ -20,6 +20,6 @@ $(document).ready(function() {
         
         var text_length = $(this).val().length;
         
-        $("#chars-left")[0].innerHTML = "Chars left: " + (AVAILABLE_CHARS - text_length);
+        $("#chars-left")[0].innerHTML = (AVAILABLE_CHARS - text_length);
     });
 });
