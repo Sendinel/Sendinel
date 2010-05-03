@@ -25,8 +25,10 @@
             <input type="submit" name="submit" value="Send" id="id_submit" />
         </form>
         
-        <div id="chars-left">{% trans "Chars left:" %}</div>
+        <div id="character-number">
+            {% trans "Characters left: " %} <div id="chars-left">160</div>        
+        </div>
     </p>
-    <p><a href="{% url staff_list_infoservices %}">{% trans "List Inforservices" %}</a> |
+    <p><a href="{% url staff_list_infoservices %}">{% trans "List Infoservices" %}</a> |
         <a href="{% url web_index %}">{% trans "Back to Main Menu" %}</a></p>
 {% endblock %}

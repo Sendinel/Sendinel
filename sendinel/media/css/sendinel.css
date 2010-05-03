@@ -156,8 +156,26 @@ strong.big {
     
 }
 
+.status {
+    width: 500px;
+    margin: 50px;
+    padding: 50px;
+    text-align: center;
+    
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
 .success {
-    color: green;
+    color: green;    
+    border: 1px solid green;    
+    background-color: #E2FFDE;   
+}
+
+.error {
+    color: red;
+    border: 1px solid red;
+    background-color: #FFDEDE;
 }
 
 /* Way of communication selector */
