@@ -1,4 +1,5 @@
 var div_resize = function() {
+
     var heightContent = window.innerHeight - ($('#header').height() + $('#footer').height());
     var heightNotification = heightContent-(parseInt($('#notifications').css('padding-top'))*2);
     
