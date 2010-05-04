@@ -11,7 +11,7 @@
         <div class="menulistNotificationItem">
              <a href="{% url web_appointment_create appointment_type_name=appointment_type.name %}">
                 <div class="notificationName">
-                   {% trans "Remind of " %}{{ appointment_type.verbose_name }}
+                   {{ appointment_type.verbose_name }}
                 </div>
             </a>
         </div>
