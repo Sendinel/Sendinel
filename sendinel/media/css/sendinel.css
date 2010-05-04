@@ -274,6 +274,9 @@ h3{
     padding-right:10px;
     float:left;
 }
+.lastfield{
+    border-right: 0px; 
+}
 .head{
     font-weight:bold;
     margin: 10px 0px;
