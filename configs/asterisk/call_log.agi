@@ -1,8 +1,8 @@
 #!/bin/bash
 # this script should go into /usr/share/asterisk/agi-bin/call_log.agi
 
-user=root
-log_call_script=/media/sdcard/sendinel/Sendinel/sendinel/asterisk/log_call.py
+user="%user"
+log_call_script=%targetDir%/sendinel/asterisk/log_call.py
 # set to /dev/null to disable logging
 logFile="/tmp/call-script.log"
 
