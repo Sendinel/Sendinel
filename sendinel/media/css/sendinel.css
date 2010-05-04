@@ -199,8 +199,8 @@ float:right;
     
     border: 1px solid #F3F3F3;
     float:left;
-    width:155px;
-    padding:0.8em 10px 12px 45px;
+    width:150px;
+    padding:0.8em 5px 12px 45px;
     background-position:10px 15px;
     background-repeat: no-repeat;
 }
@@ -210,6 +210,7 @@ float:right;
 }
 
 .groupSend{
+    width:140px;
     padding-left: 60px;
     background-image: url(../img/send.png);
 }
