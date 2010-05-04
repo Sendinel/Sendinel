@@ -120,9 +120,11 @@ def list_members_of_infoservice(request, id):
 
 @log_request
 def delete_members_of_infoservice(request, id):
-    infoservice = InfoService.objects.filter(pk = id)[0]
-    subscription = Subscription.objects.filter(patient = patient, 
-                                               infoservice = infoservice)
-    subscription.delete()
+    import pdb; pdb.set_trace()
+    if request.method == "POST":
+        
+        subscription = Subscription.objects.get(request.POST["subscription_id"])        
+        subscription.delete()
+        
     return HttpResponseRedirect(reverse("staff_infoservice_members", 
-                                   kwargs={"id": infoservice.id}))  
+                                   kwargs={"id": id}))  

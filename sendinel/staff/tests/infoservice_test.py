@@ -70,11 +70,10 @@ class StaffInfoServiceTest(TestCase):
     def test_delete_members_of_infoservice(self):
         infoservice = InfoService.objects.filter(pk = 1)[0]
         patient = infoservice.members.all()[0]
-        import pdb; pdb.set_trace()
         subscription = Subscription.objects.get(patient=patient, infoservice=infoservice)
         response = self.client.post(reverse("staff_infoservice_members_delete",
                                             kwargs={"id" : infoservice.id}),
-                                    {'member_id' : patient.id})
+                                    {'subscription_id' : subscription.id})
         new_members = infoservice.members.all()
         self.assertTrue(not patient in new_members)
         self.assertTrue(not subscription in Subscription.objects.all())
