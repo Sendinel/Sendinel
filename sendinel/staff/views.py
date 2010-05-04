@@ -120,10 +120,10 @@ def list_members_of_infoservice(request, id):
 
 @log_request
 def delete_members_of_infoservice(request, id):
-    import pdb; pdb.set_trace()
+    
     if request.method == "POST":
         
-        subscription = Subscription.objects.get(request.POST["subscription_id"])        
+        subscription = Subscription.objects.get(id = request.POST["subscription_id"])        
         subscription.delete()
         
     return HttpResponseRedirect(reverse("staff_infoservice_members", 

@@ -5,13 +5,14 @@
         var confirmForm = function(form) {
             $("#confirmation").dialog({
                 modal: true,
+                resizable: false,
                 title: "Please confirm",
                 buttons: {
-                    "OK" : function() {
-                        form.submit();
-                    },
                     "Cancel" : function() {
                         $(this).dialog("close");
+                    },
+                    "OK" : function() {
+                        form.submit();
                     }
                 }
             });
@@ -25,8 +26,8 @@
 {% block content %}
     <h3>{% trans "Members of " %}{{infoservice}}</h3>
     
-    <div id="confirmation" style="display:none">
-        Do you really want to remove this patient from the group?
+    <div id="confirmation" style="display:none; text-align:center">
+        {% trans "Do you really want to remove this patient from the group?" %}
     </div>
     
     <table cellspacing="0" cellpadding="3">

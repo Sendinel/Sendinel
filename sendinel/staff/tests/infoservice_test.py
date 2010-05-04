@@ -78,7 +78,7 @@ class StaffInfoServiceTest(TestCase):
         self.assertTrue(not patient in new_members)
         self.assertTrue(not subscription in Subscription.objects.all())
         self.assertRedirects(response, reverse("staff_infoservice_members", 
-                                               kwargs={"id": info.id}))
+                                               kwargs={"id": infoservice.id}))
             
         
         
