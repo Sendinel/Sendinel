@@ -153,6 +153,9 @@ input[type=text] {
     background-position: 10px 0px;
     margin: 10px 0px;
     padding-left:80px;
+    
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
 }
 .notificationName{
     min-height: 2em;
@@ -175,6 +178,9 @@ input[type=text] {
     background: #F3F3F3;
     padding-left: 10px;
     margin: 10px 0px;
+    
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
 }
 
 .groupName{
@@ -226,6 +232,9 @@ float:right;
     background-image: url(../img/gear_wheel.png);
     background-repeat: no-repeat;
     background-position: 17px 20px;
+    
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
 }
 .menulistManageGroups:hover {
     border: 1px solid orange;
