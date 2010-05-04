@@ -1,7 +1,6 @@
 {% load i18n %} 
 <div name="control-buttons-widget" id="control_buttons" class="control-buttons">
-  <div class="back-button">
-    <input type="button" name="form_submit" value="&lt;- {% trans 'Back' %}" id="id_back" onclick="javascript:location.href='{{ backurl }}'" />
-    <input type="hidden" class="" name="back-button-link" value="{{ backurl }}" />
-  </div>
+     <div class="button_only button_only_right " onClick="javascript:location.href='{{ nexturl }}'">
+     next
+    </div>
 </div>

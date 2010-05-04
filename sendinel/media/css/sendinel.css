@@ -280,6 +280,28 @@ h3{
 }
 .input{
 }
+.button_only{
+    width:120px;
+    background: #F3F3F3;
+    border: 1px solid #8e8e8e;
+    padding-top:44px;
+    text-align:center;
+}
+.button_only_left{
+    background-image: url(../img/button_left.png);
+    background-repeat: no-repeat;
+    background-position: 31px 6px;
+}
+.button_only_right{
+    background-image: url(../img/button_right.png);
+    background-repeat: no-repeat;
+    background-position: 31px 6px;
+}
+.button_only:hover{
+ border: 1px solid orange;
+    cursor:pointer;
+    background-color: #FFDCA3;
+}
 
 .button{
     width:50px;
@@ -319,6 +341,10 @@ h3{
 }
 .groupbutton{
     margin-top:40px;
+}
+#contentStatusMessage{
+    margin:auto;
+    width:700px;
 }
 #contentCenterList{
     margin:auto;

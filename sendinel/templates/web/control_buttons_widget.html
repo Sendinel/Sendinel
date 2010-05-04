@@ -3,16 +3,19 @@
 <table width="100%">
 <tr>
 <td align="left">
-  <div class="back-button">
-    <input type="button" name="form_submit" value="&lt;- {% trans 'Back' %}" id="id_back" onclick="javascript:location.href='{{ backurl }}'" />
-    <input type="hidden" name="back-button-link" value="{{ backurl }}" />
-  </div>
+
+    <div class="button_only button_only_left " onClick="javascript:location.href='{{ backurl }}'">
+     back
+    </div>
+
 </td>
 <td align="right">
-  <div class="next-button">
-    <input type="submit" name="form_submit" value="{% trans 'Next' %} -&gt;" id="id_next" />
-    <input type="hidden" id="next-button-link" name="next-button-link" value="{{ nexturl }}" />
-  </div>
-</div>
+
+    <div class="button_only button_only_right " onClick="javascript:location.href='{{ nexturl }}'">
+     Main Menu
+    </div>
+
+
 </td></tr>
 </table>
+</div>

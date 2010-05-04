@@ -49,6 +49,7 @@
                             jValKey="{valid:/[+0-9]/, message:'&quot;%c&quot; not valid', cFunc:'$(\'#submitButton\').click();'}"></input>  
                 </div>
             </div>
+            {% if not appointment_type.notify_immediately %}
             <div class="field">
                 <div class="head">
                     Date:&nbsp;
@@ -56,12 +57,13 @@
                                 {{ form.date.errors }}
                     {% endif %}
                 </div>
+                
                 <div class="input">
                     <div id="datepicker" ></div>
                     <input id="date" type="hidden" name="date" />
                 </div>
             </div>
-            
+            {% endif %}
             <div class="field">
                 <div class="head">
                     Way of communication:&nbsp;
