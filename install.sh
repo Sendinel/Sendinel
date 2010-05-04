@@ -8,7 +8,7 @@ user='sendinel'
 group='sendinel'
 requiredPackages='asterisk festival lighttpd sudo build-essential python-setuptools wget' # wget only for django install
 requiredPythonPackages='python-daemon lockfile'
-pythonVersion='python2.6' # name of the binary that should exist in PATH
+###pythonVersion='python2.6' # name of the binary that should exist in PATH #### refactor this
 tempDir="/tmp"
 
 # targetDir="./installTest"
@@ -18,17 +18,17 @@ sourceDir=$(dirname "$sourceDir")
 targetParentDir="$(dirname $targetDir)"
 # timestamp in form 2010-05-03-16-27-15
 timestamp=$(date +%F-%k-%M-%S)
-
+pythonBin=$(which python)
 
 error() {
-    echo -e "ERROR: $errorMessage"
+    echo -e "ERROR: $errorMessage$1"
     echo "Sendinel installation aborted."
     exit 1
 }
 
 warning() {
     # todo ask user wether he wants to continue
-    echo -e "WARNING: $errorMessage"
+    echo -e "WARNING: $errorMessage$1"
     read -p "Do you want to continue anyway - this may not work? (y/n)"
     if [ "$REPLY" != "y" ]; then
         echo "Sendinel installation aborted."
@@ -43,6 +43,9 @@ message_done() {
 
 backup_file() {
     file="$1"
+    if [ ! -e "$file" ]; then
+        return 0
+    fi
     backupFile="$file.sendinel-backup-$timestamp"
     echo "Backing up file $file to $backupFile"
     errorMessage='File backup failed.'
@@ -62,14 +65,14 @@ check_file_exists_and_backup() {
 }
 
 remove_or_warning() {
-    file="$0"
+    file="$1"
     errorMessage="The following file could not be removed: '$file'"
     rm "$file" || warning
 }
 
 symlink_or_warning() {
-    source="$0"
-    target="$1"
+    source="$1"
+    target="$2"
     check_file_exists_and_backup "$source"
     remove_or_warning "$source"
 
@@ -83,6 +86,31 @@ replace_in_file() {
     replaceWith="$3"
     sed -i "s/$searchFor/$replaceWith/g" "$file"
 }
+
+download_extract_and_cd_to_targz() {
+    url="$1"
+    subDirectory="$2"
+    tempFile=$(mktemp "$extractionTempDir/sendinel-install-temp-XXXXXXXXXXXX")
+    extractionTempDir="$tempFile-extracted"
+    extractionOldPwd="$(pwd)"
+    
+    errorMessage="The download and extraction of $url failed. See above for errors."
+    
+    mkdir -p "$extractionTempDir" && \
+    wget -O "$tempFile" "$url" && \
+    tar xzf "$tempFile" -C "$extractionTempDir" && \
+    rm $tempFile || warning
+    extractionDir="$extractionTempDir/$subDirectory"
+    errorMessage="Could not cd to directory '$extractionDir'. You may manually install $url."
+    cd "$extractionDir" || warning
+}
+
+cleanup_extraction() {
+    cd "$extractionOldPwd" && \
+    rm -r "$extractionTempDir" || echo "Clean up of temporary directory $extractionTempDir failed. This hopefully does not affect the sendinel installation."
+}
+
+# TODO check /etc/debian_version
 
 # test wether target dir already exists
 if [ -e "$targetDir" ]; then
@@ -103,13 +131,13 @@ fi
 # TODO check which python versions work
 # eventually write scripts to start sendinel using python2.6
 # $pythonVersion
-if type -P "$pythonVersion" > /dev/null; then
-    pythonPath=$(type -P "$pythonVersion")
-    echo "Python found: $pythonPath"
-else
-    errorMessage="The python executable '$pythonVersion' was not found in PATH."
-    warning
-fi
+# if type -P "$pythonVersion" > /dev/null; then
+#     pythonPath=$(type -P "$pythonVersion")
+#     echo "Python found: $pythonPath"
+# else
+#     errorMessage="The python executable '$pythonVersion' was not found in PATH."
+#     warning
+# fi
 
 
 # package installs
@@ -125,17 +153,17 @@ easy_install $requiredPythonPackages || warning
 message_done
 
 # django 1.2 beta until final release is available
+echo "Downloading and installing django 1.2 beta 1..."
 url="http://www.djangoproject.com/download/1.2-beta-1/tarball/"
-tarball="$tempDir/django.tar.gz"
-wget -O "$tarball" "$url"
-tar xvzf "$tarball" -C "$tempDir"
-
-djangoDir="$tempDir/Django-1.2-beta-1"
-errorMessage="Could not cd to directory '$djangoDir'. You may manually install django > 1.2 beta 1."
-cd "$djangoDir" || warning
+subDirectory="Django-1.2-beta-1"
+download_extract_and_cd_to_targz "$url" "$subDirectory"
 
 errorMessage="Django installation failed. Look for errors above."
-python setup.py install || warning
+"$pythonBin" setup.py install || warning
+djangoDir=$("$pythonBin" -c 'import django; print django.__path__[0]')
+
+cleanup_extraction
+message_done
 
 # sendinel user and group
 echo "Creating user '$user' and group '$group'..."
@@ -156,7 +184,7 @@ if [ "$?" -ne "0" ]; then
 fi
 
 
-cp -a "$sourceDir/sendinel" "$targetDir/sendinel"
+cp -a "$sourceDir/sendinel" "$sourceDir/configs" "$targetDir/sendinel"
 if [ "$?" -ne "0" ]; then
     errorMessage="Copying files failed. Look for errors above."
     error
@@ -213,23 +241,66 @@ replace_in_file "$agiLinkTarget" '%user%' "$user"
 message_done
 
 
+
+
 # asterisk permissions
 # TODO warning about security issues - /var/spool/asterisk/outgoing 
 # /var/spool/asterisk/outgoing 770
+outgoingDir="/var/spool/asterisk/outgoing"
+permissions="770"
+echo "Setting permissions of '$outgoingDir' to 770..." || 
+chmod "$permissions" "$outgoingDir" || warning "failed to set permissions on '$outgoingDir'"
+message_done
 
 
 # download and compile datacard
+echo "Downloading and compiling Asterisk chan_datacard module for 3G stick support..."
+url="http://github.com/thomasklingbeil/chan_datacard/tarball/28dffc8a5ed498581ab0421ddca0da322777aec2"
+subDirectory="thomasklingbeil-chan_datacard-28dffc8"
+download_extract_and_cd_to_targz "$url" "$subDirectory"
+
+errorMessage="chan_datacard installation failed. Look for errors above."
+make && \
+make install || warning
+
+cleanup_extraction
+message_done
 
 # restart asterisk
-
+echo "Restarting Asterisk telephony server..."
+/etc/init.d/asterisk restart || warning "Failed to start asterisk."
+message_done
 
 
 # lighttpd config
 # 
+echo "Configuring lighttpd webserver..."
+lighttpdDir="/etc/lighttpd"
+lighttpdMainConfig="$lighttpdDir/lighttpd.conf"
+wwwRoot = $(grep ^server.document-root "$lighttpdMainConfig" | cut -d '"' -f2)
+if [ "$wwwRoot" -eq "" ]; then
+    warning "server.document-root could not be found automatically in '$lighttpdMainConfig'. You will have to manually copy configs/www-redirect/index.html to your webserver's document root."
+fi
 
+# copy index.html
+backup_file "$wwwRoot/index.html"
+cp -av "$targetDir/configs/www-redirect/index.html" "$wwwRoot/index.html" || warning
 
+# check for lighttpd/conf-enabled directory
+if [ ! -e "$lighttpdDir/conf-enabled" ]; then
+    warning "Cannot automatically configure lighttpd since '$lighttpdDir/conf-enabled' could not be found."
+fi
 
+lighttpdConfigSrc="$targetDir/configs/lighttpd/conf-enabled/10-sendinel.conf"
+lighttpdConfigTarget="$lighttpdDir/conf-enabled/10-sendinel.conf"
 
+backup_file "$lighttpdConfigTarget"
+cp -v "$lighttpdConfigSrc" "$lighttpdConfigTarget" || warning "Failed to copy lighttpd configuration file '$lighttpdConfigSrc' to '$lighttpdConfigTarget'."
+replace_in_file "$%mediaPath%$" "$targetDir/sendinel/media" || warning
+replace_in_file "$%adminMediaPath%$" "$djangoDir/contrib/admin/media" || warning
+message_done
+/etc/init.d/lighttpd restart || warning
 
-
+echo "Congratulations - if you didn't see any error messages, sendinel should be installed and reachable at:"
+echo "http://localhost/"
 
