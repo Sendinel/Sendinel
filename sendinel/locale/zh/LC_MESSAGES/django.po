@@ -207,7 +207,7 @@ msgid "Remind of Follow-Up Consultation"
 msgstr "#TRANSLATED#"
 
 #: templates/web/index.html:16
-msgid "Inform about Arrival of Medication"
+msgid "Inform about Arrival of Medicine"
 msgstr "#TRANSLATED#"
 
 #: templates/web/index.html:19
