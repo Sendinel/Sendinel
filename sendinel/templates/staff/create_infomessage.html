@@ -17,22 +17,34 @@
 
 {% block content %}
 <div id="content-padding">
+<div id="contentformGroupheight">
     <h3>{% blocktrans with infoservice.name as infoservice %}Send a message to {{ infoservice }}{% endblocktrans %}</h3>
-    <p>
         <form action="" method="post">
-            <table>
-                {{ form }}
-            </table>
-            <input type="submit" name="submit" value="Send" id="id_submit" />
+        <br />
+            <div class="button button_left button_float groupbutton" onClick="javascript:location.href='{{ backurl }}'">
+                back
+            </div>
+            <div class="field sendGroupheight">
+                <div class="head">
+                    Infoservice Text:
+                </div>
+                <div class="input">
+                    <textarea id="id_text" rows="5" cols="35" name="text"></textarea>
+                    <div id="character-number">
+                    {% trans "Characters left: " %} <div id="chars-left">160</div>        
+                </div>
+                </div>
+            </div>
+            
+            <div class="button button_right button_float groupbutton" onClick="javascript:location.href='{% url web_index %}'">next</div>
+            <div style="clear:both;"></div>
+            
         </form>
-        
-        <div id="character-number">
-            {% trans "Characters left: " %} <div id="chars-left">160</div>        
-        </div>
-    </p>
-    <p><a href="{% url staff_list_infoservices %}">{% trans "List Infoservices" %}</a> |
-        <a href="{% url web_index %}">{% trans "Back to Main Menu" %}</a></p>
-</div>
+
+    <br />
+    <a href="{% url staff_list_infoservices %}">{% trans "List Infoservices" %}</a>
+ </div>
+ </div>
 {% endblock %}
 
 {% block infotext %}

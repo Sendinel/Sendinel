@@ -8,16 +8,24 @@ from sendinel.backend.authhelper import format_and_validate_phonenumber
 class NotificationValidationForm(Form):
     phone_number = CharField(validators = [format_and_validate_phonenumber],
             error_messages={'required':_('Please enter a phone number')})
-                
+    way_of_communication = ChoiceField(
+                        choices = Sendable.WAYS_OF_COMMUNICATION,
+                        error_messages={'required': \
+                                _('Please choose a way of communication')})
     date = DateTimeField(error_messages={ \
                             'required': _('Please choose a date'), \
-                            'invalid': _('Please choose a date')})
+                            'invalid': _('Please choose a date')})                                 
+                                
+class DateValidationForm(Form): 
+    date = DateTimeField(error_messages={ \
+                            'required': _('Please choose a date'), \
+                            'invalid': _('Please choose a date')})                        
+    
+
+class NotificationValidationForm2(Form):
+    phone_number = CharField(validators = [format_and_validate_phonenumber],
+            error_messages={'required':_('Please enter a phone number')})
     way_of_communication = ChoiceField(
                         choices = Sendable.WAYS_OF_COMMUNICATION,
                         error_messages={'required': \
                                 _('Please choose a way of communication')}) 
-                        
-    
-
-
-

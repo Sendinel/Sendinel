@@ -14,6 +14,7 @@
 <script src="{% url django.views.i18n.javascript_catalog %}" type="text/javascript" charset="utf-8"></script>
 
 <script src="{{ MEDIA_URL }}/js/window_resize.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ MEDIA_URL }}/js/utils.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 var media_url = '{{ MEDIA_URL }}';
 
@@ -32,12 +33,12 @@ var media_url = '{{ MEDIA_URL }}';
 		<div id="header">
             <div id="sendinelDIV">
                 <a href="{% url web_index %}">
-                    <img src="{{ MEDIA_URL }}/img/logo-800px.png" height="80px"alt="sendinel" border="0"/>
+                    <img src="{{ MEDIA_URL }}/img/sendinel-height80px.png" height="80px"alt="sendinel" border="0"/>
                 </a>
             </div>
             
             <div id="hpiDIV">
-                <img src="{{ MEDIA_URL }}/img/hpi-logo.png" height="80px" alt="HPI" />
+                <img src="{{ MEDIA_URL }}/img/hpi-logo.png"  alt="HPI" />
             </div>
             <div style="clear:both;"></div>
         </div>
@@ -50,16 +51,17 @@ var media_url = '{{ MEDIA_URL }}';
         
 	</div>
     <div id="footer">
-            <div id="infotext">
+            <div id="infotext" style="display:none;">
               {% block infotext %}
                   {% trans "If you want to return to the main menu, click on the sendinel logo in the upper left corner." %}
               {% endblock %}
             </div>
 
             <div id="contact">
-                Bachelorprojekt M2 <br />
-                Hasso-Plattner-Institut Potsdam Germany<br />
-                contact@sendinel.org<br />
+                Bachelorprojekt M2 |
+                Hasso-Plattner-Institut Potsdam Germany |
+                contact@sendinel.org |
+                <a href="http://www.sendinel.org">http://www.sendinel.org</a>
             </div>
         </div>
 

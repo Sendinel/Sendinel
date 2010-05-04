@@ -33,8 +33,7 @@ def create_infomessage(request, id):
     infoservice = InfoService.objects.filter(pk = id)[0]
     
     if(request.method == "GET"):
-        form = InfoMessageForm()
-    
+          
         return render_to_response("staff/create_infomessage.html",
                                     locals(),
                                     context_instance = RequestContext(request))
@@ -109,6 +108,14 @@ def create_infoservice(request):
     return render_to_response("staff/infoservice_create.html",
                                 locals(),
                                 context_instance = RequestContext(request))
+                                
+@log_request
+def delete_infoservice(request):
+    if request.method == 'POST' and request.POST.has_key('infoservice_id'):
+        infoservice = InfoService.objects.get(id = request.POST['infoservice_id'])
+        infoservice.delete()
+    return HttpResponseRedirect(reverse("staff_list_infoservices"))   
+        
 
 @log_request
 def list_members_of_infoservice(request, id):   
@@ -121,7 +128,7 @@ def list_members_of_infoservice(request, id):
 @log_request
 def delete_members_of_infoservice(request, id):
     
-    if request.method == "POST":
+    if request.method == "POST" and request.POST.has_key('subscription_id'):
         
         subscription = Subscription.objects.get(id = request.POST["subscription_id"])        
         subscription.delete()

@@ -25,54 +25,54 @@
 {% endblock %}
 
 {% block content %}
-    <div id="content-padding">
-    <h3>{{ appointment_type.verbose_name }}</h3>
-	<p>{% trans "Please enter the notification details." %}</p>
-    <p>
-        <form action="./" method="post">
-            <table class="cells_align_top">
-                <tr>
-                    <th>
-                    <tr>
-                    <th valign="top" align="left">
-                    <label for="id_phone_input">Phone number:</label>
+    <div id="content-padding" >
+        <div id="contentform">
+        <h3>{{ appointment_type.verbose_name }}</h3>
+        <p>{% trans "Please enter the appointment details." %}</p>
+        <p></p>
+        <form name="appointment_create" action="./" method="post" >
+        <br />
+            
+            <div class="button button_left button_float" onClick="javascript:location.href='{{ backurl }}'">
+                back
+            </div>
+            <div class="field">
+                <div class="head">
+                    Phone number:
                         {% if form.phone_number.errors %}
                             {{ form.phone_number.errors }}
                         {% endif %}
-                    </th>
-                    <td valign="top" >
-                        <input id="id_phone_input" type="text" name="phone_number" class="selectable" 
+                </div>
+                <div class="input">
+                    <input id="id_phone_input" type="text" name="phone_number" class="selectable" 
                             jVal="{valid:function (val) { if (val.length < 6) return false; else return true; }, message:'Please enter a valid phone number'}"
-                            jValKey="{valid:/[+0-9]/, message:'&quot;%c&quot; not valid', cFunc:'$(\'#submitButton\').click();'}"></input>                       
-                    </td>
-                    {% if not appointment_type.notify_immediately %}
-     
-                    <td width="200">&nbsp;</td>
-                    <th rowspan="2" >
-                    
-                            <label for="id_date_0">Date:&nbsp;</label>
-                            {% if form.date.errors %}
+                            jValKey="{valid:/[+0-9]/, message:'&quot;%c&quot; not valid', cFunc:'$(\'#submitButton\').click();'}"></input>  
+                </div>
+            </div>
+            {% if not appointment_type.notify_immediately %}
+            <div class="field">
+                <div class="head">
+                    Date:&nbsp;
+                    {% if form.date.errors %}
                                 {{ form.date.errors }}
-                            {% endif %}
-
-                        </th>
-                        <td rowspan="2">
-                        
-                            <div id="datepicker" ></div>
-                            <input id="date" type="hidden" name="date" />
-                        </td>
                     {% endif %}
-                </tr>
+                </div>
                 
-                <tr>
-                    <th valign="top" align="left">
-                        <label for="id_way_of_communication">Way of communication:&nbsp;</label>
+                <div class="input">
+                    <div id="datepicker" ></div>
+                    <input id="date" type="hidden" name="date" />
+                </div>
+            </div>
+            {% endif %}
+            <div class="field">
+                <div class="head">
+                    Way of communication:&nbsp;
                         {% if form.way_of_communication.errors %}
                             {{ form.way_of_communication.errors }}
                         {% endif %}
-                    </th>
-                    <td valign="top"> 
-                        <select name="way_of_communication" id="id_way_of_communication">
+                </div>
+                <div class="input">
+                    <select name="way_of_communication" id="id_way_of_communication">
                             <option value="" selected="selected">---------</option>
                             <option value="sms">SMS</option>
                 {% comment %} 
@@ -83,17 +83,15 @@
                 {% endcomment %}
                             <option value="voice">Voice Call</option>
                         </select>
-                    </td>
-                </tr>
-            </table>
+                </div>
+            </div>
+            <div class="button button_right button_float" onClick="appointment_create.submit();">next</div>
+            <div style="clear:both;"></div>
+            
 
-            {% include "web/control_buttons_widget.html" %}
         </form>        
-    </p>
+    
     </div>
     </div>
+
 {% endblock %}
-{% block infotext %}
-    {% trans "When you have filled out all information, a notification will be sent to the patient one day before the appointment" %}
-{% endblock %}
- 
