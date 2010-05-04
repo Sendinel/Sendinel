@@ -35,9 +35,9 @@ class TesthelperTest(unittest.TestCase):
         self.assertEquals (text, should_text)
 
     def test_generate_text_message(self):
-        text = texthelper.generate_text({'free_text':"Mrs. Joirie, your medication is there. " \
+        text = texthelper.generate_text({'free_text':"Mrs. Joirie, your medicine is there. " \
                                 + "Please remember to pay 2 $."}, Template("$free_text"))
-        should_text = texthelper.SMS_SALUTATION + "Mrs. Joirie, your medication is there. Please remember to pay 2 $."
+        should_text = texthelper.SMS_SALUTATION + "Mrs. Joirie, your medicine is there. Please remember to pay 2 $."
         self.assertEquals (text, should_text)
         self.assertTrue(len(text) <= 160)
         
