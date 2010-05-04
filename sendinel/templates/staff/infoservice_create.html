@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
+<div id="content-padding">
     <h3>{% trans "Create a new information group" %}</h3>
 	<p>{% trans "Please enter the name of the information group you want to create" %}</p>	
     <p>
@@ -10,5 +11,9 @@
         </form>
     </p>
     <p><a href="{% url staff_list_infoservices %}">{% trans "Back to Information Groups" %}</a></p>
-    
+</div>
+{% endblock %}
+
+{% block infotext %}
+After you have created a new information group, it will also appear in the main menu.
 {% endblock %}

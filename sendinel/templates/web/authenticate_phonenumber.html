@@ -20,6 +20,7 @@
 {% endblock %}
  
 {% block content %}
+<div id="content-padding">
     <h3>{% trans "Patient phone number" %}</h3>
 	<p>{% trans "Please enter the patient's phone number:" %}</p>
     <p>
@@ -36,4 +37,5 @@
             {% include "web/control_buttons_widget.html" %}	         
         </form>
     </p>
+    </div>
 {% endblock %}

@@ -3,15 +3,15 @@
 {% block script %}
 {% endblock %}
 {% block content %}
+<div id="content-padding">
     <h3>{% trans "Sorry, but this does not work yet" %}</h3>
     <p>{% trans "We are working on that and hope to get it running until June 2010." %}</p>
     <div class="selectable_container">
        {% include "web/control_buttons_back_only_widget.html" %}
     </DIV>
-
+</div>
 {% endblock %}
 
 {% block infotext %}
-  <p>Press the 'Enter' key to go back to the main menu.
-  </p>
+  {% trans " Click on the sendinel logo or the back button to return to the main menu" %}
 {% endblock %}
