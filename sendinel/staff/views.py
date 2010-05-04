@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
 
 from sendinel.backend.models import InfoService, InfoMessage, \
                                     Subscription, Patient
@@ -39,7 +40,6 @@ def create_infomessage(request, id):
                                     context_instance = RequestContext(request))
     elif(request.method == "POST"):
         
-        
         for patient in infoservice.members.all():
         
             info_message = InfoMessage()
@@ -59,7 +59,16 @@ def create_infomessage(request, id):
             
             logger.info("Created %s", str(info_message))
         
-        return HttpResponseRedirect(reverse("web_index"))
+        nexturl = reverse('web_index')
+        
+        success = True
+        title = _("Message created")
+        message = _("All members of the %s service will get your message.") \
+                            % infoservice.name
+    
+        return render_to_response('web/status_message.html', 
+                                  locals(),
+                                  context_instance = RequestContext(request))
 
 @log_request
 def list_infoservices(request):
@@ -87,7 +96,16 @@ def create_infoservice(request):
         
         logger.info("Created InfoService: %s", str(infoservice))
         
-        return HttpResponseRedirect(reverse('staff_list_infoservices'))
+        nexturl = reverse('staff_list_infoservices')
+        
+        success = True
+        title = _("Creation successful")
+        message = _("The %s service has been created.") % infoservice.name
+    
+        return render_to_response('web/status_message.html', 
+                                  locals(),
+                                  context_instance = RequestContext(request))
+        
     return render_to_response("staff/infoservice_create.html",
                                 locals(),
                                 context_instance = RequestContext(request))

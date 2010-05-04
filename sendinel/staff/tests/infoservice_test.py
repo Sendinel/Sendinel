@@ -27,7 +27,7 @@ class StaffInfoServiceTest(TestCase):
             "date" : "2010-01-01 00:00:00"
         })
                 
-        self.assertRedirects(response, reverse("web_index"))
+        self.assertEquals(response.status_code, 200)
         
         offset = infoservice.members.all().count()
         
@@ -47,7 +47,7 @@ class StaffInfoServiceTest(TestCase):
         self.assertContains(response, 'name="name"')
         response = self.client.post(reverse("staff_infoservice_create"), 
                                 {"name" : "This is a name for an infoservice"})
-        self.assertRedirects(response, reverse('staff_list_infoservices'))
+        self.assertEquals(response.status_code, 200)
         response = self.client.get(reverse("staff_list_infoservices"))
         self.assertContains(response, "This is a name for an infoservice")
         
