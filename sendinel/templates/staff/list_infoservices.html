@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 {% load i18n %}
+
 {% block content %}
 <div id="content-padding">
 <div id="contentCenterList">
     <h3>{% trans "Information Groups" %}</h3>
    
-    <br />
+    <div id="confirmation" style="display:none; text-align:center">
+        {% trans "Do you really want to remove this information group?" %}
+    </div>
+    
+    
     <table>
         <tr> 
             <td rowspan="5" align="middle" align="center" width="80">
@@ -19,12 +24,16 @@
             <td />
         </tr>
     {% for infoservice in infoservices %}
-        <tr>
-            <td>{{ infoservice.name }}</td>
-            <td>{{ infoservice.count_members }}</td>
-            <td><a href="{% url not_implemented %}">{% trans "Remove group" %}</a> | </td>
-            <td><a href="{% url staff_infoservice_members id=infoservice.id %}">{% trans "Group members" %}</a></td>
-        </tr>
+        <form method="post" id="form_{{ infoservice.id }}" action="{% url staff_infoservice_delete %}">
+            <input type="hidden" name="infoservice_id" value="{{ infoservice.id }}" />
+            <tr>
+                <td>{{ infoservice.name }}</td>
+                <td>{{ infoservice.count_members }}</td>
+                <td><input type="button" onclick="Sendinel.Utils.confirmForm($('#form_{{ infoservice.id }}')[0], 'Please confirm')" value='{% trans "Remove group" %}' />  </td>
+                <td><a href="{% url staff_infoservice_members id=infoservice.id %}">{% trans "Group members" %}</a></td>
+            </tr>
+        
+        </form>
         
     {% endfor %}
     

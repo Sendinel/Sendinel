@@ -1,20 +1,13 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block script %}
-    <script type="text/javascript">
-        var confirmFunction = function(url) {
-            var confirmed = confirm("Do you really want to delete the patient?");
-            if (confirmed){
-                window.location = url;
-            }
-        };
-    </script>
-{% endblock %}
+
 {% block content %}
 <div id="content-padding">
 <div id="contentformGroupheight">
     <h3>{% trans "Members of " %}{{infoservice}}</h3>
-    
+      <div id="confirmation" style="display:none; text-align:center">
+        {% trans "Do you really want to remove this patient from the group?" %}
+    </div>
     <table cellspacing="0" cellpadding="3">
         <tr>   
             <td rowspan="5" align="middle" align="center" width="80">
@@ -27,14 +20,14 @@
             <td width="200px" />
         </tr>
     {% for subscription in subscriptions %}
-        
-        <tr>
-            <td>{{ subscription.patient.phone_number }}</td>
-            <td>{{ subscription.way_of_communication }}</td>
-            <td><a onclick=" confirmFunction('{% url staff_infoservice_members_delete id=infoservice.id, patient_id=subscription.patient.id%}')">
-                                {% trans "Remove Patient from Group" %}</a></td>
-        </tr>
-        
+        <form method="post" id="form_{{ subscription.id }}" action="{% url staff_infoservice_members_delete id=infoservice.id %}">
+            <input type="hidden" name="subscription_id" value="{{ subscription.id }}" />
+            <tr>
+                <td>{{ subscription.patient.phone_number }}</td>
+                <td>{{ subscription.way_of_communication }}</td>
+                <td><input type="button" onclick="Sendinel.Utils.confirmForm($('#form_{{ subscription.id }}')[0], 'Please confirm')" value='{% trans "Remove Patient from Group" %}' /></td>
+            </tr>
+        </form>
     {% endfor %}
     
     </table>
