@@ -6,7 +6,7 @@ from django.test import TestCase, Client
 from sendinel.backend.models import ScheduledEvent, HospitalAppointment
 from sendinel.backend.models import Hospital, Patient, AppointmentType
 from sendinel.settings import AUTH
-from sendinel.web.forms import NotificationValidationForm
+from sendinel.web.forms import NotificationValidationForm, NotificationValidationForm2 , DateValidationForm
 from sendinel import settings
 
 class AppointmentViewTest(TestCase):
@@ -18,21 +18,27 @@ class AppointmentViewTest(TestCase):
         #self.client = Client()
         
     def test_notification_form_validation(self):
-        data = { "date" : "2010-08-12 12:00",
-                 "phone_number" : "0123456789",
-                 "way_of_communication" : "bluetooth"}
-        form = NotificationValidationForm(data)       
+        data = {"phone_number" : "0123456789",
+                "way_of_communication" : "bluetooth"}
+        form = NotificationValidationForm2(data)
         self.assertTrue(form.is_valid())
         
-        data = { "date" : "2010-08-45 12:00",
-                 "phone_number" : "0123456rttddbh789",
+        date = {"date" : "2010-08-12 12:00"}
+        form_date = DateValidationForm(date)
+        self.assertTrue(form_date.is_valid())
+
+        
+        data = { "phone_number" : "0123456rttddbh789",
                  "way_of_communication" : "Bluetooth" }
-        form = NotificationValidationForm(data)
+        form = NotificationValidationForm2(data)
         self.assertFalse(form.is_valid())
-        self.assertEquals(len(form['date'].errors), 1)
         self.assertEquals(len(form['phone_number'].errors), 1)
         self.assertEquals(len(form['way_of_communication'].errors), 1)
         
+        date = {"date" : "2010-08-45 12:00"}
+        form_date = DateValidationForm(date)
+        self.assertFalse(form_date.is_valid())         
+        self.assertEquals(len(form_date['date'].errors), 1)
     
     
     
@@ -89,7 +95,7 @@ class AppointmentViewTest(TestCase):
         
 
     def create_appointment(self, way_of_communication):
-        appointment_type = AppointmentType.objects.get(pk=1)
+        appointment_type = AppointmentType.objects.get(pk=1) #vaccination
         self.client.get(reverse('web_appointment_create', \
                 kwargs={"appointment_type_name": appointment_type.name }))
         
