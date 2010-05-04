@@ -49,10 +49,11 @@ a {
 }
 
 #footer{
+
     background-color: #eeeeee;
     position: absolute;
     bottom:0px;
-    height:120px;
+    height:40px;
     width:100%;
 
 }
@@ -62,7 +63,8 @@ a {
 }
 
 #content-padding {
-    padding: 20px;
+    padding-top: 10px;
+    padding-left:25px;
 }
 
 #notifications{
@@ -83,24 +85,28 @@ a {
 }
 
 #infotext{
+    font-size:0.5em;
     position:absolute;
     left:40px;
     float:left;
     min-width:300px;
     max-width:500px;
-    max-height: 100px;
-    padding: 10px;
-    padding-left: 80px;
-    background-position:20px 20px;
+    min-height: 40px;
+    max-height: 60px;
+    line-height:2em;
+    padding-left: 50px;
+    padding-top: 7px;
+    background-position:10px 10px;
     background-image: url(../img/info_sign.png);
     background-repeat: no-repeat;
 }
 #contact{
-    position:absolute;
-    right:40px;
+    padding-top:10px;
+    text-align:center;
+    line-height:2em;
     float:left;
-    text-align:right;
-    padding:10px;
+    width:100%;
+    font-size:0.5em;
 }
 
 
@@ -224,9 +230,9 @@ strong.big {
     color: #af0037;
     border: 1px solid #af0037;
     margin: 5px 0;
-    padding: 0;
     list-style-type: none;
     background-color: #FCC533;
+    font-size:0.6em;
     
 }
 
@@ -244,7 +250,78 @@ strong.big {
 
 h3{
     text-align:left;
-    color:#fcc533;
+    color:#f29400;
     font-size:1.4em;
     font-weight:bold;
+}
+
+.field{
+    border-right: 10px solid #eeeeee; 
+    height:380px;
+    padding-top:10px;
+    padding-left:10px;
+    padding-right:10px;
+    float:left;
+}
+.head{
+    font-weight:bold;
+    margin: 10px 0px;
+}
+.input{
+}
+
+.button{
+    width:50px;
+    height:30px;
+    background: #F3F3F3;
+    border: 1px solid #8e8e8e;
+    padding-top:44px;
+    padding-left:3px;
+    
+}
+.button_left{
+    background-image: url(../img/button_left.png);
+    background-repeat: no-repeat;
+    background-position: 5px 5px;
+}
+.button_right{
+    background-image: url(../img/button_right.png);
+    background-repeat: no-repeat;
+    background-position: 5px 5px;
+}
+.button:hover {
+    border: 1px solid orange;
+    cursor:pointer;
+    background-color: #FFDCA3;
+}
+.button_float{
+    float:left;
+    margin-top:100px;
+    margin-left:20px;
+    margin-right:20px;
+}
+.sendGroupheight{
+    height:190px;
+}
+.groupheight{
+    height:200px;
+}
+.groupbutton{
+    margin-top:40px;
+}
+#contentCenterList{
+    margin:auto;
+    width:700px;
+}
+#contentformGroupheight{
+    margin:auto;
+    width:700px;
+}
+#contentformRegGroup{
+    margin:auto;
+    width:700px;
+}
+#contentform{
+    margin:auto;
+    width:1000px;
 }

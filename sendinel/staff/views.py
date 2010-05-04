@@ -33,8 +33,7 @@ def create_infomessage(request, id):
     infoservice = InfoService.objects.filter(pk = id)[0]
     
     if(request.method == "GET"):
-        form = InfoMessageForm()
-    
+          
         return render_to_response("staff/create_infomessage.html",
                                     locals(),
                                     context_instance = RequestContext(request))

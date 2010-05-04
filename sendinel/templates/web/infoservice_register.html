@@ -22,38 +22,50 @@
  
 {% block content %}
 <div id="content-padding">
+    <div id="contentformRegGroup">
     <h3>{% trans "Register patient for " %} {{infoservice}}</h3>
 	<p>{% trans "Please enter your phone number and the way you want to receive the messages" %}</p>
-    <p>
-        <form method="post" class="selectable_container" action='#' 
+    <br />
+        <form name="infoservice" method="post" class="selectable_container" action='#' 
          autocomplete="off">
-            <table>
-                {% if error %}
-                <tr><td></td><td>{{ error }}</td></tr>
-                {% endif %}              
-                <tr>
-                  <td>{% trans "Phone Number" %}</td>
-                  <td>
-			<input id="id_phone_input" type="text" name="number" class="selectable" 
+         
+          <div class="button button_left button_float groupbutton" onClick="javascript:location.href='{{ backurl }}'">
+                back
+            </div>
+            <div class="field groupheight">
+                <div class="head">
+                    Phone number:
+                        {% if form.phone_number.errors %}
+                            {{ form.phone_number.errors }}
+                        {% endif %}
+                </div>
+                <div class="input">
+                    <input id="id_phone_input" type="text" name="number" class="selectable" 
 			    jVal="{valid:function (val) { if (val.length < 6) return false; else return true; }, message:'Please enter a valid phone number'}"
                             jValKey="{valid:/[+0-9]/, message:'&quot;%c&quot; Please only enter digits for the phone number', cFunc:'$(\'#submitButton\').click();'}"/>
-		</td>
-                </tr>
-                <tr>
-                  <td>{% trans "Way of Communication" %}</td>
-                  <td>
+                </div>
+            </div>
+            
+            
+            <div class="field groupheight">
+                <div class="head">
+                    Way of communication:&nbsp;
+                        {% if form.way_of_communication.errors %}
+                            {{ form.way_of_communication.errors }}
+                        {% endif %}
+                </div>
+                <div class="input">
                     <select name="way_of_communication" id="id_way_of_communication">
                      <option value='sms'>{% trans "SMS" %}</option>
                      <option value='voice'>{% trans "Voice Call" %}</option>
                     </select> 
-                  </td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>{% include "web/control_buttons_widget.html" %}</td>
-                </tr>
-	         </table>
+                </div>
+            </div>
+            <div class="button button_right button_float groupbutton" onClick="infoservice.submit();">next</div>
+            <div style="clear:both;"></div>
+         
         </form>
-    </p>
+    
+    </div>
 </div>
 {% endblock %}
