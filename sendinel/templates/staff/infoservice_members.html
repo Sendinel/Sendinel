@@ -36,3 +36,6 @@
     <p><a href="{% url staff_list_infoservices %}">{% trans "Back to Infoservices" %}</a></p>
     </div>
 {% endblock %}
+{% block infotext %}
+{%trans "These are all patients currently subscribed to " %}{{infoservice}}
+{% endblock %}

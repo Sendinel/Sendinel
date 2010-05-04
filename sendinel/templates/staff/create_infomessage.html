@@ -34,3 +34,7 @@
         <a href="{% url web_index %}">{% trans "Back to Main Menu" %}</a></p>
 </div>
 {% endblock %}
+
+{% block infotext %}
+{%trans "This message will be sent to all patients who are subscribed to "%} {{infoservice}}
+{% endblock %}

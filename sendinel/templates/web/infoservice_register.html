@@ -23,7 +23,7 @@
 {% block content %}
 <div id="content-padding">
     <h3>{% trans "Register patient for " %} {{infoservice}}</h3>
-	<p>{% trans "Please enter your phone number and the way you want to receive the messages" %}</p>
+	<p>{% trans "Please enter the patient's phone number and the way the patient should receive the message." %}</p>
     <p>
         <form method="post" class="selectable_container" action='#' 
          autocomplete="off">
@@ -34,7 +34,7 @@
                 <tr>
                   <td>{% trans "Phone Number" %}</td>
                   <td>
-			<input id="id_phone_input" type="text" name="number" class="selectable" 
+			<input id="id_phone_input" type="text" name="phone_number" class="selectable" 
 			    jVal="{valid:function (val) { if (val.length < 6) return false; else return true; }, message:'Please enter a valid phone number'}"
                             jValKey="{valid:/[+0-9]/, message:'&quot;%c&quot; Please only enter digits for the phone number', cFunc:'$(\'#submitButton\').click();'}"/>
 		</td>
@@ -56,4 +56,7 @@
         </form>
     </p>
 </div>
+{% endblock %}
+{% block infotext %}
+{%trans "When you have registered the patient, he/she will always receive messages that you send to the group " %}{{infoservice}}
 {% endblock %}
