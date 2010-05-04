@@ -30,7 +30,7 @@
          autocomplete="off">
          
           <div class="button button_left button_float groupbutton" onClick="javascript:location.href='{{ backurl }}'">
-                back
+                {% trans "Back" %}
             </div>
             <div class="field groupheight">
                 <div class="head">
@@ -40,14 +40,14 @@
                         {% endif %}
                 </div>
                 <div class="input">
-                    <input id="id_phone_input" type="text" name="number" class="selectable" 
+                    <input id="id_phone_input" type="text" name="phone_number" class="selectable" 
 			    jVal="{valid:function (val) { if (val.length < 6) return false; else return true; }, message:'Please enter a valid phone number'}"
                             jValKey="{valid:/[+0-9]/, message:'&quot;%c&quot; Please only enter digits for the phone number', cFunc:'$(\'#submitButton\').click();'}"/>
                 </div>
             </div>
             
             
-            <div class="field groupheight">
+            <div class="field groupheight lastfield">
                 <div class="head">
                     Way of communication:&nbsp;
                         {% if form.way_of_communication.errors %}
@@ -61,7 +61,7 @@
                     </select> 
                 </div>
             </div>
-            <div class="button button_right button_float groupbutton" onClick="infoservice.submit();">next</div>
+            <div class="button button_right button_float groupbutton" onClick="infoservice.submit();">{% trans "Next" %}</div>
             <div style="clear:both;"></div>
          
         </form>

@@ -299,11 +299,36 @@ h3{
     padding-right:10px;
     float:left;
 }
+.lastfield{
+    border-right: 0px; 
+}
 .head{
     font-weight:bold;
     margin: 10px 0px;
 }
 .input{
+}
+.button_only{
+    width:120px;
+    background: #F3F3F3;
+    border: 1px solid #8e8e8e;
+    padding-top:44px;
+    text-align:center;
+}
+.button_only_left{
+    background-image: url(../img/button_left.png);
+    background-repeat: no-repeat;
+    background-position: 31px 6px;
+}
+.button_only_right{
+    background-image: url(../img/button_right.png);
+    background-repeat: no-repeat;
+    background-position: 31px 6px;
+}
+.button_only:hover{
+ border: 1px solid orange;
+    cursor:pointer;
+    background-color: #FFDCA3;
 }
 
 .button{
@@ -345,13 +370,17 @@ h3{
 .groupbutton{
     margin-top:40px;
 }
+#contentStatusMessage{
+    margin:auto;
+    width:800px;
+}
 #contentCenterList{
     margin:auto;
-    width:700px;
+    width:800px;
 }
 #contentformGroupheight{
     margin:auto;
-    width:700px;
+    width:800px;
 }
 #contentformRegGroup{
     margin:auto;

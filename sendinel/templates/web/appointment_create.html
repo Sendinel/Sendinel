@@ -34,7 +34,7 @@
         <br />
             
             <div class="button button_left button_float" onClick="javascript:location.href='{{ backurl }}'">
-                back
+                {% trans "Back" %}
             </div>
             <div class="field">
                 <div class="head">
@@ -49,6 +49,7 @@
                             jValKey="{valid:/[+0-9]/, message:'&quot;%c&quot; not valid', cFunc:'$(\'#submitButton\').click();'}"></input>  
                 </div>
             </div>
+            {% if not appointment_type.notify_immediately %}
             <div class="field">
                 <div class="head">
                     Date:&nbsp;
@@ -56,13 +57,14 @@
                                 {{ form.date.errors }}
                     {% endif %}
                 </div>
+                
                 <div class="input">
                     <div id="datepicker" ></div>
                     <input id="date" type="hidden" name="date" />
                 </div>
             </div>
-            
-            <div class="field">
+            {% endif %}
+            <div class="field lastfield">
                 <div class="head">
                     Way of communication:&nbsp;
                         {% if form.way_of_communication.errors %}
@@ -83,7 +85,7 @@
                         </select>
                 </div>
             </div>
-            <div class="button button_right button_float" onClick="appointment_create.submit();">next</div>
+            <div class="button button_right button_float" onClick="appointment_create.submit();">{% trans "Next" %}</div>
             <div style="clear:both;"></div>
             
 

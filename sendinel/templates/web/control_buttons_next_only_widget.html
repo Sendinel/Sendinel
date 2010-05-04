@@ -4,10 +4,9 @@
 <td>&nbsp;</td>
 <td align="right">
 <div name="control-buttons-widget" id="control_buttons" class="control-buttons">
-  <div class="next-button">
-    <input type="submit" name="form_submit" value="{% trans 'Next' %} -&gt;" id="id_next" />
-    <input type="hidden" class="" name="next-button-link" id="next-button-link" value="{{ nexturl }}" />
-  </div>
+     <div class="button_only button_only_right " onClick="javascript:location.href='{{ nexturl }}'">
+    {% trans "Next" %}
+    </div>
 </div>
 </td>
 </tr>
