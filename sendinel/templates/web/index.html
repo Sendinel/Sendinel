@@ -11,13 +11,13 @@
         <div class="menulistNotificationItem">
              <a href="{% url web_appointment_create appointment_type_name=appointment_type.name %}">
                 <div class="notificationName">
-                   {% trans "Remind of " %}{{ appointment_type.verbose_name }}
+                   {{ appointment_type.verbose_name }}
                 </div>
             </a>
         </div>
         {% endfor %}     
         <div class="menulistNotificationItem">
-             <a href="">
+             <a href="{% url not_implemented %}">
                 <div class="notificationName">
                    {% trans "Inform about Arrival of Medication" %}
                 </div>
@@ -59,7 +59,6 @@
 {% endblock %}
 {% block infotext %}
   <p>This is the main menu. 
-     Press the arrow keys  ←↑→↓ in front of you to choose menu items.
-     Use the 'Enter' key to select.
+     If you want to tell one patient that he/she should come to the clinic, choose a topic under "Notifications". If you want to inform a group of people you should use groups.
   </p>
 {% endblock %}
