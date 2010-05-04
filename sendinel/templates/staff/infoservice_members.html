@@ -1,11 +1,24 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block script %}
-    <script type="text/javascript">
-        var confirmFunction = function(url) {
-            var confirmed = confirm("Do you really want to delete the patient?");
-            if (confirmed){
-                window.location = url;
+    <script type="text/javascript">  
+        var confirmForm = function(form) {
+            $("#confirmation").dialog({
+                modal: true,
+                resizable: false,
+                title: "Please confirm",
+                buttons: {
+                    "Cancel" : function() {
+                        $(this).dialog("close");
+                    },
+                    "OK" : function() {
+                        form.submit();
+                    }
+                }
+            });
+            
+            if(!$("#confirmation").dialog("isOpen")) {
+                $("#confirmation").dialog("open");
             }
         };
     </script>
@@ -14,6 +27,10 @@
 <div id="content-padding">
     <h3>{% trans "Members of " %}{{infoservice}}</h3>
     
+    <div id="confirmation" style="display:none; text-align:center">
+        {% trans "Do you really want to remove this patient from the group?" %}
+    </div>
+    
     <table cellspacing="0" cellpadding="3">
         <tr>   
             <td>{% trans "Phone Number" %}</td>
@@ -21,14 +38,14 @@
             <td />
         </tr>
     {% for subscription in subscriptions %}
-        
-        <tr>
-            <td>{{ subscription.patient.phone_number }}</td>
-            <td>{{ subscription.way_of_communication }}</td>
-            <td><a onclick=" confirmFunction('{% url staff_infoservice_members_delete id=infoservice.id, patient_id=subscription.patient.id%}')">
-                                {% trans "Remove Patient from Group" %}</a></td>
-        </tr>
-        
+        <form method="post" id="form_{{ subscription.id }}" action="{% url staff_infoservice_members_delete id=infoservice.id %}">
+            <input type="hidden" name="subscription_id" value="{{ subscription.id }}" />
+            <tr>
+                <td>{{ subscription.patient.phone_number }}</td>
+                <td>{{ subscription.way_of_communication }}</td>
+                <td><input type="button" onclick="confirmForm($('#form_{{ subscription.id }}')[0])" value='{% trans "Remove Patient from Group" %}' /></td>
+            </tr>
+        </form>
     {% endfor %}
     
     </table>

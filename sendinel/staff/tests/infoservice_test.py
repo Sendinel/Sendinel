@@ -65,17 +65,20 @@ class StaffInfoServiceTest(TestCase):
         response = self.client.get(reverse("staff_infoservice_members", 
                                            kwargs={"id": info.id}))
         self.assertContains(response, patient.phone_number)
-        subscription_count = Subscription.objects.all().count()
-        patient_count = Patient.objects.all().count()
-        response = self.client.get(reverse("staff_infoservice_members_delete", 
-                                           kwargs={"id": info.id, 
-                                                   "patient_id": patient.id}))
-
+        
+        
+    def test_delete_members_of_infoservice(self):
+        infoservice = InfoService.objects.filter(pk = 1)[0]
+        patient = infoservice.members.all()[0]
+        subscription = Subscription.objects.get(patient=patient, infoservice=infoservice)
+        response = self.client.post(reverse("staff_infoservice_members_delete",
+                                            kwargs={"id" : infoservice.id}),
+                                    {'subscription_id' : subscription.id})
+        new_members = infoservice.members.all()
+        self.assertTrue(not patient in new_members)
+        self.assertTrue(not subscription in Subscription.objects.all())
         self.assertRedirects(response, reverse("staff_infoservice_members", 
-                                               kwargs={"id": info.id}))     
-        self.assertEquals(Subscription.objects.all().count(), subscription_count - 1)
-        # TODO why patient_count - 1 -- replaced by equals
-        self.assertEquals(Patient.objects.all().count(), patient_count)
-                                         
+                                               kwargs={"id": infoservice.id}))
+            
         
         
