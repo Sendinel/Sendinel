@@ -22,6 +22,7 @@
                 <th>{% trans "Members" %}</th>
                 <td />
                 <td />
+                <td />
             </tr>
         {% for infoservice in infoservices %}
             <form method="post" id="form_{{ infoservice.id }}" action="{% url staff_infoservice_delete %}">
@@ -38,6 +39,11 @@
                         <input  type="button" 
                                 onclick="Sendinel.Utils.goto_url('{% url staff_infoservice_members id=infoservice.id %}')"
                                 value='{% trans "Group members" %}' />
+                    </td>
+                    <td>
+                        <input  type="button" 
+                                onclick="Sendinel.Utils.goto_url('{% url staff_create_infomessage id=infoservice.id %}')"
+                                value='{% trans "Send message" %}' />
                     </td>
                 </tr>
             

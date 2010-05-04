@@ -252,13 +252,17 @@ strong.big {
 }
 
 .errorlist {
-    color: #af0037;
-    border: 1px solid #af0037;
-    margin: 5px 0;
+    color: #4F4F4F;
+    border: 1px solid #4F4F4F;
+    padding: 10px;
     list-style-type: none;
-    background-color: #FCC533;
+    background-color: #FFE5C9;
     font-size:0.6em;
     
+    text-align: center;  
+
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;    
 }
 
 .status {
@@ -272,15 +276,15 @@ strong.big {
 }
 
 .success {
-    color: #F0A10E;    
+    color: #C96A04;    
     border: 1px solid #F0A10E;    
     background-color: #FFEECF;   
 }
 
 .error {
-    color: red;
-    border: 1px solid red;
-    background-color: #FFDEDE;
+    color: #4F4F4F;
+    border: 1px solid #4F4F4F;
+    background-color: #FFE5C9;
 }
 
 /* Way of communication selector */

@@ -24,5 +24,5 @@ class InfoserviceValidationForm(Form):
                             
 class InfoMessageValidationForm(Form):
     text = CharField(error_messages={ \
-                            'required': _('Please enter a name'), \
-                            'invalid': _('The name contains invalid characters')})    
+                            'required': _('Please enter a text to send'), \
+                            'invalid': _('The text contains invalid characters')})    

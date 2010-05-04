@@ -27,6 +27,9 @@
             <div class="field sendGroupheight lastfield">
                 <div class="head">
                     Message Text:
+                    {% if form.text.errors %}
+                        {{ form.text.errors }}
+                    {% endif %}
                 </div>
                 <div class="input">
                     <textarea id="id_text" rows="5" cols="35" name="text"></textarea>
