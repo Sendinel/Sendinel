@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
+<div id="content-padding">
     <h3>{% trans "Information Groups" %}</h3>
     
     <table>
@@ -24,5 +25,5 @@
     <a href="{% url staff_infoservice_create %}">+ {% trans "Create information group" %}</a>
     
     <p><a href="{% url web_index %}">{% trans "Back to Main Menu" %}</a></p>
-    
+ /div>   
 {% endblock %}

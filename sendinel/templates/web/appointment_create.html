@@ -34,41 +34,44 @@
                 <tr>
                     <th>
                     <tr>
-                        <th>
-                        <label for="id_phone_input">Phone number:</label>
+                    <th valign="top" align="left">
+                    <label for="id_phone_input">Phone number:</label>
                         {% if form.phone_number.errors %}
                             {{ form.phone_number.errors }}
                         {% endif %}
                     </th>
-                    <td>
+                    <td valign="top" >
                         <input id="id_phone_input" type="text" name="phone_number" class="selectable" 
                             jVal="{valid:function (val) { if (val.length < 6) return false; else return true; }, message:'Please enter a valid phone number'}"
-                            jValKey="{valid:/[+0-9]/, message:'&quot;%c&quot; Please only enter digits for the phone number', cFunc:'$(\'#submitButton\').click();'}"></input>                       
+                            jValKey="{valid:/[+0-9]/, message:'&quot;%c&quot; not valid', cFunc:'$(\'#submitButton\').click();'}"></input>                       
                     </td>
-                </tr>
-                {% if not appointment_type.notify_immediately %}
-                    <tr>
-                        <th>
-                            <label for="id_date_0">Date:</label>
+                    {% if not appointment_type.notify_immediately %}
+     
+                    <td width="200">&nbsp;</td>
+                    <th rowspan="2" >
+                    
+                            <label for="id_date_0">Date:&nbsp;</label>
                             {% if form.date.errors %}
                                 {{ form.date.errors }}
                             {% endif %}
 
                         </th>
-                        <td>
-                            <div id="datepicker"></div>
+                        <td rowspan="2">
+                        
+                            <div id="datepicker" ></div>
                             <input id="date" type="hidden" name="date" />
                         </td>
-                    </tr>
-                {% endif %}
+                    {% endif %}
+                </tr>
+                
                 <tr>
-                    <th>
-                        <label for="id_way_of_communication">Way of communication:</label>
+                    <th valign="top" align="left">
+                        <label for="id_way_of_communication">Way of communication:&nbsp;</label>
                         {% if form.way_of_communication.errors %}
                             {{ form.way_of_communication.errors }}
                         {% endif %}
                     </th>
-                    <td> 
+                    <td valign="top"> 
                         <select name="way_of_communication" id="id_way_of_communication">
                             <option value="" selected="selected">---------</option>
                             <option value="sms">SMS</option>

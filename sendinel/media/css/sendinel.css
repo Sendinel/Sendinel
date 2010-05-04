@@ -104,33 +104,107 @@ a {
 }
 
 
-.menulist div
+.menulistNotificationItem
 {
-    min-height: 2em;
-    padding-top: 0.8em;
-    padding-bottom: 10px;
-    margin: 10px 0px;
-    font-size: 1.2em;
+    
+
     font: bold Verdana, sans-serif;
+    border: 1px solid #F3F3F3;
     background: #F3F3F3;
     background-image: url(../img/arrow_right_orange.png);
     background-repeat: no-repeat;
     background-position: 10px 0px;
+    margin: 10px 0px;
+    padding-left:80px;
 }
-.menulist div a
-{
-    padding-left: 80px;
+.notificationName{
+    min-height: 2em;
+    padding-top: 0.8em;
+    padding-bottom: 2px;
+    width:100%;
+    font-size: 1.2em;    
+
 }
 
-.menulist div a.menu_secondlink
+.menulistNotificationItem:hover {
+    border: 1px solid orange;
+    background-color: #FFDCA3;
+}
+
+.menulistGroupsItem
 {
+    font-size: 1em;
+    font: bold Verdana, sans-serif;
+    background: #F3F3F3;
     padding-left: 10px;
-    margin-left: 10px;
+    margin: 10px 0px;
 }
 
-.cells_align_top td
-{
-    vertical-align: top;
+.groupName{
+    min-height: 2em;
+    padding-top: 0.8em;
+    padding-bottom: 12px;
+    
+    
+
+    float:left;
+}
+.links{
+float:right;
+}
+.groupRegister{
+    min-height: 2em;
+    padding-top: 0.8em;
+    padding-bottom: 12px;
+     border: 1px solid #F3F3F3;
+    float:left;
+    width:155px;
+    padding-left:30px;
+    background-position:0px 15px;
+    background-image: url(../img/add.png);
+    background-repeat: no-repeat;
+}
+.groupRegister:hover {
+    border: 1px solid orange;
+    background-color: #FFDCA3;
+}
+.groupSend{
+    min-height: 2em;
+    padding-top: 0.8em;
+    padding-bottom: 12px;
+    border: 1px solid #F3F3F3;
+    
+    float:left;
+    width:140px;
+    clear:right;
+    padding-left:45px;
+    background-position:0px 13px;
+    background-image: url(../img/send.png);
+    background-repeat: no-repeat;
+
+}
+.groupSend:hover {
+    border: 1px solid orange;
+    background-color: #FFDCA3;
+}
+
+.menulistManageGroups{
+    padding-left: 60px;
+    min-height: 2em;
+    padding-top: 0.8em;
+    padding-bottom: 12px;
+    margin: 10px 0px 0px 0px;
+    font-size: 1em;
+    font: bold Verdana, sans-serif;
+    border: 1px solid #F3F3F3;
+    background: #F3F3F3;
+    background-image: url(../img/gear_wheel.png);
+    background-repeat: no-repeat;
+    background-position: 17px 20px;
+}
+.menulistManageGroups:hover {
+    border: 1px solid orange;
+    background-color: #FFDCA3;
 }
 
 /* Forms */
@@ -156,26 +230,8 @@ strong.big {
     
 }
 
-.status {
-    width: 500px;
-    margin: 50px;
-    padding: 50px;
-    text-align: center;
-    
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-}
-
 .success {
-    color: green;    
-    border: 1px solid green;    
-    background-color: #E2FFDE;   
-}
-
-.error {
-    color: red;
-    border: 1px solid red;
-    background-color: #FFDEDE;
+    color: green;
 }
 
 /* Way of communication selector */

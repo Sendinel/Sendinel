@@ -24,6 +24,7 @@
     </script>
 {% endblock %}
 {% block content %}
+<div id="content-padding">
     <h3>{% trans "Members of " %}{{infoservice}}</h3>
     
     <div id="confirmation" style="display:none; text-align:center">
@@ -50,5 +51,5 @@
     </table>
 
     <p><a href="{% url staff_list_infoservices %}">{% trans "Back to Infoservices" %}</a></p>
-    
+    </div>
 {% endblock %}
