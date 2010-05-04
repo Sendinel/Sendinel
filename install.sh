@@ -49,6 +49,41 @@ backup_file() {
     cp -a "$file" "$backupFile" || warning
 }
 
+check_file_exists_and_backup() {
+    # test wether file already exists - if yes do a backup
+    file="$1"
+    if [ -e "$file" ]; then
+        errorMessage="Configuration file already exists: '$file'. A backup file will be created if you choose to proceed."
+        warning
+        backup_file "$file"
+        return 1
+    fi
+    return 0
+}
+
+remove_or_warning() {
+    file="$0"
+    errorMessage="The following file could not be removed: '$file'"
+    rm "$file" || warning
+}
+
+symlink_or_warning() {
+    source="$0"
+    target="$1"
+    check_file_exists_and_backup "$source"
+    remove_or_warning "$source"
+
+    errorMessage="Failed to create symlink from '$source' to '$target'"
+    ln -sfv "$target" "$source" || warning
+}
+
+replace_in_file() {
+    file="$1"
+    searchFor="$2"
+    replaceWith="$3"
+    sed -i "s/$searchFor/$replaceWith/g" "$file"
+}
+
 # test wether target dir already exists
 if [ -e "$targetDir" ]; then
     errorMessage="Installation target directory already exists: '$targetDir'"
@@ -65,8 +100,8 @@ if  test ! -w "$targetParentDir"; then
 fi
 
 
-# TODO check python version
-# write scripts to start sendinel using python2.6
+# TODO check which python versions work
+# eventually write scripts to start sendinel using python2.6
 # $pythonVersion
 if type -P "$pythonVersion" > /dev/null; then
     pythonPath=$(type -P "$pythonVersion")
@@ -131,38 +166,66 @@ message_done
 
 
 # sudo
+# TODO check wether sudoers already contains sendinel line
 # TODO fix python path
+echo "Configuring permissions for phone authentication in /etc/sudoers..."
 sudoersFile="/etc/sudoers"
 backup_file "$sudoersFile"
-sudoLine="asterisk      ALL = ($user)NOPASSWD: /usr/bin/python '$targetDir/sendinel/asterisk/log_call.py"
+sudoLine="asterisk      ALL = ($user)NOPASSWD: /usr/bin/python '$targetDir/sendinel/asterisk/log_call.py'"
 
 errorMessage='Writing the sudoers file failed. You can try to add the following line manually using visudo:'
 errorMessage="$errorMessage\n$sudoLine"
 echo "\n\n#This line was added by the sendinel install script." >> $sudoersFile
 echo "$sudoLine" >> $sudoersFile
+message_done
+
+
+# asterisk config
+asteriskDir="/etc/asterisk"
+echo "Configuring Asterisk telephony server..."
+asteriskConfigsDir="$targetDir/configs/asterisk"
+
+# replace extensions.conf
+extensionsTarget="$asteriskDir/extensions.conf"
+backup_file "$extensionsTarget"
+errorMessage="Failed to replace asterisk configuration file '$extensionsTarget'"
+cp -a "$asteriskConfigsDir/extensions.conf" "$extensionsTarget" || warning
+
+# copy datacard.conf
+dataCardTarget="$asteriskDir/datacard.conf"
+if [ -e "$dataCardTarget" ]; then
+    backup_file "$dataCardTarget"
+fi
+errorMessage="Failed to install asterisk configuration file '$dataCardTarget'"
+cp -a "$asteriskConfigsDir" "$dataCardTarget" || warning
+
+
 
 # call_log agi script symlink
-# agiLinkSource="/usr/share/asterisk/agi-bin"
-# agiLinkTarget="$targetDir/scripts/l"
-# 
-# if [ -e "$targetDir" ]; then
-    
-# asterisk config
-# replace extensions.conf
-# copy datacard.conf
+agiFileName="call_log.agi"
+agiLinkSource="/usr/share/asterisk/agi-bin"
+
+symlink_or_warning "$agiLinkSource/$agiFileName" "$asteriskConfigsDir/$agiFileName"
+
+backup_file "$file"
+replace_in_file "$agiLinkTarget" '%targetDir%' "$targetDir" 
+replace_in_file "$agiLinkTarget" '%user%' "$user"
+message_done
+
 
 # asterisk permissions
 # TODO warning about security issues - /var/spool/asterisk/outgoing 
 # /var/spool/asterisk/outgoing 770
 
+
+# download and compile datacard
+
+# restart asterisk
+
+
+
 # lighttpd config
 # 
-
-
-
-
-
-
 
 
 
