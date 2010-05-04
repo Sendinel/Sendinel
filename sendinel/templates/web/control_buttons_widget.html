@@ -10,9 +10,9 @@
 
 </td>
 <td align="right">
-
-    <div class="button_only button_only_right " onClick="javascript:location.href='{{ nexturl }}'">
-    {% trans "Main Menue" %}
+    <input type="hidden" id="next-button-link" value="{% url web_index %}">
+    <div class="button_only button_only_right " id="next-button-link" onClick="javascript:location.href='{% url web_index %}'">
+    {% trans "Main Menu" %}
     </div>
 
 
