@@ -22,7 +22,7 @@
         <form name="infoservice" action="" method="post">
         <br />
             <div class="button button_left button_float groupbutton" onClick="javascript:location.href='{% url web_index %}'">
-                back
+                {% trans "Back" %}
             </div>
             <div class="field sendGroupheight lastfield">
                 <div class="head">
@@ -36,7 +36,7 @@
                 </div>
             </div>
             
-            <div class="button button_right button_float groupbutton" onClick="infoservice.submit();">next</div>
+            <div class="button button_right button_float groupbutton" onClick="infoservice.submit();">{% trans "Next" %}</div>
             <div style="clear:both;"></div>
             
         </form>
