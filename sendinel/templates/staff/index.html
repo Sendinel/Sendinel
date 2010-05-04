@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-
+<div id="content-padding">
     <h3>{% trans "Your are logged in as staff. Please choose what you want to do:" %}</h3>
     <p>
         <ul class="navlist">
@@ -12,4 +12,5 @@
     <div class="logout">
         <a href="{% url staff_logout %}">Back to Main Menu</a>
     </div>
+</div>
 {% endblock %}

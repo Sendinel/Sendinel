@@ -10,18 +10,20 @@
         {% for appointment_type in appointment_types %}
         <div class="menulistNotificationItem">
              <a href="{% url web_appointment_create appointment_type_name=appointment_type.name %}">
-                <div id="notificationName">
+                <div class="notificationName">
                    {% trans "Remind of " %}{{ appointment_type.verbose_name }}
                 </div>
             </a>
         </div>
         {% endfor %}     
-        
         <div class="menulistNotificationItem">
-                <div id="notificationName">
+             <a href="">
+                <div class="notificationName">
                    {% trans "Inform about Arrival of Medication" %}
                 </div>
+            </a>
         </div>
+
     </div>
    
     <div id="groups">

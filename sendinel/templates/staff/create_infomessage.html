@@ -16,6 +16,7 @@
 {% endblock %}
 
 {% block content %}
+<div id="content-padding">
     <h3>{% blocktrans with infoservice.name as infoservice %}Send a message to {{ infoservice }}{% endblocktrans %}</h3>
     <p>
         <form action="" method="post">
@@ -31,4 +32,5 @@
     </p>
     <p><a href="{% url staff_list_infoservices %}">{% trans "List Infoservices" %}</a> |
         <a href="{% url web_index %}">{% trans "Back to Main Menu" %}</a></p>
+</div>
 {% endblock %}
