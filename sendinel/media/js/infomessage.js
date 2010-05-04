@@ -4,7 +4,7 @@ $(document).ready(function() {
     
     var textarea = $("#id_text");
     
-    $("#chars-left")[0].innerHTML = "Chars left: " + AVAILABLE_CHARS;
+    $("#chars-left")[0].innerHTML = AVAILABLE_CHARS;
     
     textarea.bind("keydown", function(e) {
         e.stopPropagation();
@@ -30,6 +30,6 @@ $(document).ready(function() {
             text_length = AVAILABLE_CHARS;
         }
         
-        $("#chars-left")[0].innerHTML = "Chars left: " + (AVAILABLE_CHARS - text_length);
+        $("#chars-left")[0].innerHTML = AVAILABLE_CHARS - text_length;
     });
 });

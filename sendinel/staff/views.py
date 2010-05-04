@@ -76,6 +76,8 @@ def list_infoservices(request):
 
     infoservices = []
     
+    backurl = reverse("web_index")
+    
     for infoservice in all_infoservices:
         infoservices.append({
             "id": infoservice.id,
