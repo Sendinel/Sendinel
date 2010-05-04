@@ -133,5 +133,6 @@ div.abstract {width:100%;}
 span.footnote-mark sup.textsuperscript, span.footnote-mark a sup.textsuperscript{ font-size:80%; }
 .figure img.graphics {margin-left:10%;}
 .supertabular {text-align:center}
+span#textcolor1{color:#FF0000}
 /* end css.sty */
 
