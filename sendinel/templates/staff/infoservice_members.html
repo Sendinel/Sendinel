@@ -1,28 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block script %}
-    <script type="text/javascript">  
-        var confirmForm = function(form) {
-            $("#confirmation").dialog({
-                modal: true,
-                resizable: false,
-                title: "Please confirm",
-                buttons: {
-                    "Cancel" : function() {
-                        $(this).dialog("close");
-                    },
-                    "OK" : function() {
-                        form.submit();
-                    }
-                }
-            });
-            
-            if(!$("#confirmation").dialog("isOpen")) {
-                $("#confirmation").dialog("open");
-            }
-        };
-    </script>
-{% endblock %}
+
 {% block content %}
 <div id="content-padding">
     <h3>{% trans "Members of " %}{{infoservice}}</h3>
@@ -43,7 +21,7 @@
             <tr>
                 <td>{{ subscription.patient.phone_number }}</td>
                 <td>{{ subscription.way_of_communication }}</td>
-                <td><input type="button" onclick="confirmForm($('#form_{{ subscription.id }}')[0])" value='{% trans "Remove Patient from Group" %}' /></td>
+                <td><input type="button" onclick="Sendinel.Utils.confirmForm($('#form_{{ subscription.id }}')[0], 'Please confirm')" value='{% trans "Remove Patient from Group" %}' /></td>
             </tr>
         </form>
     {% endfor %}

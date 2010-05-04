@@ -360,4 +360,4 @@ class Subscription(models.Model):
                                 choices=Sendable.WAYS_OF_COMMUNICATION)
                                 
     def __unicode__(self):
-        return "%s %s" % (str(self.infoservice), str(self.patient.phone_number))
+        return "%s %s" % (unicode(self.infoservice), unicode(self.patient.phone_number))
