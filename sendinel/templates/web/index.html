@@ -33,12 +33,12 @@
                 <div class="groupName"><strong>{{ service }}</strong></div>
                 <div class="links">
                 <a href="{% url web_infoservice_register id=service.id %}">
-                    <div class="groupRegister">
+                    <div class="groups groupRegister">
                         {% trans "Register Patient" %}
                     </div>
                 </a>
                 <a href="{% url staff_create_infomessage id=service.id %}" class="menu_secondlink">
-                    <div class="groupSend">
+                    <div class="groups groupSend">
                         {% trans "Send Message" %}
                     </div>
                 </a>

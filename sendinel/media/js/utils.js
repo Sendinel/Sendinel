@@ -5,6 +5,7 @@ Sendinel.Utils = {
         $("#confirmation").dialog({
             modal: true,
             resizable: false,
+            draggable: false,
             title: title,
             buttons: {
                 "Cancel" : function() {
@@ -18,6 +19,12 @@ Sendinel.Utils = {
         
         if(!$("#confirmation").dialog("isOpen")) {
             $("#confirmation").dialog("open");
+        }
+    },
+    
+    goto_url : function(url) {
+        if(url) {
+            window.location.assign(url);
         }
     }
 };
