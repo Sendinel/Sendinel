@@ -34,7 +34,7 @@
         <br />
             
             <div class="button button_left button_float" onClick="javascript:location.href='{{ backurl }}'">
-                back
+                {% trans "Back" %}
             </div>
             <div class="field">
                 <div class="head">
@@ -64,7 +64,7 @@
                 </div>
             </div>
             {% endif %}
-            <div class="field">
+            <div class="field lastfield">
                 <div class="head">
                     Way of communication:&nbsp;
                         {% if form.way_of_communication.errors %}
@@ -85,7 +85,7 @@
                         </select>
                 </div>
             </div>
-            <div class="button button_right button_float" onClick="appointment_create.submit();">next</div>
+            <div class="button button_right button_float" onClick="appointment_create.submit();">{% trans "Next" %}</div>
             <div style="clear:both;"></div>
             
 

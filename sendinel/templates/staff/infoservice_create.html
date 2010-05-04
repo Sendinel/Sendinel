@@ -9,9 +9,9 @@
         <form name="infoservice" method="post" action='#'>
         <br />
             <div class="button button_left button_float groupbutton" onClick="javascript:location.href='{% url staff_list_infoservices %}'">
-                back
+                {% trans "Back" %}
             </div>
-            <div class="field groupheight">
+            <div class="field groupheight lastfield">
                 <div class="head">
                     Inform patients about:
                 </div>
@@ -21,7 +21,7 @@
             </div>
             
        
-            <div class="button button_right button_float groupbutton" onClick="infoservice.submit();">next</div>
+            <div class="button button_right button_float groupbutton" onClick="infoservice.submit();">{% trans "Next" %}</div>
             <div style="clear:both;"></div>
 
         </form>

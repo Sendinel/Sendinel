@@ -14,9 +14,40 @@ body {
     color:#666666;
 }
 
-a {
-    text-decoration: none;
-    color: #000000;
+a:link { color: #000; text-decoration:none; }
+a:visited { color:#000; text-decoration:none; }
+a:focus { color:#000; text-decoration:none; }
+a:hover { color:#915413; text-decoration:underline; }
+a:active { color:#000; text-decoration:none; }
+
+img { border: 0px; }
+
+td, th {
+    padding: 5px;
+}
+
+tr.odd {
+    background-color: #EDEDED;
+}
+
+tr.odd td {
+    border-bottom: 1px solid #C4C4C4;
+}
+
+input[type=text] {
+    font-size: 14pt;    
+    min-height: 30px;
+}
+
+#chars-left {
+    float: right;
+    width: 100px;
+    font-weight: bold;
+}
+
+#infoservice-create {
+    margin-left: 100px;
+    margin-top: 30px;
 }
 
 #page {
@@ -52,7 +83,7 @@ a {
     background-color: #eeeeee;
     position: absolute;
     bottom:0px;
-    height:40px;
+    height:30px;
     width:100%;
 
 }
@@ -68,7 +99,7 @@ a {
 
 #notifications{
     float:left;
-    padding:20px;
+    padding:10px;
 
     background:#ffffff;
     border-right: 10px solid #eeeeee;    
@@ -79,7 +110,7 @@ a {
     float:left;
 
     background:#ffffff;
-    padding:20px;
+    padding:10px;
     display:block;
 }
 
@@ -100,12 +131,16 @@ a {
     background-repeat: no-repeat;
 }
 #contact{
-    padding-top:10px;
+    padding-top:5px;
     text-align:center;
     line-height:2em;
     float:left;
     width:100%;
     font-size:0.5em;
+}
+
+.centered {
+    text-align: center;
 }
 
 .menulistNotificationItem
@@ -118,6 +153,9 @@ a {
     background-position: 10px 0px;
     margin: 10px 0px;
     padding-left:80px;
+    
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
 }
 .notificationName{
     min-height: 2em;
@@ -140,6 +178,9 @@ a {
     background: #F3F3F3;
     padding-left: 10px;
     margin: 10px 0px;
+    
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
 }
 
 .groupName{
@@ -151,38 +192,30 @@ a {
 .links{
 float:right;
 }
-.groupRegister{
-    min-height: 2em;
-    padding-top: 0.8em;
-    padding-bottom: 12px;
-     border: 1px solid #F3F3F3;
-    float:left;
-    width:155px;
-    padding-left:30px;
-    background-position:0px 15px;
-    background-image: url(../img/add.png);
-    background-repeat: no-repeat;
-}
-.groupRegister:hover {
-    border: 1px solid orange;
-    background-color: #FFDCA3;
-}
-.groupSend{
-    min-height: 2em;
-    padding-top: 0.8em;
-    padding-bottom: 12px;
-    border: 1px solid #F3F3F3;
-    
-    float:left;
-    width:140px;
-    clear:right;
-    padding-left:45px;
-    background-position:0px 13px;
-    background-image: url(../img/send.png);
-    background-repeat: no-repeat;
 
+.groups {
+    min-height: 2em;
+    padding-top: 0.8em;
+    
+    border: 1px solid #F3F3F3;
+    float:left;
+    width:150px;
+    padding:0.8em 5px 12px 45px;
+    background-position:10px 15px;
+    background-repeat: no-repeat;
 }
-.groupSend:hover {
+
+.groupRegister{   
+    background-image: url(../img/add.png);    
+}
+
+.groupSend{
+    width:140px;
+    padding-left: 60px;
+    background-image: url(../img/send.png);
+}
+
+.groups:hover {
     border: 1px solid orange;
     background-color: #FFDCA3;
 }
@@ -200,6 +233,9 @@ float:right;
     background-image: url(../img/gear_wheel.png);
     background-repeat: no-repeat;
     background-position: 17px 20px;
+    
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
 }
 .menulistManageGroups:hover {
     border: 1px solid orange;
@@ -208,11 +244,7 @@ float:right;
 
 /* Forms */
 th {
-    vertical-align: top;
-}
-
-img {
-    border-width: 0;
+    vertical-align: middle;
 }
 
 strong.big {
@@ -240,9 +272,9 @@ strong.big {
 }
 
 .success {
-    color: green;    
-    border: 1px solid green;    
-    background-color: #E2FFDE;   
+    color: #F0A10E;    
+    border: 1px solid #F0A10E;    
+    background-color: #FFEECF;   
 }
 
 .error {
@@ -264,6 +296,9 @@ h3{
     color:#f29400;
     font-size:1.4em;
     font-weight:bold;
+    
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .field{
@@ -273,6 +308,9 @@ h3{
     padding-left:10px;
     padding-right:10px;
     float:left;
+}
+.lastfield{
+    border-right: 0px; 
 }
 .head{
     font-weight:bold;

@@ -12,19 +12,19 @@
         <tr>   
             <td rowspan="5" align="middle" align="center" width="80">
                 <div class="button button_left button_float groupbutton" onClick="javascript:location.href='{% url staff_list_infoservices %}'">
-                    back
+                    {% trans "Back" %}
                 </div>
             </td>
-            <td width="200px">{% trans "Phone Number" %}</td>
-            <td width="200px">{% trans "Way of Communication" %}</td>
+            <th width="200px">{% trans "Phone Number" %}</td>
+            <th width="200px">{% trans "Way of Communication" %}</td>
             <td width="200px" />
         </tr>
     {% for subscription in subscriptions %}
         <form method="post" id="form_{{ subscription.id }}" action="{% url staff_infoservice_members_delete id=infoservice.id %}">
             <input type="hidden" name="subscription_id" value="{{ subscription.id }}" />
-            <tr>
+            <tr class="{% cycle 'odd' 'even' %}">
                 <td>{{ subscription.patient.phone_number }}</td>
-                <td>{{ subscription.way_of_communication }}</td>
+                <td class="centered">{{ subscription.way_of_communication }}</td>
                 <td><input type="button" onclick="Sendinel.Utils.confirmForm($('#form_{{ subscription.id }}')[0], 'Please confirm')" value='{% trans "Remove Patient from Group" %}' /></td>
             </tr>
         </form>
