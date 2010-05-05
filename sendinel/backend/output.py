@@ -5,6 +5,7 @@ class OutputData(object):
     """
     Define an interface for OutputData.
     """
+    
     class Meta:
         abstract = True
     
@@ -33,19 +34,21 @@ class SMSOutputData(OutputData):
     """
     Define necessary OutputData for sending via sms.
     """
+    
     phone_number = None
     
     def send(self):
+        logger.info("Sending via SMS")
         sms.send_sms(self.phone_number, self.data)
 
 class VoiceOutputData(OutputData):
     """
     Define necessary OutputData for sending via voice.
     """
+    
     phone_number = None
     
     def send(self):
+        logger.info("Sending via Phone Call")
         call = voicecall.Voicecall()
         call.conduct_call(self.phone_number, self.data, "outbound-call")
-
-

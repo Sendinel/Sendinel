@@ -1,8 +1,7 @@
 from django.test import TestCase
 from datetime import datetime, timedelta
 
-from sendinel.backend.models import ScheduledEvent, InfoMessage, \
-                                    HospitalAppointment, Patient
+from sendinel.backend.models import ScheduledEvent, InfoMessage, Patient
 from sendinel.backend import scheduler
 from sendinel.backend import output
 

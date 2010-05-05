@@ -2,8 +2,7 @@ from django.test import TestCase
 
 from datetime import datetime, timedelta
 
-from sendinel.backend.models import Hospital, HospitalAppointment
-from sendinel.backend.output import BluetoothOutputData
+from sendinel.backend.models import Hospital
 from sendinel.backend import vcal
 from sendinel import settings
 

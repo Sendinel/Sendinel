@@ -90,9 +90,6 @@ agi_threadid: -1258067088
 
         call_received = check_and_delete_authentication_call(" 0160 1234567 ")
         self.assertTrue(call_received)
-        # TODO fix this when authentication is optional - disabled for now
-        # call_received = check_and_delete_authentication_call(" 0160 1234567 ")
-        # self.assertFalse(call_received)
 
     def test_delete_timed_out_authentication_calls(self):
         AuthenticationCall.objects.all().delete()

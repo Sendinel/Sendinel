@@ -14,7 +14,6 @@ from sendinel.backend.output import VoiceOutputData, SMSOutputData, \
 
 
 class SendableTest(TestCase):
-
     fixtures = ['backend_test']
 
     def setUp(self):
@@ -23,6 +22,7 @@ class SendableTest(TestCase):
         self.sendable.text = "Test Text"
 
     def test_sendable_get_data_for_sending(self):
+        #TODO write test for get_data_for_sending()
         pass
 
 class HospitalTest(TestCase):
@@ -141,22 +141,12 @@ class InfoServiceModelTest(TestCase):
         self.patient = Patient()
         self.patient.save()
     
-    def test_no_infoservices_with_same_name(self):
+    def test_no_infoservices_with_same_or_empty_name(self):
         first_infoservice = InfoService(name ="Hospitalinfos")
         first_infoservice.save()
         second_infoservice = InfoService(name ="Hospitalinfos")
         self.assertRaises(IntegrityError, second_infoservice.save)
-    
-    #TODO bei Form testen, dass keine Nullwerte angegeben werden duerfen
-    # def test_no_groups_with_empty_name(self):
-        # self.assertRaises(IntegrityError, Usergroup(name = None).save)
-        # amount = Usergroup.objects.all().count()
-        # first_group = Usergroup()
-        # import pdb; pdb.set_trace()
-        # first_group.save()
-        # print first_group.__str__
-        # self.assertEquals(Usergroup.objects.all().count(), amount) 
-        
+        self.assertRaises(IntegrityError, InfoService(name = None).save)        
 
 class SubscriptionTest(TestCase):
     
@@ -194,3 +184,4 @@ class SubscriptionTest(TestCase):
         self.assertEquals(self.infoservice.members.all().count(), 1)
         self.assertEquals(self.infoservice.members.all()[0], self.patient)
         self.assertTrue(self.infoservice in self.patient.infoservices())
+        self.assertTrue(subscription in Subscription.objects.all())

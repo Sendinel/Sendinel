@@ -3,7 +3,6 @@ import sys
 
 from os.path import abspath, dirname
 from datetime import datetime
-from itertools import chain
 
 from django.core.management import setup_environ
 
@@ -13,8 +12,7 @@ sys.path.insert(0, project_path)
 from sendinel import settings
 setup_environ(settings) # this must be run before any model etc imports
 
-from sendinel.backend.models import ScheduledEvent, InfoMessage,\
-                                    HospitalAppointment
+from sendinel.backend.models import ScheduledEvent
 from sendinel.logger import logger
 
 
