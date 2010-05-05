@@ -18,20 +18,22 @@
     <h2> You don't know what Sendinel is? Then please click <a href="http://www.sendinel.org">here</a></h2>
     
     <h2>Requirements</h2>
-      <p>In order for Sendinel to run, you need to have the WASFÜREINEN UMTS stick. <br>
-      Sendinel runs best under Linux. However it is also possible to run Sendinel on other platforms like Mac OS X or Windows when the environment described in Dependencies is set-up at your system. We ran Sendinel successfully on WOHATSÜBERALLSCHONGEKLAPPT?
+      <p>In order for Sendinel to run, you need to have a Huawei E169 3G data stick. (also sold as K3520) <br>
+      To run Sendinel, Linux is recommended as operating system. However it is also possible to run Sendinel on other platforms like Mac OS X or Windows when the environment described in Dependencies is set-up at your system. We ran Sendinel successfully on the Linux distributions Ubuntu 9.10, 10.04 and Debian Squeeze.
        </p>      
     
     <h2>Installation</h2>
       <p>Setting up Sendinel is described in detail in the Installation Instructions. Please read them (html|pdf). <br>
       
-      In very short: After having downloaded the tar.gz file, you need to run ./install.sh and everything should be fine!</p>
+      In very short: After having downloaded the tar.gz file, you need to unpack it using "tar -xzf [filename]", change to that directory and run ./install.sh and everything should be fine!</p>
 
-    <h2>Dependencies</h2>    
+    <h2>Dependencies</h2>
+        On a compatible Linux distribution the installation script will resolve all dependencies automatically.
       <ul>
         <li>Python 2.6</li>
         <li>Django 1.2</li>
-        <li>Asterisk 1.6.2 </li>
+        <li>gcc 4.4 or newer</li>
+        <li>Asterisk 1.6.2 or newer</li>
         <li>Festival Speech Synthesis System 1.4</li>
       </ul>
       
