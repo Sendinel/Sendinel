@@ -6,7 +6,7 @@
     <h3>{% trans "Create a new information group" %}</h3>
 	<p>{% trans "Please enter the name of the information group you want to create" %}</p>	
 
-        <form name="infoservice" method="post" action='#'>
+        <form name="infoservice" method="post" action='#' autocomplete="off">
         <br />
             <div class="button button_left button_float groupbutton" onClick="javascript:location.href='{% url staff_list_infoservices %}'">
                 {% trans "Back" %}

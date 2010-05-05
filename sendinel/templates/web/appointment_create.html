@@ -30,7 +30,7 @@
         <h3>{{ appointment_type.verbose_name }}</h3>
         <p>{% trans "Please enter the appointment details." %}</p>
 
-        <form name="appointment_create" action="./" method="post" >
+        <form name="appointment_create" action="./" method="post" autocomplete="off" >
         <br />
             
             <div class="button button_left button_float" onClick="javascript:location.href='{{ backurl }}'">

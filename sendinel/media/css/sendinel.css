@@ -10,8 +10,8 @@ height:100%;
 body {
 
    height:100%;
-    font: 14pt/20pt 'Lucida Grande', Verdana, Helvetica, sans-serif;
-    color:#666666;
+   font: 14pt/20pt 'Lucida Grande', Verdana, Helvetica, sans-serif;
+   color:#666666;
 }
 
 a:link { color: #000; text-decoration:none; }
@@ -21,6 +21,10 @@ a:hover { color:#915413; text-decoration:underline; }
 a:active { color:#000; text-decoration:none; }
 
 img { border: 0px; }
+
+textarea {
+    font: 14pt/20pt 'Lucida Grande', Verdana, Helvetica, sans-serif;
+}
 
 td, th {
     padding: 5px;
