@@ -185,7 +185,7 @@ def authenticate_phonenumber(request):
         return render_to_response('web/authenticate_phonenumber_call.html', 
                           locals(),
                           context_instance = RequestContext(request))
-    except ValueError as e:
+    except ValueError, e:
         error = e
 
 
@@ -241,7 +241,7 @@ def get_bluetooth_devices(request):
         
         return HttpResponse(content = simplejson.dumps(response_dict),
                             content_type = "application/json")
-    except Exception as e:
+    except Exception, e:
         logger.error("get_bluetooth_devices from %s failed: %s" %
                         (BLUETOOTH_SERVER_ADDRESS, str(e)))
         # TODO write bluetooth error to log file

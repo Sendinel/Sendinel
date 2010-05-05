@@ -2,8 +2,8 @@
 
 ### BEGIN INIT INFO
 # Provides:          sendinel
-# Required-Start:    $remote_fs $syslog sdcard-mount
-# Required-Stop:     $remote_fs $syslog sdcard-mount
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: Sendinel web application server

@@ -16,6 +16,7 @@ tar cvzf Sendinel.tar.gz --exclude='Sendinel/MockUp' \
                          --exclude='.DS_Store' \
                          --exclude='.gitignore' \
                          --exclude='local_settings.py' \
+                         --exclude='sendinel.db' \
                          Sendinel
 
 echo "Done"
