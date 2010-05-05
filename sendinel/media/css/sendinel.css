@@ -30,13 +30,17 @@ tr.odd {
     background-color: #EDEDED;
 }
 
-tr.odd td {
+tr.odd td, tr.even td {
     border-bottom: 1px solid #C4C4C4;
 }
 
 input[type=text] {
     font-size: 14pt;    
     min-height: 30px;
+}
+
+.inactive {
+    color: #BFBFBF;    
 }
 
 #chars-left {
