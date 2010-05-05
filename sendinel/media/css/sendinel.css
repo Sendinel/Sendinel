@@ -392,23 +392,8 @@ h3{
 .groupbutton{
     margin-top:40px;
 }
-#contentStatusMessage{
-    margin:auto;
-    width:800px;
-}
-#contentCenterList{
-    margin:auto;
-    width:800px;
-}
-#contentformGroupheight{
-    margin:auto;
-    width:800px;
-}
-#contentformRegGroup{
-    margin:auto;
-    width:800px;
-}
+
 #contentform{
     margin:auto;
-    width:1000px;
+    display: table;
 }
