@@ -1,4 +1,5 @@
- 
+body { max-width: 800px; }
+img {max-width: 700px; } 
 /* start css.sty */
 .pplr8t-x-x-109{}
 .phvb8t-x-x-164{font-size:149%;font-family: sans-serif; font-weight: bold;}
