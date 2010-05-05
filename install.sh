@@ -210,13 +210,13 @@ fi
 
 errorMessage="Copying files failed. Look for errors above."
 cp -a "$sourceDir/sendinel" "$sourceDir/configs" "$targetDir/" >> $installLog || error
-if [ "$?" -ne "0" ]; then
-    error
-fi
+chown -R "$user:$group" "$targetDir" || error
 message_done
 
-# TODO sendinel init scripts
-
+echo "Setting up database and installing example data..."
+cd "$targetDir/sendinel" && \
+    su "$user" -c "$pythonBin manage.py syncdb --noinput -v0" && \
+    su "$user" -c "$pythonBin manage.py loaddata backend" || warning
 
 # sudo
 # TODO check wether sudoers already contains sendinel line
@@ -281,17 +281,17 @@ message_done
 
 
 # download and compile datacard
-# echo "Downloading and compiling Asterisk chan_datacard module for 3G stick support..."
-# url="http://github.com/thomasklingbeil/chan_datacard/tarball/28dffc8a5ed498581ab0421ddca0da322777aec2"
-# subDirectory="thomasklingbeil-chan_datacard-28dffc8"
-# download_extract_and_cd_to_targz "$url" "$subDirectory"
-# 
-# errorMessage="chan_datacard installation failed. Look for errors above."
-# make && \
-# make install || warning
-# 
-# cleanup_extraction
-# message_done
+echo "Downloading and compiling Asterisk chan_datacard module for 3G stick support..."
+url="http://github.com/thomasklingbeil/chan_datacard/tarball/28dffc8a5ed498581ab0421ddca0da322777aec2"
+subDirectory="thomasklingbeil-chan_datacard-28dffc8"
+download_extract_and_cd_to_targz "$url" "$subDirectory"
+
+errorMessage="chan_datacard installation failed. Look for errors above."
+make && \
+make install || warning
+
+cleanup_extraction
+message_done
 
 # restart asterisk
 echo "Restarting Asterisk telephony server..."
@@ -336,6 +336,7 @@ backup_file "$initSendinel"
 copy_file "$initSendinelSrc" "/etc/init.d"
 replace_in_file "$initSendinel" "%targetDir%" "$targetDir"
 chmod 755 "$initSendinel" || warning
+update-rc.d sendinel defaults || warning
 
 initSendinelSchedulerSrc="$targetDir/configs/init-scripts/sendinel-scheduler"
 initSendinelScheduler="/etc/init.d/sendinel-scheduler"
@@ -343,13 +344,15 @@ backup_file "$initSendinelScheduler"
 copy_file "$initSendinelSchedulerSrc" "/etc/init.d"
 replace_in_file "$initSendinelScheduler" "%targetDir%" "$targetDir"
 chmod 755 "$initSendinelScheduler" || warning
+update-rc.d sendinel-scheduler defaults || warning
 message_done
 
 echo "Starting sendinel..."
 /etc/init.d/sendinel start
-# /etc/init.d/sendinel-scheduler start
+/etc/init.d/sendinel-scheduler start
 message_done
 
 echo "Congratulations - if you didn't see any error messages, sendinel should be installed and reachable at:"
 echo "http://localhost/"
+echo "If your computer has network access, sendinel is also reachable over the network. Just replace localhost with your computers IP address."
 
