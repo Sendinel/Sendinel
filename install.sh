@@ -201,6 +201,8 @@ useradd -N -G "$group,asterisk" $user || warning
 message_done
 
 
+
+
 echo "Copying files to $targetDir... "
 mkdir -p "$targetDir/sendinel"
 if [ "$?" -ne "0" ]; then
@@ -210,6 +212,19 @@ fi
 
 errorMessage="Copying files failed. Look for errors above."
 cp -a "$sourceDir/sendinel" "$sourceDir/configs" "$targetDir/" >> $installLog || error
+message_done
+
+echo "Installing sendinel configuration..."
+localSettingsSrc="$sourceDir/configs/sendinel/local_settings.py"
+localSettings="$targetDir/sendinel/local_settings.py"
+if [ -e "$localSettings" ]; then
+    echo "$localSettings already exists - not replacing your configuration file."
+else
+    copy_file "$localSettingsSrc" "$localSettings"
+fi
+message_done
+
+echo "Setting permissions for sendinel..."
 chown -R "$user:$group" "$targetDir" || error
 message_done
 
@@ -217,6 +232,10 @@ echo "Setting up database and installing example data..."
 cd "$targetDir/sendinel" && \
     su "$user" -c "$pythonBin manage.py syncdb --noinput -v0" && \
     su "$user" -c "$pythonBin manage.py loaddata backend" || warning
+message_done
+
+
+
 
 # sudo
 # TODO check wether sudoers already contains sendinel line
