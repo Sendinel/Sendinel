@@ -5,7 +5,7 @@ thumbs.db
 *~
 logs/**
 sendinel.db
-local_settings.py
+sendinel/local_settings.py
 sendinel.tmproj
 fake_file_log
 

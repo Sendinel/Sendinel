@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 from sendinel.backend.models import ScheduledEvent, InfoService, InfoMessage, \
-                                    Subscription, Patient, Subscription
+                                    Subscription, Patient
 
 class StaffInfoServiceTest(TestCase):
     

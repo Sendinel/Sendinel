@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from sendinel.backend.models import InfoService, Subscription, Patient
@@ -91,12 +89,12 @@ class WebInfoServiceTest(TestCase):
         
 
     
-    # def test_remove_subscription(self):
-        # subscription_count = Subscription.objects.all().count()
+    def test_remove_subscription(self):
+        subscription_count = Subscription.objects.all().count()
         
-        # self.client.delete(reverse('web_index'))
+        self.subscription.delete()
                             
-        # self.assertEquals(Subscription.objects.all().count(), 
-                          # subscription_count - 1)
-        # self.assertEquals(Suscription.objects.filter(pk = self.info.id), None)
+        self.assertEquals(Subscription.objects.all().count(), 
+                          subscription_count - 1)
+        self.assertTrue(Subscription.objects.filter(pk = self.info.id).count() == 0)
             

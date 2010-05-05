@@ -20,9 +20,10 @@ case "$1" in
        if [ -f $PIDFILE ]; then
          echo -n "Sendinel is already running."
        else
-         exec /usr/bin/env - \
-           PYTHONPATH="../python:.." \
-           sendinel/manage.py runfcgi host=127.0.0.1 port=3034  pidfile=$PIDFILE
+         su '%user%' -c "
+         /usr/bin/env - \
+           PYTHONPATH=\"../python:..\" \
+           sendinel/manage.py runfcgi host=127.0.0.1 port=3034  pidfile=$PIDFILE"
          echo "."
        fi
        ;;

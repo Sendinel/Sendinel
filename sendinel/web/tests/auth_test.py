@@ -12,14 +12,15 @@ class AuthenticateViewTests(TestCase):
     urls = "urls"
 
     def test_authenticate_phonenumber_messages(self):
+        # TODO test
         # infoservice = Infoservice(name="tesstinfoservice")
         # infoservice.save()
+        # info_text = "You want to register for" + str(infoservice)
         # self.client.post(reverse('web_authenticate_phonenumber') +"?next=" + 
                                  # reverse('web_infoservice_register', \
-                                          # kwargs={'id': infoservice.id})),
-            # {infoservice_text = "You want to register " + \
-                                # "for" + str(infoservice)})
-        # self.assertContains(r
+                                          # kwargs={'id': infoservice.id}), \
+                                # {'infoservice_text' : info_text})
+        # self.assertContains(response, 
         # infoservice.delete()
         pass
         
@@ -51,13 +52,12 @@ class AuthenticateViewTests(TestCase):
 
         # TODO implement Form validation
         # response = self.client.post("/authenticate_phonenumber/",
-        #     {
-        #         'number' : 'abcdfef',
-        #         'name' : ''
-        #     })                   
-        # 
+            # {
+                # 'number' : 'abcdfef'
+            # })                   
+        
         # self.failUnlessEqual(response.status_code, 200)
-        # 
+        
         # self.assertContains(response, 'name="name"')
         
     def test_check_call_received(self):        
