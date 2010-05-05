@@ -27,7 +27,7 @@
         {% for infoservice in infoservices %}
             <form method="post" id="form_{{ infoservice.id }}" action="{% url staff_infoservice_delete %}">
                 <input type="hidden" name="infoservice_id" value="{{ infoservice.id }}" />
-                <tr class="{% cycle 'odd' 'even' %} {% if infoservice.count_members == 0 %} inactive {% endif %}">
+                <tr class="{% cycle 'odd' 'even' %}">
                     <td>{{ infoservice.name }}</td>
                     <td class="centered">{{ infoservice.count_members }}</td>
                     <td>
@@ -38,7 +38,10 @@
                     <td>
                         <input  type="button" 
                                 onclick="Sendinel.Utils.goto_url('{% url staff_infoservice_members id=infoservice.id %}')"
-                                value='{% trans "Group members" %}' />
+                                value='{% trans "Group members" %}' 
+                                {% if infoservice.count_members == 0 %}
+                                    disabled="disabled"
+                                {% endif %} />
                     </td>
                     <td>
                         <input  type="button" 

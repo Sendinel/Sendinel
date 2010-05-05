@@ -39,10 +39,6 @@ input[type=text] {
     min-height: 30px;
 }
 
-.inactive {
-    color: #BFBFBF;    
-}
-
 #chars-left {
     float: right;
     width: 100px;
@@ -207,6 +203,14 @@ float:right;
     padding:0.8em 5px 12px 45px;
     background-position:10px 15px;
     background-repeat: no-repeat;
+}
+
+.groups-empty {
+    width:207px;
+}
+
+.float-left {
+    float: left;
 }
 
 .groupRegister{   

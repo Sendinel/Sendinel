@@ -37,11 +37,15 @@
                         {% trans "Register Patient" %}
                     </div>
                 </a>
+                {% if service.members.count > 0 %}
                 <a href="{% url staff_create_infomessage id=service.id %}" class="menu_secondlink">
                     <div class="groups groupSend">
                         {% trans "Send Message" %}
                     </div>
                 </a>
+                {% else %}
+                <div class="groups-empty float-left"></div>
+                {% endif %}
                 </div>
                 <div style="clear:both"></div>
     
