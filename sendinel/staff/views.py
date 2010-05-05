@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from datetime import datetime
 
 from django.shortcuts import render_to_response
@@ -11,9 +13,11 @@ from django.utils.translation import ugettext as _
 from sendinel.backend.models import InfoService, InfoMessage, \
                                     Subscription, Patient
 
-from sendinel.staff.forms import InfoMessageForm
+from sendinel.staff.forms import InfoMessageForm, \
+                                 InfoserviceValidationForm, \
+                                 InfoMessageValidationForm
+                                 
 from sendinel.logger import logger, log_request
-
 
 @log_request
 def index(request):
@@ -39,35 +43,44 @@ def create_infomessage(request, id):
                                     context_instance = RequestContext(request))
     elif(request.method == "POST"):
         
-        for patient in infoservice.members.all():
+        data = deepcopy(request.POST)
+        form = InfoMessageValidationForm(data)
         
-            info_message = InfoMessage()
+        if form.is_valid():
         
-            info_message.text = request.POST["text"]
+            for patient in infoservice.members.all():
             
-            subscription = Subscription.objects.filter(patient = patient,
-                                                infoservice = infoservice)[0]
+                info_message = InfoMessage()
             
-            info_message.recipient = patient
-            info_message.send_time = datetime.now()
-            info_message.way_of_communication = \
-                            subscription.way_of_communication
+                info_message.text = request.POST["text"]
+                
+                subscription = Subscription.objects.filter(patient = patient,
+                                                    infoservice = infoservice)[0]
+                
+                info_message.recipient = patient
+                info_message.send_time = datetime.now()
+                info_message.way_of_communication = \
+                                subscription.way_of_communication
 
-            info_message.save()        
-            info_message.create_scheduled_event(datetime.now())
+                info_message.save()        
+                info_message.create_scheduled_event(datetime.now())
+                
+                logger.info("Created %s", str(info_message))
             
-            logger.info("Created %s", str(info_message))
+            nexturl = reverse('web_index')
+            
+            success = True
+            title = _("Message created")
+            message = _("All members of the %s service will get your message.") \
+                                % infoservice.name
         
-        nexturl = reverse('web_index')
+            return render_to_response('web/status_message.html', 
+                                      locals(),
+                                      context_instance = RequestContext(request))
         
-        success = True
-        title = _("Message created")
-        message = _("All members of the %s service will get your message.") \
-                            % infoservice.name
-    
-        return render_to_response('web/status_message.html', 
-                                  locals(),
-                                  context_instance = RequestContext(request))
+        return render_to_response("staff/create_infomessage.html",
+                                locals(),
+                                context_instance = RequestContext(request))
 
 @log_request
 def list_infoservices(request):
@@ -75,6 +88,8 @@ def list_infoservices(request):
     all_infoservices = InfoService.objects.all()
 
     infoservices = []
+    
+    backurl = reverse("web_index")
     
     for infoservice in all_infoservices:
         infoservices.append({
@@ -89,21 +104,28 @@ def list_infoservices(request):
 
 @log_request
 def create_infoservice(request):
+
     if request.method == "POST":
-        infoservice = InfoService(name = request.POST["name"])
-        infoservice.save()
-        
-        logger.info("Created InfoService: %s", str(infoservice))
-        
-        nexturl = reverse('staff_list_infoservices')
-        
-        success = True
-        title = _("Creation successful")
-        message = _("The %s service has been created.") % infoservice.name
     
-        return render_to_response('web/status_message.html', 
-                                  locals(),
-                                  context_instance = RequestContext(request))
+        data = deepcopy(request.POST)        
+        form = InfoserviceValidationForm(data)
+    
+        if form.is_valid():
+    
+            infoservice = InfoService(name = request.POST["name"])
+            infoservice.save()
+            
+            logger.info("Created InfoService: %s", str(infoservice))
+            
+            nexturl = reverse('staff_list_infoservices')
+            
+            success = True
+            title = _("Creation successful")
+            message = _("The %s service has been created.") % infoservice.name
+        
+            return render_to_response('web/status_message.html', 
+                                      locals(),
+                                      context_instance = RequestContext(request))
         
     return render_to_response("staff/infoservice_create.html",
                                 locals(),

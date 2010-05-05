@@ -18,59 +18,16 @@
         <field type="CharField" name="template">your lab results have arrived at the $hospital</field>
         <field type="BooleanField" name="notify_immediately">True</field>
     </object>
-    <object pk="1" model="backend.patient">
-        <field type="CharField" name="name">Daniel</field>
-        <field type="CharField" name="phone_number">01621785295</field>
-    </object>
-    <object pk="2" model="backend.patient">
-        <field type="CharField" name="name">Philipp</field>
-        <field type="CharField" name="phone_number">015222502372</field>
-    </object>
-    <object pk="3" model="backend.patient">
-        <field type="CharField" name="name">Office</field>
-        <field type="CharField" name="phone_number">03315509256</field>
-    </object>
     <object pk="1" model="backend.hospital">
         <!-- it's important to have UTF8 umlauts in here-->
-        <field type="CharField" name="name">Agincourt Clinic</field>
+        <field type="CharField" name="name">Test Clinic</field>
         <field type="BooleanField" name="current_hospital">True</field>
     </object>
-    <object pk="2" model="backend.hospital">
-        <field type="CharField" name="name">Another Clinic</field>
-        <field type="BooleanField" name="current_hospital">False</field>        
-    </object>    
-    <object pk="1" model="backend.infoservice">
-        <field type="CharField" name="name">Bachelorproject</field>
+   <object pk="1" model="backend.infoservice">
+        <field type="CharField" name="name">Information about the Clinic</field>
     </object>
-    <object pk="1" model="backend.subscription">
-        <field to="backend.patient" name="patient" rel="ManyToOneRel">1</field>
-        <field to="backend.infoservice" name="infoservice" rel="ManyToOneRel">1</field>
-        <field type="CharField" name="way_of_communication">sms</field>
+   <object pk="2" model="backend.infoservice">
+        <field type="CharField" name="name">Information for Pregnant Women</field>
     </object>
-    <object pk="2" model="backend.subscription">
-        <field to="backend.patient" name="patient" rel="ManyToOneRel">2</field>
-        <field to="backend.infoservice" name="infoservice" rel="ManyToOneRel">1</field>
-        <field type="CharField" name="way_of_communication">voice</field>
-    </object>
-    <object pk="2" model="backend.infoservice">
-        <field type="CharField" name="name">Morning Prayer</field>
-    </object>
-    <object pk="1" model="backend.hospitalappointment">
-        <field type="CharField" name="way_of_communication">sms</field>
-        <field type="DateTimeField" name="date">2010-02-08 18:43:07</field>       
-        <field to="backend.appointmenttype" name="appointment_type" rel="ManyToOneRel">1</field>
-        <field to="backend.hospital" name="hospital" rel="ManyToOneRel">1</field>
-        <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
-    </object>
-    <object pk="1" model="backend.scheduledevent">
-        <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>backend</natural><natural>hospitalappointment</natural></field>
-        <field type="PositiveIntegerField" name="sendable_id">1</field>
-        <field type="DateTimeField" name="send_time">2010-02-08 18:43:07</field>
-        <field type="CharField" name="state">sent</field>
-    </object>
-    <object pk="1" model="backend.infomessage">
-        <field type="CharField" name="way_of_communication">sms</field>
-        <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
-        <field type="TextField" name="text">Das ist eine Nachricht</field>
-    </object>    
+   
 </django-objects>
