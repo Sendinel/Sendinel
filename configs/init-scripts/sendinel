@@ -2,21 +2,21 @@
 
 ### BEGIN INIT INFO
 # Provides:          sendinel
-# Required-Start:    $remote_fs $syslog sdcard-mount
-# Required-Stop:     $remote_fs $syslog sdcard-mount
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: Sendinel web application server
 ### END INIT INFO
 
-PROJDIR="/media/sdcard/sendinel/Sendinel"
+PROJDIR="%targetDir%"
 PIDFILE="/tmp/sendinel.pid"
 
 cd $PROJDIR
 
 case "$1" in
  start)
-       echo -n "Starting Sendinel"
+       echo -n "Starting Sendinel..."
        if [ -f $PIDFILE ]; then
          echo -n "Sendinel is already running."
        else

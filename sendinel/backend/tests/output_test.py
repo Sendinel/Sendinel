@@ -2,8 +2,6 @@ from django.test import TestCase
 from sendinel.backend.output import *
 
 class OutputTest(TestCase):
-    """
-    """
     def setUp(self):
         pass
         

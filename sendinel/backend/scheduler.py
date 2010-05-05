@@ -3,7 +3,6 @@ import sys
 
 from os.path import abspath, dirname
 from datetime import datetime
-from itertools import chain
 
 from django.core.management import setup_environ
 
@@ -13,8 +12,7 @@ sys.path.insert(0, project_path)
 from sendinel import settings
 setup_environ(settings) # this must be run before any model etc imports
 
-from sendinel.backend.models import ScheduledEvent, InfoMessage,\
-                                    HospitalAppointment
+from sendinel.backend.models import ScheduledEvent
 from sendinel.logger import logger
 
 
@@ -33,7 +31,7 @@ def run(run_only_one_time = False):
             try:
                 data = event.sendable.get_data_for_sending()
                 logger.info("Trying to send: %s" % unicode(event.sendable))
-            except Exception as e:
+            except Exception, e:
                 logger.error("Failed to get data for " + unicode(event) + \
                              " exception " + unicode(e))
                 
@@ -47,7 +45,7 @@ def run(run_only_one_time = False):
                 data.send()
                 if not run_only_one_time:
                     time.sleep(20)
-            except Exception as e:
+            except Exception, e:
                 logger.error("Failed to send: " + unicode(data) + \
                              " exception " + unicode(e))
                 event.state = "failed"
@@ -88,8 +86,11 @@ if __name__ == "__main__":
                     pidfile = pidlockfile.PIDLockFile(pid_file),
                     detach_process = True)
     
-        with context:
+        context.__enter__()
+        try:
             run()
+        finally:
+            context.__exit()
     
     else:
         print "Usage: %s [pid file]\n  without pid file the scheduler " + \

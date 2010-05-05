@@ -6,7 +6,7 @@ configureLighttpd=true
 installInitScripts=true
 user='sendinel'
 group='sendinel'
-requiredPackages='asterisk festival lighttpd sudo build-essential python-setuptools wget' # wget only for django install
+requiredPackages='asterisk asterisk-dev festival lighttpd sudo build-essential python-flup python-setuptools wget' # wget only for django install
 requiredPythonPackages='python-daemon lockfile'
 ###pythonVersion='python2.6' # name of the binary that should exist in PATH #### refactor this
 tempDir="/tmp"
@@ -15,6 +15,7 @@ tempDir="/tmp"
 
 sourceDir=$(readlink -f "$0")
 sourceDir=$(dirname "$sourceDir")
+installLog="$sourceDir/install.log"
 targetParentDir="$(dirname $targetDir)"
 # timestamp in form 2010-05-03-16-27-15
 timestamp=$(date +%F-%k-%M-%S)
@@ -27,8 +28,15 @@ error() {
 }
 
 warning() {
-    # todo ask user wether he wants to continue
-    echo -e "WARNING: $errorMessage$1"
+    message="$errorMessage"
+    if [ "$1" != "" ]; then
+        message="$1"
+    fi
+    if [ "$message" == "" ]; then
+        message="An error ocurred. Look for messages above."
+    fi
+    
+    echo -e "WARNING: $message"
     read -p "Do you want to continue anyway - this may not work? (y/n)"
     if [ "$REPLY" != "y" ]; then
         echo "Sendinel installation aborted."
@@ -37,8 +45,17 @@ warning() {
     echo "Sendinel installation continued despite warning."
 }
 
+general_warning() {
+    warning "An error ocurred. Look for messages above."
+}
+
+debug() {
+    echo "$1" >> $installLog
+}
+
 message_done() {
-    echo -e "\tdone"
+    echo -e "done"
+    echo "-----------------------"
 }
 
 backup_file() {
@@ -47,7 +64,7 @@ backup_file() {
         return 0
     fi
     backupFile="$file.sendinel-backup-$timestamp"
-    echo "Backing up file $file to $backupFile"
+    debug "Backing up file $file to $backupFile"
     errorMessage='File backup failed.'
     cp -a "$file" "$backupFile" || warning
 }
@@ -59,9 +76,9 @@ check_file_exists_and_backup() {
         errorMessage="Configuration file already exists: '$file'. A backup file will be created if you choose to proceed."
         warning
         backup_file "$file"
-        return 1
+        return 0
     fi
-    return 0
+    return 1
 }
 
 remove_or_warning() {
@@ -73,31 +90,38 @@ remove_or_warning() {
 symlink_or_warning() {
     source="$1"
     target="$2"
-    check_file_exists_and_backup "$source"
-    remove_or_warning "$source"
+    if check_file_exists_and_backup "$source"; then
+        remove_or_warning "$source"
+    fi
 
     errorMessage="Failed to create symlink from '$source' to '$target'"
     ln -sfv "$target" "$source" || warning
 }
 
+copy_file() {
+    src="$1"
+    dst="$2"
+    cp -av "$src" "$dst" >> $installLog || warning "Failed to copy file '$src' to '$dst'."
+}
+
 replace_in_file() {
     file="$1"
     searchFor="$2"
-    replaceWith="$3"
-    sed -i "s/$searchFor/$replaceWith/g" "$file"
+    replaceWith=$(echo "$3" | sed -e 's/\(\.\|\/\|\*\|\[\|\]\|\\\)/\\&/g')
+    sed -i "s/$searchFor/$replaceWith/g" "$file" || warning 
 }
 
 download_extract_and_cd_to_targz() {
     url="$1"
     subDirectory="$2"
-    tempFile=$(mktemp "$extractionTempDir/sendinel-install-temp-XXXXXXXXXXXX")
+    tempFile=$(mktemp "$tempDir/sendinel-install-temp-XXXXXXXXXXXX")
     extractionTempDir="$tempFile-extracted"
     extractionOldPwd="$(pwd)"
     
     errorMessage="The download and extraction of $url failed. See above for errors."
     
     mkdir -p "$extractionTempDir" && \
-    wget -O "$tempFile" "$url" && \
+    wget --no-verbose -O "$tempFile" "$url" && \
     tar xzf "$tempFile" -C "$extractionTempDir" && \
     rm $tempFile || warning
     extractionDir="$extractionTempDir/$subDirectory"
@@ -149,7 +173,7 @@ message_done
 # python package installs
 echo "Installing required python packages: $requiredPythonPackages"
 errorMessage='Installing required python packages failed. You may manually install them.'
-easy_install $requiredPythonPackages || warning
+easy_install -q $requiredPythonPackages || warning
 message_done
 
 # django 1.2 beta until final release is available
@@ -159,10 +183,11 @@ subDirectory="Django-1.2-beta-1"
 download_extract_and_cd_to_targz "$url" "$subDirectory"
 
 errorMessage="Django installation failed. Look for errors above."
-"$pythonBin" setup.py install || warning
-djangoDir=$("$pythonBin" -c 'import django; print django.__path__[0]')
-
+"$pythonBin" setup.py -q install || warning
 cleanup_extraction
+djangoDir=$("$pythonBin" -c 'import django; print django.__path__[0]')
+echo "################"
+echo "Django dir: $djangoDir"
 message_done
 
 # sendinel user and group
@@ -183,15 +208,15 @@ if [ "$?" -ne "0" ]; then
     error
 fi
 
-
-cp -a "$sourceDir/sendinel" "$sourceDir/configs" "$targetDir/sendinel"
-if [ "$?" -ne "0" ]; then
-    errorMessage="Copying files failed. Look for errors above."
-    error
-fi
+errorMessage="Copying files failed. Look for errors above."
+cp -a "$sourceDir/sendinel" "$sourceDir/configs" "$targetDir/" >> $installLog || error
+chown -R "$user:$group" "$targetDir" || error
 message_done
 
-
+echo "Setting up database and installing example data..."
+cd "$targetDir/sendinel" && \
+    su "$user" -c "$pythonBin manage.py syncdb --noinput -v0" && \
+    su "$user" -c "$pythonBin manage.py loaddata backend" || warning
 
 # sudo
 # TODO check wether sudoers already contains sendinel line
@@ -203,8 +228,8 @@ sudoLine="asterisk      ALL = ($user)NOPASSWD: /usr/bin/python '$targetDir/sendi
 
 errorMessage='Writing the sudoers file failed. You can try to add the following line manually using visudo:'
 errorMessage="$errorMessage\n$sudoLine"
-echo "\n\n#This line was added by the sendinel install script." >> $sudoersFile
-echo "$sudoLine" >> $sudoersFile
+echo -e "\n\n#This line was added by the sendinel install script." >> $sudoersFile && \
+echo "$sudoLine" >> $sudoersFile || warning "$errorMessage"
 message_done
 
 
@@ -217,7 +242,7 @@ asteriskConfigsDir="$targetDir/configs/asterisk"
 extensionsTarget="$asteriskDir/extensions.conf"
 backup_file "$extensionsTarget"
 errorMessage="Failed to replace asterisk configuration file '$extensionsTarget'"
-cp -a "$asteriskConfigsDir/extensions.conf" "$extensionsTarget" || warning
+copy_file "$asteriskConfigsDir/extensions.conf" "$extensionsTarget"
 
 # copy datacard.conf
 dataCardTarget="$asteriskDir/datacard.conf"
@@ -225,15 +250,17 @@ if [ -e "$dataCardTarget" ]; then
     backup_file "$dataCardTarget"
 fi
 errorMessage="Failed to install asterisk configuration file '$dataCardTarget'"
-cp -a "$asteriskConfigsDir" "$dataCardTarget" || warning
-
+copy_file "$asteriskConfigsDir" "$dataCardTarget"
 
 
 # call_log agi script symlink
 agiFileName="call_log.agi"
 agiLinkSource="/usr/share/asterisk/agi-bin"
+agiLinkTarget="$asteriskConfigsDir/$agiFileName"
 
-symlink_or_warning "$agiLinkSource/$agiFileName" "$asteriskConfigsDir/$agiFileName"
+mkdir -p "$agiLinkSource" || general_warning
+symlink_or_warning "$agiLinkSource/$agiFileName" "$agiLinkTarget"
+
 
 backup_file "$file"
 replace_in_file "$agiLinkTarget" '%targetDir%' "$targetDir" 
@@ -277,14 +304,14 @@ message_done
 echo "Configuring lighttpd webserver..."
 lighttpdDir="/etc/lighttpd"
 lighttpdMainConfig="$lighttpdDir/lighttpd.conf"
-wwwRoot = $(grep ^server.document-root "$lighttpdMainConfig" | cut -d '"' -f2)
-if [ "$wwwRoot" -eq "" ]; then
+wwwRoot=$(grep ^server.document-root "$lighttpdMainConfig" | cut -d '"' -f2)
+if [ "$wwwRoot" == "" ]; then
     warning "server.document-root could not be found automatically in '$lighttpdMainConfig'. You will have to manually copy configs/www-redirect/index.html to your webserver's document root."
 fi
 
 # copy index.html
 backup_file "$wwwRoot/index.html"
-cp -av "$targetDir/configs/www-redirect/index.html" "$wwwRoot/index.html" || warning
+copy_file "$targetDir/configs/www-redirect/index.html" "$wwwRoot/index.html"
 
 # check for lighttpd/conf-enabled directory
 if [ ! -e "$lighttpdDir/conf-enabled" ]; then
@@ -295,12 +322,37 @@ lighttpdConfigSrc="$targetDir/configs/lighttpd/conf-enabled/10-sendinel.conf"
 lighttpdConfigTarget="$lighttpdDir/conf-enabled/10-sendinel.conf"
 
 backup_file "$lighttpdConfigTarget"
-cp -v "$lighttpdConfigSrc" "$lighttpdConfigTarget" || warning "Failed to copy lighttpd configuration file '$lighttpdConfigSrc' to '$lighttpdConfigTarget'."
-replace_in_file "$%mediaPath%$" "$targetDir/sendinel/media" || warning
-replace_in_file "$%adminMediaPath%$" "$djangoDir/contrib/admin/media" || warning
+copy_file "$lighttpdConfigSrc" "$lighttpdConfigTarget"
+replace_in_file "$lighttpdConfigTarget" "%mediaPath%" "$targetDir/sendinel/media"
+replace_in_file "$lighttpdConfigTarget" "%adminMediaPath%" "$djangoDir/contrib/admin/media"
+/etc/init.d/lighttpd restart || general_warning
 message_done
-/etc/init.d/lighttpd restart || warning
+
+# install init scripts
+echo "Configuring automatic sendinel start on system boot."
+initSendinelSrc="$targetDir/configs/init-scripts/sendinel"
+initSendinel="/etc/init.d/sendinel"
+backup_file "$initSendinel"
+copy_file "$initSendinelSrc" "/etc/init.d"
+replace_in_file "$initSendinel" "%targetDir%" "$targetDir"
+chmod 755 "$initSendinel" || warning
+update-rc.d sendinel defaults || warning
+
+initSendinelSchedulerSrc="$targetDir/configs/init-scripts/sendinel-scheduler"
+initSendinelScheduler="/etc/init.d/sendinel-scheduler"
+backup_file "$initSendinelScheduler"
+copy_file "$initSendinelSchedulerSrc" "/etc/init.d"
+replace_in_file "$initSendinelScheduler" "%targetDir%" "$targetDir"
+chmod 755 "$initSendinelScheduler" || warning
+update-rc.d sendinel-scheduler defaults || warning
+message_done
+
+echo "Starting sendinel..."
+/etc/init.d/sendinel start
+/etc/init.d/sendinel-scheduler start
+message_done
 
 echo "Congratulations - if you didn't see any error messages, sendinel should be installed and reachable at:"
 echo "http://localhost/"
+echo "If your computer has network access, sendinel is also reachable over the network. Just replace localhost with your computers IP address."
 

@@ -21,6 +21,7 @@ class User(models.Model):
     """
     Define an interface for a user of the system.
     """
+    
     class Meta:
         abstract = True
     name = models.CharField(max_length=255, blank=True, null=True)
@@ -32,6 +33,7 @@ class AppointmentType(models.Model):
     """
     Represent an appointment type like follow-up consultation.
     """
+    
     name = models.CharField(max_length = 255)
     verbose_name = models.CharField(max_length = 255)
     template = models.CharField(max_length = 255)
@@ -54,6 +56,7 @@ class Patient(User):
     """
     Represent a patient.
     """
+    
     phone_number = models.CharField(max_length = 20)
     
     def __unicode__(self):
@@ -66,6 +69,7 @@ class Hospital(models.Model):
     """
     Represent a Hospital.
     """
+    
     name = models.CharField(max_length = 255)
     current_hospital = models.BooleanField()
     
@@ -77,6 +81,7 @@ class Hospital(models.Model):
         """
         Return the standard current hospital
         """
+        
         try:
             hospital = Hospital.objects.get(current_hospital = True)
         except Hospital.DoesNotExist:
@@ -87,13 +92,14 @@ class Hospital(models.Model):
         
 class InfoService(models.Model):
     """
-    Represent a user group.
-    Raises integrity error
+    Represent a user group
     """
+    
     members = models.ManyToManyField(Patient, through="Subscription")
-    name = models.CharField(max_length=255, unique=True, blank=False, \
+    name = models.CharField(max_length=255,
+                            unique=True,
+                            blank=False,
                             null=False)
-
 
     def __unicode__(self):
         return self.name
@@ -103,6 +109,7 @@ class Sendable(models.Model):
     """
     Define an interface for a Sendable object.
     """
+    
     class Meta:
         abstract = True
 
@@ -119,32 +126,12 @@ class Sendable(models.Model):
     def __unicode__(self):
         return "%s %s" % (unicode(self.recipient), self.way_of_communication)
     
-    def get_data_for_bluetooth(self):
-        """
-        Prepare OutputData for bluetooth.
-        Return BluetoothOutputData for sending.
-        """
-        pass
-    
-    def get_data_for_sms(self):
-        """
-        Prepare OutputData for sms.
-        Return SMSOutputData for sending.
-        """
-        pass
-    
-    def get_data_for_voice(self):
-        """
-        Prepare OutputData for voice.
-        Return VoiceOutputData for sending.
-        """
-        pass
-    
     def get_data_for_sending(self):
         """
         Prepare OutputData for selected way_of_communication.
         Return an object of a subclass of OutputData.
-        """    
+        """
+        
         call = "self.get_data_for_%s()" % self.way_of_communication      
         logger.info("sendable.get_data_for_sending() calling method: " + call)        
         return eval(call)
@@ -282,9 +269,8 @@ class InfoMessage(Sendable):
     """
     Define a InfoMessage.
     """
-    #TODO extract to superclass?
+
     template = Template("$text")
-    # TODO restrict text to 160? but not good for voice calls
     text = models.TextField()
     
     def __unicode__(self):
@@ -324,7 +310,8 @@ class InfoMessage(Sendable):
 class ScheduledEvent(models.Model):
     """
     Define a ScheduledEvent for sending at a specific date.
-    """    
+    """
+    
     sendable_type = models.ForeignKey(ContentType)
     sendable_id = models.PositiveIntegerField()
     sendable = generic.GenericForeignKey('sendable_type', 'sendable_id')
@@ -348,10 +335,14 @@ class AuthenticationCall(models.Model):
     mobile phone number. These calls get deleted once the user has
     been authenticated successfully.
     """
+    
     number = models.CharField(max_length = 20)
     time = models.DateTimeField(auto_now_add = True)
     
 class Subscription(models.Model):
+    """
+    Represents a patient's subscription to an infoservice
+    """
     
     patient = models.ForeignKey(Patient)
     infoservice = models.ForeignKey(InfoService)
@@ -360,4 +351,5 @@ class Subscription(models.Model):
                                 choices=Sendable.WAYS_OF_COMMUNICATION)
                                 
     def __unicode__(self):
-        return "%s %s" % (unicode(self.infoservice), unicode(self.patient.phone_number))
+        return "%s %s" % (unicode(self.infoservice), \
+                          unicode(self.patient.phone_number))

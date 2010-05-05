@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import sys
-# fix paths for call from asterisk
+# adapt paths for call from asterisk
 from os.path import abspath, dirname
 
 PROJECT_PATH = dirname(abspath(__file__)) + "/../../"
