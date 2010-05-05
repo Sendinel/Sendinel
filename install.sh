@@ -323,11 +323,32 @@ lighttpdConfigTarget="$lighttpdDir/conf-enabled/10-sendinel.conf"
 
 backup_file "$lighttpdConfigTarget"
 copy_file "$lighttpdConfigSrc" "$lighttpdConfigTarget"
-replace_in_file "$lighttpdConfigTarget" "%mediaPath%" "$targetDir/sendinel/media" || general_warning
-replace_in_file "$lighttpdConfigTarget" "%adminMediaPath%" "$djangoDir/contrib/admin/media" || general_warning
+replace_in_file "$lighttpdConfigTarget" "%mediaPath%" "$targetDir/sendinel/media"
+replace_in_file "$lighttpdConfigTarget" "%adminMediaPath%" "$djangoDir/contrib/admin/media"
 /etc/init.d/lighttpd restart || general_warning
 message_done
 
+# install init scripts
+echo "Configuring automatic sendinel start on system boot."
+initSendinelSrc="$targetDir/configs/init-scripts/sendinel"
+initSendinel="/etc/init.d/sendinel"
+backup_file "$initSendinel"
+copy_file "$initSendinelSrc" "/etc/init.d"
+replace_in_file "$initSendinel" "%targetDir%" "$targetDir"
+chmod 755 "$initSendinel" || warning
+
+initSendinelSchedulerSrc="$targetDir/configs/init-scripts/sendinel-scheduler"
+initSendinelScheduler="/etc/init.d/sendinel-scheduler"
+backup_file "$initSendinelScheduler"
+copy_file "$initSendinelSchedulerSrc" "/etc/init.d"
+replace_in_file "$initSendinelScheduler" "%targetDir%" "$targetDir"
+chmod 755 "$initSendinelScheduler" || warning
+message_done
+
+echo "Starting sendinel..."
+/etc/init.d/sendinel start
+# /etc/init.d/sendinel-scheduler start
+message_done
 
 echo "Congratulations - if you didn't see any error messages, sendinel should be installed and reachable at:"
 echo "http://localhost/"

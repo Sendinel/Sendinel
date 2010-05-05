@@ -9,14 +9,14 @@
 # Short-Description: Sendinel web application server
 ### END INIT INFO
 
-PROJDIR="/media/sdcard/sendinel/Sendinel"
+PROJDIR="%targetDir%"
 PIDFILE="/tmp/sendinel.pid"
 
 cd $PROJDIR
 
 case "$1" in
  start)
-       echo -n "Starting Sendinel"
+       echo -n "Starting Sendinel..."
        if [ -f $PIDFILE ]; then
          echo -n "Sendinel is already running."
        else

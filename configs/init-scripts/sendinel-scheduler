@@ -9,40 +9,44 @@
 # Short-Description: Sendinel scheduler
 ### END INIT INFO
 
-sendinelPath="/media/sdcard/sendinel/Sendinel/sendinel"
+sendinelPath="%targetDir%/sendinel"
 pidFile="/tmp/sendinelScheduler.pid"
 
-#################################
-# TODO update this for release - see sendinel/scheduler.sh
-#################################
+start() {
+    echo -n "Starting Sendinel scheduler"
+    cd $sendinelPath && \
+    python "$sendinelPath/backend/scheduler.py" $pidFile
+    echo "."
+}
+
+stop() {
+    echo -n "Stopping sendinel scheduler"
+    if [ -f "$pidFile" ]; then
+        pid=$(cat $pidFile)
+        kill $pid
+        # pid file should be removed by python
+    else
+        echo "Warning: Scheduler not running - no PID file found."
+    fi
+
+    echo "."
+}
 
 case "$1" in
  start)
-       echo -n "Starting Sendinel scheduler"
-       cd $sendinelPath
-       python "$sendinelPath/backend/scheduler.py" >> /tmp/sendinelScheduler.log 2>&1 &
-       newPid=$!
-       echo -n $newPid > $pidFile
-       echo "."
-       ;;
+    start
+    ;;
  stop)
-       echo -n "Stopping sendinel scheduler "
-       if [ -f "$pidFile" ]; then
-           pid=$(cat $pidFile)
-           kill $pid
-           rm $pidFile
-       else
-           echo "Warning: Scheduler not running - no PID file found."
-       fi
-
-       echo "."
-       ;;
+    stop
+    ;;
+ restart)
+    stop
+    start
+    ;;
  *)
-       N=/etc/init.d/$NAME
-       echo "Usage: $N {start|stop}" >&2
-       exit 1
-       ;;
+    echo "Usage: $0 {start|stop|restart}" >&2
+    exit 1
+    ;;
 esac
 
 exit 0
-
