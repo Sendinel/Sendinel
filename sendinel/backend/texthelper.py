@@ -21,7 +21,7 @@ def date_to_text(weekday, day, month, hour, minutes):
              12:"December"}
              
     days =  {1: "Monday",
-             2: "Tueday",
+             2: "Tuesday",
              3: "Wednesday",
              4: "Thursday",
              5: "Friday",
@@ -130,6 +130,7 @@ def generate_text(contents, template, is_sms = True):
     """
     creates an sms text from a given template that is not longer than 160 characters
     """
+    
     max_chars = 160 - len(SMS_SALUTATION)
     
     contents = replace_dollar_signs(contents)
@@ -148,6 +149,7 @@ def get_content_length(contents):
     """ 
     returns the length of all dictionary values together 
     """
+    
     length = 0
     for value in contents.itervalues():
         length += len(value)
@@ -158,6 +160,7 @@ def replace_dollar_signs(contents):
     dollar signs are represented in a way, that they continue to be $, even after
     the substitution of the template
     """
+    
     for value in contents.itervalues():
         value.replace("$","$$")
     return contents
@@ -167,6 +170,7 @@ def reduce_contents(contents, chars_left):
     the inserted fields are shortened, 
     so that the sms will in total not ecceed 160 characters
     """
+    
     important_content = ['date', 'time']
     
     important_content_counter = 0

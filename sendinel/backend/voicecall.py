@@ -140,6 +140,7 @@ Set: Text=%s
             
             @return True if the operating succeeded, if not False
         """
+        
         try:
             uid = pwd.getpwnam(self.asterisk_user).pw_uid
             gid = grp.getgrnam(self.asterisk_group).gr_gid
@@ -163,6 +164,7 @@ Set: Text=%s
 
            @return text without special characters
         """
+        
         return re.sub('[^\x00-\x8f]', "_", text) 
 
     def conduct_sms(self, number, text, context):

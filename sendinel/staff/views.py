@@ -5,7 +5,6 @@ from datetime import datetime
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
@@ -13,8 +12,7 @@ from django.utils.translation import ugettext as _
 from sendinel.backend.models import InfoService, InfoMessage, \
                                     Subscription, Patient
 
-from sendinel.staff.forms import InfoMessageForm, \
-                                 InfoserviceValidationForm, \
+from sendinel.staff.forms import InfoserviceValidationForm, \
                                  InfoMessageValidationForm
                                  
 from sendinel.logger import logger, log_request

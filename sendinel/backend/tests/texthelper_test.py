@@ -1,6 +1,5 @@
 from sendinel.backend import texthelper
 import unittest
-from sendinel import settings
 from string import Template
 
 

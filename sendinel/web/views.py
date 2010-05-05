@@ -1,8 +1,5 @@
 ﻿from copy import deepcopy
-
 from datetime import datetime, date
-
-
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
@@ -244,7 +241,6 @@ def get_bluetooth_devices(request):
     except Exception, e:
         logger.error("get_bluetooth_devices from %s failed: %s" %
                         (BLUETOOTH_SERVER_ADDRESS, str(e)))
-        # TODO write bluetooth error to log file
         return HttpResponse(status = 500)
 
 @log_request
@@ -257,8 +253,7 @@ def register_infoservice(request, id):
         patient = Patient()
         patient.phone_number = request.POST['phone_number']
         request.session['patient'] = patient
-         #neu gemacht
-        #data = {'phone_number':
+        
         data = deepcopy(request.POST)
         form = NotificationValidationForm2(data)
         if form.is_valid():
@@ -280,26 +275,6 @@ def register_infoservice(request, id):
             return render_to_response('web/infoservice_register.html', 
                                 locals(),
                                 context_instance=RequestContext(request))
-                                
-        # neu gemacht ende
-        
-        # try:                                
-            # number = fill_authentication_session_variable(request) 
-            # auth_number = AUTH_NUMBER
-            # backurl = reverse('web_infoservice_register',  kwargs = {'id': id})        
-            # next = reverse('web_infoservice_register_save', kwargs = {'id': id})
-            # url = reverse('web_check_call_received')
-            
-            # if AUTH:
-                # return render_to_response('web/authenticate_phonenumber_call.html', 
-                    # locals(),
-                    # context_instance = RequestContext(request))
-                
-            # return HttpResponseRedirect(
-                # reverse('web_infoservice_register_save', kwargs = {'id': id}))
-            
-        # except ValueError as e:
-            # error = e
        
     infoservice = InfoService.objects.filter(pk = id)[0].name
     backurl = reverse("web_index")

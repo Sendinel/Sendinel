@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block content %}
 <div id="content-padding">
-<div id="contentformRegGroup">
+<div id="contentform">
     <h3>{% trans "Create a new information group" %}</h3>
 	<p>{% trans "Please enter the name of the information group you want to create" %}</p>	
 
@@ -33,5 +33,5 @@
 {% endblock %}
 
 {% block infotext %}
-After you have created a new information group, it will also appear in the main menu.
+    {% trans "After you have created a new information group, it will also appear in the main menu." %}
 {% endblock %}
