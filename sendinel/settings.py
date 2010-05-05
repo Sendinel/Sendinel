@@ -137,8 +137,8 @@ ASTERISK_EXTENSION = "s"
 ASTERISK_SIP_ACCOUNT = "datacard0"
 #ASTERISK_SIP_ACCOUNT = "ext-sip-account"
 
-FESTIVAL_CACHE = "/lib/init/rw"
-#FESTIVAL_CACHE = "/tmp"
+# FESTIVAL_CACHE = "/lib/init/rw"
+FESTIVAL_CACHE = "/tmp"
 
 # Phonenumber to authenticate against the system
 AUTH_NUMBER = "CHANGE ME"
