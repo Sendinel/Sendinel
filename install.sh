@@ -230,7 +230,7 @@ message_done
 
 echo "Setting up database and installing example data..."
 cd "$targetDir/sendinel" && \
-    su "$user" -c "$pythonBin manage.py syncdb --noinput -v0" && \
+    su "$user" -c "$pythonBin manage.py syncdb -v0" && \
     su "$user" -c "$pythonBin manage.py loaddata backend" || warning
 message_done
 
@@ -265,11 +265,9 @@ copy_file "$asteriskConfigsDir/extensions.conf" "$extensionsTarget"
 
 # copy datacard.conf
 dataCardTarget="$asteriskDir/datacard.conf"
-if [ -e "$dataCardTarget" ]; then
-    backup_file "$dataCardTarget"
-fi
+backup_file "$dataCardTarget"
 errorMessage="Failed to install asterisk configuration file '$dataCardTarget'"
-copy_file "$asteriskConfigsDir" "$dataCardTarget"
+copy_file "$asteriskConfigsDir/datacard.conf" "$dataCardTarget"
 
 
 # call_log agi script symlink
@@ -294,7 +292,7 @@ message_done
 # /var/spool/asterisk/outgoing 770
 outgoingDir="/var/spool/asterisk/outgoing"
 permissions="770"
-echo "Setting permissions of '$outgoingDir' to 770..." || 
+echo "Setting permissions of '$outgoingDir' to 770..." 
 chmod "$permissions" "$outgoingDir" || warning "failed to set permissions on '$outgoingDir'"
 message_done
 
@@ -354,6 +352,7 @@ initSendinel="/etc/init.d/sendinel"
 backup_file "$initSendinel"
 copy_file "$initSendinelSrc" "/etc/init.d"
 replace_in_file "$initSendinel" "%targetDir%" "$targetDir"
+replace_in_file "$initSendinel" "%user%" "$user"
 chmod 755 "$initSendinel" || warning
 update-rc.d sendinel defaults || warning
 
@@ -362,6 +361,7 @@ initSendinelScheduler="/etc/init.d/sendinel-scheduler"
 backup_file "$initSendinelScheduler"
 copy_file "$initSendinelSchedulerSrc" "/etc/init.d"
 replace_in_file "$initSendinelScheduler" "%targetDir%" "$targetDir"
+replace_in_file "$initSendinelScheduler" "%user%" "$user"
 chmod 755 "$initSendinelScheduler" || warning
 update-rc.d sendinel-scheduler defaults || warning
 message_done

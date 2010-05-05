@@ -124,8 +124,8 @@ START_MOBILE_PHONE = "0" # "0" for South Africa (07/08..), "01" for Germany
 # see http://en.wikipedia.org/wiki/Telephone_numbers_in_South_Africa
 # TODO multiple mobile prefixes
 
-ASTERISK_USER = "root"
-ASTERISK_GROUP = "root"
+ASTERISK_USER = "sendinel"
+ASTERISK_GROUP = "sendinel"
 ASTERISK_SPOOL_DIR = "/var/spool/asterisk/outgoing/"
 
 # to or of authentication
