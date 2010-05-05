@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django.contrib.auth.models import User
 
 class StaffTest(TestCase):
     def test_if_index_site_present_when_logged_in(self):

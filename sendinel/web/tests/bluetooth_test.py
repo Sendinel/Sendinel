@@ -4,7 +4,6 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
 
-from sendinel.web.views import get_bluetooth_devices
 from sendinel.backend import bluetooth
 from sendinel.backend.models import AppointmentType
 

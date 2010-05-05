@@ -1,8 +1,5 @@
 ﻿from copy import deepcopy
-
 from datetime import datetime, date
-
-
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
@@ -244,7 +241,6 @@ def get_bluetooth_devices(request):
     except Exception, e:
         logger.error("get_bluetooth_devices from %s failed: %s" %
                         (BLUETOOTH_SERVER_ADDRESS, str(e)))
-        # TODO write bluetooth error to log file
         return HttpResponse(status = 500)
 
 @log_request

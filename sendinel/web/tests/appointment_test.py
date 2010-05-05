@@ -6,7 +6,8 @@ from django.test import TestCase, Client
 from sendinel.backend.models import ScheduledEvent, HospitalAppointment
 from sendinel.backend.models import Hospital, Patient, AppointmentType
 from sendinel.settings import AUTH
-from sendinel.web.forms import NotificationValidationForm, NotificationValidationForm2 , DateValidationForm
+from sendinel.web.forms import  NotificationValidationForm2, \
+                                DateValidationForm
 from sendinel import settings
 
 class AppointmentViewTest(TestCase):
@@ -15,7 +16,7 @@ class AppointmentViewTest(TestCase):
     
     def setUp (self):
         self.hospital = Hospital.objects.get(current_hospital = True)
-        #self.client = Client()
+        self.client = Client()
         
     def test_notification_form_validation(self):
         data = {"phone_number" : "0123456789",
