@@ -29,7 +29,7 @@ var Bluetooth = {
             error: function() {
                 $("#loading").hide();
                 var text = gettext("The Bluetooth device doesn't work correctly. Please inform the clerk.");
-                var element = '<tr><td class="errorlist">' + text + '</td></tr>'
+                var element = '<tr><td class="errorlist rounded-corners">' + text + '</td></tr>'
                 
                 var deviceTable = $("#bluetooth_devices");
                 deviceTable.empty();

@@ -41,7 +41,8 @@ var check_for_call = function() {
                     break;
                     
                     case "failed":
-                        statusText.addClass("errorlist");
+                        statusText.addClass("errorlist")
+                                  .addClass("rounded-corners");
                         statusText.text(gettext("Sorry, the authentication of your telephone number failed. Please try again."));
                         
                         $("#auth_spinner").hide();                                                

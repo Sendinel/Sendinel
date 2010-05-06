@@ -21,10 +21,10 @@
         <h3>{% blocktrans with infoservice.name as infoservice %}Send a message to {{ infoservice }}{% endblocktrans %}</h3>
             <form name="infoservice" action="" method="post">
             <br />
-                <div class="button button_left button_float groupbutton" onClick="javascript:location.href='{% url web_index %}'">
+                <div class="button button-left float-left background-grey link menu-hover rounded-corners" onClick="javascript:location.href='{% url web_index %}'">
                     {% trans "Back" %}
                 </div>
-                <div class="field sendGroupheight lastfield">
+                <div class="field float-left lastfield">
                     <div class="head">
                         Message Text:
                         {% if form.text.errors %}
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             
-                <div class="button button_right button_float groupbutton" onClick="infoservice.submit();">{% trans "Next" %}</div>
+                <div class="button button-right link menu-hover background-grey float-left rounded-corners" onClick="infoservice.submit();">{% trans "Next" %}</div>
                 <div style="clear:both;"></div>
             
             </form>
