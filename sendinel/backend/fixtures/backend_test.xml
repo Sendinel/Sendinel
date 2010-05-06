@@ -19,16 +19,16 @@
         <field type="BooleanField" name="notify_immediately">True</field>
     </object>
     <object pk="1" model="backend.patient">
-        <field type="CharField" name="name">Daniel</field>
-        <field type="CharField" name="phone_number">01621785295</field>
+        <field type="CharField" name="name">a_person</field>
+        <field type="CharField" name="phone_number">01567778899</field>
     </object>
     <object pk="2" model="backend.patient">
-        <field type="CharField" name="name">Philipp</field>
-        <field type="CharField" name="phone_number">015222502372</field>
+        <field type="CharField" name="name">another_person</field>
+        <field type="CharField" name="phone_number">01233333333</field>
     </object>
     <object pk="3" model="backend.patient">
-        <field type="CharField" name="name">Office</field>
-        <field type="CharField" name="phone_number">03315509256</field>
+        <field type="CharField" name="name">personthree</field>
+        <field type="CharField" name="phone_number">012345</field>
     </object>
     <object pk="1" model="backend.hospital">
         <!-- it's important to have UTF8 umlauts in here-->
