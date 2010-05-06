@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <django-objects version="1.0">
-    <object pk="1" model="backend.appointmenttype">
+    <object pk="1" model="notifications.appointmenttype">
         <field type="CharField" name="name">vaccination</field>
         <field type="CharField" name="verbose_name">Remind of Vaccination</field>
         <field type="CharField" name="template">please remember the vaccination at the $hospital on $date</field>
         <field type="BooleanField" name="notify_immediately">False</field> 
     </object>
-    <object pk="2" model="backend.appointmenttype">
+    <object pk="2" model="notifications.appointmenttype">
         <field type="CharField" name="name">consultation</field>
         <field type="CharField" name="verbose_name">Remind of Follow-Up Consultation</field>
         <field type="CharField" name="template">please remember your consultation at the $hospital on $date</field>
         <field type="BooleanField" name="notify_immediately">False</field>
     </object>
-    <object pk="3" model="backend.appointmenttype">
+    <object pk="3" model="notifications.appointmenttype">
         <field type="CharField" name="name">labresult</field>
         <field type="CharField" name="verbose_name">Inform about Lab Results</field>
         <field type="CharField" name="template">your lab results have arrived at the $hospital</field>
@@ -23,11 +23,10 @@
         <field type="CharField" name="name">Test Clinic</field>
         <field type="BooleanField" name="current_hospital">True</field>
     </object>
-   <object pk="1" model="backend.infoservice">
+   <object pk="1" model="groups.infoservice">
         <field type="CharField" name="name">Information about the Clinic</field>
     </object>
-   <object pk="2" model="backend.infoservice">
+   <object pk="2" model="groups.infoservice">
         <field type="CharField" name="name">Information for Pregnant Women</field>
     </object>
-   
 </django-objects>

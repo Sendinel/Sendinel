@@ -9,18 +9,15 @@ from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
-from sendinel.backend.models import InfoService, InfoMessage, \
-                                    Subscription, Patient
-
-from sendinel.staff.forms import InfoserviceValidationForm, \
-                                 InfoMessageValidationForm
-                                 
+from sendinel.backend.models import Patient
+from sendinel.groups.models import InfoService, InfoMessage, Subscription
+from sendinel.groups.forms import InfoserviceValidationForm, \
+                                  InfoMessageValidationForm, \
+                                  NotificationValidationForm2
 from sendinel.logger import logger, log_request
+from sendinel.settings import AUTH, AUTH_NUMBER
+from sendinel.web.views import fill_authentication_session_variable
 
-@log_request
-def index(request):
-    return render_to_response('staff/index.html',
-                              context_instance=RequestContext(request))
 
 @log_request                              
 def logout_staff(request):
@@ -155,3 +152,70 @@ def delete_members_of_infoservice(request, id):
         
     return HttpResponseRedirect(reverse("staff_infoservice_members", 
                                    kwargs={"id": id}))  
+
+@log_request
+def register_infoservice(request, id):
+    ajax_url= reverse('web_check_call_received')
+    
+    if request.method == "POST":
+        request.session['way_of_communication'] = \
+                                        request.POST['way_of_communication']
+        patient = Patient()
+        patient.phone_number = request.POST['phone_number']
+        request.session['patient'] = patient
+        
+        data = deepcopy(request.POST)
+        form = NotificationValidationForm2(data)
+        if form.is_valid():
+            number = fill_authentication_session_variable(request) 
+            auth_number = AUTH_NUMBER
+            backurl = reverse('web_infoservice_register',  kwargs = {'id': id})        
+            next = reverse('web_infoservice_register_save', kwargs = {'id': id})
+            url = reverse('web_check_call_received')
+            
+            if AUTH:
+                return render_to_response('web/authenticate_phonenumber_call.html', 
+                    locals(),
+                    context_instance = RequestContext(request))
+                
+            return HttpResponseRedirect(
+                reverse('web_infoservice_register_save', kwargs = {'id': id}))
+        else:
+            logger.info("register_infoservice: Invalid form.")
+            return render_to_response('web/infoservice_register.html', 
+                                locals(),
+                                context_instance=RequestContext(request))
+       
+    infoservice = InfoService.objects.filter(pk = id)[0].name
+    backurl = reverse("web_index")
+    
+    return render_to_response('web/infoservice_register.html', 
+                              locals(),
+                              context_instance = RequestContext(request))
+
+@log_request
+def save_registration_infoservice(request, id):
+    backurl = reverse('web_infoservice_register',  kwargs = {'id': id})        
+    nexturl = reverse('web_index')
+    
+    patient = request.session['patient']
+    patient.save()
+    way_of_communication = request.session['way_of_communication']
+    infoservice = InfoService.objects.filter(pk = id)[0]
+    subscription = Subscription(patient = patient,
+                                way_of_communication = way_of_communication,
+                                infoservice = infoservice)
+    subscription.save()
+    logger.info("Saved subscription %s.", unicode(subscription))
+    
+    success = True
+    title = _("Registration successful")
+    message = _("The patient will now receive all messages from the "
+                        " %s service.") % infoservice.name
+    
+    return render_to_response('web/status_message.html', 
+                              locals(),
+                              context_instance = RequestContext(request))
+
+
+

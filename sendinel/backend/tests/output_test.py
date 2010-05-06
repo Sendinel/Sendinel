@@ -1,5 +1,8 @@
 from django.test import TestCase
-from sendinel.backend.output import *
+from sendinel.backend.output import VoiceOutputData, SMSOutputData, \
+                                    BluetoothOutputData, OutputData
+
+from sendinel.backend import sms, bluetooth, voicecall
 
 class OutputTest(TestCase):
     def setUp(self):
