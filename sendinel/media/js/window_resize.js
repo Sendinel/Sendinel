@@ -3,7 +3,7 @@ var div_resize = function() {
     var heightContent = window.innerHeight - ($('#header').height() + $('#footer').height());    
     $("#content").height(heightContent);
     
-    if($("#notifications").height() > heightContent) {
+    if(Math.max($("#notifications").height(), $("#groups").height()) > heightContent) {
         var backgroundWidth = 12;
         $('#content').css("background-position", ($("#content").width() / 2) + backgroundWidth + "px 0px");
     } else {
