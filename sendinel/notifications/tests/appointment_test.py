@@ -6,7 +6,7 @@ from django.test import TestCase, Client
 from sendinel.backend.models import Hospital, Patient, ScheduledEvent
 from sendinel.notifications.models import HospitalAppointment, AppointmentType
 from sendinel.settings import AUTH
-from sendinel.web.forms import  NotificationValidationForm2, \
+from sendinel.groups.forms import  NotificationValidationForm2, \
                                 DateValidationForm
 from sendinel import settings
 
