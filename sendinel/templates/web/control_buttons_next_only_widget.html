@@ -1,6 +1,13 @@
-<div name="control-buttons-widget" class="control-buttons selectable">
-  <div class="next-button">
-    <input type="button" class="subselectable" name="form_submit" value="Next" id="id_next" />
-    <input type="hidden" class="" name="next-button-link" value="{{ nexturl }}" />
-  </div>
+{% load i18n %}
+<table width="100%">
+<tr>
+<td>&nbsp;</td>
+<td align="right">
+<div name="control-buttons-widget" id="control_buttons" class="control-buttons">
+     <div class="button_only button_only_right " onClick="javascript:location.href='{{ nexturl }}'">
+    {% trans "Next" %}
+    </div>
 </div>
+</td>
+</tr>
+</table>

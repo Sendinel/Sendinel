@@ -1,26 +1,72 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
-    <h3>Available Infoservices</h3>
-    
-    <table cellspacing="0" cellpadding="3">
-        <tr>   
-            <td>Service</td>
-            <td>Members</td>
-            <td />
-            <td />
-        </tr>
-    {% for infoservice in infoservices %}
+<div id="content-padding">
+<div id="contentform">
+    <h3>{% trans "Information Groups" %}</h3>
+   
+    <div id="confirmation" style="display:none; text-align:center">
+        {% trans "Do you really want to remove this information group?" %}
+    </div>
+       
+    <div    class="button button_left button_float groupbutton" 
+                            onclick="Sendinel.Utils.goto_url('{{ backurl }}')">
+                        back
+                    </div>
+       
+    <div>
+        <table cellspacing="0">
+            <tr>        
+                <th align="left">{% trans "Group" %}</th>
+                <th>{% trans "Members" %}</th>
+                <td />
+                <td />
+                <td />
+            </tr>
+        {% for infoservice in infoservices %}
+            <form method="post" id="form_{{ infoservice.id }}" action="{% url staff_infoservice_delete %}">
+                <input type="hidden" name="infoservice_id" value="{{ infoservice.id }}" />
+                <tr class="{% cycle 'odd' 'even' %}">
+                    <td>{{ infoservice.name }}</td>
+                    <td class="centered">{{ infoservice.count_members }}</td>
+                    <td>
+                        <input type="button" 
+                               onclick="Sendinel.Utils.confirmForm($('#form_{{ infoservice.id }}')[0], 'Please confirm')" 
+                               value='{% trans "Remove group" %}' />
+                    </td>
+                    <td>
+                        <input  type="button" 
+                                onclick="Sendinel.Utils.goto_url('{% url staff_infoservice_members id=infoservice.id %}')"
+                                value='{% trans "Group members" %}' 
+                                {% if infoservice.count_members == 0 %}
+                                    disabled="disabled"
+                                {% endif %} />
+                    </td>
+                    <td>
+                        <input  type="button" 
+                                onclick="Sendinel.Utils.goto_url('{% url staff_create_infomessage id=infoservice.id %}')"
+                                value='{% trans "Send message" %}'
+                                {% if infoservice.count_members == 0 %}
+                                    disabled="disabled"
+                                {% endif %} />
+                    </td>
+                </tr>
+            
+            </form>
+            
+        {% endfor %}
         
-        <tr>
-            <td>{{ infoservice.name }}</td>
-            <td>{{ infoservice.count_members }}</td>
-            <td><a href="{% url staff_create_infomessage id=infoservice.id %}">Create message</a></td>
-            <td><a href="{% url staff_infoservice_members id=infoservice.id %}">Manage members</a></td>
-        </tr>
-        
-    {% endfor %}
-    
-    </table>
-    
+        </table>
+        <div id="infoservice-create">
+            <img src="{{ MEDIA_URL }}/img/add.png" style="margin-bottom:-8px" />
+            <input  type="button" 
+                onclick="Sendinel.Utils.goto_url('{% url staff_infoservice_create %}')"
+                value='{% trans "Create information group" %}' />
+        </div>
+    </div>
+    <br />    
+
+ </div>
+ </div>
 {% endblock %}

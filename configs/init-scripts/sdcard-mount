@@ -1,0 +1,31 @@
+#! /bin/sh
+
+### BEGIN INIT INFO
+# Provides:          sdcard-mount
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Mount sd card at boot time
+### END INIT INFO
+
+case "$1" in
+ start)
+       echo -n "Mounting SD card"
+       mount /dev/mmcblk0p1 /media/sdcard
+       echo "."
+       ;;
+ stop)
+       echo -n "Unmounting SD card"
+       umount /dev/mmcblk0p1
+       echo "."
+       ;;
+ *)
+       N=/etc/init.d/sdcard-mount
+       echo "Usage: sdcard-mount {start|stop}" >&2
+       exit 1
+       ;;
+esac
+
+exit 0
+

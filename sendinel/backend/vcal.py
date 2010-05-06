@@ -20,6 +20,7 @@ def create_vcal_string(start_date, location, content, uid):
         
         @return:    Plain text version of the vcal entry
     """
+    
     time_delta = settings.REMINDER_TIME_BEFORE_APPOINTMENT
     #need time difference in minutes for alarm
     alarm_time = start_date - time_delta
@@ -43,10 +44,10 @@ END:VCALENDAR""" % {\
     'uid': uid,
     'content': content,
     'location': location,
-    'start': start_date.strftime("%Y%m%dT%H%M%SZ"),
-    'end': end_date.strftime("%Y%m%dT%H%M%SZ"),
-    'stamp': datetime.now().strftime("%Y%m%dT%H%M%SZ"),    
-    'alarm': alarm_time.strftime("%Y%m%dT%H%M%SZ")}
+    'start': start_date.strftime("%Y%m%dT%H%M%S"),
+    'end': end_date.strftime("%Y%m%dT%H%M%S"),
+    'stamp': datetime.now().strftime("%Y%m%dT%H%M%S"),    
+    'alarm': alarm_time.strftime("%Y%m%dT%H%M%S")}
     
     return vcal_data
     
@@ -54,6 +55,7 @@ def get_uid():
     """
         Calculate a unique UID for a vcal by using appointment id and a time.
     """
+    
     date_time = datetime.now().strftime("%Y%m%dT%H%M%S")
     return "%s@%s" % (date_time, settings.VCAL_UID_SLUG)
     

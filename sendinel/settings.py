@@ -1,6 +1,7 @@
 import logging
 from datetime import timedelta
 from os.path import abspath, dirname
+
 # Django settings for sendinel project.
 
 DEBUG = True        #for scheduling set to false
@@ -32,6 +33,16 @@ TIME_ZONE = 'Europe/Berlin'
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
+
+
+_ = lambda s: s
+
+#LANGUAGES = (
+#  ('de', _('German')),
+#  ('en', _('English')),
+#  ('ts', _('Shangaan')),
+#  ('zh', _('Test Language')),
+#)
 
 SITE_ID = 1
 
@@ -73,6 +84,7 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.core.context_processors.auth",
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.csrf.middleware.CsrfMiddleware'
 )
@@ -94,10 +106,10 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'sendinel',
     'sendinel.web',
     'sendinel.backend',
     'sendinel.staff',
-    'sendinel.knowledgebase'
 )
 
 ####################################
@@ -105,29 +117,41 @@ INSTALLED_APPS = (
 REMINDER_TIME_BEFORE_APPOINTMENT = timedelta(days = 1)
 DEFAULT_APPOINTMENT_DURATION = timedelta(minutes = 60)
 DEFAULT_HOSPITAL_NAME = 'your hospital'
+DEFAULT_SEND_TIME = '12:00' #hh:mm in 24-hours format
 
-COUNTRY_CODE_PHONE = "0049" #"0027"
-START_MOBILE_PHONE = "01" #"07"
+COUNTRY_CODE_PHONE = "0049" #"0027" for South Africa
+START_MOBILE_PHONE = "0" # "0" for South Africa (07/08..), "01" for Germany
+# see http://en.wikipedia.org/wiki/Telephone_numbers_in_South_Africa
+# TODO multiple mobile prefixes
 
-KNOWLEDGEBASE_DIRECTORY = PROJECT_PATH + "/media/knowledgebase"
-
-ASTERISK_USER = "hudson"
-ASTERISK_GROUP = "hudson"
+ASTERISK_USER = "sendinel"
+ASTERISK_GROUP = "sendinel"
 ASTERISK_SPOOL_DIR = "/var/spool/asterisk/outgoing/"
-ASTERISK_DATACARD = False
+
+# to or of authentication
+# and to turn it on and off again ss
+ASTERISK_DATACARD = True 
+
 
 ASTERISK_EXTENSION = "s"
-#ASTERISK_SIP_ACCOUNT = "datacard0"
-ASTERISK_SIP_ACCOUNT = "ext-sip-account"
+ASTERISK_SIP_ACCOUNT = "datacard0"
+#ASTERISK_SIP_ACCOUNT = "ext-sip-account"
 
-#FESTIVAL_CACHE = "/lib/init/rw"
+# FESTIVAL_CACHE = "/lib/init/rw"
 FESTIVAL_CACHE = "/tmp"
 
 # Phonenumber to authenticate against the system
-# TODO move to local_settings on CI server
-AUTH_NUMBER = "0331-27975256"
+AUTH_NUMBER = "CHANGE ME"
 # time a user has to call the system to authenticate
 AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = 3)
+
+CALL_SALUTATION = "This is an automated call from your clinic"
+
+# True or False to turn authentication on or off
+AUTH = False
+
+#Salutation for SMS Template
+SMS_SALUTATION = 'Hello, '
 
 # Specify a COM Port for SMS
 # for windows maybe it starts at 0

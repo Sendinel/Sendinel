@@ -4,13 +4,13 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 from sendinel.backend.models import ScheduledEvent, InfoService, InfoMessage, \
-                                    Subscription, Patient, Subscription
+                                    Subscription, Patient
 
-class InfoserviceTest(TestCase):
+class StaffInfoServiceTest(TestCase):
     
     client = Client()
     
-    fixtures = ['backend']
+    fixtures = ['backend_test']
     
     def setUp(self):
         User.objects.create_user('john', 'l@example.com', 'passwd')
@@ -27,7 +27,7 @@ class InfoserviceTest(TestCase):
             "date" : "2010-01-01 00:00:00"
         })
                 
-        self.assertRedirects(response, reverse("staff_list_infoservices"))
+        self.assertEquals(response.status_code, 200)
         
         offset = infoservice.members.all().count()
         
@@ -43,13 +43,11 @@ class InfoserviceTest(TestCase):
                               subscription.way_of_communication)                  
                               
     def test_create_infoservice(self):
-        response = self.client.get(reverse('staff_index'))
-        self.assertContains(response, "Create new infoservice")
         response = self.client.get(reverse("staff_infoservice_create"))
         self.assertContains(response, 'name="name"')
         response = self.client.post(reverse("staff_infoservice_create"), 
                                 {"name" : "This is a name for an infoservice"})
-        self.assertRedirects(response, reverse('staff_index'))
+        self.assertEquals(response.status_code, 200)
         response = self.client.get(reverse("staff_list_infoservices"))
         self.assertContains(response, "This is a name for an infoservice")
         
@@ -63,20 +61,35 @@ class InfoserviceTest(TestCase):
                                     way_of_communication = "voice")
         subscription.save()
         response = self.client.get(reverse("staff_list_infoservices"))
-        self.assertContains(response, "Manage members")
+        self.assertContains(response, "Group members")
         response = self.client.get(reverse("staff_infoservice_members", 
                                            kwargs={"id": info.id}))
         self.assertContains(response, patient.phone_number)
+        
+        
+    def test_delete_members_of_infoservice(self):
+        infoservice = InfoService.objects.filter(pk = 1)[0]
         subscription_count = Subscription.objects.all().count()
-        patient_count = Patient.objects.all().count()
-        response = self.client.get(reverse("staff_infoservice_members_delete", 
-                                           kwargs={"id": info.id, 
-                                                   "patient_id": patient.id}))
-
+        patient = infoservice.members.all()[0]
+        subscription = Subscription.objects.get(patient=patient, infoservice=infoservice)
+        response = self.client.post(reverse("staff_infoservice_members_delete",
+                                            kwargs={"id" : infoservice.id}),
+                                    {'subscription_id' : subscription.id})
+        self.assertTrue(not patient in infoservice.members.all())
+        self.assertTrue(not subscription in Subscription.objects.all())
+        self.assertEquals(subscription_count - 1, Subscription.objects.all().count())
         self.assertRedirects(response, reverse("staff_infoservice_members", 
-                                               kwargs={"id": info.id}))     
-        self.assertEquals(Subscription.objects.all().count(), subscription_count - 1)
-        self.assertEquals(Patient.objects.all().count(), patient_count - 1)
-                                         
+                                               kwargs={"id": infoservice.id}))
+                                               
+    def test_delete_infoservice(self):
+        infoservices_count = InfoService.objects.all().count()
+        infoservice = InfoService.objects.get(id = 1)
+        response = self.client.post(reverse("staff_infoservice_delete"), 
+                                    {'infoservice_id' : infoservice.id})
+        self.assertTrue(not infoservice in InfoService.objects.all())
+        self.assertEquals(infoservices_count - 1, InfoService.objects.all().count())
+        self.assertRedirects(response, reverse("staff_list_infoservices"))               
+        
+            
         
         

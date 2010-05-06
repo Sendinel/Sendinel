@@ -1,35 +1,47 @@
 import unittest
-
 from datetime import datetime
 
-from sendinel.settings import COUNTRY_CODE_PHONE, START_MOBILE_PHONE
+from django.core.exceptions import ValidationError
+
 from sendinel.backend.authhelper import check_and_delete_authentication_call, \
-                                        format_phonenumber, \
+                                        format_and_validate_phonenumber, \
                                         delete_timed_out_authentication_calls
+from sendinel.backend import authhelper 
 from sendinel.backend.models import AuthenticationCall
 from sendinel.asterisk import log_call
+from sendinel import settings
 
 class AuthTest(unittest.TestCase):
 
     def test_number_formating(self):
+        
+        country_code_phone = authhelper.COUNTRY_CODE_PHONE
+        start_mobile_phone = authhelper.START_MOBILE_PHONE
+        
+        authhelper.COUNTRY_CODE_PHONE = "0027"
+        authhelper.START_MOBILE_PHONE = "07"
+    
         number = "+27723456789"
-        self.assertEquals(format_phonenumber(number, "0027", "07"), "0723456789")          
+        self.assertEquals(authhelper.format_and_validate_phonenumber(number), "0723456789")          
         number = "+277 234/567 89"
-        self.assertEquals(format_phonenumber(number, "0027", "07"), "0723456789")    
+        self.assertEquals(authhelper.format_and_validate_phonenumber(number), "0723456789")    
         number = "07 234-56789"
-        self.assertEquals(format_phonenumber(number, "0027", "07"), "0723456789")
+        self.assertEquals(authhelper.format_and_validate_phonenumber(number), "0723456789")
         number = "0123a45678"
-        self.assertRaises(ValueError, format_phonenumber, number, "0027", "07")
+        self.assertRaises(ValidationError, authhelper.format_and_validate_phonenumber, number)
         number = "0049123456789"
-        self.assertRaises(ValueError, format_phonenumber, number, "0027", "07")
+        self.assertRaises(ValidationError, authhelper.format_and_validate_phonenumber, number)
         number = "030123456789"
-        self.assertRaises(ValueError, format_phonenumber, number, "0027", "07")          
-
+        self.assertRaises(ValidationError, authhelper.format_and_validate_phonenumber, number)          
+        
+        
+        authhelper.COUNTRY_CODE_PHONE = country_code_phone
+        authhelper.START_MOBILE_PHONE = start_mobile_phone
         
     def test_asterisk_log_call(self):
         class MockFile:
-            def readlines(input):
-                fake_data = """agi_request: call_log.agi
+            counter = 0
+            fake_data = """agi_request: call_log.agi
 agi_channel: SIP/ext-sip-account-b50d4dc8
 agi_language: en
 agi_type: SIP
@@ -50,8 +62,10 @@ agi_enhanced: 0.0
 agi_accountcode: 
 agi_threadid: -1258067088
 """
-                return fake_data.splitlines()
-
+            def readline(input):
+                data = MockFile.fake_data.splitlines()[MockFile.counter]
+                MockFile.counter += 1
+                return data
 
         real_stdin = log_call.sys.stdin
         fake_stdin = MockFile()
@@ -68,6 +82,7 @@ agi_threadid: -1258067088
         self.assertEquals(call.number, "01601234567")
 
         log_call.sys.stdin = real_stdin
+        MockFile.counter = 0
     
     def test_check_and_delete_authentication_call(self):
         AuthenticationCall.objects.all().delete()
@@ -75,8 +90,6 @@ agi_threadid: -1258067088
 
         call_received = check_and_delete_authentication_call(" 0160 1234567 ")
         self.assertTrue(call_received)
-        call_received = check_and_delete_authentication_call(" 0160 1234567 ")
-        self.assertFalse(call_received)
 
     def test_delete_timed_out_authentication_calls(self):
         AuthenticationCall.objects.all().delete()

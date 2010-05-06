@@ -1,11 +1,16 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block content %}
-    <h3>Your are logged in as staff. Please choose what you want to do:</h3>
+<div id="content-padding">
+    <h3>{% trans "Your are logged in as staff. Please choose what you want to do:" %}</h3>
     <p>
         <ul class="navlist">
-            <li><a href="{% url staff_list_infoservices %}">Manage all infoservices</a></li>
-            <li><a href="{% url staff_infoservice_create %}">Create new infoservice</a></li>
+            <li><a href="{% url staff_list_infoservices %}">{% trans "Manage all infoservices" %}</a></li>
         </ul>
     </p>
+    
+    <div class="logout">
+        <a href="{% url staff_logout %}">Back to Main Menu</a>
+    </div>
+</div>
 {% endblock %}

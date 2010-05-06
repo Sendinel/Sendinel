@@ -5,16 +5,16 @@ from django.test import TestCase
 from django.db import IntegrityError
 
 from sendinel import settings
-from sendinel.backend.models import Hospital, HospitalAppointment, \
-                                    InfoMessage, InfoService,  Patient, \
-                                    Doctor, ScheduledEvent, Subscription
+from sendinel.backend.models import AppointmentType, Hospital, \
+                                    HospitalAppointment, \
+                                    InfoMessage, InfoService,  \
+                                    Patient, ScheduledEvent, Subscription 
 from sendinel.backend.output import VoiceOutputData, SMSOutputData, \
                                     BluetoothOutputData
 
 
 class SendableTest(TestCase):
-
-    fixtures = ['backend']
+    fixtures = ['backend_test']
 
     def setUp(self):
         self.sendable = InfoMessage()
@@ -22,10 +22,11 @@ class SendableTest(TestCase):
         self.sendable.text = "Test Text"
 
     def test_sendable_get_data_for_sending(self):
+        #TODO write test for get_data_for_sending()
         pass
 
 class HospitalTest(TestCase):
-    fixtures = ['backend']
+    fixtures = ['backend_test']
     
     def test_get_hospital_no_hospital(self):
         Hospital.objects.all().delete()
@@ -39,7 +40,7 @@ class HospitalTest(TestCase):
         self.assertEquals(Hospital.get_current_hospital(), hospital)
 
 class HospitalAppointmentTest(TestCase):
-    fixtures = ['backend']
+    fixtures = ['backend_test']
     
     def setUp(self):
         self.appointment = HospitalAppointment.objects.get(id = 1)
@@ -71,7 +72,7 @@ class HospitalAppointmentTest(TestCase):
         #create new appointment without saving
         appointment = HospitalAppointment()        
         appointment.date = datetime(2010, 4, 4)
-        appointment.doctor = Doctor.objects.get(pk = 1)
+        appointment.appointment_type = AppointmentType.objects.get(pk = 1)
         appointment.bluetooth_mac_address = "00AA11BB22"
                 
         output_data = appointment.get_data_for_bluetooth()
@@ -83,14 +84,23 @@ class HospitalAppointmentTest(TestCase):
         self.assertEquals(type(output_data.data).__name__, "unicode") 
     
     def test_get_data_for_sms(self):
+        self.appointment.appointment_type.template = "This is a template with a $date " + \
+            "for the $hospital and a $time and, " + \
+            "we use this long template to check if it is reduced before sending it via SMS"
         self.appointment.recipient.phone_number = "012345678"
+        self.appointment.hospital.name = "HospitalnameIsLoooooooooooooooooooooooooong"
         output_data = self.appointment.get_data_for_sms()
         
         self.assertEquals(type(output_data), SMSOutputData)
         self.assertEquals(output_data.phone_number, "012345678")
         self.assertEquals(type(output_data.data), unicode)
         
+        self.assertTrue(len(output_data.data) <= 160)
+        
     def test_get_data_for_voice(self):
+        self.appointment.appointment_type.template = "This is a very long template with a $date " + \
+            "for the $hospital and also has a $time and is much longer than 160 characters, " + \
+            "we use this long template to check if it is reduced before sending it via SMS"
         self.appointment.recipient.phone_number = "012345678"
         output_data = self.appointment.get_data_for_voice()
         
@@ -98,8 +108,11 @@ class HospitalAppointmentTest(TestCase):
         self.assertEquals(output_data.phone_number, "012345678")
         self.assertEquals(type(output_data.data), unicode)
         
+        self.assertTrue(len(output_data.data) > \
+            len(self.appointment.appointment_type.template))
+        
 class InfoMessageTest(TestCase):
-    fixtures = ['backend']
+    fixtures = ['backend_test']
     
     def setUp(self):
         self.info_message = InfoMessage.objects.get(pk = 1)
@@ -119,30 +132,21 @@ class InfoMessageTest(TestCase):
         self.assertEquals(type(output_data), VoiceOutputData)
         self.assertEquals(output_data.phone_number, "012345678")
         self.assertEquals(type(output_data.data), unicode)
-    
-class InfoServiceTest(TestCase):
+        
+        
+class InfoServiceModelTest(TestCase):
     def setUp(self):
         self.infoservice = InfoService(name = "Gruppe")
         self.infoservice.save()
         self.patient = Patient()
         self.patient.save()
     
-    def test_no_infoservices_with_same_name(self):
+    def test_no_infoservices_with_same_or_empty_name(self):
         first_infoservice = InfoService(name ="Hospitalinfos")
         first_infoservice.save()
         second_infoservice = InfoService(name ="Hospitalinfos")
         self.assertRaises(IntegrityError, second_infoservice.save)
-    
-    #TODO bei Form testen, dass keine Nullwerte angegeben werden duerfen
-    # def test_no_groups_with_empty_name(self):
-        # self.assertRaises(IntegrityError, Usergroup(name = None).save)
-        # amount = Usergroup.objects.all().count()
-        # first_group = Usergroup()
-        # import pdb; pdb.set_trace()
-        # first_group.save()
-        # print first_group.__str__
-        # self.assertEquals(Usergroup.objects.all().count(), amount) 
-        
+        self.assertRaises(IntegrityError, InfoService(name = None).save)        
 
 class SubscriptionTest(TestCase):
     
@@ -180,3 +184,4 @@ class SubscriptionTest(TestCase):
         self.assertEquals(self.infoservice.members.all().count(), 1)
         self.assertEquals(self.infoservice.members.all()[0], self.patient)
         self.assertTrue(self.infoservice in self.patient.infoservices())
+        self.assertTrue(subscription in Subscription.objects.all())

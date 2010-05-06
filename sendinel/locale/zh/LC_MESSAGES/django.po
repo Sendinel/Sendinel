@@ -1,0 +1,270 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-04-21 17:23+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"#TRANSLATED#Report-Msgid-Bugs-To: \n"
+"#TRANSLATED#Report-Msgid-Bugs-To: \n"
+"#TRANSLATED#Report-Msgid-Bugs-To: \n"
+"#TRANSLATED#Project-Id-Version: PACKAGE VERSION\n"
+
+#: backend/models.py:99 templates/web/infoservice_register.html:38
+msgid "SMS"
+msgstr "#TRANSLATED#"
+
+#: backend/models.py:100
+msgid "Bluetooth"
+msgstr "#TRANSLATED#"
+
+#: backend/models.py:101 templates/web/infoservice_register.html:39
+msgid "Voice Call"
+msgstr "#TRANSLATED#"
+
+#: templates/404.html:5
+msgid "Sorry, this page does not exist"
+msgstr "#TRANSLATED#"
+
+#: templates/base.html:19
+msgid "This page needs JavaScript to work."
+msgstr "#TRANSLATED#"
+
+#: templates/base.html:32
+msgid "Sendinel is free for you."
+msgstr "#TRANSLATED#"
+
+#: templates/base.html:39
+msgid ""
+"If you want to return to the main menu, press the arrow keys  ←↑→↓ in front "
+"of you to go to the 'Back' button and press the 'Enter' key."
+msgstr "#TRANSLATED#"
+
+#: templates/registration/login.html:6
+msgid "Your username and password didn't match. Please try again."
+msgstr "#TRANSLATED#"
+
+#: templates/staff/create_infomessage.html:4
+#, fuzzy, python-format
+msgid "Send a message to %(infoservice)s"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/create_infomessage.html:13
+#: templates/staff/infoservice_members.html:25
+msgid "Back to Infoservices"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/index.html:5
+msgid "Your are logged in as staff. Please choose what you want to do:"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/index.html:8
+msgid "Manage all infoservices"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/infoservice_create.html:4
+#, fuzzy
+msgid "Create a new information group"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/infoservice_create.html:5
+#, fuzzy
+msgid "Please enter the name of the information group you want to create"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/infoservice_create.html:9
+msgid "Save"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/infoservice_create.html:12
+#, fuzzy
+msgid "Back to Information Groups"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/infoservice_members.html:4
+msgid "Members of "
+msgstr "#TRANSLATED#"
+
+#: templates/staff/infoservice_members.html:8
+#: templates/web/infoservice_register.html:31
+msgid "Phone Number"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/infoservice_members.html:9
+#: templates/web/infoservice_register.html:35
+msgid "Way of Communication"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/infoservice_members.html:18
+msgid "Remove Patient from Group"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/list_infoservices.html:4
+msgid "Information Groups"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/list_infoservices.html:8
+msgid "Group"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/list_infoservices.html:9
+msgid "Members"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/list_infoservices.html:17
+msgid "Remove group"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/list_infoservices.html:18
+#, fuzzy
+msgid "Group members"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/list_infoservices.html:24
+#, fuzzy
+msgid "Create information group"
+msgstr "#TRANSLATED#"
+
+#: templates/staff/list_infoservices.html:26
+#, fuzzy
+msgid "Back to Main Menu"
+msgstr "#TRANSLATED#"
+
+#: templates/web/appointment_create.html:15
+msgid "Appointment"
+msgstr "#TRANSLATED#"
+
+#: templates/web/appointment_create.html:16
+msgid "Please enter the appointment details."
+msgstr "#TRANSLATED#"
+
+#: templates/web/appointment_saved.html:16
+msgid "The appointment has been created."
+msgstr "#TRANSLATED#"
+
+#: templates/web/appointment_saved.html:17
+msgid ""
+"Please tell the patient that he/she will be reminded one day before the "
+"appointment."
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber.html:23
+#, fuzzy
+msgid "Patient phone number"
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber.html:24
+#, fuzzy
+msgid "Please enter the patient's phone number:"
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber.html:32
+msgid "Phone number"
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber_call.html:11
+msgid "Authenticate Phonenumber"
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber_call.html:13
+msgid "Please ring "
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber_call.html:14
+#, fuzzy
+msgid "This will be <strong>free</strong>."
+msgstr "#TRANSLATED#"
+
+#: templates/web/control_buttons_back_only_widget.html:4
+#: templates/web/control_buttons_widget.html:4
+msgid "Back"
+msgstr "#TRANSLATED#"
+
+#: templates/web/control_buttons_next_only_widget.html:4
+#: templates/web/control_buttons_widget.html:8
+msgid "Next"
+msgstr "#TRANSLATED#"
+
+#: templates/web/index.html:6
+msgid "Notifications"
+msgstr "#TRANSLATED#"
+
+#: templates/web/index.html:9
+msgid "Remind of Vaccination"
+msgstr "#TRANSLATED#"
+
+#: templates/web/index.html:12
+msgid "Remind of Follow-Up Consultation"
+msgstr "#TRANSLATED#"
+
+#: templates/web/index.html:16
+msgid "Inform about Arrival of Medicine"
+msgstr "#TRANSLATED#"
+
+#: templates/web/index.html:19
+msgid "Groups"
+msgstr "#TRANSLATED#"
+
+#: templates/web/index.html:23
+msgid ": Register"
+msgstr "#TRANSLATED#"
+
+#: templates/web/index.html:24
+#, fuzzy
+msgid "Send Message"
+msgstr "#TRANSLATED#"
+
+#: templates/web/index.html:29
+msgid "Add or remove information group"
+msgstr "#TRANSLATED#"
+
+#: templates/web/infoservice_register.html:21
+#, fuzzy
+msgid "Register patient for "
+msgstr "#TRANSLATED#"
+
+#: templates/web/infoservice_register.html:22
+msgid ""
+"Please enter your phone number and the way you want to receive the messages"
+msgstr "#TRANSLATED#"
+
+#: templates/web/list_devices.html:14
+msgid ""
+"Please turn on your Bluetooth now. Please assure that it is in the Bluetooth "
+"visibility mode."
+msgstr "#TRANSLATED#"
+
+#: templates/web/list_devices.html:22
+msgid "Looking for further devices"
+msgstr "#TRANSLATED#"
+
+#: templates/web/list_infoservices.html:6
+msgid "Register a patient to receive regular information."
+msgstr "#TRANSLATED#"
+
+#: templates/web/not_implemented.html:6
+#, fuzzy
+msgid "Sorry, but this does not work yet"
+msgstr "#TRANSLATED#"
+
+#: templates/web/not_implemented.html:7
+msgid "We are working on that and hope to get it running until June 2010."
+msgstr "#TRANSLATED#"
+
+#: templates/web/send_bluetooth_appointment.html:11
+#: templates/web/send_bluetooth_appointment.html:20
+msgid "Sending your appointment"
+msgstr "#TRANSLATED#"
+
+#: templates/web/send_bluetooth_appointment.html:12
+msgid "Please accept the file on your mobile"
+msgstr "#TRANSLATED#"

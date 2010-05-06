@@ -2,8 +2,7 @@ from django.test import TestCase
 
 from datetime import datetime, timedelta
 
-from sendinel.backend.models import Hospital, HospitalAppointment
-from sendinel.backend.output import BluetoothOutputData
+from sendinel.backend.models import Hospital
 from sendinel.backend import vcal
 from sendinel import settings
 
@@ -11,7 +10,7 @@ class VcalTest(TestCase):
     """
     """
     
-    fixtures = ['backend']
+    fixtures = ['backend_test']
 
     class FakeDatetime:
         def now(self):
@@ -35,14 +34,14 @@ class VcalTest(TestCase):
 VERSION:1.0
 BEGIN:VEVENT
 UID:43
-DTSTART:20100404T120000Z
-DTEND:20100404T130000Z
+DTSTART:20100404T120000
+DTEND:20100404T130000
 DESCRIPTION:aContent in some language
 SUMMARY:aContent in some language
-DTSTAMP:20100404T000000Z
+DTSTAMP:20100404T000000
 LOCATION:aHospital
-DALARM:20100403T120000Z
-AALARM:20100403T120000Z
+DALARM:20100403T120000
+AALARM:20100403T120000
 END:VEVENT
 END:VCALENDAR""")
         vcal.settings = settings

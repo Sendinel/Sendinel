@@ -1,29 +1,29 @@
 {% extends "base.html" %}
-
+{% load i18n %} 
 {% block script %}
     <script src="{{MEDIA_URL}}/js/auth.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
-
+<div id="content-padding">
     <div id="message" class="message"></div>
 
-    <h3>Authenticate Phonenumber</h3>
-    <p>To register your phone number {{number}}</p>
-    {% comment %}
-        TODO Write number to local phone settings
-    {% endcomment %}
-	<p>please call the following phone number: {{auth_number}}.</p>
-	<p>Your mobile's function send own number must be activated. This is the default on most phones. If the authentication does not work, your can try to enable it by calling the number *31#</p>
+    <h3>{% trans "Authenticate Phonenumber" %}</h3>
+
+    <p><strong class="big">{% trans "Please ring " %}</strong>{{auth_number}}</p>
+    <p>{% trans 'This will be <strong>free</strong>.' %}</p>
+    {#  <p>{{number}}</p> #}
+    
+    {# <p>{% trans "Your mobile's function send own number must be activated. This is the default on most phones. If the authentication does not work, your can try to enable it by calling the number *31#" %}</p> #}
     <input type="hidden" id="number" value="{{number}}" />
-    <input type="hidden" id="next" value="{{ next }}">
-    <input type="hidden" id="ajax_url" value="{{ ajax_url }}">
+    <input type="hidden" id="next" value="{{ next }}" />
+    <input type="hidden" id="ajax_url" value="{{ ajax_url }}" />
     <div id="auth" class="centered">
         <img src="{{ MEDIA_URL }}/ajax-loader.gif" alt="Spinner" id="auth_spinner"/>
-        <div id="auth_status"></div>
+        <div id="auth_status"></div><br />
     </div>
-    <div class="selectable_container">
+    <div id="nav_buttons" class="selectable_container">
       {% include "web/control_buttons_back_only_widget.html" %}	      
     </div>
-    
+</div>
 {% endblock %}

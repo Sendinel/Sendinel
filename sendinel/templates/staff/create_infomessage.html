@@ -1,16 +1,55 @@
 {% extends "base.html" %}
+{% load i18n %}
+
+{% block script %}
+    <script src="{{ MEDIA_URL }}/js/infomessage.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    
+    $(document).ready(function() {
+    $("#id_text").attr("jVal", "{valid:function (val) { if (val.length < 10) return false; else return true; }, message:'This message seems to be too short.'}");
+    $("#id_text").attr("jValKey", "{valid:/[ a-zA-Z0-9._%+-@:,#*]/, message:'&quot;%c&quot; Invalid Character - No Special Characters Allowed', cFunc:'$(\\'#formContainer\\').jVal()'}");
+    });
+    
+    </script>
+     <script src="{{ MEDIA_URL }}/js/jVal.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/jval/jVal.css">
+{% endblock %}
 
 {% block content %}
-    <h3>Create an Infomessage</h3>
-    <p>
-        <form action="" method="post">
-            <table>
-                {{ form }}
-            </table>
-            <input type="submit" name="submit" value="Save" id="id_submit" />
+<div id="content-padding">
+<div id="contentform">
+    <h3>{% blocktrans with infoservice.name as infoservice %}Send a message to {{ infoservice }}{% endblocktrans %}</h3>
+        <form name="infoservice" action="" method="post">
+        <br />
+            <div class="button button_left button_float groupbutton" onClick="javascript:location.href='{% url web_index %}'">
+                {% trans "Back" %}
+            </div>
+            <div class="field sendGroupheight lastfield">
+                <div class="head">
+                    Message Text:
+                    {% if form.text.errors %}
+                        {{ form.text.errors }}
+                    {% endif %}
+                </div>
+                <div class="input">
+                    <textarea id="id_text" rows="5" cols="35" name="text"></textarea>
+                    <div id="character-number">
+                    {% trans "Characters left: " %} <div id="chars-left">160</div>        
+                </div>
+                </div>
+            </div>
+            
+            <div class="button button_right button_float groupbutton" onClick="infoservice.submit();">{% trans "Next" %}</div>
+            <div style="clear:both;"></div>
+            
         </form>
-    </p>
-    
-   
-    
+
+    <br />
+
+ </div>
+ </div>
+{% endblock %}
+
+{% block infotext %}
+    {%trans "This message will be sent to all patients who are subscribed to "%} {{infoservice}}
 {% endblock %}

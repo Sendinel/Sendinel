@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %} 
+{% block script %}
+    <script type="text/javascript">
+        var toNext = function() {
+            var next = $("#next-button-link").val();
+            window.location.replace(next);
+        };
+    
+        $(document).ready(function() {
+            window.setTimeout("toNext()", 120000);
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+<div id="contentform">
+    <div id="content-padding">
+    
+        <h3>
+            {{ title }}
+        </h3>
+        
+        <div class="status {% if success %}success {% else %} error {% endif %}">
+            {{ message }}
+        </div>
+        
+        <form action="{{ nexturl }}" method="post">
+            {% include "web/control_buttons_widget.html" %}	      
+        </form>
+    </div>
+</div>
+{% endblock %}

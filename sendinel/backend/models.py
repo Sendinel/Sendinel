@@ -1,12 +1,16 @@
 from string import Template
 
+from datetime import datetime
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
 
 from sendinel.settings import DEFAULT_HOSPITAL_NAME, \
                               REMINDER_TIME_BEFORE_APPOINTMENT, \
-                              BLUETOOTH_SERVER_ADDRESS  
+                              BLUETOOTH_SERVER_ADDRESS  , \
+                              LANGUAGE_CODE
 from sendinel.backend import texthelper, vcal
 from sendinel.backend.output import SMSOutputData, \
                                     VoiceOutputData, \
@@ -17,6 +21,7 @@ class User(models.Model):
     """
     Define an interface for a user of the system.
     """
+    
     class Meta:
         abstract = True
     name = models.CharField(max_length=255, blank=True, null=True)
@@ -24,16 +29,34 @@ class User(models.Model):
     def __unicode__(self):
         return self.name or "unnamed user"
     
-class Doctor(User):
+class AppointmentType(models.Model):
     """
-    Represent a doctor.
+    Represent an appointment type like follow-up consultation.
     """
-    pass
+    
+    name = models.CharField(max_length = 255)
+    verbose_name = models.CharField(max_length = 255)
+    template = models.CharField(max_length = 255)
+    notify_immediately = models.BooleanField()
+
+    def __unicode__(self):
+        return self.verbose_name
+    
+    @classmethod
+    def get_appointment_type(cls, type_name):
+        """
+        Return the given AppointmentType
+        """
+        
+        appointment_type = AppointmentType.objects.get(name = type_name)
+        
+        return appointment_type   
 
 class Patient(User):
     """
     Represent a patient.
     """
+    
     phone_number = models.CharField(max_length = 20)
     
     def __unicode__(self):
@@ -46,7 +69,8 @@ class Hospital(models.Model):
     """
     Represent a Hospital.
     """
-    name = models.CharField(max_length=255)
+    
+    name = models.CharField(max_length = 255)
     current_hospital = models.BooleanField()
     
     def __unicode__(self):
@@ -57,6 +81,7 @@ class Hospital(models.Model):
         """
         Return the standard current hospital
         """
+        
         try:
             hospital = Hospital.objects.get(current_hospital = True)
         except Hospital.DoesNotExist:
@@ -67,13 +92,14 @@ class Hospital(models.Model):
         
 class InfoService(models.Model):
     """
-    Represent a user group.
-    Raises integrity error
+    Represent a user group
     """
+    
     members = models.ManyToManyField(Patient, through="Subscription")
-    name = models.CharField(max_length=255, unique=True, blank=False, \
+    name = models.CharField(max_length=255,
+                            unique=True,
+                            blank=False,
                             null=False)
-
 
     def __unicode__(self):
         return self.name
@@ -83,13 +109,14 @@ class Sendable(models.Model):
     """
     Define an interface for a Sendable object.
     """
+    
     class Meta:
         abstract = True
 
     WAYS_OF_COMMUNICATION = (
-        ('sms','SMS'),
-        ('bluetooth','Bluetooth'),
-        ('voice','Voice Call'),
+        ('sms', ugettext_lazy('SMS')),
+        ('bluetooth', ugettext_lazy('Bluetooth')),
+        ('voice', ugettext_lazy('Phone Call')),
     )
     way_of_communication = models.CharField(max_length=9,
                                 choices=WAYS_OF_COMMUNICATION)
@@ -99,32 +126,12 @@ class Sendable(models.Model):
     def __unicode__(self):
         return "%s %s" % (unicode(self.recipient), self.way_of_communication)
     
-    def get_data_for_bluetooth(self):
-        """
-        Prepare OutputData for bluetooth.
-        Return BluetoothOutputData for sending.
-        """
-        pass
-    
-    def get_data_for_sms(self):
-        """
-        Prepare OutputData for sms.
-        Return SMSOutputData for sending.
-        """
-        pass
-    
-    def get_data_for_voice(self):
-        """
-        Prepare OutputData for voice.
-        Return VoiceOutputData for sending.
-        """
-        pass
-    
     def get_data_for_sending(self):
         """
         Prepare OutputData for selected way_of_communication.
         Return an object of a subclass of OutputData.
-        """    
+        """
+        
         call = "self.get_data_for_%s()" % self.way_of_communication      
         logger.info("sendable.get_data_for_sending() calling method: " + call)        
         return eval(call)
@@ -137,6 +144,9 @@ class Sendable(models.Model):
         scheduled_event = ScheduledEvent(sendable = self,
                                          send_time = send_time)
         scheduled_event.save()
+        
+
+        
 
 class HospitalAppointment(Sendable):
     """
@@ -144,13 +154,26 @@ class HospitalAppointment(Sendable):
     """
     
     date = models.DateTimeField()
-    doctor = models.ForeignKey(Doctor)
+    appointment_type = models.ForeignKey(AppointmentType)
     hospital = models.ForeignKey(Hospital)
-    template = Template("Hello, please remember your appointment" + \
-                         " at the $hospital at $date with doctor $doctor")
-    def __unicode__(self):
-        return "%s Doctor %s" % ((str(self.date) or ""), (str(self.doctor) or ""))
                          
+    def __unicode__(self):
+        return "HospitalAppointment<%s>" \
+                    % ((str(self.date) or ""))
+
+    @property
+    def template(self):
+        return Template(self.appointment_type.template)
+        
+    def reminder_text(self, contents = False, is_sms = True):
+        if not contents:
+            contents = {'date': unicode(self.date.date()),
+                        'time': unicode(self.date.time()),
+                        'hospital': self.hospital.name}
+
+        return texthelper.generate_text(contents,
+                                        self.template, is_sms)
+
     def get_data_for_bluetooth(self):
         """
         Prepare OutputData for voice.
@@ -172,10 +195,8 @@ class HospitalAppointment(Sendable):
         except Hospital.DoesNotExist:
             self.hospital = Hospital.get_current_hospital()
         
-        content = "Please remember your Appointment tomorrow at "\
-                    + self.hospital.name\
-                    + " by doctor "\
-                    + self.doctor.name
+        content = self.reminder_text()
+
         uid = vcal.get_uid()
         data.data = vcal.create_vcal_string(self.date, 
                                             self.hospital, 
@@ -196,12 +217,7 @@ class HospitalAppointment(Sendable):
         """
 
         data = SMSOutputData()
-        contents = {'date':str(self.date),
-                    'doctor': self.doctor.name,
-                    'hospital': self.hospital.name}
-                    
-        data.data = texthelper.generate_text(contents,
-                        HospitalAppointment.template)
+        data.data = self.reminder_text()
         data.phone_number = self.recipient.phone_number
         
         return data
@@ -212,13 +228,17 @@ class HospitalAppointment(Sendable):
         Generate the message for an HospitalAppointment.
         Return VoiceOutputData for sending.
         """
-        data = VoiceOutputData()
-        contents = {'date':str(self.date),
-                    'doctor': self.doctor.name,
-                    'hospital': self.hospital.name}
+    
+        spoken_date = texthelper.date_to_text(self.date.weekday() + 1, \
+            self.date.day, self.date.month, self.date.hour, self.date.minute)
 
-        data.data = texthelper.generate_text(contents,
-                        HospitalAppointment.template, False)
+        data = VoiceOutputData()
+        
+        contents = {'date': unicode(spoken_date["date"]),
+                    'time' : unicode(spoken_date["time"]),
+                    'hospital': self.hospital.name}
+                    
+        data.data = self.reminder_text(contents, False)
         data.phone_number = self.recipient.phone_number
 
         return data
@@ -239,9 +259,8 @@ class HospitalAppointment(Sendable):
         Save appointment with patient & hospital and create a scheduled event
         """
         patient.save()
-        self.hospital = Hospital.get_current_hospital()
+
         self.recipient = patient
-                
         self.save()
         self.create_scheduled_event()    
         return self
@@ -250,10 +269,15 @@ class InfoMessage(Sendable):
     """
     Define a InfoMessage.
     """
-    #TODO extract to superclass?
+
     template = Template("$text")
-    # TODO restrict text to 160? but not good for voice calls
     text = models.TextField()
+    
+    def __unicode__(self):
+        return "InfoMessage to %s: '%s' via %s" % \
+                                        (self.recipient.phone_number,
+                                         self.text,
+                                         self.way_of_communication)
     
     def get_data_for_sms(self):
         """
@@ -286,7 +310,8 @@ class InfoMessage(Sendable):
 class ScheduledEvent(models.Model):
     """
     Define a ScheduledEvent for sending at a specific date.
-    """    
+    """
+    
     sendable_type = models.ForeignKey(ContentType)
     sendable_id = models.PositiveIntegerField()
     sendable = generic.GenericForeignKey('sendable_type', 'sendable_id')
@@ -310,10 +335,14 @@ class AuthenticationCall(models.Model):
     mobile phone number. These calls get deleted once the user has
     been authenticated successfully.
     """
+    
     number = models.CharField(max_length = 20)
     time = models.DateTimeField(auto_now_add = True)
     
 class Subscription(models.Model):
+    """
+    Represents a patient's subscription to an infoservice
+    """
     
     patient = models.ForeignKey(Patient)
     infoservice = models.ForeignKey(InfoService)
@@ -322,4 +351,5 @@ class Subscription(models.Model):
                                 choices=Sendable.WAYS_OF_COMMUNICATION)
                                 
     def __unicode__(self):
-      return "%s %s" % (str(self.infoservice), str(self.patient.phone_number))
+        return "%s %s" % (unicode(self.infoservice), \
+                          unicode(self.patient.phone_number))

@@ -1,20 +1,41 @@
 {% extends "base.html" %}
+{% load i18n %}
 
+{% block script %}
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#id_phone_input").keydown(function(event){
+                if(event.keyCode === 37){
+                    var phone_input = $("#id_phone_input");
+                    var string = phone_input.val();
+                    string = string.substr(0, (string.length - 1));
+                    phone_input.val(string);                    
+                    return false;
+                }
+            });
+        });
+    </script>
+
+{% endblock %}
+ 
 {% block content %}
-    <h3>Authenticate Phonenumber</h3>
-	<p>Hello {{ patient_name }}! Please enter your phone number.</p>
+<div id="content-padding">
+    <h3>{% trans "Patient phone number" %}</h3>
+	<p>{% trans "Please enter the patient's phone number:" %}</p>
     <p>
         <form method="post" class="selectable_container" autocomplete="off">
             <table>
                 {% if error %}
-                <tr><td></td><td>{{ error }}</td></tr>
+                <tr><td></td><td class="errorlist">{{ error }}</td></tr>
                 {% endif %}
                 <tr>
-                  <td>Phone number</td>
-                  <td><input type="text" name="number" class="selectable" /></td>
+                  <td>{% trans "Phone number" %}</td>
+                  <td><input id="id_phone_input" type="text" name="number" class="selectable" /></td>
                 </tr>
 	         </table>
             {% include "web/control_buttons_widget.html" %}	         
         </form>
     </p>
+    </div>
 {% endblock %}

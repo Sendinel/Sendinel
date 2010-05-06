@@ -1,18 +1,20 @@
 import re
 from datetime import datetime
 
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext as _
+
 from sendinel.backend.models import AuthenticationCall
 from sendinel.settings import AUTHENTICATION_CALL_TIMEOUT, \
                               COUNTRY_CODE_PHONE, \
                               START_MOBILE_PHONE
 
-def format_phonenumber(number, country_code, start_mobile_number):
+def format_and_validate_phonenumber(number):
     """
     Replaces all number specific characters like
     "+", "-" and "/" and checks that there are no
-    letters included. Checks also if the number is the number of a 
-    mobile phone.
-    TODO update docstring for mobile number
+    letters included. Checks also if the number is 
+    the number of a mobile phone.
     
     @param  number:     The phone number that will be checked
     @type   number:     string
@@ -26,31 +28,33 @@ def format_phonenumber(number, country_code, start_mobile_number):
     regex = re.compile('(\/|\+|-| )')
     number = regex.sub('', number)
     
-    if number.startswith(country_code):
-        number = number.replace(country_code, '0', 1)
+    if number.startswith(COUNTRY_CODE_PHONE):
+        number = number.replace(COUNTRY_CODE_PHONE, '0', 1)
 
-    # if the conversion to int does not fail
-    # then there are only numbers included
-    # in the string
+    # if the conversion to int does not fail then
+    # there are only numbers included in the string
     try:
         int(number)
     except ValueError:
-        raise ValueError('Please enter a phonenumber like 0181238723.')
+        raise ValidationError(_('Please enter numbers only.'))
     
-    if number.startswith(start_mobile_number):
+    if number.startswith(START_MOBILE_PHONE):
         return number
     else:
-        raise ValueError('Please enter a phonenumber like 0181238723.')    
+        raise ValidationError(_('Please enter a cell phone number.'))
 
 def check_and_delete_authentication_call(number):
     """
     Try to find an AuthenticationCall for the given phone numner.
     The last seven digits are compared to identify the call.
     """
-    number = format_phonenumber(number, COUNTRY_CODE_PHONE, START_MOBILE_PHONE)
+    
+    number = format_and_validate_phonenumber(number)
+    
     last_seven_digits = number[-7:]
     calls = AuthenticationCall.objects.filter( \
                                     number__endswith = last_seven_digits)
+    
     if calls.count() == 1:
         calls.delete()
         return True
@@ -62,12 +66,6 @@ def delete_timed_out_authentication_calls():
     Find and delete all timed out authentication calls.
     This can be configured through settings.
     """
-    AuthenticationCall.objects.filter(time__lt = calculate_call_timeout()). \
-                                                                    delete()
     
-def calculate_call_timeout():
-    """
-    Calculate the time when all calls received before are timed out.
-    Can be configured via AUTHENTICATION_CALL_TIMEOUT.
-    """
-    return (datetime.now() - AUTHENTICATION_CALL_TIMEOUT)
+    timeout = datetime.now() - AUTHENTICATION_CALL_TIMEOUT
+    AuthenticationCall.objects.filter(time__lt = timeout).delete()

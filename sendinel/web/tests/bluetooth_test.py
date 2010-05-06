@@ -4,9 +4,8 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
 
-from sendinel.web.views import get_bluetooth_devices
 from sendinel.backend import bluetooth
-from sendinel.backend.models import Doctor
+from sendinel.backend.models import AppointmentType
 
 class BluetoothViewTest(TestCase):
     client = Client()
@@ -50,16 +49,18 @@ class BluetoothViewTest(TestCase):
         bluetooth.get_discovered_devices = get_discovered_devices_old
         
     def test_send_appointment(self):   
-        doctor = Doctor(name = "Giese")
-        doctor.save()
-    
-        data = {'date_0': '2012-02-22',
-                'date_1': '19:02:42',
-                'doctor': doctor.id,
-                'recipient_name': 'Shiko Taga',
+        appointment_type = AppointmentType(name = "vaccination")
+        appointment_type.save()
+        
+        appointment_type = AppointmentType.objects.get(pk=1)
+        
+        self.client.get(reverse('web_appointment_create', \
+                kwargs={"appointment_type_name": appointment_type.name })) 
+        data = {'date': '2012-02-22',
+                'phone_number': '0175685444',
                 'way_of_communication': 'bluetooth'}
-                
-        self.client.post("/web/appointment/create/", data)
+        self.client.post(reverse('web_appointment_create', \
+                kwargs = {"appointment_type_name": appointment_type.name }), data)
         
         self.assertTrue(self.client.session.has_key("appointment"))
     

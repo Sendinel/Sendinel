@@ -1,3 +1,5 @@
+from random import random
+
 from sendinel import settings
 
 linux_available = False
@@ -19,6 +21,8 @@ except ImportError:
 import time
 import re
 
+# TODO Test this!
+
 class Voicecall:
     def __init__(self):
         self.asterisk_user = settings.ASTERISK_USER
@@ -28,19 +32,27 @@ class Voicecall:
         self.asterisk_sip_account = settings.ASTERISK_SIP_ACCOUNT
         self.asterisk_festivalcache = settings.FESTIVAL_CACHE
         self.asterisk_datacard = settings.ASTERISK_DATACARD 
+        self.salutation = settings.CALL_SALUTATION
 
     def create_voicefile(self, text):
-        text_hash = md5(text).hexdigest()
+        text_hash = md5(str(random())).hexdigest()
         filename = "%s/%s.ulaw" % (self.asterisk_festivalcache, text_hash)
         if not os.path.exists(filename):
             args = "-o %s -otype ulaw -" % (filename)
+            
+            if str(settings.LANGUAGE_CODE) == "en-us":
+                pass
+            elif str(settings.LANGUAGE_CODE) == "zu-za":
+                args = args + ' -eval "(voice_csir_isizulu_buhle_multisyn)"'
+                
+             
             process = Popen(["text2wave"] + args.split(" "), stdin=PIPE)
             process.communicate(input=text)
         else:
             pass
         return "%s/%s" % (self.asterisk_festivalcache, text_hash)
 
-    def create_spool_content(self, number, voicefile, extension,
+    def create_spool_content(self, number, voicefile, salutation, extension,
                             sip_account, context):
         """
             Create the content for asterisk's spool file
@@ -72,7 +84,8 @@ Context: %s
 Extension: %s
 Priority: 1
 Set: PassedInfo=%s
-""" %(sip_account, number, context, extension, voicefile)
+Set: Salutation=%s
+""" %(sip_account, number, context, extension, voicefile, salutation)
      
         else:
             output = """
@@ -84,7 +97,8 @@ Context: %s
 Extension: %s
 Priority: 1
 Set: PassedInfo=%s
-""" %(number, sip_account, context, extension, voicefile)
+Set: Salutation=%s
+""" %(number, sip_account, context, extension, voicefile, salutation)
 
         return output
        
@@ -93,6 +107,7 @@ Set: PassedInfo=%s
 Channel: Local/2000
 Context: %s
 Extension: %s
+WaitTime: 2
 Priority: 1
 Set: SmsNumber=%s
 Set: Text=%s
@@ -125,6 +140,7 @@ Set: Text=%s
             
             @return True if the operating succeeded, if not False
         """
+        
         try:
             uid = pwd.getpwnam(self.asterisk_user).pw_uid
             gid = grp.getgrnam(self.asterisk_group).gr_gid
@@ -148,6 +164,7 @@ Set: Text=%s
 
            @return text without special characters
         """
+        
         return re.sub('[^\x00-\x8f]', "_", text) 
 
     def conduct_sms(self, number, text, context):
@@ -174,9 +191,12 @@ Set: Text=%s
         """
         
         if linux_available:
+            text = self.replace_special_characters(text)
+	    salutation = self.create_voicefile(self.salutation)
             voicefile = self.create_voicefile(text)
             content = self.create_spool_content(number,
                                                 voicefile,
+                                                salutation,
                                                 self.asterisk_extension,
                                                 self.asterisk_sip_account,
                                                 context)

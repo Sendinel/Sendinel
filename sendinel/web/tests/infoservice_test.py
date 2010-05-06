@@ -1,11 +1,10 @@
-from datetime import datetime
-
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from sendinel.backend.models import InfoService, Subscription, Patient
+from sendinel.settings import AUTH
 from sendinel.utils import last
 
-class InfoServiceTest(TestCase):
+class WebInfoServiceTest(TestCase):
     def setUp(self):
         self.info = InfoService(name = "testinfoservice")
         self.info.save()
@@ -16,9 +15,17 @@ class InfoServiceTest(TestCase):
                                          patient = self.patient)
         self.subscription.save()
      
+    def create_register_infoservice_form(self):
+        response = self.client.get(reverse('web_infoservice_register', 
+                                    kwargs={'id': self.info.id}))
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertContains(response, 'name="phone_number"')
+        self.assertContains(response, 'name="way_of_communication"')
+        return response
+        
     def test_infoservices_on_main_page(self):
         response = self.client.get(reverse('web_index'))
-        self.assertContains(response, "Register for Information Services")
+
         infoservices = InfoService.objects.all()
         for infoservice in infoservices:
             self.assertContains(response, infoservice.name)
@@ -28,25 +35,46 @@ class InfoServiceTest(TestCase):
 
         
     def test_register_infoservice(self):
-        response = self.client.get(reverse('web_infoservice_register', 
-                                    kwargs={'id': self.info.id}))
-        self.assertEquals(response.status_code, 200)
+        self.create_register_infoservice_form()
         response = self.client.post(reverse('web_infoservice_register', 
                                     kwargs={'id': self.info.id}),
                                     {'way_of_communication': 'sms',
-                                     'number':'01234 / 56789012'})
+                                     'phone_number':'01234 / 56789012'})
 
         self.assertTrue(self.client.session.has_key('way_of_communication'))
         self.assertTrue(self.client.session.has_key('authenticate_phonenumber'))
-        self.assertEquals(response.status_code, 200)
+        
+        if AUTH:
+            self.assertEquals(response.status_code, 200)
+        else:
+            self.assertEquals(response.status_code, 302)
       
+    def test_register_infoservice_submit_validations(self):
+        response = self.client.post(reverse('web_infoservice_register', 
+                                    kwargs={'id': self.info.id}),
+                                    {'way_of_communication': 'sms',
+                                     'phone_number':'01234 / 56789012'})
+        self.assertEquals(response.status_code, 302)
+            
+        response = self.client.post(reverse('web_infoservice_register', 
+                                    kwargs={'id': self.info.id}),
+                                    {'way_of_communication': 'sms',
+                                     'phone_number':'0123afffg789012'})
+        self.assertContains(response, 'Please enter numbers only')
+
+        response = self.client.post(reverse('web_infoservice_register', 
+                                    kwargs={'id': self.info.id}),
+                                    {'way_of_communication': 'sms',
+                                     'phone_number':'234 / 56789012'})
+        self.assertContains(response, 'Please enter a cell phone number.')
+        
     def test_save_registration_infoservice(self):
         subscription_count = Subscription.objects.all().count()
 
         self.client.post(reverse('web_infoservice_register',
                          kwargs={'id': self.info.id}),
                          {"way_of_communication": "sms",
-                          "number": "0123456"})
+                          "phone_number": "0123456"})
                           
         response = self.client.get(reverse('web_infoservice_register_save',
                                    kwargs={'id': self.info.id}))
@@ -58,13 +86,15 @@ class InfoServiceTest(TestCase):
         self.assertEquals(new_subscription.patient.phone_number, "0123456")
         self.assertEquals(new_subscription.infoservice, self.info)
         self.assertEquals(new_subscription.way_of_communication, "sms")
-    
-    # def test_remove_subscription(self):
-        # subscription_count = Subscription.objects.all().count()
         
-        # self.client.delete(reverse('web_index'))
+
+    
+    def test_remove_subscription(self):
+        subscription_count = Subscription.objects.all().count()
+        
+        self.subscription.delete()
                             
-        # self.assertEquals(Subscription.objects.all().count(), 
-                          # subscription_count - 1)
-        # self.assertEquals(Suscription.objects.filter(pk = self.info.id), None)
+        self.assertEquals(Subscription.objects.all().count(), 
+                          subscription_count - 1)
+        self.assertTrue(Subscription.objects.filter(pk = self.info.id).count() == 0)
             
