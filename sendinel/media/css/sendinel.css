@@ -299,14 +299,18 @@ strong.big {
     background-position: 20px 30px;    
 }
 
+#header-notification {        
+    text-align: center;    
+    font-weight: bold;
+}
+
 #hpi-logo{
     height: inherit;
+    width: 245px;
     
     background-image: url("../img/hpi-logo-80px.png");
     background-repeat: no-repeat;
     background-position: 100% 30px;
-    
-    text-align: center;
 }
 
 #footer {

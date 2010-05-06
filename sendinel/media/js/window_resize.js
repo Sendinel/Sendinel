@@ -3,6 +3,9 @@ var div_resize = function() {
     var heightContent = window.innerHeight - ($('#header').height() + $('#footer').height());    
     $("#content").height(heightContent);
     
+    var notificationWidth = window.innerWidth - ($('#sendinel-logo').width() + $('#hpi-logo').width());
+    $('#header-notification').width(notificationWidth);
+    
     if(Math.max($("#notifications").height(), $("#groups").height()) > heightContent) {
         var backgroundWidth = 12;
         $('#content').css("background-position", ($("#content").width() / 2) + backgroundWidth + "px 0px");
