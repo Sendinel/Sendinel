@@ -1,5 +1,7 @@
 Sendinel improves the communication between institutions and its clients. It has been build with Python and Django. 
 
+The user manual and installation guide can be found in the doc/ directory or on http://sendinel.github.com/
+
 For more information please go to
 
 http://www.sendinel.org/

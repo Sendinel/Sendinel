@@ -1,9 +1,3 @@
 Sendinel
 
-These are Python dependencies, installable using easy_install
-
-django-1.2 # not available yet using easy_install - download manually from djangoproject.com
-
-# scheduler
-python-daemon
-lockfile
+see installation guide in doc/ or on http://sendinel.github.com/
