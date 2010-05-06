@@ -4,10 +4,10 @@ var div_resize = function() {
     $("#content").height(heightContent);
     
     if($("#notifications").height() > heightContent) {
-        var backgroundWidth = 10;
-        $('#main-menu').css("background-position", ($("#main-menu").width() / 2) + backgroundWidth + "px 0px");
+        var backgroundWidth = 12;
+        $('#content').css("background-position", ($("#content").width() / 2) + backgroundWidth + "px 0px");
     } else {
-        $('#main-menu').css("background-position", "50% 0%");
+        $('#content').css("background-position", "50% 0%");
     }
 };
 
