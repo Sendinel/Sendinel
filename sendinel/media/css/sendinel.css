@@ -299,7 +299,9 @@ strong.big {
     background-position: 20px 30px;    
 }
 
-#header-notification {        
+#header-notification {    
+    height: inherit;
+        
     text-align: center;    
     font-weight: bold;
 }
