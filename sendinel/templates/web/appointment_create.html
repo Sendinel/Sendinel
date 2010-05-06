@@ -31,12 +31,11 @@
     <p>{% trans "Please enter the appointment details." %}</p>
 
     <form name="appointment_create" action="./" method="post" autocomplete="off" >
-    <br />
-        
+    
         <div class="button button_left button_float" onClick="javascript:location.href='{{ backurl }}'">
             {% trans "Back" %}
         </div>
-        <div class="field">
+        <div class="field float-left">
             <div class="head">
                 Phone number:
                     {% if form.phone_number.errors %}
@@ -50,21 +49,21 @@
             </div>
         </div>
         {% if not appointment_type.notify_immediately %}
-        <div class="field">
+        <div class="field float-left">
             <div class="head">
                 Date:&nbsp;
                 {% if form.date.errors %}
                             {{ form.date.errors }}
                 {% endif %}
             </div>
-            
+        
             <div class="input">
                 <div id="datepicker" ></div>
                 <input id="date" type="hidden" name="date" />
             </div>
         </div>
         {% endif %}
-        <div class="field lastfield">
+        <div class="field float-left lastfield">
             <div class="head">
                 Way of communication:&nbsp;
                     {% if form.way_of_communication.errors %}
@@ -86,10 +85,9 @@
             </div>
         </div>
         <div class="button button_right button_float" onClick="appointment_create.submit();">{% trans "Next" %}</div>
-        <div style="clear:both;"></div>
-        
+        <div style="clear:both;"></div>        
 
-    </form>        
+    </form>
 
 </div>
 

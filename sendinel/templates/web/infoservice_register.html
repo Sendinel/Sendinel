@@ -27,11 +27,11 @@
     	<p>{% trans "Please enter your phone number and the way you want to receive the messages" %}</p>
         <br />
         <form name="infoservice" method="post" class="selectable_container" action='#' autocomplete="off">
- 
+
             <div class="button button_left button_float groupbutton" onClick="javascript:location.href='{{ backurl }}'">
                 {% trans "Back" %}
             </div>
-            <div class="field groupheight">
+            <div class="field field-groups float-left">
                 <div class="head">
                     Phone number:
                         {% if form.phone_number.errors %}
@@ -45,8 +45,7 @@
                 </div>
             </div>
 
-
-            <div class="field groupheight lastfield">
+            <div class="field field-groups float-left lastfield">
                 <div class="head">
                     Way of communication:&nbsp;
                         {% if form.way_of_communication.errors %}
@@ -62,7 +61,6 @@
             </div>
             <div class="button button_right button_float groupbutton" onClick="infoservice.submit();">{% trans "Next" %}</div>
             <div style="clear:both;"></div>
- 
         </form>    
     </div>
 

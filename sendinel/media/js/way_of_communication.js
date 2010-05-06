@@ -19,7 +19,7 @@ $(document).ready(function() {
                     .attr('alt', $(this).text());
 
         var value = $(this).val()
-        img.addClass("clickable")
+        img.addClass("link")
             .click(function() {
                 selectItem(this, value);
             });

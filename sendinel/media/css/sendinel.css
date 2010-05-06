@@ -44,11 +44,24 @@ input[type=text] {
 }
 
 h3 {
+    color: #f29400;
+    
+    font-size:1.4em;
+    font-weight:bold;    
+
+    margin-bottom: 5px;    
     margin-top: 10px;
+}
+
+#notifications h3, #groups h3 {
     margin-left: 20px;
 }
 
 /* Classes */
+
+.centered {
+    text-align: center;
+}
 
 .float-left {
     float: left;
@@ -216,6 +229,7 @@ h3 {
     background-image: url(../img/info_sign.png);
     background-repeat: no-repeat;
 }
+
 #contact{
     padding-top:5px;
     text-align:center;
@@ -223,32 +237,6 @@ h3 {
     float:left;
     width:100%;
     font-size:0.5em;
-}
-
-.centered {
-    text-align: center;
-}
-
-.menulistManageGroups{
-    padding-left: 60px;
-    min-height: 2em;
-    padding-top: 0.8em;
-    padding-bottom: 12px;
-    margin: 10px 0px 0px 0px;
-    font-size: 1em;
-    font: bold Verdana, sans-serif;
-    border: 1px solid #F3F3F3;
-    background: #F3F3F3;
-    background-image: url(../img/gear_wheel.png);
-    background-repeat: no-repeat;
-    background-position: 17px 20px;
-    
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-}
-.menulistManageGroups:hover {
-    border: 1px solid orange;
-    background-color: #FFDCA3;
 }
 
 /* Forms */
@@ -304,33 +292,29 @@ strong.big {
     background-color: #FCC533;
 }
 
-h3{
-    text-align:left;
-    color:#f29400;
-    font-size:1.4em;
-    font-weight:bold;
-    
-
-    margin-bottom: 5px;
-}
-
-.field{
+.field {
     border-right: 10px solid #eeeeee; 
-    height:380px;
+
+    height: 380px;
+    
     padding-top:10px;
     padding-left:10px;
     padding-right:10px;
-    float:left;
 }
+
+.field-groups {
+    height: 180px;
+}
+
 .lastfield{
-    border-right: 0px; 
+    border-right: 0px solid; 
 }
+
 .head{
     font-weight:bold;
     margin: 10px 0px;
 }
-.input{
-}
+
 .button_only{
     width:120px;
     background: #F3F3F3;
