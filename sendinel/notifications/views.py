@@ -12,7 +12,7 @@ from sendinel.notifications.models import HospitalAppointment, AppointmentType
 from sendinel.settings import   AUTH, \
                                 DEFAULT_SEND_TIME
 from sendinel.logger import logger, log_request
-from sendinel.web.forms import NotificationValidationForm
+from sendinel.notifications.forms import NotificationValidationForm
                                
 
 @log_request
