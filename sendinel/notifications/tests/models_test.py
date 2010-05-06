@@ -6,7 +6,7 @@ from django.db import IntegrityError
 
 from sendinel import settings
 from sendinel.backend.models import Patient, ScheduledEvent 
-from sendinel.notifications.models import HospitalAppointment
+from sendinel.notifications.models import AppointmentType, HospitalAppointment
 from sendinel.backend.output import VoiceOutputData, SMSOutputData, \
                                     BluetoothOutputData
 
