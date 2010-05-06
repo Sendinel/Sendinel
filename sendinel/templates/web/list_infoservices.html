@@ -3,7 +3,7 @@
 {% block script %}
 {% endblock %}
 {% block content %}
-<div id="content-padding">
+
     <h3>{% trans "Register a patient to receive regular information." %}</h3>
         <ul id="informationservices">
             {% for service in informationservices %}
@@ -20,7 +20,7 @@
     <div class="selectable_container">
        {% include "web/control_buttons_back_only_widget.html" %}
     </div>
-</div>
+
 {% endblock %}
 
 {% block infotext %}

@@ -21,15 +21,14 @@
 {% endblock %}
  
 {% block content %}
-<div id="content-padding">
+
     <div id="contentform">
-    <h3>{% trans "Register patient for " %} {{infoservice}}</h3>
-	<p>{% trans "Please enter your phone number and the way you want to receive the messages" %}</p>
-    <br />
-        <form name="infoservice" method="post" class="selectable_container" action='#' 
-         autocomplete="off">
-         
-          <div class="button button_left button_float groupbutton" onClick="javascript:location.href='{{ backurl }}'">
+        <h3>{% trans "Register patient for " %} {{infoservice}}</h3>
+    	<p>{% trans "Please enter your phone number and the way you want to receive the messages" %}</p>
+        <br />
+        <form name="infoservice" method="post" class="selectable_container" action='#' autocomplete="off">
+ 
+            <div class="button button_left button_float groupbutton" onClick="javascript:location.href='{{ backurl }}'">
                 {% trans "Back" %}
             </div>
             <div class="field groupheight">
@@ -41,12 +40,12 @@
                 </div>
                 <div class="input">
                     <input id="id_phone_input" type="text" name="phone_number" class="selectable" 
-			    jVal="{valid:function (val) { if (val.length < 6) return false; else return true; }, message:'Please enter a valid phone number'}"
+                jVal="{valid:function (val) { if (val.length < 6) return false; else return true; }, message:'Please enter a valid phone number'}"
                             jValKey="{valid:/[+0-9]/, message:'&quot;%c&quot; Please only enter digits for the phone number', cFunc:'$(\'#submitButton\').click();'}"/>
                 </div>
             </div>
-            
-            
+
+
             <div class="field groupheight lastfield">
                 <div class="head">
                     Way of communication:&nbsp;
@@ -63,9 +62,8 @@
             </div>
             <div class="button button_right button_float groupbutton" onClick="infoservice.submit();">{% trans "Next" %}</div>
             <div style="clear:both;"></div>
-         
-        </form>
-    
+ 
+        </form>    
     </div>
-</div>
+
 {% endblock %}
