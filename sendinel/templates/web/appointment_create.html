@@ -32,7 +32,7 @@
 
     <form name="appointment_create" action="./" method="post" autocomplete="off" >
     
-        <div class="button button_left button_float" onClick="javascript:location.href='{{ backurl }}'">
+        <div class="button button-left background-grey link menu-hover rounded-corners float-left" onClick="javascript:location.href='{{ backurl }}'">
             {% trans "Back" %}
         </div>
         <div class="field float-left">
@@ -58,7 +58,7 @@
             </div>
         
             <div class="input">
-                <div id="datepicker" ></div>
+                <div id="datepicker"></div>
                 <input id="date" type="hidden" name="date" />
             </div>
         </div>
@@ -84,7 +84,7 @@
                     </select>
             </div>
         </div>
-        <div class="button button_right button_float" onClick="appointment_create.submit();">{% trans "Next" %}</div>
+        <div class="button button-right float-left background-grey menu-hover link rounded-corners" onClick="appointment_create.submit();">{% trans "Next" %}</div>
         <div style="clear:both;"></div>        
 
     </form>

@@ -10,13 +10,13 @@
             {% trans "Do you really want to remove this information group?" %}
         </div>
        
-        <div    class="button button_left button_float groupbutton" 
-                                onclick="Sendinel.Utils.goto_url('{{ backurl }}')">
-                            back
-                        </div>
+        <div class="button button-left background-grey link menu-hover rounded-corners float-left" 
+             onclick="Sendinel.Utils.goto_url('{{ backurl }}')">
+            {% trans "Back" %}
+        </div>
        
-        <div>
-            <table cellspacing="0">
+        <table id="infoservice-list" class="float-left" cellspacing="0">
+            <thead>
                 <tr>        
                     <th align="left">{% trans "Group" %}</th>
                     <th>{% trans "Members" %}</th>
@@ -24,6 +24,8 @@
                     <td />
                     <td />
                 </tr>
+            </thead>
+            <tbody>
             {% for infoservice in infoservices %}
                 <form method="post" id="form_{{ infoservice.id }}" action="{% url staff_infoservice_delete %}">
                     <input type="hidden" name="infoservice_id" value="{{ infoservice.id }}" />
@@ -52,19 +54,22 @@
                                     {% endif %} />
                         </td>
                     </tr>
-            
-                </form>
-            
-            {% endfor %}
         
-            </table>
-            <div id="infoservice-create">
-                <img src="{{ MEDIA_URL }}/img/add.png" style="margin-bottom:-8px" />
-                <input  type="button" 
-                    onclick="Sendinel.Utils.goto_url('{% url staff_infoservice_create %}')"
-                    value='{% trans "Create information group" %}' />
-            </div>
+                </form>
+        
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <br />
+        
+        <div id="infoservice-create">
+            <img src="{{ MEDIA_URL }}/img/add.png" style="margin-bottom:-8px" />
+            <input  type="button" 
+                onclick="Sendinel.Utils.goto_url('{% url staff_infoservice_create %}')"
+                value='{% trans "Create information group" %}' />
         </div>
+
         <br />    
 
      </div>
