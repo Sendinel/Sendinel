@@ -5,9 +5,9 @@ var div_resize = function() {
     
     if($("#notifications").height() > heightContent) {
         var backgroundWidth = 10;
-        $('#content').css("background-position", ($("#content").width() / 2) + backgroundWidth + "px 0px");
+        $('#main-menu').css("background-position", ($("#main-menu").width() / 2) + backgroundWidth + "px 0px");
     } else {
-        $('#content').css("background-position", "50% 0%");
+        $('#main-menu').css("background-position", "50% 0%");
     }
 };
 
