@@ -3,8 +3,10 @@ from datetime import datetime, timedelta
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from sendinel.backend.models import AuthenticationCall, AppointmentType
-from sendinel.web import views
+from sendinel.backend.models import AuthenticationCall
+from sendinel.notifications.models import AppointmentType
+from sendinel.notifications import views as notification_views
+from sendinel.web import views as web_views
 
 
 class AuthenticateViewTests(TestCase):
@@ -76,8 +78,8 @@ class AuthenticateViewTests(TestCase):
         # make sure there are no AuthenticationCall objects in the db
         AuthenticationCall.objects.all().delete()
                
-        auth_save = views.AUTH
-        views.AUTH = True
+        auth_save = notification_views.AUTH
+        notification_views.AUTH = True
                 
         self.client.post("/web/authenticate_phonenumber/", 
             {'number':'01234 / 56789012'})
@@ -95,14 +97,14 @@ class AuthenticateViewTests(TestCase):
         self.assertContains(response, "received")
     
         # make sure timeout is over
-        real_timeout = views.AUTHENTICATION_CALL_TIMEOUT
-        views.AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = -1)
+        real_timeout = web_views.AUTHENTICATION_CALL_TIMEOUT
+        web_views.AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = -1)
     
         response = self.client.post("/web/check_call_received/")  
     
         self.failUnlessEqual(response.status_code, 200)
         self.assertContains(response, "failed")      
     
-        views.AUTHENTICATION_CALL_TIMEOUT = real_timeout
+        web_views.AUTHENTICATION_CALL_TIMEOUT = real_timeout
         
-        views.AUTH = auth_save
+        notification_views.AUTH = auth_save

@@ -1,13 +1,16 @@
 from django.contrib import admin
 
-from sendinel.backend.models import AppointmentType, Patient, Hospital, \
-                                    HospitalAppointment, \
-                                    InfoMessage, \
-                                    InfoService, \
+from sendinel.backend.models import Patient, \
+                                    Hospital, \
                                     ScheduledEvent, \
-                                    AuthenticationCall, \
-                                    Subscription, \
-                                    InfoService
+                                    AuthenticationCall
+from sendinel.groups.models import InfoMessage, \
+                                   InfoService, \
+                                   Subscription, \
+                                   InfoService
+from sendinel.notifications.models import AppointmentType, \
+                                          HospitalAppointment
+
 
 admin.site.register(AppointmentType)
 admin.site.register(Patient)

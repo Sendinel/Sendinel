@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <django-objects version="1.0">
-    <object pk="1" model="backend.appointmenttype">
+    <object pk="1" model="notifications.appointmenttype">
         <field type="CharField" name="name">vaccination</field>
         <field type="CharField" name="verbose_name">Vaccination</field>
         <field type="CharField" name="template">please remember the vaccination at the $hospital on $date</field>
         <field type="BooleanField" name="notify_immediately">False</field> 
     </object>
-    <object pk="2" model="backend.appointmenttype">
+    <object pk="2" model="notifications.appointmenttype">
         <field type="CharField" name="name">consultation</field>
         <field type="CharField" name="verbose_name">Follow-Up Consultation</field>
         <field type="CharField" name="template">please remember your consultation at the $hospital on $date</field>
         <field type="BooleanField" name="notify_immediately">False</field>
     </object>
-    <object pk="3" model="backend.appointmenttype">
+    <object pk="3" model="notifications.appointmenttype">
         <field type="CharField" name="name">labresult</field>
         <field type="CharField" name="verbose_name">Lab Result</field>
         <field type="CharField" name="template">your lab results have arrived at the $hospital</field>
@@ -39,38 +39,38 @@
         <field type="CharField" name="name">Another Clinic</field>
         <field type="BooleanField" name="current_hospital">False</field>        
     </object>    
-    <object pk="1" model="backend.infoservice">
+    <object pk="1" model="groups.infoservice">
         <field type="CharField" name="name">Bachelorproject</field>
     </object>
-    <object pk="1" model="backend.subscription">
+    <object pk="1" model="groups.subscription">
         <field to="backend.patient" name="patient" rel="ManyToOneRel">1</field>
-        <field to="backend.infoservice" name="infoservice" rel="ManyToOneRel">1</field>
+        <field to="groups.infoservice" name="infoservice" rel="ManyToOneRel">1</field>
         <field type="CharField" name="way_of_communication">sms</field>
     </object>
-    <object pk="2" model="backend.subscription">
+    <object pk="2" model="groups.subscription">
         <field to="backend.patient" name="patient" rel="ManyToOneRel">2</field>
-        <field to="backend.infoservice" name="infoservice" rel="ManyToOneRel">1</field>
+        <field to="groups.infoservice" name="infoservice" rel="ManyToOneRel">1</field>
         <field type="CharField" name="way_of_communication">voice</field>
     </object>
-    <object pk="2" model="backend.infoservice">
+    <object pk="2" model="groups.infoservice">
         <field type="CharField" name="name">Sendinel-Tester</field>
     </object>
-    <object pk="1" model="backend.hospitalappointment">
+    <object pk="1" model="notifications.hospitalappointment">
         <field type="CharField" name="way_of_communication">sms</field>
         <field type="DateTimeField" name="date">2010-02-08 18:43:07</field>       
-        <field to="backend.appointmenttype" name="appointment_type" rel="ManyToOneRel">1</field>
+        <field to="notifications.appointmenttype" name="appointment_type" rel="ManyToOneRel">1</field>
         <field to="backend.hospital" name="hospital" rel="ManyToOneRel">1</field>
         <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
     </object>
     <object pk="1" model="backend.scheduledevent">
-        <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>backend</natural><natural>hospitalappointment</natural></field>
+        <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>notifications</natural><natural>hospitalappointment</natural></field>
         <field type="PositiveIntegerField" name="sendable_id">1</field>
         <field type="DateTimeField" name="send_time">2010-02-08 18:43:07</field>
         <field type="CharField" name="state">new</field>
     </object>
-    <object pk="1" model="backend.infomessage">
+    <object pk="1" model="groups.infomessage">
         <field type="CharField" name="way_of_communication">sms</field>
         <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
         <field type="TextField" name="text">Das ist eine Nachricht</field>
-    </object>    
+    </object>
 </django-objects>

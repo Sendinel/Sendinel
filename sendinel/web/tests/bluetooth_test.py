@@ -5,7 +5,7 @@ from django.test import TestCase
 from django.test.client import Client
 
 from sendinel.backend import bluetooth
-from sendinel.backend.models import AppointmentType
+from sendinel.notifications.models import AppointmentType
 
 class BluetoothViewTest(TestCase):
     client = Client()

@@ -1,9 +1,9 @@
 from django.test import TestCase
 from datetime import datetime, timedelta
 
-from sendinel.backend.models import ScheduledEvent, InfoMessage, Patient
-from sendinel.backend import scheduler
-from sendinel.backend import output
+from sendinel.backend.models import ScheduledEvent, Patient
+from sendinel.groups.models import InfoMessage
+from sendinel.backend import output, scheduler
 
 class SchedulerTest(TestCase):    
     

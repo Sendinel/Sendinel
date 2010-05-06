@@ -3,8 +3,8 @@ from datetime import datetime
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 
-from sendinel.backend.models import ScheduledEvent, HospitalAppointment
-from sendinel.backend.models import Hospital, Patient, AppointmentType
+from sendinel.backend.models import Hospital, Patient, ScheduledEvent
+from sendinel.groups.models import HospitalAppointment, AppointmentType
 from sendinel.settings import AUTH
 from sendinel.web.forms import  NotificationValidationForm2, \
                                 DateValidationForm
