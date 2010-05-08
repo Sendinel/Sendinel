@@ -207,10 +207,6 @@ strong.big {
     margin-right: auto;
     
     padding: 50px;
-    text-align: center;
-    
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
 }
 
 .success {
