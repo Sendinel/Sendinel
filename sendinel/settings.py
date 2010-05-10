@@ -147,7 +147,7 @@ AUTH_NUMBER = "CHANGE ME"
 AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = 3)
 
 # True or False to turn authentication on or off
-AUTH = True
+AUTH = False
 
 # Salutation for SMS Template
 SMS_SALUTATION = 'Hello, '

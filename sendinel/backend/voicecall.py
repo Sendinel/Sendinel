@@ -24,6 +24,10 @@ import re
 # TODO Test this!
 
 class Voicecall:
+    """
+        This class takes responsibility for sending voicecalls and short messages
+        through the asterisk telephony server
+    """
     def __init__(self):
         self.asterisk_user = settings.ASTERISK_USER
         self.asterisk_group = settings.ASTERISK_GROUP
@@ -35,6 +39,15 @@ class Voicecall:
         self.salutation = settings.CALL_SALUTATION
 
     def create_voicefile(self, text):
+    """
+        Create a soundfile for the given text, using a TTS engine
+
+        @param  text:   the text to be read
+        @type   text:   String
+
+        @return The full file name of the sound file containing the text
+    """
+
         text_hash = md5(str(random())).hexdigest()
         filename = "%s/%s.ulaw" % (self.asterisk_festivalcache, text_hash)
         if not os.path.exists(filename):
@@ -105,6 +118,16 @@ Archive: true
         return output
        
     def create_sms_spool_content(self, text, number):
+        """
+            Create the asterisk spool file for a short message
+            
+            @param  text:   The text to be sent
+            @type   text:   String
+            
+            @param  number:    The receipient's mobile phone number
+            @type   number:    String
+        """
+
         output = """
 Channel: Local/2000
 WaitTime: 2
@@ -194,7 +217,7 @@ Archive: true
         
         if LINUX_AVAILABLE:
             text = self.replace_special_characters(text)
-	    salutation = self.create_voicefile(self.salutation)
+            salutation = self.create_voicefile(self.salutation)
             voicefile = self.create_voicefile(text)
             content = self.create_spool_content(number,
                                                 voicefile,

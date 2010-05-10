@@ -58,7 +58,7 @@ def run(run_only_one_time = False):
         del due_events
             #TODO Exception Handling
         if run_only_one_time: break
-        #time.sleep(5)
+        time.sleep(5)
 
 
 if __name__ == "__main__":
