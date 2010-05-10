@@ -1,0 +1,11 @@
+<div class="head">
+    Phone number:
+        {% if form.phone_number.errors %}
+            {{ form.phone_number.errors }}
+        {% endif %}
+</div>
+<div class="input">
+    <input id="id_phone_input" type="text" name="phone_number" class="selectable" 
+jVal="{valid:function (val) { if (val.length < 6) return false; else return true; }, message:'Please enter a valid phone number'}"
+            jValKey="{valid:/[+0-9]/, message:'&quot;%c&quot; Please only enter digits for the phone number', cFunc:'$(\'#submitButton\').click();'}"/>
+</div>

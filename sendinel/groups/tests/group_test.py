@@ -131,6 +131,26 @@ class WebInfoServiceTest(TestCase):
 
         
     def test_register_infoservice(self):
+        original_value = groups_views.AUTH
+        
+        # test with authentication disabled
+        groups_views.AUTH = False
+        
+        redirection_path = reverse('web_infoservice_register_save', \
+                                    kwargs = {'id': self.info.id})
+        self.register_infoservice_with_assertions(redirection_path)
+    
+        #test with authentication enabled
+        groups_views.AUTH = True
+        
+        redirection_path = reverse('web_authenticate_phonenumber') \
+                        + "?next=" + redirection_path
+        self.register_infoservice_with_assertions(redirection_path)
+    
+        # restore AUTH value
+        groups_views.AUTH = original_value
+    
+    def register_infoservice_with_assertions(self, redirection_path):
         self.create_register_infoservice_form()
         response = self.client.post(reverse('web_infoservice_register', 
                                     kwargs={'id': self.info.id}),
@@ -140,11 +160,11 @@ class WebInfoServiceTest(TestCase):
         self.assertTrue(self.client.session.has_key('way_of_communication'))
         self.assertTrue(self.client.session.has_key('authenticate_phonenumber'))
         
-        if AUTH:
-            self.assertEquals(response.status_code, 200)
-        else:
-            self.assertEquals(response.status_code, 302)
-    
+        self.assertEquals(response.status_code, 302)
+        self.assertRedirects(response, redirection_path)
+        return response
+        
+        
     def register_infoservice_validations(self):
         return self.client.post(reverse('web_infoservice_register', 
                                     kwargs={'id': self.info.id}),
@@ -163,7 +183,7 @@ class WebInfoServiceTest(TestCase):
         groups_views.AUTH = True
         
         response = self.register_infoservice_validations()
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, 302)
         
         # restore AUTH value
         groups_views.AUTH = original_value
@@ -194,8 +214,7 @@ class WebInfoServiceTest(TestCase):
                           
         response = self.client.get(reverse('web_infoservice_register_save',
                                    kwargs={'id': self.info.id}))
-                          
-                                      
+                                                               
         self.assertEquals(Subscription.objects.all().count(),
                           subscription_count + 1)
         new_subscription = last(Subscription)

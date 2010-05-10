@@ -18,6 +18,24 @@ import sendinel.settings
 class VoicecallTest(unittest.TestCase):
     def setUp(self):
         self.vc = sendinel.backend.voicecall.Voicecall()
+
+    def test_sms_spool_content_creation(self):
+        text = "This is a test"
+        number = "1234"  
+
+        output = self.vc.create_sms_spool_content(text, number)
+
+        output_should = """
+Channel: Local/2000
+WaitTime: 2
+RetryTime: 5
+MaxRetries: 8000
+Application: DatacardSendSMS
+Data: datacard0,1234,This is a test
+Archive: true
+"""
+        self.assertEquals(output, output_should)
+
     
     def test_spool_content_creation(self):
         self.setUp()
@@ -28,7 +46,7 @@ class VoicecallTest(unittest.TestCase):
         self.vc.asterisk_datacard = True 
         output_should = """
 Channel: Datacard/datacard0/03315509256
-MaxRetries: 3
+MaxRetries: 20
 RetryTime: 20
 WaitTime: 30
 Context: call-file-beispiel
