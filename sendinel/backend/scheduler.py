@@ -7,8 +7,8 @@ from datetime import datetime
 from django.core.management import setup_environ
 
 # fix paths for run from commandline
-project_path = dirname(abspath(__file__)) + "/../../"
-sys.path.insert(0, project_path)
+PROJECT_PATH = dirname(abspath(__file__)) + "/../../"
+sys.path.insert(0, PROJECT_PATH)
 from sendinel import settings
 setup_environ(settings) # this must be run before any model etc imports
 
@@ -17,6 +17,11 @@ from sendinel.logger import logger
 
 
 def get_all_due_events():
+    """
+        Get all scheduled events from the database that are due
+
+        @return All due elements
+    """
     return ScheduledEvent.objects \
                     .filter(state__exact = 'new') \
                     .filter(send_time__lte=datetime.now())
@@ -57,7 +62,8 @@ def run(run_only_one_time = False):
             del data
         del due_events
             #TODO Exception Handling
-        if run_only_one_time: break
+        if run_only_one_time: 
+             break
         time.sleep(5)
 
 
@@ -71,19 +77,18 @@ if __name__ == "__main__":
         try:
             import daemon
             from daemon import pidlockfile
-            import lockfile
         except ImportError:
             print "Error: daemon and lockfile libraries are needed for" + \
                     " running the scheduler. " + \
                     " Install with: easy_install daemon; easy_install lockfile"
             exit(1)
     
-        pid_file = sys.argv[1]
-        working_directory = settings.PROJECT_PATH
+        PID_FILE = sys.argv[1]
+        WORKING_DIRECTORY = settings.PROJECT_PATH
     
         context = daemon.DaemonContext(
-                    working_directory = working_directory,
-                    pidfile = pidlockfile.PIDLockFile(pid_file),
+                    working_directory = WORKING_DIRECTORY,
+                    pidfile = pidlockfile.PIDLockFile(PID_FILE),
                     detach_process = True)
     
         context.__enter__()
