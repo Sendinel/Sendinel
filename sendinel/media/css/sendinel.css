@@ -339,28 +339,14 @@ strong.big {
     background-color: #fff;    
 }
 
-#infotext{
-    font-size:0.5em;
-    position:absolute;
-    left:40px;
-    float:left;
-    min-width:300px;
-    max-width:500px;
-    min-height: 40px;
-    max-height: 60px;
-    line-height:2em;
-    padding-left: 50px;
-    padding-top: 7px;
-    background-position:10px 10px;
-    background-image: url(../img/info_sign.png);
-    background-repeat: no-repeat;
+#infotext {
+    /* Opt-in */
+    display: none;
 }
 
-#contact{
+#contact {
     padding-top:5px;
     text-align:center;
     line-height:2em;
-    float:left;
-    width:100%;
     font-size:0.5em;
 }
