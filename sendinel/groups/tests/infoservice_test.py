@@ -45,13 +45,13 @@ class StaffInfoServiceTest(TestCase):
             self.assertEquals(message.way_of_communication,
                               subscription.way_of_communication)                  
                               
-    def test_create_infoservice(self):
+    def test_create_group(self):
         response = self.client.get(reverse("staff_infoservice_create"))
         self.assertContains(response, 'name="name"')
         response = self.client.post(reverse("staff_infoservice_create"), 
                                 {"name" : "This is a name for an infoservice"})
         self.assertEquals(response.status_code, 200)
-        response = self.client.get(reverse("staff_list_infoservices"))
+        response = self.client.get(reverse("staff_list_groups"))
         self.assertContains(response, "This is a name for an infoservice")
         
     def test_manage_infoservice_groups(self):
@@ -63,7 +63,7 @@ class StaffInfoServiceTest(TestCase):
                                     patient = patient,
                                     way_of_communication = "voice")
         subscription.save()
-        response = self.client.get(reverse("staff_list_infoservices"))
+        response = self.client.get(reverse("staff_list_groups"))
         self.assertContains(response, "Group members")
         response = self.client.get(reverse("staff_infoservice_members", 
                                            kwargs={"id": info.id}))
@@ -91,11 +91,14 @@ class StaffInfoServiceTest(TestCase):
                                     {'infoservice_id' : infoservice.id})
         self.assertTrue(not infoservice in InfoService.objects.all())
         self.assertEquals(infoservices_count - 1, InfoService.objects.all().count())
-        self.assertRedirects(response, reverse("staff_list_infoservices"))               
+        self.assertRedirects(response, reverse("staff_list_groups"))               
         
 class WebInfoServiceTest(TestCase):
+    
+    fixtures = ['backend_test']
+    
     def setUp(self):
-        self.info = InfoService(name = "testinfoservice")
+        self.info = InfoService(name = "testinfoservice", type="group")
         self.info.save()
         self.patient = Patient(name="eu",phone_number = "01234")
         self.patient.save()
@@ -117,10 +120,13 @@ class WebInfoServiceTest(TestCase):
 
         infoservices = InfoService.objects.all()
         for infoservice in infoservices:
-            self.assertContains(response, infoservice.name)
-            self.assertContains(response, 
+            if infoservice.type == 'group':
+                self.assertContains(response, infoservice.name)
+                self.assertContains(response, 
                                 reverse('web_infoservice_register',
                                          kwargs={'id': infoservice.id}))
+            else:
+                self.assertNotContains(response, infoservice.name)
 
         
     def test_register_infoservice(self):
@@ -186,5 +192,7 @@ class WebInfoServiceTest(TestCase):
         self.assertEquals(Subscription.objects.all().count(), 
                           subscription_count - 1)
         self.assertTrue(Subscription.objects.filter(pk = self.info.id).count() == 0)
+
+
 
         

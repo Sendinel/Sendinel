@@ -22,7 +22,7 @@ from sendinel.settings import   AUTH_NUMBER, \
 
 @log_request
 def index(request):
-    information_services = InfoService.objects.all()
+    groups = InfoService.objects.all().filter(type="group")
     appointment_types = AppointmentType.objects.all()
     return render_to_response('web/index.html',
                               locals(),  

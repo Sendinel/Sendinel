@@ -27,8 +27,8 @@
     </div>
 
     <div id="groups" class="float-left">
-    <h3>{% trans "Groups" %}</h3>
-        {% for service in information_services %}
+    <h3>{% trans "Groups " %}</h3>
+        {% for service in groups %}
             <div class="menu-item background-grey rounded-corners">
                 <div class="menu-item-name groups-name float-left"><strong>{{ service }}</strong></div>
                 <div>
@@ -48,7 +48,7 @@
                 <div style="clear:both"></div>    
             </div>
         {% endfor %}
-         <a href="{% url staff_list_infoservices %}">
+         <a href="{% url staff_list_groups %}">
             <div class="menu-item menu-hover menu-item-name groups-manage background-grey rounded-corners">
                {% trans "Manage Information Groups" %}
             </div>

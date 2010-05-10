@@ -78,27 +78,27 @@ def create_infomessage(request, id):
                                 context_instance = RequestContext(request))
 
 @log_request
-def list_infoservices(request):
+def list_groups(request):
 
-    all_infoservices = InfoService.objects.all()
+    all_groups = InfoService.objects.all().filter(type="group")
 
-    infoservices = []
+    groups = []
     
     backurl = reverse("web_index")
     
-    for infoservice in all_infoservices:
-        infoservices.append({
+    for infoservice in all_groups:
+        groups.append({
             "id": infoservice.id,
             "name": infoservice.name, 
             "count_members": infoservice.members.all().count()
         })
             
-    return render_to_response("staff/list_infoservices.html",
+    return render_to_response("staff/list_groups.html",
                                 locals(),
                                 context_instance = RequestContext(request))
 
 @log_request
-def create_infoservice(request):
+def create_group(request):
 
     if request.method == "POST":
     
@@ -107,12 +107,12 @@ def create_infoservice(request):
     
         if form.is_valid():
     
-            infoservice = InfoService(name = request.POST["name"])
+            infoservice = InfoService(name = request.POST["name"], type="group")
             infoservice.save()
             
             logger.info("Created InfoService: %s", str(infoservice))
             
-            nexturl = reverse('staff_list_infoservices')
+            nexturl = reverse('staff_list_groups')
             
             success = True
             title = _("Creation successful")
@@ -131,7 +131,7 @@ def delete_infoservice(request):
     if request.method == 'POST' and request.POST.has_key('infoservice_id'):
         infoservice = InfoService.objects.get(id = request.POST['infoservice_id'])
         infoservice.delete()
-    return HttpResponseRedirect(reverse("staff_list_infoservices"))   
+    return HttpResponseRedirect(reverse("staff_list_groups"))   
         
 
 @log_request

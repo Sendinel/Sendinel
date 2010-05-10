@@ -10,7 +10,10 @@ from sendinel.backend.output import SMSOutputData, \
 
 class InfoService(models.Model):
     """
-    Represent a user group
+    Represent a user group.
+    Existing types are 'group' and 'medicine' 
+    whereas groups send regular messages to their 
+    subscribers, medicine deletes the group after sending a message
     """
     
     members = models.ManyToManyField(Patient, through="Subscription")
@@ -18,7 +21,10 @@ class InfoService(models.Model):
                             unique=True,
                             blank=False,
                             null=False)
-
+    type = models.CharField(max_length=255, 
+                            blank=False, 
+                            null=False)
+                            
     def __unicode__(self):
         return self.name
 
