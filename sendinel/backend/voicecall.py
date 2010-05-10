@@ -110,6 +110,7 @@ Channel: Local/2000
 WaitTime: 2
 RetryTime: 5
 MaxRetries: 8000
+Application: DatacardSendSMS
 Data: datacard0,%s,%s
 Archive: true
 """ %(number, text)
