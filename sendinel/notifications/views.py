@@ -47,7 +47,6 @@ def create_appointment(request, appointment_type_name = None):
                 return HttpResponseRedirect(reverse("web_list_devices") + \
                                 "?next=" + reverse("web_appointment_send"))
             elif appointment.way_of_communication in ('sms', 'voice' ):
-
                 if AUTH:
                     return HttpResponseRedirect( \
                         reverse("web_authenticate_phonenumber") + "?next=" + \
