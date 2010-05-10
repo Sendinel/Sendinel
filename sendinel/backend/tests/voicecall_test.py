@@ -28,7 +28,7 @@ class VoicecallTest(unittest.TestCase):
         self.vc.asterisk_datacard = True 
         output_should = """
 Channel: Datacard/datacard0/03315509256
-MaxRetries: 3
+MaxRetries: 20
 RetryTime: 20
 WaitTime: 30
 Context: call-file-beispiel

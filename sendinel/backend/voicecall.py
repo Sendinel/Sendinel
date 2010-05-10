@@ -77,7 +77,7 @@ class Voicecall:
 	if(self.asterisk_datacard):
             output = """
 Channel: Datacard/%s/%s
-MaxRetries: 3
+MaxRetries: 20
 RetryTime: 20
 WaitTime: 30
 Context: %s
@@ -91,7 +91,7 @@ Archive: true
         else:
             output = """
 Channel: SIP/%s@%s
-MaxRetries: 3
+MaxRetries: 20
 RetryTime: 20
 WaitTime: 30
 Context: %s
@@ -107,12 +107,10 @@ Archive: true
     def create_sms_spool_content(self, text, number, extension, context):
         output = """
 Channel: Local/2000
-Context: %s
-Extension: %s
 WaitTime: 2
-Priority: 1
-Set: SmsNumber=%s
-Set: Text=%s
+RetryTime: 5
+MaxRetries: 8000
+Data: datacard0,%s,%s
 Archive: true
 """ %(context, extension, number, text)
 
