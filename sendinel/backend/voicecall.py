@@ -2,7 +2,7 @@ from random import random
 
 from sendinel import settings
 
-linux_available = False
+LINUX_AVAILABLE = False
 
 try:
     import grp
@@ -13,7 +13,7 @@ try:
 
     from hashlib import md5
     
-    linux_available = True
+    LINUX_AVAILABLE = True
     
 except ImportError:
     print "Warning: Linux is required for voicecall functionality"
@@ -74,7 +74,7 @@ class Voicecall:
             
             @return The text which can be put to a file, to make asterisk conduct the call
             """
-	if(self.asterisk_datacard):
+        if(self.asterisk_datacard):
             output = """
 Channel: Datacard/%s/%s
 MaxRetries: 20
@@ -86,7 +86,7 @@ Priority: 1
 Set: PassedInfo=%s
 Set: Salutation=%s
 Archive: true
-""" %(sip_account, number, context, extension, voicefile, salutation)
+""" % (sip_account, number, context, extension, voicefile, salutation)
      
         else:
             output = """
@@ -100,7 +100,7 @@ Priority: 1
 Set: PassedInfo=%s
 Set: Salutation=%s
 Archive: true
-""" %(number, sip_account, context, extension, voicefile, salutation)
+""" % (number, sip_account, context, extension, voicefile, salutation)
 
         return output
        
@@ -113,7 +113,7 @@ MaxRetries: 8000
 Application: DatacardSendSMS
 Data: datacard0,%s,%s
 Archive: true
-""" %(number, text)
+""" % (number, text)
 
         return output
  
@@ -192,7 +192,7 @@ Archive: true
             @return True if spooling the call succeeded, if not False
         """
         
-        if linux_available:
+        if LINUX_AVAILABLE:
             text = self.replace_special_characters(text)
 	    salutation = self.create_voicefile(self.salutation)
             voicefile = self.create_voicefile(text)

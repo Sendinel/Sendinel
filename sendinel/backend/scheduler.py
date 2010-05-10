@@ -43,8 +43,8 @@ def run(run_only_one_time = False):
             try:
                 logger.info("  sending: %s" % unicode(data))
                 data.send()
-                if not run_only_one_time:
-                    time.sleep(20)
+                #if not run_only_one_time:
+                    #time.sleep(20)
             except Exception, e:
                 logger.error("Failed to send: " + unicode(data) + \
                              " exception " + unicode(e))
@@ -58,7 +58,7 @@ def run(run_only_one_time = False):
         del due_events
             #TODO Exception Handling
         if run_only_one_time: break
-        time.sleep(5)
+        #time.sleep(5)
 
 
 if __name__ == "__main__":
