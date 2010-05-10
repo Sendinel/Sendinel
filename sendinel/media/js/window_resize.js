@@ -3,6 +3,10 @@ var div_resize = function() {
     var heightContent = window.innerHeight - ($('#header').height() + $('#footer').height());    
     $("#content").height(heightContent);
     
+    if($("#contentform").length === 1) {
+        $("#contentform").height(heightContent);
+    }
+    
     var notificationWidth = window.innerWidth - ($('#sendinel-logo').width() + $('#hpi-logo').width());
     $('#header-notification').width(notificationWidth);
     

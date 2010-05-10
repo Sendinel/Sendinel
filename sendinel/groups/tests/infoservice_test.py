@@ -143,6 +143,7 @@ class WebInfoServiceTest(TestCase):
                                     kwargs={'id': self.info.id}),
                                     {'way_of_communication': 'sms',
                                      'phone_number':'01234 / 56789012'})
+        
         self.assertEquals(response.status_code, 302)
             
         response = self.client.post(reverse('web_infoservice_register', 
