@@ -75,13 +75,15 @@ class StaffInfoServiceTest(TestCase):
         infoservice = InfoService.objects.filter(pk = 1)[0]
         subscription_count = Subscription.objects.all().count()
         patient = infoservice.members.all()[0]
-        subscription = Subscription.objects.get(patient=patient, infoservice=infoservice)
+        subscription = Subscription.objects.get(patient=patient, 
+                                            infoservice=infoservice)
         response = self.client.post(reverse("staff_infoservice_members_delete",
                                             kwargs={"id" : infoservice.id}),
                                     {'subscription_id' : subscription.id})
         self.assertTrue(not patient in infoservice.members.all())
         self.assertTrue(not subscription in Subscription.objects.all())
-        self.assertEquals(subscription_count - 1, Subscription.objects.all().count())
+        self.assertEquals(subscription_count - 1, 
+                            Subscription.objects.all().count())
         self.assertRedirects(response, reverse("staff_infoservice_members", 
                                                kwargs={"id": infoservice.id}))
                                                
@@ -91,7 +93,8 @@ class StaffInfoServiceTest(TestCase):
         response = self.client.post(reverse("staff_infoservice_delete"), 
                                     {'infoservice_id' : infoservice.id})
         self.assertTrue(not infoservice in InfoService.objects.all())
-        self.assertEquals(infoservices_count - 1, InfoService.objects.all().count())
+        self.assertEquals(infoservices_count - 1, 
+                            InfoService.objects.all().count())
         self.assertRedirects(response, reverse("staff_list_groups"))               
         
 class WebInfoServiceTest(TestCase):
