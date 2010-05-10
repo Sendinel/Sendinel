@@ -146,13 +146,13 @@ AUTH_NUMBER = "CHANGE ME"
 # time a user has to call the system to authenticate
 AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = 3)
 
-CALL_SALUTATION = "This is an automated call from your clinic"
-
 # True or False to turn authentication on or off
 AUTH = False
 
-#Salutation for SMS Template
+# Salutation for SMS Template
 SMS_SALUTATION = 'Hello, '
+# Salutation for phone calls
+CALL_SALUTATION = "This is an automated call from your clinic"
 
 # Specify a COM Port for SMS
 # for windows maybe it starts at 0

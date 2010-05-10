@@ -36,22 +36,29 @@ class InfoMessageTest(TestCase):
         
 class InfoServiceModelTest(TestCase):
     def setUp(self):
-        self.infoservice = InfoService(name = "Gruppe")
+        self.infoservice = InfoService(name = "Gruppe", type="information")
         self.infoservice.save()
         self.patient = Patient()
         self.patient.save()
     
-    def test_no_infoservices_with_same_or_empty_name(self):
-        first_infoservice = InfoService(name ="Hospitalinfos")
+    def test_no_infoservices_with_same_name(self):
+        first_infoservice = InfoService(name ="Hospitalinfos", type="information")
         first_infoservice.save()
-        second_infoservice = InfoService(name ="Hospitalinfos")
+        second_infoservice = InfoService(name ="Hospitalinfos", type="information")
         self.assertRaises(IntegrityError, second_infoservice.save)
-        self.assertRaises(IntegrityError, InfoService(name = None).save)        
+        
+    def test_no_infoservices_with_no_name(self):
+        self.assertRaises(IntegrityError, InfoService(name = None).save)  
+        self.assertRaises(IntegrityError, InfoService().save)          
+        
+    def test_no_infoservices_with_empty_type(self):
+        an_infoservice = InfoService(name = "Hospitalinfos")
+        self.assertRaises(IntegrityError, an_infoservice.save)
 
 class SubscriptionTest(TestCase):
     
     def setUp(self):
-        self.infoservice = InfoService(name = "Gruppe")
+        self.infoservice = InfoService(name = "Gruppe", type = "information")
         self.infoservice.save()
         self.patient = Patient()
         self.patient.save()
@@ -73,7 +80,7 @@ class SubscriptionTest(TestCase):
         
         self.assertRaises(IntegrityError, subscription.save)
         
-        infoservice = InfoService(name = "Group")
+        infoservice = InfoService(name = "information", type="information")
         infoservice.save()
         
         subscription.patient = self.patient

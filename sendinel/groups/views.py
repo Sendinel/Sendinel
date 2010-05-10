@@ -78,27 +78,27 @@ def create_infomessage(request, id):
                                 context_instance = RequestContext(request))
 
 @log_request
-def list_infoservices(request):
+def list_groups(request):
 
-    all_infoservices = InfoService.objects.all()
+    all_groups = InfoService.objects.all().filter(type="information")
 
-    infoservices = []
+    groups = []
     
     backurl = reverse("web_index")
     
-    for infoservice in all_infoservices:
-        infoservices.append({
+    for infoservice in all_groups:
+        groups.append({
             "id": infoservice.id,
             "name": infoservice.name, 
             "count_members": infoservice.members.all().count()
         })
             
-    return render_to_response("staff/list_infoservices.html",
+    return render_to_response("staff/list_groups.html",
                                 locals(),
                                 context_instance = RequestContext(request))
 
 @log_request
-def create_infoservice(request):
+def create_group(request):
 
     if request.method == "POST":
     
@@ -107,12 +107,12 @@ def create_infoservice(request):
     
         if form.is_valid():
     
-            infoservice = InfoService(name = request.POST["name"])
+            infoservice = InfoService(name = request.POST["name"], type="information")
             infoservice.save()
             
             logger.info("Created InfoService: %s", str(infoservice))
             
-            nexturl = reverse('staff_list_infoservices')
+            nexturl = reverse('staff_list_groups')
             
             success = True
             title = _("Creation successful")
@@ -131,7 +131,7 @@ def delete_infoservice(request):
     if request.method == 'POST' and request.POST.has_key('infoservice_id'):
         infoservice = InfoService.objects.get(id = request.POST['infoservice_id'])
         infoservice.delete()
-    return HttpResponseRedirect(reverse("staff_list_infoservices"))   
+    return HttpResponseRedirect(reverse("staff_list_groups"))   
         
 
 @log_request
@@ -169,9 +169,8 @@ def register_infoservice(request, id):
         if form.is_valid():
             number = fill_authentication_session_variable(request) 
             auth_number = AUTH_NUMBER
-            backurl = reverse('web_infoservice_register',  kwargs = {'id': id})        
+            backurl = reverse('web_index')        
             next = reverse('web_infoservice_register_save', kwargs = {'id': id})
-            url = reverse('web_check_call_received')
             
             if AUTH:
                 return render_to_response('web/authenticate_phonenumber_call.html', 
@@ -193,11 +192,7 @@ def register_infoservice(request, id):
                               locals(),
                               context_instance = RequestContext(request))
 
-@log_request
-def save_registration_infoservice(request, id):
-    backurl = reverse('web_infoservice_register',  kwargs = {'id': id})        
-    nexturl = reverse('web_index')
-    
+def subscription_save(request, id):
     patient = request.session['patient']
     patient.save()
     way_of_communication = request.session['way_of_communication']
@@ -206,16 +201,83 @@ def save_registration_infoservice(request, id):
                                 way_of_communication = way_of_communication,
                                 infoservice = infoservice)
     subscription.save()
-    logger.info("Saved subscription %s.", unicode(subscription))
+    logger.info("Saved subscription %s of type %s.", 
+                (unicode(subscription), 
+                 unicode(subscription.infoservice.type)))
+    return subscription
+                              
+@log_request
+def save_registration_infoservice(request, id):
+    backurl = reverse('web_infoservice_register',  kwargs = {'id': id})        
+    nexturl = reverse('web_index')
+    
+    subscription = subscription_save(request, id)
     
     success = True
     title = _("Registration successful")
     message = _("The patient will now receive all messages from the "
-                        " %s service.") % infoservice.name
+                        " %s service.") % subscription.infoservice.name
     
     return render_to_response('web/status_message.html', 
                               locals(),
                               context_instance = RequestContext(request))
 
+@log_request
+def medicine_register_patient_save(request, id):
+    backurl = reverse('groups_medicine_register_patient')        
+    nexturl = reverse('web_index')
+    
+    subscription = subscription_save(request, id)
+    
+    success = True
+    title = _("Registration successful")
+    message = _("The patient will receive a messages once the medicine "
+                " %s is available in the clinic again.") \
+                % subscription.infoservice.name
+    
+    return render_to_response('web/status_message.html', 
+                              locals(),
+                              context_instance = RequestContext(request))
+                              
+                              
+def medicine_register_patient(request):
+    ajax_url= reverse('web_check_call_received')
+    medicines = InfoService.objects.all().filter(type='medicine')
+     
+    if request.method == "POST":
+        request.session['way_of_communication'] = \
+                                        request.POST['way_of_communication']
+        patient = Patient()
+        patient.phone_number = request.POST['phone_number']
+        request.session['patient'] = patient
+        request.session['medicine'] = request.POST['medicine']
+        
+        data = deepcopy(request.POST)
+        form = NotificationValidationForm2(data)
+        if form.is_valid():
+            number = fill_authentication_session_variable(request) 
+            auth_number = AUTH_NUMBER
+            backurl = reverse('web_index')  
+            #next = reverse('groups_medicine_register_patient_save', kwargs = {'id': id})
+            
+            if AUTH:
+                return render_to_response('web/authenticate_phonenumber_call.html', 
+                    locals(),
+                    context_instance = RequestContext(request))
+                
+            return HttpResponseRedirect( \
+                            reverse('groups_medicine_register_patient_save',
+                                kwargs = {'id': request.session['medicine']}))
+        else:
+            logger.info("register_infoservice: Invalid form.")
+            return render_to_response('groups/medicine_register_patient.html', 
+                                locals(),
+                                context_instance=RequestContext(request))
+       
+    backurl = reverse("web_index")
+    
+    return render_to_response('groups/medicine_register_patient.html', 
+                              locals(),
+                              context_instance = RequestContext(request))
 
 

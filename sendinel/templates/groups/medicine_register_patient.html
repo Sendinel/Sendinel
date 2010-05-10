@@ -23,8 +23,9 @@
 {% block content %}
 
     <div id="contentform">
-        <h3>{% trans "Register patient for " %} {{infoservice}}</h3>
-    	<p>{% trans "Please enter the patient's phone number and the way the patient wants to receive the messages." %}</p>
+        <h3>{% trans "Register patient for Waiting List for Medicine" %}</h3>
+    	<p>{% trans "Please enter the patient's phone number and the way the patient wants to receive the notification." %}</p>
+        <p>{% trans "Then choose the medicine the patient is waiting for." %}</p>        
         <br />
         <form name="infoservice" method="post" class="selectable_container" action='#' autocomplete="off">
 
@@ -45,7 +46,7 @@
                 </div>
             </div>
 
-            <div class="field field-groups float-left lastfield">
+            <div class="field field-groups float-left ">
                 <div class="head">
                     Way of communication:
                         {% if form.way_of_communication.errors %}
@@ -59,7 +60,18 @@
                     </select> 
                 </div>
             </div>
-            
+            <div class="field field-groups float-left lastfield">
+                <div class="head">
+                    Medicine:
+                </div>
+                <div class="input">
+                    <select name="medicine" size="1">
+                     {% for medicine in medicines %}
+                     <option value={{medicine.id}}>{{medicine}}</option>
+                     {% endfor %}
+                    </select> 
+                </div>
+            </div>
             <div class="button button-right link menu-hover background-grey rounded-corners float-left" onClick="infoservice.submit();">{% trans "Next" %}</div>
             <div style="clear:both;"></div>
         </form>    

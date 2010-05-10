@@ -41,6 +41,7 @@
     </object>    
     <object pk="1" model="groups.infoservice">
         <field type="CharField" name="name">Bachelorproject</field>
+        <field type="CharField" name="type">information</field>
     </object>
     <object pk="1" model="groups.subscription">
         <field to="backend.patient" name="patient" rel="ManyToOneRel">1</field>
@@ -54,6 +55,11 @@
     </object>
     <object pk="2" model="groups.infoservice">
         <field type="CharField" name="name">Sendinel-Tester</field>
+        <field type="CharField" name="type">information</field>
+    </object>
+    <object pk="3" model="groups.infoservice">
+        <field type="CharField" name="name">Medicine-Test</field>
+        <field type="CharField" name="type">medicine</field>
     </object>
     <object pk="1" model="notifications.hospitalappointment">
         <field type="CharField" name="way_of_communication">sms</field>

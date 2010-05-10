@@ -108,33 +108,33 @@ msgstr "#TRANSLATED#"
 msgid "Remove Patient from Group"
 msgstr "#TRANSLATED#"
 
-#: templates/staff/list_infoservices.html:4
+#: templates/staff/list_groups.html:4
 msgid "Information Groups"
 msgstr "#TRANSLATED#"
 
-#: templates/staff/list_infoservices.html:8
-msgid "Group"
+#: templates/staff/list_groups.html:8
+msgid "information"
 msgstr "#TRANSLATED#"
 
-#: templates/staff/list_infoservices.html:9
+#: templates/staff/list_groups.html:9
 msgid "Members"
 msgstr "#TRANSLATED#"
 
-#: templates/staff/list_infoservices.html:17
+#: templates/staff/list_groups.html:17
 msgid "Remove group"
 msgstr "#TRANSLATED#"
 
-#: templates/staff/list_infoservices.html:18
+#: templates/staff/list_groups.html:18
 #, fuzzy
 msgid "Group members"
 msgstr "#TRANSLATED#"
 
-#: templates/staff/list_infoservices.html:24
+#: templates/staff/list_groups.html:24
 #, fuzzy
 msgid "Create information group"
 msgstr "#TRANSLATED#"
 
-#: templates/staff/list_infoservices.html:26
+#: templates/staff/list_groups.html:26
 #, fuzzy
 msgid "Back to Main Menu"
 msgstr "#TRANSLATED#"
@@ -247,7 +247,7 @@ msgstr "#TRANSLATED#"
 msgid "Looking for further devices"
 msgstr "#TRANSLATED#"
 
-#: templates/web/list_infoservices.html:6
+#: templates/web/list_groups.html:6
 msgid "Register a patient to receive regular information."
 msgstr "#TRANSLATED#"
 

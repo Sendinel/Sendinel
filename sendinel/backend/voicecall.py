@@ -85,6 +85,7 @@ Extension: %s
 Priority: 1
 Set: PassedInfo=%s
 Set: Salutation=%s
+Archive: true
 """ %(sip_account, number, context, extension, voicefile, salutation)
      
         else:
@@ -98,6 +99,7 @@ Extension: %s
 Priority: 1
 Set: PassedInfo=%s
 Set: Salutation=%s
+Archive: true
 """ %(number, sip_account, context, extension, voicefile, salutation)
 
         return output
@@ -111,6 +113,7 @@ WaitTime: 2
 Priority: 1
 Set: SmsNumber=%s
 Set: Text=%s
+Archive: true
 """ %(context, extension, number, text)
 
         return output

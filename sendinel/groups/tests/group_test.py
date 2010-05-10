@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 
 from sendinel.backend.models import ScheduledEvent, Patient
 from sendinel.groups.models import InfoService, InfoMessage, Subscription
+from sendinel.groups import views as groups_views
 from sendinel.settings import AUTH
 from sendinel.utils import last
 
@@ -45,17 +46,17 @@ class StaffInfoServiceTest(TestCase):
             self.assertEquals(message.way_of_communication,
                               subscription.way_of_communication)                  
                               
-    def test_create_infoservice(self):
+    def test_create_group(self):
         response = self.client.get(reverse("staff_infoservice_create"))
         self.assertContains(response, 'name="name"')
         response = self.client.post(reverse("staff_infoservice_create"), 
                                 {"name" : "This is a name for an infoservice"})
         self.assertEquals(response.status_code, 200)
-        response = self.client.get(reverse("staff_list_infoservices"))
+        response = self.client.get(reverse("staff_list_groups"))
         self.assertContains(response, "This is a name for an infoservice")
         
     def test_manage_infoservice_groups(self):
-        info = InfoService(name = "testgroup")
+        info = InfoService(name = "testgroup", type="information")
         info.save()
         patient = Patient(phone_number = "012345")
         patient.save()
@@ -63,7 +64,7 @@ class StaffInfoServiceTest(TestCase):
                                     patient = patient,
                                     way_of_communication = "voice")
         subscription.save()
-        response = self.client.get(reverse("staff_list_infoservices"))
+        response = self.client.get(reverse("staff_list_groups"))
         self.assertContains(response, "Group members")
         response = self.client.get(reverse("staff_infoservice_members", 
                                            kwargs={"id": info.id}))
@@ -91,11 +92,14 @@ class StaffInfoServiceTest(TestCase):
                                     {'infoservice_id' : infoservice.id})
         self.assertTrue(not infoservice in InfoService.objects.all())
         self.assertEquals(infoservices_count - 1, InfoService.objects.all().count())
-        self.assertRedirects(response, reverse("staff_list_infoservices"))               
+        self.assertRedirects(response, reverse("staff_list_groups"))               
         
 class WebInfoServiceTest(TestCase):
+    
+    fixtures = ['backend_test']
+    
     def setUp(self):
-        self.info = InfoService(name = "testinfoservice")
+        self.info = InfoService(name = "testinfoservice", type="information")
         self.info.save()
         self.patient = Patient(name="eu",phone_number = "01234")
         self.patient.save()
@@ -117,10 +121,13 @@ class WebInfoServiceTest(TestCase):
 
         infoservices = InfoService.objects.all()
         for infoservice in infoservices:
-            self.assertContains(response, infoservice.name)
-            self.assertContains(response, 
+            if infoservice.type == "information":
+                self.assertContains(response, infoservice.name)
+                self.assertContains(response, 
                                 reverse('web_infoservice_register',
                                          kwargs={'id': infoservice.id}))
+            else:
+                self.assertNotContains(response, infoservice.name)
 
         
     def test_register_infoservice(self):
@@ -137,15 +144,30 @@ class WebInfoServiceTest(TestCase):
             self.assertEquals(response.status_code, 200)
         else:
             self.assertEquals(response.status_code, 302)
-      
-    def test_register_infoservice_submit_validations(self):
-        response = self.client.post(reverse('web_infoservice_register', 
+    
+    def register_infoservice_validations(self):
+        return self.client.post(reverse('web_infoservice_register', 
                                     kwargs={'id': self.info.id}),
                                     {'way_of_communication': 'sms',
                                      'phone_number':'01234 / 56789012'})
+
+    def test_register_infoservice_submit_validations(self):
+        # disable authentication
+        original_value = groups_views.AUTH
+        groups_views.AUTH = False
         
+        response = self.register_infoservice_validations()
+
         self.assertEquals(response.status_code, 302)
-            
+        
+        groups_views.AUTH = True
+        
+        response = self.register_infoservice_validations()
+        self.assertEquals(response.status_code, 200)
+        
+        # restore AUTH value
+        groups_views.AUTH = original_value
+        
         response = self.client.post(reverse('web_infoservice_register', 
                                     kwargs={'id': self.info.id}),
                                     {'way_of_communication': 'sms',
@@ -157,6 +179,10 @@ class WebInfoServiceTest(TestCase):
                                     {'way_of_communication': 'sms',
                                      'phone_number':'234 / 56789012'})
         self.assertContains(response, 'Please enter a cell phone number.')
+        
+        
+
+
         
     def test_save_registration_infoservice(self):
         subscription_count = Subscription.objects.all().count()
@@ -187,5 +213,7 @@ class WebInfoServiceTest(TestCase):
         self.assertEquals(Subscription.objects.all().count(), 
                           subscription_count - 1)
         self.assertTrue(Subscription.objects.filter(pk = self.info.id).count() == 0)
+
+
 
         

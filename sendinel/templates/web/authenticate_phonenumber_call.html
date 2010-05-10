@@ -20,15 +20,15 @@
         <input type="hidden" id="number" value="{{number}}" />
         <input type="hidden" id="next" value="{{ next }}" />
         <input type="hidden" id="ajax_url" value="{{ ajax_url }}" />
-        
-        <br /><br />
-        
-        <div id="auth" class="centered">
-            <img src="{{ MEDIA_URL }}/ajax-loader.gif" alt="Spinner" id="auth_spinner"/>
-            <div id="auth_status"></div><br />
+
+        <div class="centered">
+            <div id="auth_spinner" class="status">
+                <img src="{{ MEDIA_URL }}/ajax-loader.gif" />
+                <p id="auth_spinner_status"></p>
+            </div>
+            <div id="auth_message" class="status rounded-corners" style="display:none"></div>
         </div>
         
-        <br /><br  />
                 
         {% include "web/control_buttons_back_only_widget.html" %}	      
 

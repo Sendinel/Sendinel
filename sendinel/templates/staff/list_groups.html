@@ -18,7 +18,7 @@
         <table id="infoservice-list" class="float-left" cellspacing="0">
             <thead>
                 <tr>        
-                    <th align="left">{% trans "Group" %}</th>
+                    <th align="left">{% trans "information" %}</th>
                     <th>{% trans "Members" %}</th>
                     <td />
                     <td />
@@ -26,7 +26,7 @@
                 </tr>
             </thead>
             <tbody>
-            {% for infoservice in infoservices %}
+            {% for infoservice in groups %}
                 <form method="post" id="form_{{ infoservice.id }}" action="{% url staff_infoservice_delete %}">
                     <input type="hidden" name="infoservice_id" value="{{ infoservice.id }}" />
                     <tr class="{% cycle 'odd' 'even' %}">
