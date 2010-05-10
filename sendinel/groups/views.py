@@ -192,11 +192,7 @@ def register_infoservice(request, id):
                               locals(),
                               context_instance = RequestContext(request))
 
-@log_request
-def save_registration_infoservice(request, id):
-    backurl = reverse('web_infoservice_register',  kwargs = {'id': id})        
-    nexturl = reverse('web_index')
-    
+def subscription_save(request, id):
     patient = request.session['patient']
     patient.save()
     way_of_communication = request.session['way_of_communication']
@@ -205,17 +201,44 @@ def save_registration_infoservice(request, id):
                                 way_of_communication = way_of_communication,
                                 infoservice = infoservice)
     subscription.save()
-    logger.info("Saved subscription %s.", unicode(subscription))
+    logger.info("Saved subscription %s of type %s.", 
+                (unicode(subscription), 
+                 unicode(subscription.infoservice.type)))
+    return subscription
+                              
+@log_request
+def save_registration_infoservice(request, id):
+    backurl = reverse('web_infoservice_register',  kwargs = {'id': id})        
+    nexturl = reverse('web_index')
+    
+    subscription = subscription_save(request, id)
     
     success = True
     title = _("Registration successful")
     message = _("The patient will now receive all messages from the "
-                        " %s service.") % infoservice.name
+                        " %s service.") % subscription.infoservice.name
     
     return render_to_response('web/status_message.html', 
                               locals(),
                               context_instance = RequestContext(request))
 
+@log_request
+def medicine_register_patient_save(request, id):
+    backurl = reverse('groups_medicine_register_patient')        
+    nexturl = reverse('web_index')
+    
+    subscription = subscription_save(request, id)
+    
+    success = True
+    title = _("Registration successful")
+    message = _("The patient will receive a messages once the medicine "
+                " %s is available in the clinic again.") \
+                % subscription.infoservice.name
+    
+    return render_to_response('web/status_message.html', 
+                              locals(),
+                              context_instance = RequestContext(request))
+                              
                               
 def medicine_register_patient(request):
     ajax_url= reverse('web_check_call_received')
@@ -243,7 +266,7 @@ def medicine_register_patient(request):
                     context_instance = RequestContext(request))
                 
             return HttpResponseRedirect( \
-                            reverse('web_infoservice_register_save',
+                            reverse('groups_medicine_register_patient_save',
                                 kwargs = {'id': request.session['medicine']}))
         else:
             logger.info("register_infoservice: Invalid form.")

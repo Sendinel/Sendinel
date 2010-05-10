@@ -30,4 +30,7 @@ urlpatterns = patterns("",
     url(r"^medicine/register/$",
         'sendinel.groups.views.medicine_register_patient', 
         name = 'groups_medicine_register_patient'),     
+    url(r'^medicine/register/save/(?P<id>\d+)/$',
+        'sendinel.groups.views.medicine_register_patient_save',
+        name = 'groups_medicine_register_patient_save')
 )

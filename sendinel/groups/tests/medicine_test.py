@@ -19,7 +19,7 @@ class MedicineTest(TestCase):
                           "phone_number": "0123456",
                           "medicine": "3"})
                           
-        response = self.client.get(reverse('web_infoservice_register_save',
+        response = self.client.get(reverse('groups_medicine_register_patient_save',
                                    kwargs={'id': '3'}))
                                       
         self.assertEquals(Subscription.objects.all().count(),
@@ -46,7 +46,7 @@ class MedicineTest(TestCase):
         else:
             self.assertEquals(response.status_code, 302)
             self.assertRedirects(response, \
-                                 reverse('web_infoservice_register_save',
+                                 reverse('groups_medicine_register_patient_save',
                                          kwargs={'id': '3'}))
         
     def test_create_register_patient_form(self):

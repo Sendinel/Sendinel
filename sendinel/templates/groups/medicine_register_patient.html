@@ -23,8 +23,9 @@
 {% block content %}
 
     <div id="contentform">
-        <h3>{% trans "Register patient for " %} {{infoservice}}</h3>
-    	<p>{% trans "Please enter your phone number and the way you want to receive the messages" %}</p>
+        <h3>{% trans "Register patient for Waiting List for Medicine" %}</h3>
+    	<p>{% trans "Please enter the patient's phone number and the way the patient wants to receive the notification." %}</p>
+        <p>{% trans "Then choose the medicine the patient is waiting for." %}</p>        
         <br />
         <form name="infoservice" method="post" class="selectable_container" action='#' autocomplete="off">
 
