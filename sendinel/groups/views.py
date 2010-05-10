@@ -242,8 +242,9 @@ def medicine_register_patient(request):
                     locals(),
                     context_instance = RequestContext(request))
                 
-            return HttpResponseRedirect(reverse('web_index'))
-                #reverse('web_infoservice_register_save', kwargs = {'id': id}))
+            return HttpResponseRedirect( \
+                            reverse('web_infoservice_register_save',
+                                kwargs = {'id': request.session['medicine']}))
         else:
             logger.info("register_infoservice: Invalid form.")
             return render_to_response('groups/medicine_register_patient.html', 
