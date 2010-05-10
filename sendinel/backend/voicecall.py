@@ -39,14 +39,14 @@ class Voicecall:
         self.salutation = settings.CALL_SALUTATION
 
     def create_voicefile(self, text):
-    """
-        Create a soundfile for the given text, using a TTS engine
-
-        @param  text:   the text to be read
-        @type   text:   String
-
-        @return The full file name of the sound file containing the text
-    """
+        """
+            Create a soundfile for the given text, using a TTS engine
+    
+            @param  text:   the text to be read
+            @type   text:   String
+    
+            @return The full file name of the sound file containing the text
+        """
 
         text_hash = md5(str(random())).hexdigest()
         filename = "%s/%s.ulaw" % (self.asterisk_festivalcache, text_hash)
