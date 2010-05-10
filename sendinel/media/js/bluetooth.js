@@ -40,7 +40,7 @@ var Bluetooth = {
     },
     
     redirect_to_next: function() {
-        window.location = $("#next").val();
+        Sendinel.Urils.goto_url(("#next").val());
     },
     
     send_file: function() {

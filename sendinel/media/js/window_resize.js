@@ -4,6 +4,9 @@ var div_resize = function() {
     $("#content").height(heightContent);
     
     if($("#contentform").length === 1) {
+        // webkit browsers would not resize the element with hight: inherit
+        // when it is getting resized via the script.
+        // so we have to do it on our own...
         $("#contentform").height(heightContent);
     }
     
