@@ -11,9 +11,9 @@ var div_resize = function() {
     }
     
     var notificationWidth = window.innerWidth - ($('#sendinel-logo').width() + $('#hpi-logo').width());
-    $('#header-notification').width(notificationWidth);
+    $('#header-notification').width(Math.floor(notificationWidth));
     
-    if(Math.max($("#notifications").height(), $("#groups").height()) > heightContent) {
+    if(Math.max($("#left-side").height(), $("#groups").height()) > heightContent) {
         var backgroundWidth = 12;
         $('#content').css("background-position", ($("#content").width() / 2) + backgroundWidth + "px 0px");
     } else {
