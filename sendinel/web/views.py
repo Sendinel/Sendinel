@@ -22,7 +22,7 @@ from sendinel.settings import   AUTH_NUMBER, \
 
 @log_request
 def index(request):
-    groups = InfoService.objects.all().filter(type="group")
+    groups = InfoService.objects.all().filter(type="information")
     appointment_types = AppointmentType.objects.all()
     return render_to_response('web/index.html',
                               locals(),  
@@ -127,10 +127,5 @@ def fill_authentication_session_variable(request):
                               'start_time': datetime.now() }
     return number
 
-@log_request
-def not_implemented(request):
-    backurl = reverse("web_index")
-    return render_to_response('web/not_implemented.html', 
-                              locals(),
-                              context_instance = RequestContext(request))
+
 

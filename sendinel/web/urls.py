@@ -11,6 +11,5 @@ urlpatterns = patterns("",
     url(r'^get_devices/$', 'sendinel.web.views.get_bluetooth_devices', 
         name = 'web_get_devices'),
     url(r"^language_choose/$", 'sendinel.web.views.choose_language',
-        name = 'choose_language'),
-    url(r"^not_implemented/$", 'sendinel.web.views.not_implemented', name = 'not_implemented'),
+        name = 'choose_language')
     )

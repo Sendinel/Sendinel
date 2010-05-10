@@ -113,7 +113,7 @@ msgid "Information Groups"
 msgstr "#TRANSLATED#"
 
 #: templates/staff/list_groups.html:8
-msgid "Group"
+msgid "information"
 msgstr "#TRANSLATED#"
 
 #: templates/staff/list_groups.html:9

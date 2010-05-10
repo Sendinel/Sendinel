@@ -55,7 +55,7 @@ class StaffInfoServiceTest(TestCase):
         self.assertContains(response, "This is a name for an infoservice")
         
     def test_manage_infoservice_groups(self):
-        info = InfoService(name = "testgroup")
+        info = InfoService(name = "testgroup", type="information")
         info.save()
         patient = Patient(phone_number = "012345")
         patient.save()
@@ -98,7 +98,7 @@ class WebInfoServiceTest(TestCase):
     fixtures = ['backend_test']
     
     def setUp(self):
-        self.info = InfoService(name = "testinfoservice", type="group")
+        self.info = InfoService(name = "testinfoservice", type="information")
         self.info.save()
         self.patient = Patient(name="eu",phone_number = "01234")
         self.patient.save()
@@ -120,7 +120,7 @@ class WebInfoServiceTest(TestCase):
 
         infoservices = InfoService.objects.all()
         for infoservice in infoservices:
-            if infoservice.type == 'group':
+            if infoservice.type == "information":
                 self.assertContains(response, infoservice.name)
                 self.assertContains(response, 
                                 reverse('web_infoservice_register',

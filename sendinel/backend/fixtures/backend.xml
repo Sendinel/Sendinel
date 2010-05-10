@@ -25,10 +25,14 @@
     </object>
    <object pk="1" model="groups.infoservice">
         <field type="CharField" name="name">Information about the Clinic</field>
-        <field type="CharField" name="type">group</field>
+        <field type="CharField" name="type">information</field>
     </object>
    <object pk="2" model="groups.infoservice">
         <field type="CharField" name="name">Information for Pregnant Women</field>
-        <field type="CharField" name="type">group</field>
+        <field type="CharField" name="type">information</field>
+    </object>
+    <object pk="2" model="groups.infoservice">
+        <field type="CharField" name="name">Aspirin</field>
+        <field type="CharField" name="type">medicine</field>
     </object>
 </django-objects>

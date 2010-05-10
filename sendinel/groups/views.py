@@ -80,7 +80,7 @@ def create_infomessage(request, id):
 @log_request
 def list_groups(request):
 
-    all_groups = InfoService.objects.all().filter(type="group")
+    all_groups = InfoService.objects.all().filter(type="information")
 
     groups = []
     
@@ -107,7 +107,7 @@ def create_group(request):
     
         if form.is_valid():
     
-            infoservice = InfoService(name = request.POST["name"], type="group")
+            infoservice = InfoService(name = request.POST["name"], type="information")
             infoservice.save()
             
             logger.info("Created InfoService: %s", str(infoservice))
@@ -169,9 +169,8 @@ def register_infoservice(request, id):
         if form.is_valid():
             number = fill_authentication_session_variable(request) 
             auth_number = AUTH_NUMBER
-            backurl = reverse('web_infoservice_register',  kwargs = {'id': id})        
+            backurl = reverse('web_index')        
             next = reverse('web_infoservice_register_save', kwargs = {'id': id})
-            url = reverse('web_check_call_received')
             
             if AUTH:
                 return render_to_response('web/authenticate_phonenumber_call.html', 
@@ -217,5 +216,44 @@ def save_registration_infoservice(request, id):
                               locals(),
                               context_instance = RequestContext(request))
 
+                              
+def medicine_register_patient(request):
+    ajax_url= reverse('web_check_call_received')
+    medicines = InfoService.objects.all().filter(type='medicine')
+     
+    if request.method == "POST":
+        request.session['way_of_communication'] = \
+                                        request.POST['way_of_communication']
+        patient = Patient()
+        patient.phone_number = request.POST['phone_number']
+        request.session['patient'] = patient
+        request.session['medicine'] = request.POST['medicine']
+        
+        data = deepcopy(request.POST)
+        form = NotificationValidationForm2(data)
+        if form.is_valid():
+            number = fill_authentication_session_variable(request) 
+            auth_number = AUTH_NUMBER
+            backurl = reverse('web_index')  
+            #next = reverse('groups_medicine_register_patient_save', kwargs = {'id': id})
+            
+            if AUTH:
+                return render_to_response('web/authenticate_phonenumber_call.html', 
+                    locals(),
+                    context_instance = RequestContext(request))
+                
+            return HttpResponseRedirect(reverse('web_index'))
+                #reverse('web_infoservice_register_save', kwargs = {'id': id}))
+        else:
+            logger.info("register_infoservice: Invalid form.")
+            return render_to_response('groups/medicine_register_patient.html', 
+                                locals(),
+                                context_instance=RequestContext(request))
+       
+    backurl = reverse("web_index")
+    
+    return render_to_response('groups/medicine_register_patient.html', 
+                              locals(),
+                              context_instance = RequestContext(request))
 
 

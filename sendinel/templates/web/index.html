@@ -5,7 +5,30 @@
 {% block content %}
 
 
-    <div class="float-left" id="notifications">
+    <div class="float-left" id="left-side">
+      <h3>{% trans "Waiting Lists for Medicine" %}</h3>
+        <div class="menu-item background-grey rounded-corners">
+            <div class="menu-item-name groups-name float-left"><strong>Currently Missing Medicine</strong></div>
+            <div>
+                <a href="{% url groups_medicine_register_patient %}">
+                    <div class="menu-hover groups-link groups-link-register float-left rounded-corners">
+                        {% trans "Register Patient" %}
+                    </div>
+                </a>
+                <a href="{% url staff_create_infomessage id=1 %}" class="menu_secondlink">
+                    <div class="menu-hover groups-link groups-link-send float-left rounded-corners">
+                        {% trans "Send Message" %}
+                    </div>
+                </a>
+                </div>
+            <div style="clear:both"></div>    
+        </div>
+        <a href="{% url staff_list_groups %}">
+            <div class="menu-item menu-hover menu-item-name groups-manage background-grey rounded-corners">
+               {% trans "Manage Waiting Lists for Medicine" %}
+            </div>
+        </a>
+
       <h3>{% trans "Notifications" %}</h3>
         {% for appointment_type in appointment_types %}
         <div class="menu-item menu-hover background-grey rounded-corners">
@@ -16,14 +39,6 @@
             </a>
         </div>
         {% endfor %}     
-        <div class="menu-item menu-hover background-grey rounded-corners">
-             <a href="{% url not_implemented %}">
-                <div class="menu-item-name">
-                   {% trans "Inform about Arrival of Medicine" %}
-                </div>
-            </a>
-        </div>
-
     </div>
 
     <div id="groups" class="float-left">

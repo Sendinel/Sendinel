@@ -26,5 +26,8 @@ urlpatterns = patterns("",
         name = 'staff_infoservice_members_delete'),
     url(r"^create_infomessage/(?P<id>\d+)/$", 
         'sendinel.groups.views.create_infomessage', 
-        name = 'staff_create_infomessage')
+        name = 'staff_create_infomessage'),
+    url(r"^medicine/register/$",
+        'sendinel.groups.views.medicine_register_patient', 
+        name = 'groups_medicine_register_patient'),     
 )
