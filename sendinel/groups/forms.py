@@ -1,10 +1,10 @@
 from django.forms import CharField, ChoiceField, DateTimeField, Textarea, \
-                            Form, ModelForm
+                            Form, ModelForm, ModelChoiceField
 from django.utils.translation import ugettext as _
 
 from sendinel.backend.authhelper import format_and_validate_phonenumber
 from sendinel.backend.models import Sendable
-from sendinel.groups.models import InfoMessage
+from sendinel.groups.models import InfoMessage, InfoService
 
 class InfoMessageForm(ModelForm):
     
@@ -37,6 +37,18 @@ class NotificationValidationForm2(Form):
                         choices = Sendable.WAYS_OF_COMMUNICATION,
                         error_messages={'required': \
                                 _('Please choose a way of communication')})
+
+class RegisterPatientForMedicineForm(Form):  
+    phone_number = CharField(validators = [format_and_validate_phonenumber],
+            error_messages={'required':_('Please enter a phone number')})
+    way_of_communication = ChoiceField(
+                        choices = Sendable.WAYS_OF_COMMUNICATION,
+                        error_messages={'required': \
+                                _('Please choose a way of communication')})                              
+    medicine = ModelChoiceField(
+                queryset=InfoService.objects.all().filter(type='medicine'),
+                error_messages={'required': \
+                                _('Please choose a medicine')})
 
 class DateValidationForm(Form): 
     date = DateTimeField(error_messages={ \

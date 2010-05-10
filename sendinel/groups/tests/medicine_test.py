@@ -37,9 +37,10 @@ class MedicineTest(TestCase):
                                      'medicine': '3'}) # pk = 3 is a medicine
 
         self.assertTrue(self.client.session.has_key('way_of_communication'))
+        self.assertTrue(self.client.session.has_key('medicine'))
         self.assertTrue(self.client.session.has_key \
                                         ('authenticate_phonenumber'))
-        self.assertTrue(self.client.session.has_key('medicine'))
+
         
         if AUTH:
             self.assertEquals(response.status_code, 200)

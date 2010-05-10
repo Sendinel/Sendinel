@@ -13,7 +13,8 @@ from sendinel.backend.models import Patient
 from sendinel.groups.models import InfoService, InfoMessage, Subscription
 from sendinel.groups.forms import InfoserviceValidationForm, \
                                   InfoMessageValidationForm, \
-                                  NotificationValidationForm2
+                                  NotificationValidationForm2, \
+                                  RegisterPatientForMedicineForm
 from sendinel.logger import logger, log_request
 from sendinel.settings import AUTH, AUTH_NUMBER
 from sendinel.web.views import fill_authentication_session_variable
@@ -250,10 +251,11 @@ def medicine_register_patient(request):
         patient = Patient()
         patient.phone_number = request.POST['phone_number']
         request.session['patient'] = patient
-        request.session['medicine'] = request.POST['medicine']
+        request.session['medicine'] = request.POST.get('medicine', '')
         
         data = deepcopy(request.POST)
-        form = NotificationValidationForm2(data)
+        form = RegisterPatientForMedicineForm(data)
+        
         if form.is_valid():
             number = fill_authentication_session_variable(request) 
             auth_number = AUTH_NUMBER
