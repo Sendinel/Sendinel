@@ -77,7 +77,7 @@ class Voicecall:
 	if(self.asterisk_datacard):
             output = """
 Channel: Datacard/%s/%s
-MaxRetries: 3
+MaxRetries: 20
 RetryTime: 20
 WaitTime: 30
 Context: %s
@@ -85,12 +85,13 @@ Extension: %s
 Priority: 1
 Set: PassedInfo=%s
 Set: Salutation=%s
+Archive: true
 """ %(sip_account, number, context, extension, voicefile, salutation)
      
         else:
             output = """
 Channel: SIP/%s@%s
-MaxRetries: 3
+MaxRetries: 20
 RetryTime: 20
 WaitTime: 30
 Context: %s
@@ -98,20 +99,21 @@ Extension: %s
 Priority: 1
 Set: PassedInfo=%s
 Set: Salutation=%s
+Archive: true
 """ %(number, sip_account, context, extension, voicefile, salutation)
 
         return output
        
-    def create_sms_spool_content(self, text, number, extension, context):
+    def create_sms_spool_content(self, text, number):
         output = """
 Channel: Local/2000
-Context: %s
-Extension: %s
 WaitTime: 2
-Priority: 1
-Set: SmsNumber=%s
-Set: Text=%s
-""" %(context, extension, number, text)
+RetryTime: 5
+MaxRetries: 8000
+Application: DatacardSendSMS
+Data: datacard0,%s,%s
+Archive: true
+""" %(number, text)
 
         return output
  
@@ -169,7 +171,7 @@ Set: Text=%s
 
     def conduct_sms(self, number, text, context):
         text = self.replace_special_characters(text)
-        content = self.create_sms_spool_content(text, number, self.asterisk_extension, context)
+        content = self.create_sms_spool_content(text, number)
         self.create_spool_file("tmp", content)
         return self.move_spool_file("tmp")
 
