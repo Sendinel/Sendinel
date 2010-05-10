@@ -268,6 +268,52 @@ strong.big {
     text-align: center;     
 }
 
+#contentform .ui-datepicker-prev, #contentform .ui-datepicker-next {
+    display: none;
+}
+
+.ui-sendinel-datepicker-button {
+    border: 1px solid #ddd;
+    
+    font-size: 0.7em;
+    display: block;
+    
+    margin-top: 5px;
+    padding: 2%;
+}
+
+.ui-sendinel-datepicker-prev {
+    
+    width: 75px;
+    
+    float: left;
+    display: block;
+    
+    background-image:url("../img/datepicker-prev.png");
+    background-repeat: no-repeat;
+    background-position: 5px 50%;
+    
+    padding-left: 25px;
+}
+
+.ui-sendinel-datepicker-next {
+    width: 75px;
+    float:right;
+    display: block;
+    
+    text-align: right;
+    
+    background-image:url("../img/datepicker-next.png");
+    background-repeat: no-repeat;
+    background-position: 95px 50%;
+    
+    padding-right: 30px;
+}
+
+.ui-datepicker-month, .ui-datepicker-year {
+    font-size: 1.1em;
+}
+
 /* IDs */
 
 #infoservice-create {
