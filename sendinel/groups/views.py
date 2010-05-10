@@ -154,29 +154,32 @@ def delete_members_of_infoservice(request, id):
     return HttpResponseRedirect(reverse("staff_infoservice_members", 
                                    kwargs={"id": id}))  
 
+def set_session_variables_for_register(request):
+    request.session['way_of_communication'] = \
+                                    request.POST['way_of_communication']
+    patient = Patient()
+    patient.phone_number = request.POST['phone_number']
+    request.session['patient'] = patient                                   
+                                   
 @log_request
 def register_infoservice(request, id):
     ajax_url= reverse('web_check_call_received')
     
     if request.method == "POST":
-        request.session['way_of_communication'] = \
-                                        request.POST['way_of_communication']
-        patient = Patient()
-        patient.phone_number = request.POST['phone_number']
-        request.session['patient'] = patient
-        
+        set_session_variables_for_register(request)
+            
         data = deepcopy(request.POST)
         form = NotificationValidationForm2(data)
         if form.is_valid():
             number = fill_authentication_session_variable(request) 
             auth_number = AUTH_NUMBER
             backurl = reverse('web_index')        
-            next = reverse('web_infoservice_register_save', kwargs = {'id': id})
-            
+
             if AUTH:
-                return render_to_response('web/authenticate_phonenumber_call.html', 
-                    locals(),
-                    context_instance = RequestContext(request))
+                return HttpResponseRedirect(
+                        reverse('web_authenticate_phonenumber') \
+                        + "?next=" + reverse('web_infoservice_register_save', \
+                        kwargs = {'id': id}))
                 
             return HttpResponseRedirect(
                 reverse('web_infoservice_register_save', kwargs = {'id': id}))
@@ -193,6 +196,7 @@ def register_infoservice(request, id):
                               locals(),
                               context_instance = RequestContext(request))
 
+@log_request                              
 def subscription_save(request, id):
     patient = request.session['patient']
     patient.save()
@@ -240,17 +244,14 @@ def medicine_register_patient_save(request, id):
                               locals(),
                               context_instance = RequestContext(request))
                               
-                              
+
+@log_request                              
 def medicine_register_patient(request):
     ajax_url= reverse('web_check_call_received')
     medicines = InfoService.objects.all().filter(type='medicine')
      
     if request.method == "POST":
-        request.session['way_of_communication'] = \
-                                        request.POST['way_of_communication']
-        patient = Patient()
-        patient.phone_number = request.POST['phone_number']
-        request.session['patient'] = patient
+        set_session_variables_for_register(request)
         request.session['medicine'] = request.POST.get('medicine', '')
         
         data = deepcopy(request.POST)
@@ -259,13 +260,14 @@ def medicine_register_patient(request):
         if form.is_valid():
             number = fill_authentication_session_variable(request) 
             auth_number = AUTH_NUMBER
-            backurl = reverse('web_index')  
-            #next = reverse('groups_medicine_register_patient_save', kwargs = {'id': id})
+            backurl = reverse('web_index')
             
             if AUTH:
-                return render_to_response('web/authenticate_phonenumber_call.html', 
-                    locals(),
-                    context_instance = RequestContext(request))
+                return HttpResponseRedirect(
+                        reverse('web_authenticate_phonenumber') \
+                        + "?next=" + \
+                        reverse('groups_medicine_register_patient_save', \
+                        kwargs= {'id': request.session['medicine']}))
                 
             return HttpResponseRedirect( \
                             reverse('groups_medicine_register_patient_save',

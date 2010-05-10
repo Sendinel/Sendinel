@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from sendinel.groups.models import InfoService, Subscription
-from sendinel.settings import AUTH
+from sendinel.groups import views as groups_views
 from sendinel.utils import last
 
 class MedicineTest(TestCase):
@@ -30,6 +30,28 @@ class MedicineTest(TestCase):
         self.assertEquals(new_subscription.way_of_communication, "sms")    
     
     def test_register_patient(self):
+        # disable authentication
+        original_value = groups_views.AUTH
+        groups_views.AUTH = False
+        
+        redirection_path = reverse('groups_medicine_register_patient_save',
+                                         kwargs={'id': '3'})
+        self.register_patient_with_assertions(redirection_path)
+        
+        # enable authentication
+        groups_views.AUTH = True
+        
+        redirection_path = reverse('web_authenticate_phonenumber') \
+                    + "?next=" + \
+                    reverse('groups_medicine_register_patient_save', \
+                    kwargs={'id': '3'})
+        self.register_patient_with_assertions( redirection_path)
+        
+        # restore authentication to original value
+        groups_views.AUTH = original_value
+        
+        
+    def register_patient_with_assertions(self,redirection_path): 
         response = self.client.post(
                         reverse('groups_medicine_register_patient'),
                                     {'way_of_communication': 'sms',
@@ -41,14 +63,10 @@ class MedicineTest(TestCase):
         self.assertTrue(self.client.session.has_key \
                                         ('authenticate_phonenumber'))
 
-        
-        if AUTH:
-            self.assertEquals(response.status_code, 200)
-        else:
-            self.assertEquals(response.status_code, 302)
-            self.assertRedirects(response, \
-                                 reverse('groups_medicine_register_patient_save',
-                                         kwargs={'id': '3'}))
+        self.assertEquals(response.status_code, 302)
+        self.assertRedirects(response, redirection_path)
+       
+                                 
         
     def test_create_register_patient_form(self):
         response = self.client.get(reverse('groups_medicine_register_patient'))
