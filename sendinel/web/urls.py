@@ -24,5 +24,6 @@ urlpatterns = patterns("",
     url(r"^language_choose/$", 'sendinel.web.views.choose_language',
         name = 'choose_language'),
     url(r"^not_implemented/$", 'sendinel.web.views.not_implemented', name = 'not_implemented'),
+    url(r"^imprint/$", 'sendinel.web.views.imprint', name = 'imprint'),
     url(r"^list_infoservices/$", 'sendinel.web.views.list_infoservices', name = 'list_infoservices'),
     )

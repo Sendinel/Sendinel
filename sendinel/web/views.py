@@ -325,6 +325,13 @@ def not_implemented(request):
                               context_instance = RequestContext(request))
 
 @log_request
+def imprint(request):
+    backurl = reverse("web_index")
+    return render_to_response('web/imprint.html',
+                              locals(),
+                              context_instance = RequestContext(request))
+
+@log_request
 def list_infoservices(request):
     backurl = reverse("web_index")
     informationservices = InfoService.objects.all()

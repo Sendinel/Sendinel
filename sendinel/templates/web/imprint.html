@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n %} 
+{% block script %}
+{% endblock %}
+{% block content %}
+
+    <div id="contentform">
+        <h3>Impressum</h3>
+       <p><b>Hasso-Plattner-Institut für Softwaresystemtechnik GmbH</b><br />Prof.-Dr.-Helmert-Str. 2-3<br />14482 Potsdam<br />Telefon: +49 (0)331 5509-0<br />Telefax: +49 (0)331 5509-129<br />E-Mail: hpi-info(at)hpi.uni-potsdam.de<br />Internet: <a href="http://www.hpi-web.de/" target="_top">www.hpi-web.de<br /></a><br /><b>Vertretungsberechtigte Geschäftsführer: </b><br />Prof. Dr. Christoph Meinel<br /><br />Registergericht: Amtsgericht Potsdam<br />Registernummer: HRB 12184<br />Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE812987194
+
+</p>
+<p>Inhaltlich Verantwortliche gemäß § 6 MDStV:<br />Prof. Dr. Christoph Meinel<br /><br /><b>Redaktion:</b> <br />Hasso-Plattner-Institut (Bachelorprojekt M2)
+</p><br />
+<p><b>Rechtliche Hinweise:</b><br />Das Hasso-Plattner-Institut (HPI) überprüft und aktualisiert regelmäßig die Inhalte seiner Websites. Trotz größtmöglicher Sorgfalt können wir nicht ausschließen, dass einzelne Informationen auf unseren Seiten veraltet oder nicht zutreffend sind. Daher können wir keine Haftung für Aktualität, Genauigkeit und Vollständigkeit der publizierten Informationen übernehmen. Das gleiche gilt für alle Websites, die von den HPI-Seiten über Hyperlinks erreichbar sind. Für alle diese Links gilt: Wir erklären ausdrücklich, dass wir keinen Einfluss auf die Gestaltung und die Inhalte der verlinkten Seite haben. Deshalb distanzieren wir uns hiermit ausdrücklich von allen Inhalten aller verlinkten Seiten und machen uns ihre Inhalte nicht zu Eigen. Diese Erklärung gilt für alle auf unserer Seite angebrachten Links zu fremden Seiten. Für den Inhalt dieser verlinkten Seiten ist das HPI nicht verantwortlich. Weiterhin behält sich das HPI jederzeit Änderungen und Ergänzungen der angezeigten Informationen vor. Inhalt und Struktur der HPI-Website sind durch das Copyright geschützt. Die Weiterverwendung von Informationen und Daten, vor allem die Verwendung von Texten und Illustrationen ist nur nach unserer Zustimmung zulässig. Wir wünschen Ihnen einen informativen Aufenthalt auf unserer Websites und freuen uns über alle Vorschläge, Wünsche oder Kritik zu unserer Website!
+</p><br />
+<p><h3>Datenschutzerklärung:</h3><br />
+<p>Jeder Ihrer Zugriffe auf das Internetangebot des HPI wird in einer Protokolldatei mit folgenden Daten gespeichert:</p><ul><li>Name der abgerufenen Datei</li><li>Datum und Uhrzeit des Abrufs</li><li>übertragene Datenmenge</li><li>Meldung, ob der Abruf erfolgreich war</li><li>IP-Adresse</li><li>die zuvor-aufgerufene Webadresse (Referrer-URL)</li><li>Informationen zu Betriebssystem</li><li>Browser</li><li>Hostname</li></ul>
+<br /><p>Diese Daten werden nur zur Optimierung des Internetangebotes ausgewertet. Eine Weitergabe an Dritte, zu kommerziellen oder nichtkommerziellen Zwecken, findet nicht statt. 
+
+</p>
+<p>Um die Benutzerfreundlichkeit unseres Internetangebots zu erhöhen, setzen wir auch JavaScript, Flash und Cookies ein. 
+</p>
+<p>JavaScript speichert keine personenbezogenen Daten. Wenn Sie über Ihre Browser-Einstellung JavaScript abschalten, können Sie unsere Internetangebote dennoch weitgehend nutzen. 
+</p>
+<p>Cookies dienen dazu, unser Angebot benutzerfreundlicher zu machen. Cookies sind kleine Textdateien, die auf den Rechner abgelegt werden und die ihr Browser speichert. Die meisten der von uns verwendeten sind so genannte &quot;Session-Cookies&quot;, diese werden nach Ende Ihres Besuchs automatisch gelöscht. HTTP Cookies werden in den Header (Kopfzeilen) via HTTP übertragen. Sie dient der Identifizierung des Teilnehmers, wobei der Browser dem Nutzer meist einschränkende Einstellungen anbietet:</p>
+
+<br /><ul><li>Keine Cookies annehmen</li><li>Benutzer bei jedem Cookie fragen</li><li>Alle Cookies bei Beendigung des Client löschen</li><li>u.v.m.</li></ul></div></div>
+
+</p>
+ 
+
+        <div class="selectable_container">
+           {% include "web/control_buttons_back_only_widget.html" %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block infotext %}
+  {% trans " Click on the sendinel logo or the back button to return to the main menu" %}
+{% endblock %}
