@@ -3,6 +3,13 @@ var div_resize = function() {
     var heightContent = window.innerHeight - ($('#header').height() + $('#footer').height());    
     $("#content").height(heightContent);
     
+    if($("#contentform").length === 1) {
+        // webkit browsers would not resize the element with hight: inherit
+        // when it is getting resized via the script.
+        // so we have to do it on our own...
+        $("#contentform").height(heightContent);
+    }
+    
     var notificationWidth = window.innerWidth - ($('#sendinel-logo').width() + $('#hpi-logo').width());
     $('#header-notification').width(notificationWidth);
     

@@ -151,6 +151,7 @@ class WebInfoServiceTest(TestCase):
         groups_views.AUTH = False
         
         response = self.register_infoservice_validations()
+
         self.assertEquals(response.status_code, 302)
         
         groups_views.AUTH = True
