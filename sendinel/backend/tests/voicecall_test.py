@@ -36,6 +36,7 @@ Extension: s
 Priority: 1
 Set: PassedInfo=helloworld
 Set: Salutation=salutation
+Archive: true
 """
         
         output = self.vc.create_spool_content(number, voicefile, salutation_file, "s", "datacard0", "call-file-beispiel")
