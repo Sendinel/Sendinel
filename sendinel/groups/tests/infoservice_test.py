@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 
 from sendinel.backend.models import ScheduledEvent, Patient
 from sendinel.groups.models import InfoService, InfoMessage, Subscription
+from sendinel.groups import views as groups_views
 from sendinel.settings import AUTH
 from sendinel.utils import last
 
@@ -137,14 +138,29 @@ class WebInfoServiceTest(TestCase):
             self.assertEquals(response.status_code, 200)
         else:
             self.assertEquals(response.status_code, 302)
-      
-    def test_register_infoservice_submit_validations(self):
-        response = self.client.post(reverse('web_infoservice_register', 
+    
+    def register_infoservice_validations(self):
+        return self.client.post(reverse('web_infoservice_register', 
                                     kwargs={'id': self.info.id}),
                                     {'way_of_communication': 'sms',
                                      'phone_number':'01234 / 56789012'})
+
+    def test_register_infoservice_submit_validations(self):
+        # disable authentication
+        original_value = groups_views.AUTH
+        groups_views.AUTH = False
+        
+        response = self.register_infoservice_validations()
         self.assertEquals(response.status_code, 302)
-            
+        
+        groups_views.AUTH = True
+        
+        response = self.register_infoservice_validations()
+        self.assertEquals(response.status_code, 200)
+        
+        # restore AUTH value
+        groups_views.AUTH = original_value
+        
         response = self.client.post(reverse('web_infoservice_register', 
                                     kwargs={'id': self.info.id}),
                                     {'way_of_communication': 'sms',
@@ -156,6 +172,10 @@ class WebInfoServiceTest(TestCase):
                                     {'way_of_communication': 'sms',
                                      'phone_number':'234 / 56789012'})
         self.assertContains(response, 'Please enter a cell phone number.')
+        
+        
+
+
         
     def test_save_registration_infoservice(self):
         subscription_count = Subscription.objects.all().count()
