@@ -79,7 +79,7 @@ class StaffInfoServiceTest(TestCase):
                      'The patients are waiting for the following medicine:')
     
     def manage_groups(self, group_type, table_head, member_button, 
-                      remove_button):
+                      remove_button, remove_patient_button, group_name):
         info = InfoService(name = "testgroup", type = group_type)
         info.save()
         
@@ -97,23 +97,29 @@ class StaffInfoServiceTest(TestCase):
         self.assertContains(response, remove_button)
         self.assertContains(response, table_head)
         
-        # response = self.client.get(reverse("staff_infoservice_members", 
-        #                                    kwargs={"id": info.id,
-        #                                    }))
-        #                                            # "group_type": group_type}))
-        # self.assertContains(response, patient.phone_number)
+        response = self.client.get(reverse("staff_infoservice_members", 
+                                                   kwargs={"id": info.id,
+                                                   }))
+                                                           
+        self.assertContains(response, patient.phone_number)
+        self.assertContains(response, remove_patient_button)
+        self.assertContains(response, group_name)
         
     def test_manage_information_groups(self):
         self.manage_groups("information", 
                            "Information", 
                            "Group members",
-                           "Remove group")
+                           "Remove group",
+                           "Remove patient from group",
+                           "information group")
     
     def test_manage_medicine_groups(self):
         self.manage_groups("medicine", 
                            "Medicine", 
                            "List members",
-                           "Remove list")
+                           "Remove list",
+                           "Remove patient from list",
+                           "waiting list for medicine")
     
     def delete_members_of_group(self, group_type):
         infoservice = InfoService.objects.filter(type = group_type)[0]

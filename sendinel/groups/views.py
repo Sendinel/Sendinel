@@ -126,9 +126,12 @@ def delete_infoservice(request):
 
 @log_request
 def list_members_of_infoservice(request, id):   
-    infoservice = InfoService.objects.filter(pk = id)[0]
+    group = get_object_or_404(InfoService, pk = id)
+    
+    group_textblocks = InfoService.TYPE_TEXTS[group.type]
+    
     subscriptions = Subscription.objects.filter(infoservice = id)
-    return render_to_response("staff/infoservice_members.html",
+    return render_to_response("groups/subscriptions.html",
                                 locals(),
                                 context_instance = RequestContext(request))
 

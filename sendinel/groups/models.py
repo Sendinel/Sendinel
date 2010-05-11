@@ -27,6 +27,7 @@ class InfoService(models.Model):
             'name': ugettext_lazy('information group'),
             'members_button': ugettext_lazy('Group members'),
             'remove_button': ugettext_lazy('Remove group'),
+            'remove_patient_button': ugettext_lazy('Remove patient from group'),
             'form_field_description': ugettext_lazy('Inform patients about:'),
             'table_head': ugettext_lazy('Information')
         },
@@ -35,6 +36,7 @@ class InfoService(models.Model):
             'name': ugettext_lazy('waiting list for medicine'),
             'members_button': ugettext_lazy('List members'),
             'remove_button': ugettext_lazy('Remove list'),
+            'remove_patient_button': ugettext_lazy('Remove patient from list'),
             'form_field_description':
             ugettext_lazy('The patients are waiting for the following medicine:'),
             'table_head': ugettext_lazy('Medicine')
