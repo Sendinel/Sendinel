@@ -59,9 +59,9 @@ Archive: true
 """
             def readline(input):
                 try:
-                     data = MockFile.fake_data.splitlines()[MockFile.counter]
+                    data = MockFile.fake_data.splitlines()[MockFile.counter]
                 except:
-                     return None 
+                    return None 
                 MockFile.counter += 1
                 return data
         real_open = scheduler.openFile
@@ -98,18 +98,18 @@ Status: Failed
         sendable.recipient = patient
         sendable.save()
 
-        self.assertEquals(scheduler.get_all_queued_events().count(),0)
+        self.assertEquals(scheduler.get_all_queued_events().count(), 0)
 
         schedule1 = ScheduledEvent(sendable=sendable,
-                                   send_time=datetime.now(),
-                                   state = "queued")
+                               send_time=datetime.now(),
+                               state = "queued")
         schedule1.save()
 
-        self.assertEquals(scheduler.get_all_queued_events().count(),1)
+        self.assertEquals(scheduler.get_all_queued_events().count(), 1)
 
         schedule2 = ScheduledEvent(sendable=sendable,
-                                   send_time=(datetime.now() - timedelta(days=1)),
-                                   state = "sent")
+                               send_time=(datetime.now() - timedelta(days=1)),
+                               state = "sent")
         schedule2.save()
 
         self.assertTrue(schedule1 in scheduler.get_all_queued_events())
@@ -134,17 +134,17 @@ Status: Failed
         sendable.recipient = patient
         sendable.save()
         
-        self.assertEquals(scheduler.get_all_due_events().count(),1)
+        self.assertEquals(scheduler.get_all_due_events().count(), 1)
         
         schedule1 = ScheduledEvent(sendable=sendable, send_time=datetime.now())
         schedule1.save()
         
         schedule2 = ScheduledEvent(sendable=sendable, 
-                                   send_time=(datetime.now() - timedelta(days=1)))
+                               send_time=(datetime.now() - timedelta(days=1)))
         schedule2.save()
         
         schedule3 = ScheduledEvent(sendable=sendable, 
-                                   send_time=(datetime.now() + timedelta(days=1)))
+                               send_time=(datetime.now() + timedelta(days=1)))
         schedule3.save()
         
         self.assertEquals(scheduler.get_all_due_events().count(), 3)
@@ -153,13 +153,13 @@ Status: Failed
         self.assertFalse(schedule3 in scheduler.get_all_due_events())
         
         schedule4 = ScheduledEvent(sendable=sendable, 
-                                   send_time=datetime.now(),
-                                   state = "failed")
+                               send_time=datetime.now(),
+                               state = "failed")
         schedule4.save()
         
         schedule5 = ScheduledEvent(sendable=sendable, 
-                                   send_time=(datetime.now() - timedelta(days=1)),
-                                   state = "sent")
+                               send_time=(datetime.now() - timedelta(days=1)),
+                               state = "sent")
         schedule5.save()
         
         self.assertEquals(scheduler.get_all_due_events().count(), 3)
