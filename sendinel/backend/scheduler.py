@@ -92,7 +92,7 @@ def check_spool_files():
             elif status == "Failed":
                 # Something really, really went wrong
                 event.state = "failed"
-        
+            event.save()
         except:
             # This means the file has not been found in the done folder
             # nothing has to be done here.
