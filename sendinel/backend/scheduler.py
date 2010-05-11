@@ -15,6 +15,35 @@ setup_environ(settings) # this must be run before any model etc imports
 from sendinel.backend.models import ScheduledEvent
 from sendinel.logger import logger
 
+def openFile(filename):
+    """
+        Open the specified file; wrapping needed so tests can run
+
+        @param filename: Filename of the file to be opened
+        @type  filename: String
+
+        @return A file object
+    """
+    return open(filename)
+
+def get_spoolfile_status(filename):
+    """
+        Get the status of a spooled Asterisk operation
+        
+        @param filename: Filename of the Spool file
+        @type  filename: String
+    """
+    spoolfile = openFile(filename)
+    while True:
+        line = spoolfile.readline()
+        if not line:
+            status = "Queued"
+            break
+        (key, value) = line.split(":", 1)
+        if key == "Status":
+            status = value.strip()
+            break
+    return status
 
 def get_all_due_events():
     """
@@ -26,6 +55,16 @@ def get_all_due_events():
                     .filter(state__exact = 'new') \
                     .filter(send_time__lte=datetime.now())
 
+def get_all_queued_events():
+    """
+        Get all scheduled events from the database that are queued
+
+        @return All queued elements
+    """
+    return ScheduledEvent.objects \
+                    .filter(state__exact = 'queued')
+
+
 
 def run(run_only_one_time = False):
     while True:        
@@ -33,6 +72,7 @@ def run(run_only_one_time = False):
         due_events = get_all_due_events()
                          
         for event in due_events:
+            event.state = 'pending'
             try:
                 data = event.sendable.get_data_for_sending()
                 logger.info("Trying to send: %s" % unicode(event.sendable))
@@ -57,7 +97,7 @@ def run(run_only_one_time = False):
                 event.save()
                     
             
-            event.state = 'sent'
+            event.state = 'queued'
             event.save()
             del data
         del due_events

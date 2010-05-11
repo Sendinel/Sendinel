@@ -121,7 +121,9 @@ class ScheduledEvent(models.Model):
 
     STATES = (
         ('new','new'),
-        ('sent','sent'),
+        ('pending','pending'),
+        ('queued', 'queued'),
+        ('done', 'done'),
         ('failed','failed'),
     )
 

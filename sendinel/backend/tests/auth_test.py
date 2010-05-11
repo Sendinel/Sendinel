@@ -63,7 +63,10 @@ agi_accountcode:
 agi_threadid: -1258067088
 """
             def readline(input):
-                data = MockFile.fake_data.splitlines()[MockFile.counter]
+                try:
+                    data = MockFile.fake_data.splitlines()[MockFile.counter]
+                except:
+                    return None
                 MockFile.counter += 1
                 return data
 
