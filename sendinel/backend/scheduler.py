@@ -39,7 +39,10 @@ def get_spoolfile_status(filename):
         if not line:
             status = "Queued"
             break
-        (key, value) = line.split(":", 1)
+        try:
+            (key, value) = line.split(":", 1)
+        except:
+            (key, value) = (None, None)
         if key == "Status":
             status = value.strip()
             break
