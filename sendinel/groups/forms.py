@@ -22,13 +22,13 @@ class InfoMessageForm(ModelForm):
 
 class InfoserviceValidationForm(Form): 
     name = CharField(error_messages={ \
-                            'required': _('Please enter a name'), \
-                            'invalid': _('The name contains invalid characters')})    
+                        'required': _('Please enter a name'), \
+                        'invalid': _('The name contains invalid characters')})
                             
 class InfoMessageValidationForm(Form):
     text = CharField(error_messages={ \
-                            'required': _('Please enter a text to send'), \
-                            'invalid': _('The text contains invalid characters')})
+                        'required': _('Please enter a text to send'), \
+                        'invalid': _('The text contains invalid characters')})
 
 class NotificationValidationForm2(Form):
     phone_number = CharField(validators = [format_and_validate_phonenumber],
@@ -53,7 +53,15 @@ class RegisterPatientForMedicineForm(Form):
 class DateValidationForm(Form): 
     date = DateTimeField(error_messages={ \
                             'required': _('Please choose a date'), \
-                            'invalid': _('Please choose a date')})                        
-    
+                            'invalid': _('Please choose a date')})   
+
+class MedicineMessageValidationForm(Form):
+    medicine = ModelChoiceField(
+                queryset=InfoService.objects.all().filter(type='medicine'),
+                error_messages={'required': \
+                                _('Please choose a medicine')})                            
+    text = CharField(error_messages={ \
+                        'required': _('Please enter a text to send'), \
+                        'invalid': _('The text contains invalid characters')})
 
 

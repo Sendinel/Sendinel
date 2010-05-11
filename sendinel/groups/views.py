@@ -13,6 +13,7 @@ from sendinel.backend.models import Patient
 from sendinel.groups.models import InfoService, InfoMessage, Subscription
 from sendinel.groups.forms import InfoserviceValidationForm, \
                                   InfoMessageValidationForm, \
+                                  MedicineMessageValidationForm, \
                                   NotificationValidationForm2, \
                                   RegisterPatientForMedicineForm
 from sendinel.logger import logger, log_request
@@ -287,7 +288,45 @@ def medicine_register_patient(request):
                               
 @log_request
 def medicine_send_message(request):
+
+    
+    if request.method == 'POST':
+        data = deepcopy(request.POST)
+        form = MedicineMessageValidationForm(data)
+        
+        if form.is_valid():
+            med_id = form.cleaned_data['medicine'].pk
+            medicine = InfoService.objects.filter(pk = med_id)[0]
+            for patient in medicine.members.all():
+                info_message = InfoMessage()
+                info_message.text = form.cleaned_data['text']
+                subscription = Subscription.objects.filter(patient = patient,
+                                                    infoservice = medicine)[0]
+                info_message.recipient = patient
+                info_message.send_time = datetime.now()
+                info_message.way_of_communication = \
+                                subscription.way_of_communication
+                info_message.save()        
+                info_message.create_scheduled_event(datetime.now())
+                logger.info("Created %s", str(info_message))
+                
+            medicine.delete()
+            
+            nexturl = reverse('web_index')
+            
+            success = True
+            title = _("Message created")
+            message = _("All members of the %s service will get your message.") \
+                                % medicine.name
+        
+            return render_to_response('web/status_message.html', 
+                                      locals(),
+                                      context_instance = RequestContext(request))
+                                      
     medicines = InfoService.objects.all().filter(type='medicine')
     return render_to_response('groups/medicine_send_message.html',
                               locals(),
                               context_instance = RequestContext(request))
+                              
+
+    
