@@ -48,7 +48,7 @@ class Voicecall:
             @return The full file name of the sound file containing the text
         """
 
-        text_hash = md5(str(random())).hexdigest()
+        text_hash = md5(text).hexdigest()
         filename = "%s/%s.ulaw" % (self.asterisk_festivalcache, text_hash)
         if not os.path.exists(filename):
             args = "-o %s -otype ulaw -" % (filename)
