@@ -116,7 +116,8 @@ class ScheduledEvent(models.Model):
     Define a ScheduledEvent for sending at a specific date.
     """
     def __unicode__(self):
-        return "Scheduled Event: " + self.id 
+        return "Scheduled Event: " + self.send_time
+ 
     sendable_type = models.ForeignKey(ContentType)
     sendable_id = models.PositiveIntegerField()
     sendable = generic.GenericForeignKey('sendable_type', 'sendable_id')
