@@ -79,19 +79,23 @@ def check_spool_files():
             filename = settings.ASTERISK_DONE_SPOOL_DIR + event.filename
             status = get_spoolfile_status(filename)
             if status == "Completed":
+                logger.info("Completed sending %s" % unicode(event.sendable))
                 event.state = "done"
             elif status == "Expired":
                 # Handle what to do if asterisk gave up
                 event.retry += 1
                 if event.retry > settings.ASTERISK_RETRY:
+                    logger.info("%s expired; rescheduling" % unicode(event.sendable))
                     event.send_time = event.send_time + \
                         timedelta(minutes = settings.ASTERISK_RETRY_TIME)
                     event.state = "new"
                 else:
                     event.state = "failed"
+                    logger.error("Sending %s failed" % unicode(event.sendable))
             elif status == "Failed":
                 # Something really, really went wrong
                 event.state = "failed"
+                logger.error("Sending %s failed" % unicode(event.sendable))
             event.save()
         except:
             # This means the file has not been found in the done folder
