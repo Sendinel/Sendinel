@@ -71,7 +71,10 @@ class Sendable(models.Model):
     """
     Define an interface for a Sendable object.
     """
-    
+
+    def __unicode__(self):
+        return self.way_of_communication + " to " + self.recipient 
+
     class Meta:
         abstract = True
 
@@ -112,7 +115,8 @@ class ScheduledEvent(models.Model):
     """
     Define a ScheduledEvent for sending at a specific date.
     """
-    
+    def __unicode__(self):
+        return "Scheduled Event: " + self.id 
     sendable_type = models.ForeignKey(ContentType)
     sendable_id = models.PositiveIntegerField()
     sendable = generic.GenericForeignKey('sendable_type', 'sendable_id')
