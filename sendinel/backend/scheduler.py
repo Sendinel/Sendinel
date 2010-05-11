@@ -87,7 +87,7 @@ def run(run_only_one_time = False):
             # TODO error handling
             try:
                 logger.info("  sending: %s" % unicode(data))
-                data.send()
+                event.filename = data.send()
                 #if not run_only_one_time:
                     #time.sleep(20)
             except Exception, e:

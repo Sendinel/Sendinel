@@ -8,7 +8,8 @@ class OutputData(object):
     
     class Meta:
         abstract = True
-    
+
+    scheduled_event = None 
     data = None
     def __str__(self):
         return unicode(self.data)
@@ -40,7 +41,7 @@ class SMSOutputData(OutputData):
     def send(self):
         logger.info("Sending via SMS")
         vc = voicecall.Voicecall()
-        vc.conduct_sms(self.phone_number, self.data, "outbound-sms")
+        return vc.conduct_sms(self.phone_number, self.data, "outbound-sms")
 
 class VoiceOutputData(OutputData):
     """
@@ -52,4 +53,4 @@ class VoiceOutputData(OutputData):
     def send(self):
         logger.info("Sending via Phone Call")
         call = voicecall.Voicecall()
-        call.conduct_call(self.phone_number, self.data, "outbound-call")
+        return call.conduct_call(self.phone_number, self.data, "outbound-call")
