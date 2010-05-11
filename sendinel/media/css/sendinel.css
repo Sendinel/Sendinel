@@ -319,6 +319,11 @@ strong.big {
     font-size: 1.1em;
 }
 
+.disabled {
+    cursor: default !important;
+    opacity: 0.35;    
+}
+
 /* IDs */
 
 #infoservice-create {
@@ -374,9 +379,7 @@ strong.big {
     width: 50%;
 }
 
-#content{
-    overflow: auto;
-    
+#content{    
     padding-left: 25px;
     padding-right: 25px;
     

@@ -143,6 +143,3 @@ class AuthenticationCall(models.Model):
     
     number = models.CharField(max_length = 20)
     time = models.DateTimeField(auto_now_add = True)
-
-
-

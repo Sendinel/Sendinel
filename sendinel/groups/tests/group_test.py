@@ -45,47 +45,103 @@ class StaffInfoServiceTest(TestCase):
             
             self.assertEquals(message.way_of_communication,
                               subscription.way_of_communication)                  
-                              
-    def test_create_group(self):
-        response = self.client.get(reverse("staff_infoservice_create"))
-        self.assertContains(response, 'name="name"')
-        response = self.client.post(reverse("staff_infoservice_create"), 
-                                {"name" : "This is a name for an infoservice"})
-        self.assertEquals(response.status_code, 200)
-        response = self.client.get(reverse("staff_list_groups"))
-        self.assertContains(response, "This is a name for an infoservice")
+    
+    def create_group(self, group_type, title, field_title):
+        response = self.client.get(reverse("groups_create",
+                                    kwargs={'group_type': group_type}))
         
-    def test_manage_infoservice_groups(self):
-        info = InfoService(name = "testgroup", type="information")
+        self.assertContains(response, 'name="name"')
+        self.assertContains(response, title)
+        self.assertContains(response, field_title)
+        
+        response = self.client.post(reverse("groups_create",
+                                    kwargs={'group_type': group_type}), 
+                                {"name" : "This is a name for a group"})
+        
+        self.assertEquals(response.status_code, 200)
+        self.assertContains(response, "This is a name for a group")
+        self.assertContains(response, title)
+        
+        response = self.client.get(reverse("groups_index",
+                                    kwargs={'group_type': group_type}))
+                                    
+        self.assertContains(response, "This is a name for a group")
+        self.assertContains(response, title)
+           
+    def test_create_information_group(self):
+        self.create_group('information', 
+                     'information group', 
+                     "Inform patients about")
+    
+    def text_create_medicine_group(self):                 
+        self.create_group('medicine', 
+                     'waiting list for medicine',
+                     'The patients are waiting for the following medicine:')
+    
+    def manage_groups(self, group_type, table_head, member_button, 
+                      remove_button, remove_patient_button, group_name):
+        info = InfoService(name = "testgroup", type = group_type)
         info.save()
+        
         patient = Patient(phone_number = "012345")
         patient.save()
+        
         subscription = Subscription(infoservice = info, 
                                     patient = patient,
                                     way_of_communication = "voice")
         subscription.save()
-        response = self.client.get(reverse("staff_list_groups"))
-        self.assertContains(response, "Group members")
+        
+        response = self.client.get(reverse("groups_index",
+                                    kwargs = {'group_type': group_type}))
+        self.assertContains(response, member_button)
+        self.assertContains(response, remove_button)
+        self.assertContains(response, table_head)
+        
         response = self.client.get(reverse("staff_infoservice_members", 
-                                           kwargs={"id": info.id}))
+                                                   kwargs={"id": info.id,
+                                                   }))
+                                                           
         self.assertContains(response, patient.phone_number)
+        self.assertContains(response, remove_patient_button)
+        self.assertContains(response, group_name)
         
-        
-    def test_delete_members_of_infoservice(self):
-        infoservice = InfoService.objects.filter(pk = 1)[0]
+    def test_manage_information_groups(self):
+        self.manage_groups("information", 
+                           "Information", 
+                           "Group members",
+                           "Remove group",
+                           "Remove patient from group",
+                           "information group")
+    
+    def test_manage_medicine_groups(self):
+        self.manage_groups("medicine", 
+                           "Medicine", 
+                           "List members",
+                           "Remove list",
+                           "Remove patient from list",
+                           "waiting list for medicine")
+    
+    def delete_members_of_group(self, group_type):
+        infoservice = InfoService.objects.filter(type = group_type)[0]
         subscription_count = Subscription.objects.all().count()
         patient = infoservice.members.all()[0]
         subscription = Subscription.objects.get(patient=patient, 
                                             infoservice=infoservice)
+                                            
         response = self.client.post(reverse("staff_infoservice_members_delete",
                                             kwargs={"id" : infoservice.id}),
                                     {'subscription_id' : subscription.id})
+                                    
         self.assertTrue(not patient in infoservice.members.all())
         self.assertTrue(not subscription in Subscription.objects.all())
         self.assertEquals(subscription_count - 1, 
                             Subscription.objects.all().count())
-        self.assertRedirects(response, reverse("staff_infoservice_members", 
+        self.assertRedirects(response, reverse("staff_infoservice_members",
                                                kwargs={"id": infoservice.id}))
+        
+    def test_delete_members_of_infoservice(self):
+        self.delete_members_of_group('information')
+        self.delete_members_of_group('medicine')
                                                
     def test_delete_infoservice(self):
         infoservices_count = InfoService.objects.all().count()
@@ -95,7 +151,8 @@ class StaffInfoServiceTest(TestCase):
         self.assertTrue(not infoservice in InfoService.objects.all())
         self.assertEquals(infoservices_count - 1, 
                             InfoService.objects.all().count())
-        self.assertRedirects(response, reverse("staff_list_groups"))               
+        self.assertRedirects(response, reverse("groups_index",
+                                        kwargs={'group_type': 'information'}))
         
 class WebInfoServiceTest(TestCase):
     
@@ -235,7 +292,3 @@ class WebInfoServiceTest(TestCase):
         self.assertEquals(Subscription.objects.all().count(), 
                           subscription_count - 1)
         self.assertTrue(Subscription.objects.filter(pk = self.info.id).count() == 0)
-
-
-
-        

@@ -4,10 +4,10 @@
 {% block content %}
 
     <div id="contentform">
-        <h3>{% trans "Information Groups" %}</h3>
+        <h3>{{ group_textblocks.title }}</h3>
    
-        <div id="confirmation" style="display:none; text-align:center">
-            {% trans "Do you really want to remove this information group?" %}
+        <div id="confirmation" style="display:none" class="centered">
+            {% trans "Do you really want to remove this " %} {{ group_textblocks.name }} ? 
         </div>
        
         <div class="button button-left background-grey link menu-hover rounded-corners float-left" 
@@ -18,11 +18,9 @@
         <table id="infoservice-list" class="float-left" cellspacing="0">
             <thead>
                 <tr>        
-                    <th align="left">{% trans "information" %}</th>
+                    <th align="left">{{ group_textblocks.table_head }}</th>
                     <th>{% trans "Members" %}</th>
-                    <td />
-                    <td />
-                    <td />
+                    <th colspan"3" />
                 </tr>
             </thead>
             <tbody>
@@ -31,17 +29,17 @@
                     <input type="hidden" name="infoservice_id" value="{{ infoservice.id }}" />
                     <tr class="{% cycle 'odd' 'even' %}">
                         <td>{{ infoservice.name }}</td>
-                        <td class="centered">{{ infoservice.count_members }}</td>
+                        <td class="centered">{{ infoservice.member_count }}</td>
                         <td>
                             <input type="button" 
                                    onclick="Sendinel.Utils.confirmForm($('#form_{{ infoservice.id }}')[0], 'Please confirm')" 
-                                   value='{% trans "Remove group" %}' />
+                                   value='{{ group_textblocks.remove_button }}' />
                         </td>
                         <td>
                             <input  type="button" 
                                     onclick="Sendinel.Utils.goto_url('{% url staff_infoservice_members id=infoservice.id %}')"
-                                    value='{% trans "Group members" %}' 
-                                    {% if infoservice.count_members == 0 %}
+                                    value='{{ group_textblocks.members_button }}' 
+                                    {% if infoservice.member_count == 0 %}
                                         disabled="disabled"
                                     {% endif %} />
                         </td>
@@ -49,7 +47,7 @@
                             <input  type="button" 
                                     onclick="Sendinel.Utils.goto_url('{% url staff_create_infomessage id=infoservice.id %}')"
                                     value='{% trans "Send message" %}'
-                                    {% if infoservice.count_members == 0 %}
+                                    {% if infoservice.member_count == 0 %}
                                         disabled="disabled"
                                     {% endif %} />
                         </td>
@@ -66,8 +64,8 @@
         <div id="infoservice-create">
             <img src="{{ MEDIA_URL }}/img/add.png" style="margin-bottom:-8px" />
             <input  type="button" 
-                onclick="Sendinel.Utils.goto_url('{% url staff_infoservice_create %}')"
-                value='{% trans "Create information group" %}' />
+                onclick="Sendinel.Utils.goto_url('{% url groups_create group_type=group_type %}')"
+                value='{% trans "Create" %} {{ group_textblocks.name }}' />
         </div>
 
         <br />    

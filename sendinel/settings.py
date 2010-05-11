@@ -136,11 +136,13 @@ ASTERISK_RETRY_TIME = 5
 # to or of authentication
 # and to turn it on and off again ss
 ASTERISK_DATACARD = True 
-
-
 ASTERISK_EXTENSION = "s"
 ASTERISK_SIP_ACCOUNT = "datacard0"
 #ASTERISK_SIP_ACCOUNT = "ext-sip-account"
+
+# Specify a COM Port for SMS
+# for windows maybe it starts at 0
+SERIALPORTSMS = '/dev/rfcomm0'
 
 # FESTIVAL_CACHE = "/lib/init/rw"
 FESTIVAL_CACHE = "/tmp"
@@ -158,9 +160,9 @@ SMS_SALUTATION = 'Hello, '
 # Salutation for phone calls
 CALL_SALUTATION = "This is an automated call from your clinic"
 
-# Specify a COM Port for SMS
-# for windows maybe it starts at 0
-SERIALPORTSMS = '/dev/rfcomm0'
+# Template for Medicine Notification Messages
+MEDICINE_MESSAGE_TEMPLATE = "The medicine $medicine is now available " + \
+                            "at the $hospital. Please come and pick it up."
 
 # IP address to bluetooth server
 BLUETOOTH_SERVER_ADDRESS = '127.0.0.1'

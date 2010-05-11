@@ -16,7 +16,7 @@
                         {% trans "Register Patient" %}
                     </div>
                 </a>
-                <a href="{% url staff_create_infomessage id=1 %}" class="menu_secondlink">
+                <a href="{% url groups_medicine_send_message %}" class="menu_secondlink">
                     <div class="menu-hover groups-link groups-link-send float-left rounded-corners">
                         {% trans "Send Message" %}
                     </div>
@@ -24,7 +24,7 @@
                 </div>
             <div style="clear:both"></div>    
         </div>
-        <a href="{% url staff_list_groups %}">
+        <a href="{% url groups_index group_type='medicine' %}">
             <div class="menu-item menu-hover menu-item-name groups-manage background-grey rounded-corners">
                {% trans "Manage Waiting Lists for Medicine" %}
             </div>
@@ -59,12 +59,16 @@
                                 {% trans "Send Message" %}
                             </div>
                         </a>
+                    {% else %}
+                        <div class="groups-link groups-link-send float-left disabled">
+                            {% trans "Send Message" %}
+                        </div>
                     {% endif %}
                     </div>
                 <div style="clear:both"></div>    
             </div>
         {% endfor %}
-         <a href="{% url staff_list_groups %}">
+         <a href="{% url groups_index group_type='information' %}">
             <div class="menu-item menu-hover menu-item-name groups-manage background-grey rounded-corners">
                {% trans "Manage Information Groups" %}
             </div>
