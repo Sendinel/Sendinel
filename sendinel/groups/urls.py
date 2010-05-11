@@ -24,7 +24,7 @@ urlpatterns = patterns("",
     url(r"^infoservice/delete/$", 'sendinel.groups.views.delete_infoservice', 
         name = 'staff_infoservice_delete'),
    
-    url(r"^infoservice/members/(?P<id>\d+)$", 
+    url(r"^(?P<id>\d+)/members/$", 
         'sendinel.groups.views.list_members_of_infoservice', 
         name = 'staff_infoservice_members'),
    
