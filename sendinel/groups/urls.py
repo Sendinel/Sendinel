@@ -41,5 +41,8 @@ urlpatterns = patterns("",
    
     url(r'^medicine/register/save/(?P<id>\d+)/$',
         'sendinel.groups.views.medicine_register_patient_save',
-        name = 'groups_medicine_register_patient_save')
+        name = 'groups_medicine_register_patient_save'),
+    url(r'^medicine/send-message/$',
+        'sendinel.groups.views.medicine_send_message',
+        name = 'groups_medicine_send_message')
 )
