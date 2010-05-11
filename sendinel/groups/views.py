@@ -9,7 +9,7 @@ from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
-from sendinel.backend.models import Patient
+from sendinel.backend.models import Patient, Hospital
 from sendinel.groups.models import InfoService, InfoMessage, Subscription
 from sendinel.groups.forms import InfoserviceValidationForm, \
                                   InfoMessageValidationForm, \
@@ -17,7 +17,7 @@ from sendinel.groups.forms import InfoserviceValidationForm, \
                                   NotificationValidationForm2, \
                                   RegisterPatientForMedicineForm
 from sendinel.logger import logger, log_request
-from sendinel.settings import AUTH, AUTH_NUMBER
+from sendinel.settings import AUTH, AUTH_NUMBER, MEDICINE_MESSAGE_TEMPLATE
 from sendinel.web.views import fill_authentication_session_variable
 
 
@@ -307,6 +307,10 @@ def medicine_send_message(request):
                                       context_instance = RequestContext(request))
                                       
     medicines = InfoService.objects.all().filter(type='medicine')
+    
+    current_hospital = Hospital.objects.all().filter(current_hospital = True)[0]
+    template_text = MEDICINE_MESSAGE_TEMPLATE
+    template_text = template_text.replace("$hospital", current_hospital.name)
     return render_to_response('groups/medicine_send_message.html',
                               locals(),
                               context_instance = RequestContext(request))
