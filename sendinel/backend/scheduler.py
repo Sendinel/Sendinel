@@ -73,13 +73,19 @@ def check_spool_files():
     queued_events = get_all_queued_events()
     for event in queued_events:
         try:
-            filename = "/var/spool/asterisk/outgoing_done/%s" % (event.filename)
+            filename = settings.ASTERISK_DONE_SPOOL_DIR + event.filename
             status = get_spoolfile_status(filename)
             if status == "Completed":
                 event.state = "done"
             elif status == "Expired":
                 # Handle what to do if asterisk gave up
-                pass
+                event.retry += 1
+                if event.retry > settings.ASTERISK_RETRY:
+                    event.send_time = event.send_time + \
+                        timedelta(minutes = settings.ASTERISK_RETRY_TIME)
+                    event.state = "new"
+                else:
+                    event.state = "failed"
             elif status == "Failed":
                 # Something really, really went wrong
                 event.state = "failed"
@@ -91,7 +97,7 @@ def check_spool_files():
 
 def run(run_only_one_time = False):
     while True:        
-                 
+        check_spool_files()         
         due_events = get_all_due_events()
                          
         for event in due_events:

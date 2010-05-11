@@ -128,6 +128,10 @@ START_MOBILE_PHONE = "0" # "0" for South Africa (07/08..), "01" for Germany
 ASTERISK_USER = "sendinel"
 ASTERISK_GROUP = "sendinel"
 ASTERISK_SPOOL_DIR = "/var/spool/asterisk/outgoing/"
+ASTERISK_DONE_SPOOL_DIR = "/var/spool/asterisk/outgoing_done/"
+
+ASTERISK_RETRY = 5
+ASTERISK_RETRY_TIME = 5
 
 # to or of authentication
 # and to turn it on and off again ss

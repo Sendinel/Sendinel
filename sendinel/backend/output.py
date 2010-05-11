@@ -1,4 +1,4 @@
-from sendinel.backend import sms, bluetooth, voicecall
+from sendinel.backend import bluetooth, voicecall
 from sendinel.logger import logger
 
 class OutputData(object):
