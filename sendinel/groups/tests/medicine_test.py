@@ -82,8 +82,12 @@ class MedicineTest(TestCase):
         for medicine in medicines:
             self.assertContains(response, unicode(medicine))
         
-    def test_send_message(self):
-        pass
+    def test_send_message_form(self):
+        response = self.client.get(reverse('groups_medicine_send_message'))
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertContains(response, 'name="medicine"')
+        self.assertContains(response, 'textarea')
+        
         
     def test_add_medicine(self):
         pass

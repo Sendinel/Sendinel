@@ -1,0 +1,14 @@
+{% load i18n %}
+<div class="head">
+    {% trans "Medicine: " %}
+        {% if form.medicine.errors %}
+            {{ form.medicine.errors }}
+        {% endif %}                    
+</div>
+<div class="input">
+    <select name="medicine" size="1">
+     {% for medicine in medicines %}
+     <option value={{medicine.id}}>{{medicine}}</option>
+     {% endfor %}
+    </select> 
+</div>

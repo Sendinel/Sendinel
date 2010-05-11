@@ -284,4 +284,10 @@ def medicine_register_patient(request):
                               locals(),
                               context_instance = RequestContext(request))
 
-
+                              
+@log_request
+def medicine_send_message(request):
+    medicines = InfoService.objects.all().filter(type='medicine')
+    return render_to_response('groups/medicine_send_message.html',
+                              locals(),
+                              context_instance = RequestContext(request))

@@ -1,6 +1,6 @@
 {% load i18n %}
 <div class="head">
-    Way of communication:
+    {% trans "Way of communication: " %}
         {% if form.way_of_communication.errors %}
             {{ form.way_of_communication.errors }}
         {% endif %}
