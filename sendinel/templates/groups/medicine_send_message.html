@@ -3,15 +3,8 @@
 
 {% block script %}
     <script src="{{ MEDIA_URL }}/js/infomessage.js" type="text/javascript"></script>
-    <script type="text/javascript">
-    
-    $(document).ready(function() {
-    $("#id_text").attr("jVal", "{valid:function (val) { if (val.length < 10) return false; else return true; }, message:'This message seems to be too short.'}");
-    $("#id_text").attr("jValKey", "{valid:/[ a-zA-Z0-9._%+-@:,#*]/, message:'&quot;%c&quot; Invalid Character - No Special Characters Allowed', cFunc:'$(\\'#formContainer\\').jVal()'}");
-    });
-    
-    </script>
-     <script src="{{ MEDIA_URL }}/js/jVal.js" type="text/javascript"></script>
+    <script src="{{ MEDIA_URL }}/js/validate_sms_input.js" type="text/javascript"></script>
+    <script src="{{ MEDIA_URL }}/js/jVal.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/jval/jVal.css">
 {% endblock %}
 
@@ -28,18 +21,7 @@
                     {% include "utils/medicine_widget.html" %}
                 </div>
                 <div class="field float-left lastfield">
-                    <div class="head">
-                        Message Text:
-                        {% if form.text.errors %}
-                            {{ form.text.errors }}
-                        {% endif %}
-                    </div>
-                    <div class="input">
-                        <textarea id="id_text" rows="5" cols="35" name="text"></textarea>
-                        <div id="character-number">
-                        {% trans "Characters left: " %} <div id="chars-left" class="chars-left float-right">160</div>        
-                    </div>
-                    </div>
+                    {% include "utils/enter_message_widget.html" %}
                 </div>
             
                 <div class="button button-right link menu-hover background-grey float-left rounded-corners" onClick="infoservice.submit();">{% trans "Next" %}</div>
@@ -51,8 +33,4 @@
 
      </div>
 
-{% endblock %}
-
-{% block infotext %}
-    {%trans "This message will be sent to all patients who are subscribed to "%} {{infoservice}}
 {% endblock %}

@@ -46,23 +46,8 @@ def create_infomessage(request, id):
         if form.is_valid():
         
             for patient in infoservice.members.all():
-            
-                info_message = InfoMessage()
-            
-                info_message.text = request.POST["text"]
-                
-                subscription = Subscription.objects.filter(patient = patient,
-                                                    infoservice = infoservice)[0]
-                
-                info_message.recipient = patient
-                info_message.send_time = datetime.now()
-                info_message.way_of_communication = \
-                                subscription.way_of_communication
-
-                info_message.save()        
-                info_message.create_scheduled_event(datetime.now())
-                
-                logger.info("Created %s", str(info_message))
+                create_scheduled_event(patient, infoservice, 
+                                            form.cleaned_data['text'])
             
             nexturl = reverse('web_index')
             
@@ -248,6 +233,10 @@ def medicine_register_patient_save(request, id):
 
 @log_request                              
 def medicine_register_patient(request):
+    '''
+    Register a patient to the waitinglist of a medicine, i.e.
+    a new subscription to the infoservice is created.
+    '''
     ajax_url= reverse('web_check_call_received')
     medicines = InfoService.objects.all().filter(type='medicine')
      
@@ -288,8 +277,11 @@ def medicine_register_patient(request):
                               
 @log_request
 def medicine_send_message(request):
-
-    
+    '''
+        Display the form and send a message to all 
+        patients waiting for the medicine. 
+        Afterwards, the medicine information group is deleted.
+    '''
     if request.method == 'POST':
         data = deepcopy(request.POST)
         form = MedicineMessageValidationForm(data)
@@ -298,17 +290,8 @@ def medicine_send_message(request):
             med_id = form.cleaned_data['medicine'].pk
             medicine = InfoService.objects.filter(pk = med_id)[0]
             for patient in medicine.members.all():
-                info_message = InfoMessage()
-                info_message.text = form.cleaned_data['text']
-                subscription = Subscription.objects.filter(patient = patient,
-                                                    infoservice = medicine)[0]
-                info_message.recipient = patient
-                info_message.send_time = datetime.now()
-                info_message.way_of_communication = \
-                                subscription.way_of_communication
-                info_message.save()        
-                info_message.create_scheduled_event(datetime.now())
-                logger.info("Created %s", str(info_message))
+                create_scheduled_event(patient, medicine, 
+                                    form.cleaned_data['text'])
                 
             medicine.delete()
             
@@ -316,8 +299,8 @@ def medicine_send_message(request):
             
             success = True
             title = _("Message created")
-            message = _("All members of the %s service will get your message.") \
-                                % medicine.name
+            message = _("All patients who were waiting for the medicine %s" + \
+                        "will be informed") %medicine.name
         
             return render_to_response('web/status_message.html', 
                                       locals(),
@@ -329,4 +312,21 @@ def medicine_send_message(request):
                               context_instance = RequestContext(request))
                               
 
+                              
+def create_scheduled_event(patient, infoservice, text):
+    '''
+        Put together all information for an infomessage and
+        calls InfoService.create_scheduled_event
+    '''
+    info_message = InfoMessage()
+    info_message.text = text
+    subscription = Subscription.objects.filter(patient = patient,
+                                        infoservice = infoservice)[0]
+    info_message.recipient = patient
+    info_message.send_time = datetime.now()
+    info_message.way_of_communication = \
+                    subscription.way_of_communication
+    info_message.save()        
+    info_message.create_scheduled_event(datetime.now())
+    logger.info("Created %s", str(info_message))
     
