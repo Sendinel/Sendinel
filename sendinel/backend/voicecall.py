@@ -173,9 +173,10 @@ Archive: true
             os.chown(filename, uid, gid)
             # set permissions to unix 666
             os.chmod(filename, 438)
-            filepath = self.asterisk_spool_dir + str(time.time())
+            filename_new = str(time.time())
+            filepath = self.asterisk_spool_dir + filename_new
             shutil.move(filename, filepath)
-            return filename
+            return filename_new
             
         except:
             return False
