@@ -374,9 +374,7 @@ strong.big {
     width: 50%;
 }
 
-#content{
-    overflow: auto;
-    
+#content{    
     padding-left: 25px;
     padding-right: 25px;
     
