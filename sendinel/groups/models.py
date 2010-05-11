@@ -1,6 +1,7 @@
 from string import Template
 
 from django.db import models
+from django.utils.translation import ugettext_lazy
 
 from sendinel.backend import texthelper
 from sendinel.backend.models import Patient, Sendable
@@ -16,19 +17,54 @@ class InfoService(models.Model):
     subscribers, medicine deletes the group after sending a message
     """
     
-    members = models.ManyToManyField(Patient, through="Subscription")
-    name = models.CharField(max_length=255,
-                            default=None,
-                            unique=True,
-                            blank=False,
-                            null=False)
-    type = models.CharField(max_length=255, 
-                            default=None,
-                            blank=False, 
-                            null=False)
+    TYPES = (
+        ('information', ugettext_lazy("Information Group")),
+        ('medicine', ugettext_lazy('Waiting List for Medicine'))
+    )
+    TYPE_TEXTS = {
+        'information': {
+            'title': ugettext_lazy('Information Groups'),
+            'name': ugettext_lazy('information group'),
+            'members_button': ugettext_lazy('Group members'),
+            'remove_button': ugettext_lazy('Remove group'),
+            'form_field_description': ugettext_lazy('Inform patients about:'),
+            'table_head': ugettext_lazy('Information')
+        },
+        'medicine': {
+            'title': ugettext_lazy('Waiting Lists for Medicine'),
+            'name': ugettext_lazy('waiting list for medicine'),
+            'members_button': ugettext_lazy('List members'),
+            'remove_button': ugettext_lazy('Remove list'),
+            'form_field_description':
+            ugettext_lazy('The patients are waiting for the following medicine:'),
+            'table_head': ugettext_lazy('Medicine')
+        },
+    }
+    
+    
+    members = models.ManyToManyField(Patient, through = "Subscription")
+    name = models.CharField(max_length = 255,
+                            default = None,
+                            unique = True,
+                            blank = False,
+                            null = False)
+    type = models.CharField(max_length = 255, 
+                            choices = TYPES,
+                            default = None,
+                            blank = False, 
+                            null = False)
                             
     def __unicode__(self):
         return self.name
+    
+    def member_count(self):
+        return self.members.all().count()
+    
+    def texts(self):
+        """
+        Returns the text blocks associated with the group's type.
+        """
+        return self.TYPE_TEXTS[self.type]
 
 
 class InfoMessage(Sendable):

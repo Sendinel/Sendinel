@@ -2,7 +2,7 @@ from copy import deepcopy
 
 from datetime import datetime
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth import logout
@@ -79,27 +79,20 @@ def create_infomessage(request, id):
                                 context_instance = RequestContext(request))
 
 @log_request
-def list_groups(request):
+def index(request, group_type):
+    groups = InfoService.objects.all().filter(type = group_type)
+    group_textblocks = InfoService.TYPE_TEXTS[group_type]
 
-    all_groups = InfoService.objects.all().filter(type="information")
-
-    groups = []
-    
     backurl = reverse("web_index")
     
-    for infoservice in all_groups:
-        groups.append({
-            "id": infoservice.id,
-            "name": infoservice.name, 
-            "count_members": infoservice.members.all().count()
-        })
-            
-    return render_to_response("staff/list_groups.html",
+    return render_to_response("groups/index.html",
                                 locals(),
                                 context_instance = RequestContext(request))
 
 @log_request
-def create_group(request):
+def create_group(request, group_type):
+
+    group_textblocks = InfoService.TYPE_TEXTS[group_type]
 
     if request.method == "POST":
     
@@ -108,31 +101,41 @@ def create_group(request):
     
         if form.is_valid():
     
-            infoservice = InfoService(name = request.POST["name"], type="information")
+            infoservice = InfoService(name = request.POST["name"],
+                                      type = group_type)
             infoservice.save()
             
             logger.info("Created InfoService: %s", str(infoservice))
             
-            nexturl = reverse('staff_list_groups')
+            nexturl = reverse('groups_index', kwargs={'group_type': group_type})
             
             success = True
             title = _("Creation successful")
-            message = _("The %s service has been created.") % infoservice.name
-        
+            message = _("The %(group_name)s %(group_type)s has been created.") \
+                        % {'group_name': infoservice.name,
+                           'group_type': group_textblocks["name"]}
+    
             return render_to_response('web/status_message.html', 
                                       locals(),
                                       context_instance = RequestContext(request))
         
-    return render_to_response("staff/infoservice_create.html",
+    return render_to_response("groups/create.html",
                                 locals(),
                                 context_instance = RequestContext(request))
                                 
 @log_request
 def delete_infoservice(request):
     if request.method == 'POST' and request.POST.has_key('infoservice_id'):
-        infoservice = InfoService.objects.get(id = request.POST['infoservice_id'])
+        infoservice = get_object_or_404(InfoService, 
+                                        pk = request.POST['infoservice_id'])
+                                        
+        group_type = infoservice.type
         infoservice.delete()
-    return HttpResponseRedirect(reverse("staff_list_groups"))   
+        
+        return HttpResponseRedirect(reverse("groups_index", 
+                                    kwargs={'group_type': group_type}))
+                                    
+    return HttpResponseRedirect(reverse("web_index"))   
         
 
 @log_request

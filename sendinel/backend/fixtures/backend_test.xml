@@ -53,6 +53,11 @@
         <field to="groups.infoservice" name="infoservice" rel="ManyToOneRel">1</field>
         <field type="CharField" name="way_of_communication">voice</field>
     </object>
+    <object pk="3" model="groups.subscription">
+       <field to="backend.patient" name="patient" rel="ManyToOneRel">2</field>
+       <field to="groups.infoservice" name="infoservice" rel="ManyToOneRel">3</field>
+       <field type="CharField" name="way_of_communication">voice</field>
+   </object>
     <object pk="2" model="groups.infoservice">
         <field type="CharField" name="name">Sendinel-Tester</field>
         <field type="CharField" name="type">information</field>

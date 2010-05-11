@@ -19,8 +19,9 @@ class MedicineTest(TestCase):
                           "phone_number": "0123456",
                           "medicine": "3"})
                           
-        response = self.client.get(reverse('groups_medicine_register_patient_save',
-                                   kwargs={'id': '3'}))
+        response = self.client.get(
+                                reverse('groups_medicine_register_patient_save',
+                                kwargs={'id': '3'}))
                                       
         self.assertEquals(Subscription.objects.all().count(),
                           subscription_count + 1)

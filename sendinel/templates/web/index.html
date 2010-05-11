@@ -24,7 +24,7 @@
                 </div>
             <div style="clear:both"></div>    
         </div>
-        <a href="{% url staff_list_groups %}">
+        <a href="{% url groups_index group_type='medicine' %}">
             <div class="menu-item menu-hover menu-item-name groups-manage background-grey rounded-corners">
                {% trans "Manage Waiting Lists for Medicine" %}
             </div>
@@ -68,7 +68,7 @@
                 <div style="clear:both"></div>    
             </div>
         {% endfor %}
-         <a href="{% url staff_list_groups %}">
+         <a href="{% url groups_index group_type='information' %}">
             <div class="menu-item menu-hover menu-item-name groups-manage background-grey rounded-corners">
                {% trans "Manage Information Groups" %}
             </div>
