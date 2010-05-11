@@ -117,6 +117,7 @@ class ScheduledEvent(models.Model):
     sendable_id = models.PositiveIntegerField()
     sendable = generic.GenericForeignKey('sendable_type', 'sendable_id')
     filename = models.CharField(max_length=255, blank=True, null=True)
+    retry = models.PositiveIntegerField(default=0)
 
     send_time = models.DateTimeField()
 

@@ -64,7 +64,30 @@ def get_all_queued_events():
     return ScheduledEvent.objects \
                     .filter(state__exact = 'queued')
 
-
+def check_spool_files():
+    """
+        Check all queued spoolfiles if they have already been processed
+        by the Asterisk telephony server;
+        Set the corresponding status for the scheduled events
+    """
+    queued_events = get_all_queued_events()
+    for event in queued_events:
+        try:
+            filename = "/var/spool/asterisk/outgoing_done/%s" % (event.filename)
+            status = get_spoolfile_status(filename)
+            if status == "Completed":
+                event.state = "done"
+            elif status == "Expired":
+                # Handle what to do if asterisk gave up
+                pass
+            elif status == "Failed":
+                # Something really, really went wrong
+                event.state = "failed"
+        
+        except:
+            # This means the file has not been found in the done folder
+            # nothing has to be done here.
+            pass
 
 def run(run_only_one_time = False):
     while True:        
