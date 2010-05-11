@@ -22,17 +22,26 @@ class AuthTest(unittest.TestCase):
         authhelper.START_MOBILE_PHONE = "07"
     
         number = "+27723456789"
-        self.assertEquals(authhelper.format_and_validate_phonenumber(number), "0723456789")          
+        self.assertEquals(authhelper.format_and_validate_phonenumber(number), 
+                                                "0723456789")          
         number = "+277 234/567 89"
-        self.assertEquals(authhelper.format_and_validate_phonenumber(number), "0723456789")    
+        self.assertEquals(authhelper.format_and_validate_phonenumber(number), 
+                                                "0723456789")    
         number = "07 234-56789"
-        self.assertEquals(authhelper.format_and_validate_phonenumber(number), "0723456789")
+        self.assertEquals(authhelper.format_and_validate_phonenumber(number), 
+                                                "0723456789")
         number = "0123a45678"
-        self.assertRaises(ValidationError, authhelper.format_and_validate_phonenumber, number)
+        self.assertRaises(ValidationError, 
+                authhelper.format_and_validate_phonenumber, 
+                number)
         number = "0049123456789"
-        self.assertRaises(ValidationError, authhelper.format_and_validate_phonenumber, number)
+        self.assertRaises(ValidationError, 
+                authhelper.format_and_validate_phonenumber, 
+                number)
         number = "030123456789"
-        self.assertRaises(ValidationError, authhelper.format_and_validate_phonenumber, number)          
+        self.assertRaises(ValidationError, 
+                authhelper.format_and_validate_phonenumber, 
+                number)          
         
         
         authhelper.COUNTRY_CODE_PHONE = country_code_phone
