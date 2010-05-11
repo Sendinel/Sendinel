@@ -319,6 +319,11 @@ strong.big {
     font-size: 1.1em;
 }
 
+.disabled {
+    cursor: default !important;
+    opacity: 0.35;    
+}
+
 /* IDs */
 
 #infoservice-create {
