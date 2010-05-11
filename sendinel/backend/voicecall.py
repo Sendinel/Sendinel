@@ -175,7 +175,7 @@ Archive: true
             os.chmod(filename, 438)
             filepath = self.asterisk_spool_dir + str(time.time())
             shutil.move(filename, filepath)
-            return True
+            return filename
             
         except:
             return False

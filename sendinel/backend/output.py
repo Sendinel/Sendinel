@@ -39,7 +39,8 @@ class SMSOutputData(OutputData):
     
     def send(self):
         logger.info("Sending via SMS")
-        sms.send_sms(self.phone_number, self.data)
+        vc = voicecall.Voicecall()
+        vc.conduct_sms(self.phone_number, self.data, "outbound-sms")
 
 class VoiceOutputData(OutputData):
     """
