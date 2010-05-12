@@ -133,8 +133,10 @@ Channel: Local/2000
 WaitTime: 2
 RetryTime: 5
 MaxRetries: 8000
-Application: DatacardSendSMS
-Data: datacard0,%s,%s
+Context: outbound-sms
+Extension: s
+Set: SmsNumber=%s
+Set: Text=%s
 Archive: true
 """ % (number, text)
 

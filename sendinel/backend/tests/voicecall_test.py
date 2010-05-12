@@ -30,8 +30,10 @@ Channel: Local/2000
 WaitTime: 2
 RetryTime: 5
 MaxRetries: 8000
-Application: DatacardSendSMS
-Data: datacard0,1234,This is a test
+Context: outbound-sms
+Extension: s
+Set: SmsNumber=1234
+Set: Text=This is a test
 Archive: true
 """
         self.assertEquals(output, output_should)
