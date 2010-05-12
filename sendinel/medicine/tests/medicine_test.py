@@ -15,13 +15,13 @@ class MedicineTest(TestCase):
         subscription_count = Subscription.objects.all().count()
 
         # pk = 3 is a medicine in fixtures
-        self.client.post(reverse('groups_medicine_register_patient'),
+        self.client.post(reverse('medicine_register_patient'),
                          {"way_of_communication": "sms",
                           "phone_number": "0123456",
                           "medicine": "3"})
                           
         response = self.client.get(
-                                reverse('groups_medicine_register_patient_save',
+                                reverse('medicine_register_patient_save',
                                 kwargs={'id': '3'}))
                                       
         self.assertEquals(Subscription.objects.all().count(),
@@ -36,7 +36,7 @@ class MedicineTest(TestCase):
         original_value = groups_views.AUTH
         groups_views.AUTH = False
         
-        redirection_path = reverse('groups_medicine_register_patient_save',
+        redirection_path = reverse('medicine_register_patient_save',
                                          kwargs={'id': '3'})
         self.register_patient_with_assertions(redirection_path)
         
@@ -45,7 +45,7 @@ class MedicineTest(TestCase):
         
         redirection_path = reverse('web_authenticate_phonenumber') \
                     + "?next=" + \
-                    reverse('groups_medicine_register_patient_save', \
+                    reverse('medicine_register_patient_save', \
                     kwargs={'id': '3'})
         self.register_patient_with_assertions( redirection_path)
         
@@ -55,7 +55,7 @@ class MedicineTest(TestCase):
         
     def register_patient_with_assertions(self,redirection_path): 
         response = self.client.post(
-                        reverse('groups_medicine_register_patient'),
+                        reverse('medicine_register_patient'),
                                     {'way_of_communication': 'sms',
                                      'phone_number':'01234 / 56789012',
                                      'medicine': '3'}) # pk = 3 is a medicine
@@ -71,7 +71,7 @@ class MedicineTest(TestCase):
                                  
         
     def test_create_register_patient_form(self):
-        response = self.client.get(reverse('groups_medicine_register_patient'))
+        response = self.client.get(reverse('medicine_register_patient'))
         self.failUnlessEqual(response.status_code, 200)
         self.assertContains(response, 'name="phone_number"')
         self.assertContains(response, 'name="way_of_communication"')
@@ -79,7 +79,7 @@ class MedicineTest(TestCase):
         return response    
         
     def test_medicine_in_register_patient_form(self):
-        response = self.client.get(reverse('groups_medicine_register_patient'))
+        response = self.client.get(reverse('medicine_register_patient'))
         medicines = InfoService.objects.all().filter(type="medicine")
         for medicine in medicines:
             self.assertContains(response, unicode(medicine))

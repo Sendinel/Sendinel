@@ -1,6 +1,5 @@
 from django.conf.urls.defaults import patterns, url
-from django.core.urlresolvers import reverse
-from django.views.generic.simple import redirect_to
+
 
 
 urlpatterns = patterns("",
@@ -33,16 +32,5 @@ urlpatterns = patterns("",
    
     url(r"^create_infomessage/(?P<id>\d+)/$", 
         'sendinel.groups.views.create_infomessage', 
-        name = 'staff_create_infomessage'),
-   
-    url(r"^medicine/register/$",
-        'sendinel.groups.views.medicine_register_patient', 
-        name = 'groups_medicine_register_patient'),     
-   
-    url(r'^medicine/register/save/(?P<id>\d+)/$',
-        'sendinel.groups.views.medicine_register_patient_save',
-        name = 'groups_medicine_register_patient_save'),
-    url(r'^medicine/send-message/$',
-        'sendinel.groups.views.medicine_send_message',
-        name = 'groups_medicine_send_message')
+        name = 'staff_create_infomessage')
 )

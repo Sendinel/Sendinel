@@ -20,7 +20,14 @@ class StaffInfoServiceTest(TestCase):
         User.objects.create_user('john', 'l@example.com', 'passwd')
         self.client.login(username='john', password="passwd")
     
-    def test_create_infomessage(self):
+    
+    def test_create_infomessage_get(self):
+        response = self.client.get(reverse("staff_create_infomessage",
+                                   kwargs={"id":1}))
+        self.assertEquals(response.status_code, 200)
+                                    
+    
+    def test_create_infomessage_post(self):
     
         counter = ScheduledEvent.objects.all().count()
         infoservice = InfoService.objects.filter(pk = 1)[0]
