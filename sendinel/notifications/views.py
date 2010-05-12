@@ -88,7 +88,7 @@ def save_appointment(request):
     appointment.save_with_patient(patient)
         
     success = True
-    title = _("The %s notification has been created.") \
+    title = _("The \"%s\" notification has been created.") \
                         % appointment.appointment_type.verbose_name
     if appointment.appointment_type.notify_immediately:
         message = _("The patient will be informed immediately.")
