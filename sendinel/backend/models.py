@@ -33,7 +33,7 @@ class Patient(User):
     phone_number = models.CharField(max_length = 20)
     
     def __unicode__(self):
-        return self.name or "unnamed patient"
+        return "Patient <%s>" % self.phone_number
 
     # TODO remove this - django has a reverse query
     def infoservices(self):
@@ -113,9 +113,10 @@ class ScheduledEvent(models.Model):
     Define a ScheduledEvent for sending at a specific date.
     """
     def __unicode__(self):
-        return "Scheduled " + self.sendable.way_of_communication + ": " +  self.sendable.recipient.phone_number \
-            + " (" + str(self.send_time) + ")"
- 
+        return "Scheduled " + self.sendable.way_of_communication + ": " + \
+                              self.sendable.recipient.phone_number  + \
+                              " (" + str(self.send_time) + ")"
+
     sendable_type = models.ForeignKey(ContentType)
     sendable_id = models.PositiveIntegerField()
     sendable = generic.GenericForeignKey('sendable_type', 'sendable_id')
