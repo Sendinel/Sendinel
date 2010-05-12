@@ -36,7 +36,8 @@ def create_appointment(request, appointment_type_name = None):
             appointment.date = form.cleaned_data['date']
             appointment.appointment_type = appointment_type
             appointment.hospital = Hospital.get_current_hospital()
-            appointment.way_of_communication = form.cleaned_data['way_of_communication']
+            appointment.way_of_communication = \
+                                    form.cleaned_data['way_of_communication']
             
             request.session['appointment'] = appointment
             request.session['patient'] = patient            
@@ -55,20 +56,16 @@ def create_appointment(request, appointment_type_name = None):
                         reverse("web_appointment_save"))
             else:
                 logger.error("Unknown way of communication selected.")
-                raise Exception ("Unknown way of communication %s " \
-                                   %appointment.way_of_communication + "(this is neither bluetooth nor sms or voice)") 
-                                
+                raise Exception ("Unknown way of communication %s " +
+                                "(this is neither bluetooth nor sms or voice)"
+                                   % appointment.way_of_communication)
+
         else:
             logger.info("create_appointment: Invalid form.")
-            return render_to_response('web/appointment_create.html',
-                                locals(),
-                                context_instance=RequestContext(request))
-    else:
-        #TODO: initiale Dateneintraege
-        
-        return render_to_response('web/appointment_create.html',
-                                locals(),
-                                context_instance=RequestContext(request))
+
+    return render_to_response('notifications/create.html',
+                            locals(),
+                            context_instance=RequestContext(request))
 
 @log_request
 def save_appointment(request):
@@ -76,8 +73,8 @@ def save_appointment(request):
     patient = request.session.get('patient', None)
     
     nexturl = reverse("web_index")
-    backurl = reverse("web_appointment_create", 
-                kwargs={'appointment_type_name' : appointment.appointment_type.name })
+    backurl = reverse("web_appointment_create", kwargs={'appointment_type_name':
+                                            appointment.appointment_type.name })
     
     if not appointment or not patient:
         logger.warning("save_appointment: no appointment/patient in session")
@@ -91,7 +88,7 @@ def save_appointment(request):
     appointment.save_with_patient(patient)
         
     success = True
-    title = _("The %s notification has been created.") \
+    title = _("The \"%s\" notification has been created.") \
                         % appointment.appointment_type.verbose_name
     if appointment.appointment_type.notify_immediately:
         message = _("The patient will be informed immediately.")

@@ -32,13 +32,8 @@ def logout_staff(request):
 @log_request
 def create_infomessage(request, id):
     infoservice = InfoService.objects.filter(pk = id)[0]
-    
-    if(request.method == "GET"):
-          
-        return render_to_response("staff/create_infomessage.html",
-                                    locals(),
-                                    context_instance = RequestContext(request))
-    elif(request.method == "POST"):
+
+    if(request.method == "POST"):
         
         data = deepcopy(request.POST)
         form = InfoMessageValidationForm(data)
@@ -53,16 +48,17 @@ def create_infomessage(request, id):
             
             success = True
             title = _("Message created")
-            message = _("All members of the %s service will get your message.") \
+            message = _("All members of the \"%s\" service" + \
+                        " will get your message.") \
                                 % infoservice.name
         
             return render_to_response('web/status_message.html', 
-                                      locals(),
-                                      context_instance = RequestContext(request))
+                                  locals(),
+                                  context_instance = RequestContext(request))
         
-        return render_to_response("staff/create_infomessage.html",
-                                locals(),
-                                context_instance = RequestContext(request))
+    return render_to_response("groups/message_create.html",
+                              locals(),
+                              context_instance = RequestContext(request))
 
 @log_request
 def index(request, group_type):
@@ -94,10 +90,11 @@ def create_group(request, group_type):
             logger.info("Created InfoService: %s", str(infoservice))
             
             nexturl = reverse('groups_index', kwargs={'group_type': group_type})
-            
+            backurl = reverse('groups_create', kwargs={'group_type': group_type})
+                        
             success = True
             title = _("Creation successful")
-            message = _("The %(group_name)s %(group_type)s has been created.") \
+            message = _("The \"%(group_name)s\" %(group_type)s has been created.") \
                         % {'group_name': infoservice.name,
                            'group_type': group_textblocks["name"]}
     
@@ -140,7 +137,8 @@ def delete_members_of_infoservice(request, id):
     
     if request.method == "POST" and request.POST.has_key('subscription_id'):
         
-        subscription = Subscription.objects.get(id = request.POST["subscription_id"])        
+        subscription = Subscription.objects.get(
+                                        id = request.POST["subscription_id"])        
         subscription.delete()
         
     return HttpResponseRedirect(reverse("staff_infoservice_members", 
@@ -177,14 +175,11 @@ def register_infoservice(request, id):
                 reverse('web_infoservice_register_save', kwargs = {'id': id}))
         else:
             logger.info("register_infoservice: Invalid form.")
-            return render_to_response('web/infoservice_register.html', 
-                                locals(),
-                                context_instance=RequestContext(request))
        
     infoservice = InfoService.objects.filter(pk = id)[0].name
     backurl = reverse("web_index")
     
-    return render_to_response('web/infoservice_register.html', 
+    return render_to_response('groups/register.html', 
                               locals(),
                               context_instance = RequestContext(request))
 
@@ -213,7 +208,7 @@ def save_registration_infoservice(request, id):
     success = True
     title = _("Registration successful")
     message = _("The patient will now receive all messages from the "
-                        " %s service.") % subscription.infoservice.name
+                        " \"%s\" service.") % subscription.infoservice.name
     
     return render_to_response('web/status_message.html', 
                               locals(),
@@ -229,13 +224,12 @@ def medicine_register_patient_save(request, id):
     success = True
     title = _("Registration successful")
     message = _("The patient will receive a messages once the medicine "
-                " %s is available in the clinic again.") \
+                " \"%s\" is available in the clinic again.") \
                 % subscription.infoservice.name
     
     return render_to_response('web/status_message.html', 
                               locals(),
                               context_instance = RequestContext(request))
-                              
 
 @log_request                              
 def medicine_register_patient(request):
@@ -264,19 +258,16 @@ def medicine_register_patient(request):
                         + "?next=" + \
                         reverse('groups_medicine_register_patient_save', \
                         kwargs= {'id': request.session['medicine']}))
-                
+
             return HttpResponseRedirect( \
                             reverse('groups_medicine_register_patient_save',
                                 kwargs = {'id': request.session['medicine']}))
         else:
             logger.info("register_infoservice: Invalid form.")
-            return render_to_response('groups/medicine_register_patient.html', 
-                                locals(),
-                                context_instance=RequestContext(request))
        
     backurl = reverse("web_index")
     
-    return render_to_response('groups/medicine_register_patient.html', 
+    return render_to_response('groups/medicine_register.html', 
                               locals(),
                               context_instance = RequestContext(request))
 
@@ -305,19 +296,19 @@ def medicine_send_message(request):
             
             success = True
             title = _("Message created")
-            message = _("All patients who were waiting for the medicine %s" + \
-                        "will be informed") %medicine.name
-        
+            message = _("All patients who were waiting for the medicine " +
+                        "\"%s\" will be informed") % medicine.name
+
             return render_to_response('web/status_message.html', 
-                                      locals(),
-                                      context_instance = RequestContext(request))
+                                    locals(),
+                                    context_instance = RequestContext(request))
                                       
     medicines = InfoService.objects.all().filter(type='medicine')
     
     current_hospital = Hospital.objects.all().filter(current_hospital = True)[0]
     template_text = MEDICINE_MESSAGE_TEMPLATE
     template_text = template_text.replace("$hospital", current_hospital.name)
-    return render_to_response('groups/medicine_send_message.html',
+    return render_to_response('groups/medicine_message_create.html',
                               locals(),
                               context_instance = RequestContext(request))
                               

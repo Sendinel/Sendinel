@@ -11,6 +11,8 @@
         <div class="menu-item background-grey rounded-corners">
             <div class="menu-item-name groups-name float-left"><strong>Currently Missing Medicine</strong></div>
             <div>
+            
+            {% if medicine_count > 0 %}
                 <a href="{% url groups_medicine_register_patient %}">
                     <div class="menu-hover groups-link groups-link-register float-left rounded-corners">
                         {% trans "Register Patient" %}
@@ -21,6 +23,17 @@
                         {% trans "Send Message" %}
                     </div>
                 </a>
+                
+            {% else %}
+            
+                <div class="groups-link groups-link-register float-left disabled">
+                    {% trans "Register Patient" %}
+                </div>
+                <div class="groups-link groups-link-send float-left disabled">
+                    {% trans "Send Message" %}
+                </div>
+          
+            {% endif %}
                 </div>
             <div style="clear:both"></div>    
         </div>

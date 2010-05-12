@@ -27,8 +27,13 @@
 
     <div id="contentform">
     <h3>{{ appointment_type.verbose_name }}</h3>
-    <p>{% trans "Please enter the appointment details." %}</p>
-
+    {% if not appointment_type.notify_immediately %}
+        <p>{% trans "Please enter the appointment details." %}</p>
+    {% else %}
+        <p>{% trans "Please enter the notification details." %}</p>
+    {% endif %}
+    
+    
     <form name="appointment_create" action="./" method="post" autocomplete="off" >
     
         <div class="button button-left background-grey link menu-hover rounded-corners float-left" onClick="javascript:location.href='{{ backurl }}'">
