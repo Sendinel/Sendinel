@@ -89,17 +89,18 @@ class Voicecall:
             """
         if(self.asterisk_datacard):
             output = """
-Channel: Datacard/%s/%s
+Channel: Local/3000
 MaxRetries: 20
 RetryTime: 20
 WaitTime: 30
 Context: %s
 Extension: %s
 Priority: 1
+Set: Receipient=Datacard/%s/%s
 Set: PassedInfo=%s
 Set: Salutation=%s
 Archive: true
-""" % (sip_account, number, context, extension, voicefile, salutation)
+""" % (context, extension, sip_account, number, voicefile, salutation)
      
         else:
             output = """
@@ -133,8 +134,10 @@ Channel: Local/2000
 WaitTime: 2
 RetryTime: 5
 MaxRetries: 8000
-Application: DatacardSendSMS
-Data: datacard0,%s,%s
+Context: outbound-sms
+Extension: s
+Set: SmsNumber=%s
+Set: Text=%s
 Archive: true
 """ % (number, text)
 
