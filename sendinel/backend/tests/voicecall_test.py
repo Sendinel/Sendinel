@@ -47,13 +47,14 @@ Archive: true
         salutation_file = "salutation"
         self.vc.asterisk_datacard = True 
         output_should = """
-Channel: Datacard/datacard0/03315509256
+Channel: Local/2000
 MaxRetries: 20
 RetryTime: 20
 WaitTime: 30
 Context: call-file-beispiel
 Extension: s
 Priority: 1
+Set: Receipient=Datacard/datacard0/03315509256
 Set: PassedInfo=helloworld
 Set: Salutation=salutation
 Archive: true

@@ -89,17 +89,18 @@ class Voicecall:
             """
         if(self.asterisk_datacard):
             output = """
-Channel: Datacard/%s/%s
+Channel: Local/2000
 MaxRetries: 20
 RetryTime: 20
 WaitTime: 30
 Context: %s
 Extension: %s
 Priority: 1
+Set: Receipient=Datacard/%s/%s
 Set: PassedInfo=%s
 Set: Salutation=%s
 Archive: true
-""" % (sip_account, number, context, extension, voicefile, salutation)
+""" % (context, extension, sip_account, number, voicefile, salutation)
      
         else:
             output = """
