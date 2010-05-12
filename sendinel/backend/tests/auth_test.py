@@ -119,3 +119,25 @@ agi_threadid: -1258067088
         delete_timed_out_authentication_calls()
 
         self.assertEquals(1, AuthenticationCall.objects.all().count())
+        
+        
+    def test_redirect_to_authentication_or(self):
+        url = '/testurl/'
+        
+        # switch authentication on
+        original_value = authhelper.AUTH
+        authhelper.AUTH = True
+        
+        response = redirect_to_authentication_or(url)
+        self.assertRedirects(response, reverse('web_authenticate_phonenumber')
+                                               + "?next=" + url )
+                                               
+        #switch authentication off
+        authhelper.AUTH = False
+        
+        response = redirect_to_authentication_or(url)
+        self.assertRedirects(response, url)
+        
+        authhelper.AUTH = original_value
+                        
+                        

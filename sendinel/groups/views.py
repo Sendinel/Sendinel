@@ -16,7 +16,8 @@ from sendinel.groups.forms import InfoserviceValidationForm, \
                                   NotificationValidationForm2
 from sendinel.logger import logger, log_request
 from sendinel.settings import AUTH, AUTH_NUMBER
-from sendinel.web.views import fill_authentication_session_variable
+from sendinel.web.views import fill_authentication_session_variable, \
+                               render_status_success
 
 
 @log_request                              
@@ -29,30 +30,21 @@ def logout_staff(request):
 
 @log_request
 def create_infomessage(request, id):
-    infoservice = InfoService.objects.filter(pk = id)[0]
-
     if(request.method == "POST"):
-        
-        data = deepcopy(request.POST)
-        form = InfoMessageValidationForm(data)
+        form = InfoMessageValidationForm(request.POST)
         
         if form.is_valid():
-        
-            for patient in infoservice.members.all():
-                create_scheduled_event(patient, infoservice, 
-                                            form.cleaned_data['text'])
+            infoservice = get_object_or_404(InfoService, pk = id)
+            create_messages_for_group(infoservice, form.cleaned_data['text'])
             
             nexturl = reverse('web_index')
-            
-            success = True
             title = _("Message created")
             message = _("All members of the \"%s\" service" + \
                         " will get your message.") \
                                 % infoservice.name
-        
-            return render_to_response('web/status_message.html', 
-                                  locals(),
-                                  context_instance = RequestContext(request))
+            
+            render_status_success(request, title, message, nexturl = nexturl)
+
         
     return render_to_response("groups/message_create.html",
                               locals(),
@@ -216,20 +208,22 @@ def save_registration_infoservice(request, id):
                               
 
                               
-def create_scheduled_event(patient, infoservice, text):
+def create_messages_for_group(group, text):
     '''
         Put together all information for an infomessage and
         calls InfoService.create_scheduled_event
     '''
-    info_message = InfoMessage()
-    info_message.text = text
-    subscription = Subscription.objects.filter(patient = patient,
-                                        infoservice = infoservice)[0]
-    info_message.recipient = patient
-    info_message.send_time = datetime.now()
-    info_message.way_of_communication = \
-                    subscription.way_of_communication
-    info_message.save()        
-    info_message.create_scheduled_event(datetime.now())
-    logger.info("Created %s", str(info_message))
+    
+    for patient in group.members.all():
+        info_message = InfoMessage()
+        info_message.text = text
+        subscription = Subscription.objects.filter(patient = patient,
+                                            infoservice = group)[0]
+        info_message.recipient = patient
+        info_message.send_time = datetime.now()
+        info_message.way_of_communication = \
+                        subscription.way_of_communication
+        info_message.save()        
+        info_message.create_scheduled_event(datetime.now())
+        logger.info("Created %s", str(info_message))
     

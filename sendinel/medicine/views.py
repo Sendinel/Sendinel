@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
@@ -10,9 +10,13 @@ from sendinel.backend.models import Hospital
 from sendinel.groups.models import InfoService
 from sendinel.groups.forms import MedicineMessageValidationForm, \
                                   RegisterPatientForMedicineForm
+from sendinel.groups.views import create_messages_for_group, \
+                                  set_session_variables_for_register, \
+                                  subscription_save
 from sendinel.logger import logger, log_request
 from sendinel.settings import AUTH, AUTH_NUMBER, MEDICINE_MESSAGE_TEMPLATE
-from sendinel.web.views import fill_authentication_session_variable
+from sendinel.web.views import fill_authentication_session_variable, \
+                               render_status_success
 
 
 
@@ -82,28 +86,21 @@ def send_message(request):
         Afterwards, the medicine information group is deleted.
     '''
     if request.method == 'POST':
-        data = deepcopy(request.POST)
-        form = MedicineMessageValidationForm(data)
+        form = MedicineMessageValidationForm(request.POST)
         
         if form.is_valid():
             med_id = form.cleaned_data['medicine'].pk
-            medicine = InfoService.objects.filter(pk = med_id)[0]
-            for patient in medicine.members.all():
-                create_scheduled_event(patient, medicine, 
-                                    form.cleaned_data['text'])
+            medicine = get_object_or_404(InfoService, pk = med_id)
+            create_messages_for_group(medicine, form.cleaned_data['text'])
                 
             medicine.delete()
             
             nexturl = reverse('web_index')
-            
-            success = True
             title = _("Message created")
             message = _("All patients who were waiting for the medicine " +
                         "\"%s\" will be informed") % medicine.name
 
-            return render_to_response('web/status_message.html', 
-                                    locals(),
-                                    context_instance = RequestContext(request))
+            render_status_success(request, title, message, nexturl = nexturl)
                                       
     medicines = InfoService.objects.all().filter(type='medicine')
     

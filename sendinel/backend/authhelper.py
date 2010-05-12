@@ -5,7 +5,8 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
 from sendinel.backend.models import AuthenticationCall
-from sendinel.settings import AUTHENTICATION_CALL_TIMEOUT, \
+from sendinel.settings import AUTHENTICATION_ENABLED, \
+                              AUTHENTICATION_CALL_TIMEOUT, \
                               COUNTRY_CODE_PHONE, \
                               START_MOBILE_PHONE
 

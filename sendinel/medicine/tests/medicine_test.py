@@ -4,7 +4,7 @@ from django.test import TestCase
 
 from sendinel.backend.models import Patient, ScheduledEvent
 from sendinel.groups.models import InfoService, Subscription
-from sendinel.groups import views as groups_views
+from sendinel.medicine import views as medicine_views
 from sendinel.utils import last
 
 class MedicineTest(TestCase):
@@ -33,15 +33,15 @@ class MedicineTest(TestCase):
     
     def test_register_patient(self):
         # disable authentication
-        original_value = groups_views.AUTH
-        groups_views.AUTH = False
+        original_value = medicine_views.AUTH
+        medicine_views.AUTH = False
         
         redirection_path = reverse('medicine_register_patient_save',
                                          kwargs={'id': '3'})
         self.register_patient_with_assertions(redirection_path)
         
         # enable authentication
-        groups_views.AUTH = True
+        medicine_views.AUTH = True
         
         redirection_path = reverse('web_authenticate_phonenumber') \
                     + "?next=" + \
@@ -50,7 +50,7 @@ class MedicineTest(TestCase):
         self.register_patient_with_assertions( redirection_path)
         
         # restore authentication to original value
-        groups_views.AUTH = original_value
+        medicine_views.AUTH = original_value
         
         
     def register_patient_with_assertions(self,redirection_path): 
@@ -85,7 +85,7 @@ class MedicineTest(TestCase):
             self.assertContains(response, unicode(medicine))
         
     def test_send_message_form(self):
-        response = self.client.get(reverse('groups_medicine_send_message'))
+        response = self.client.get(reverse('medicine_send_message'))
         self.failUnlessEqual(response.status_code, 200)
         self.assertContains(response, 'name="medicine"')
         self.assertContains(response, 'textarea')
@@ -106,7 +106,7 @@ class MedicineTest(TestCase):
         scheduled_events_count = ScheduledEvent.objects.all().count()
         a_text = 'Hello, the medicine Malarone is now available at your ' + \
                  'clinic. Please come and pick it up.'
-        response = self.client.post(reverse('groups_medicine_send_message'),
+        response = self.client.post(reverse('medicine_send_message'),
                                      { 'medicine': a_medicine.pk, 
                                        'text': a_text })
                                        
@@ -114,7 +114,7 @@ class MedicineTest(TestCase):
                           info_service_count)
         self.assertEquals(ScheduledEvent.objects.all().count(),
                           scheduled_events_count + members_count)
-       
+        #self.assertRedirects(response, 
                              
         
     def test_add_medicine(self):
