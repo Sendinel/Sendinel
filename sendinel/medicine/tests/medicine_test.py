@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from sendinel.backend.models import Patient, ScheduledEvent
+from sendinel.backend.tests.helper import disable_authentication
 from sendinel.groups.models import InfoService, Subscription
 from sendinel.medicine import views as medicine_views
 from sendinel.utils import last
@@ -31,29 +32,11 @@ class MedicineTest(TestCase):
         self.assertEquals(new_subscription.infoservice.id, 3)
         self.assertEquals(new_subscription.way_of_communication, "sms")    
     
+    @disable_authentication
     def test_register_patient(self):
-        # disable authentication
-        original_value = medicine_views.AUTHENTICATION_ENABLED
-        medicine_views.AUTHENTICATION_ENABLED = False
-        
         redirection_path = reverse('medicine_register_patient_save',
                                          kwargs={'id': '3'})
-        self.register_patient_with_assertions(redirection_path)
-        
-        # enable authentication
-        medicine_views.AUTHENTICATION_ENABLED = True
-        
-        redirection_path = reverse('web_authenticate_phonenumber') \
-                    + "?next=" + \
-                    reverse('medicine_register_patient_save', \
-                    kwargs={'id': '3'})
-        self.register_patient_with_assertions( redirection_path)
-        
-        # restore authentication to original value
-        medicine_views.AUTHENTICATION_ENABLED = original_value
-        
-        
-    def register_patient_with_assertions(self,redirection_path): 
+
         response = self.client.post(
                         reverse('medicine_register_patient'),
                                     {'way_of_communication': 'sms',

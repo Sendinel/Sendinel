@@ -4,8 +4,8 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 
 from sendinel.backend.models import Hospital, Patient, ScheduledEvent
+from sendinel.backend.tests.helper import disable_authentication
 from sendinel.notifications.models import HospitalAppointment, AppointmentType
-from sendinel.settings import AUTHENTICATION_ENABLED
 from sendinel.groups.forms import  NotificationValidationForm2, \
                                 DateValidationForm
 from sendinel import settings
@@ -112,19 +112,17 @@ class AppointmentViewTest(TestCase):
         patient = Patient()
         patient.phone_number = phone_number
         # fake authentication
+        # TODO remove this
         self.client.post(reverse('web_authenticate_phonenumber'), \
                     {'patient': patient})
 
         return self.client.get(reverse("web_appointment_save"))
 
+    @disable_authentication
     def create_appointment_woc(self, way_of_communication):
         response = self.create_appointment(way_of_communication)
        
-        if AUTHENTICATION_ENABLED:
-            self.assertRedirects(response, 
-                             reverse('web_authenticate_phonenumber') + \
-                             "?next=" + \
-                             reverse('web_appointment_save'))
+        self.assertRedirects(response, reverse('web_appointment_save'))
 
         self.assertTrue(self.client.session.has_key('patient'))
         self.assertTrue(self.client.session.has_key('appointment'))

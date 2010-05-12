@@ -8,9 +8,9 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
 from sendinel.backend.models import Patient, Hospital
+from sendinel.backend.authhelper import redirect_to_authentication_or
 from sendinel.notifications.models import HospitalAppointment, AppointmentType
-from sendinel.settings import   AUTHENTICATION_ENABLED, \
-                                DEFAULT_SEND_TIME
+from sendinel.settings import DEFAULT_SEND_TIME
 from sendinel.logger import logger, log_request
 from sendinel.notifications.forms import NotificationValidationForm
                                
@@ -48,12 +48,9 @@ def create_appointment(request, appointment_type_name = None):
                 return HttpResponseRedirect(reverse("web_list_devices") + \
                                 "?next=" + reverse("web_appointment_send"))
             elif appointment.way_of_communication in ('sms', 'voice' ):
-                if AUTHENTICATION_ENABLED:
-                    return HttpResponseRedirect( \
-                        reverse("web_authenticate_phonenumber") + "?next=" + \
-                        reverse("web_appointment_save"))
-                return HttpResponseRedirect( \
-                        reverse("web_appointment_save"))
+                return redirect_to_authentication_or(
+                                reverse("web_appointment_save"))
+
             else:
                 logger.error("Unknown way of communication selected.")
                 raise Exception ("Unknown way of communication %s " +

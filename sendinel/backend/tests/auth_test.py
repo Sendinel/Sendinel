@@ -120,6 +120,7 @@ agi_threadid: -1258067088
 
         self.assertEquals(1, AuthenticationCall.objects.all().count())
         
+    
         
     def test_redirect_to_authentication_or(self):
         url = '/testurl/'

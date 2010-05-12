@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from sendinel.backend.models import AuthenticationCall
+from sendinel.backend import authhelper
 from sendinel.notifications.models import AppointmentType
 from sendinel.notifications import views as notification_views
 from sendinel.web import views as web_views
@@ -61,11 +62,13 @@ class AuthenticateViewTests(TestCase):
         # self.failUnlessEqual(response.status_code, 200)
         
         # self.assertContains(response, 'name="name"')
-        
+    
+    
     def test_check_call_received(self):        
         # settings up the environment
-        
         appointment_type = AppointmentType.objects.get(pk=1)
+        original_value = authhelper.AUTHENTICATION_ENABLED
+        authhelper.AUTHENTICATION_ENABLED = True
         
         self.client.get(reverse('web_appointment_create', \
                 kwargs={"appointment_type_name": appointment_type.name })) 
@@ -77,9 +80,6 @@ class AuthenticateViewTests(TestCase):
                 
         # make sure there are no AuthenticationCall objects in the db
         AuthenticationCall.objects.all().delete()
-               
-        auth_save = notification_views.AUTHENTICATION_ENABLED
-        notification_views.AUTHENTICATION_ENABLED = True
                 
         self.client.post("/web/authenticate_phonenumber/", 
             {'number':'01234 / 56789012'})
@@ -107,4 +107,4 @@ class AuthenticateViewTests(TestCase):
     
         web_views.AUTHENTICATION_CALL_TIMEOUT = real_timeout
         
-        notification_views.AUTHENTICATION_ENABLED = auth_save
+        authhelper.AUTHENTICATION_ENABLED = original_value

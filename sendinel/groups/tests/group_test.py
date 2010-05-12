@@ -216,30 +216,17 @@ class WebInfoServiceTest(TestCase):
         self.assertRedirects(response, redirection_path)
         return response
         
-        
-    def register_infoservice_validations(self):
-        return self.client.post(reverse('web_infoservice_register', 
+
+    @disable_authentication
+    def test_register_infoservice_submit_validations(self):
+       
+        response = self.client.post(reverse('web_infoservice_register', 
                                     kwargs={'id': self.info.id}),
                                     {'way_of_communication': 'sms',
                                      'phone_number':'01234 / 56789012'})
 
-    def test_register_infoservice_submit_validations(self):
-        # disable authentication
-        original_value = groups_views.AUTHENTICATION_ENABLED
-        groups_views.AUTHENTICATION_ENABLED = False
-        
-        response = self.register_infoservice_validations()
+        self.assertEquals(response.status_code, 302)
 
-        self.assertEquals(response.status_code, 302)
-        
-        groups_views.AUTHENTICATION_ENABLED = True
-        
-        response = self.register_infoservice_validations()
-        self.assertEquals(response.status_code, 302)
-        
-        # restore AUTHENTICATION_ENABLED value
-        groups_views.AUTHENTICATION_ENABLED = original_value
-        
         response = self.client.post(reverse('web_infoservice_register', 
                                     kwargs={'id': self.info.id}),
                                     {'way_of_communication': 'sms',

@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
 from sendinel.backend.models import Hospital
+from sendinel.backend.authhelper import redirect_to_authentication_or
 from sendinel.groups.models import InfoService
 from sendinel.groups.forms import MedicineMessageValidationForm, \
                                   RegisterPatientForMedicineForm
@@ -14,7 +15,7 @@ from sendinel.groups.views import create_messages_for_group, \
                                   set_session_variables_for_register, \
                                   subscription_save
 from sendinel.logger import logger, log_request
-from sendinel.settings import AUTHENTICATION_ENABLED, AUTH_NUMBER, MEDICINE_MESSAGE_TEMPLATE
+from sendinel.settings import AUTH_NUMBER, MEDICINE_MESSAGE_TEMPLATE
 from sendinel.web.views import fill_authentication_session_variable, \
                                render_status_success
 
@@ -57,17 +58,10 @@ def register_patient(request):
             number = fill_authentication_session_variable(request) 
             auth_number = AUTH_NUMBER
             backurl = reverse('web_index')
-            
-            if AUTHENTICATION_ENABLED:
-                return HttpResponseRedirect(
-                        reverse('web_authenticate_phonenumber') \
-                        + "?next=" + \
-                        reverse('medicine_register_patient_save', \
-                        kwargs= {'id': request.session['medicine']}))
 
-            return HttpResponseRedirect( \
+            return redirect_to_authentication_or(
                             reverse('medicine_register_patient_save',
-                                kwargs = {'id': request.session['medicine']}))
+                                 kwargs = {'id': request.session['medicine']}))
         else:
             logger.info("register_infoservice: Invalid form.")
        
