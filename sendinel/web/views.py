@@ -23,6 +23,7 @@ from sendinel.settings import   AUTH_NUMBER, \
 @log_request
 def index(request):
     groups = InfoService.objects.all().filter(type="information")
+    medicine_count = InfoService.objects.all().filter(type="medicine").count()
     appointment_types = AppointmentType.objects.all()
     return render_to_response('web/index.html',
                               locals(),  

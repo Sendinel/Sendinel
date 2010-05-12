@@ -53,7 +53,7 @@ def create_infomessage(request, id):
             
             success = True
             title = _("Message created")
-            message = _("All members of the %s service will get your message.") \
+            message = _("All members of the \"%s\" service will get your message.") \
                                 % infoservice.name
         
             return render_to_response('web/status_message.html', 
@@ -94,10 +94,11 @@ def create_group(request, group_type):
             logger.info("Created InfoService: %s", str(infoservice))
             
             nexturl = reverse('groups_index', kwargs={'group_type': group_type})
-            
+            backurl = reverse('groups_create', kwargs={'group_type': group_type})
+                        
             success = True
             title = _("Creation successful")
-            message = _("The %(group_name)s %(group_type)s has been created.") \
+            message = _("The \"%(group_name)s\" %(group_type)s has been created.") \
                         % {'group_name': infoservice.name,
                            'group_type': group_textblocks["name"]}
     
@@ -213,7 +214,7 @@ def save_registration_infoservice(request, id):
     success = True
     title = _("Registration successful")
     message = _("The patient will now receive all messages from the "
-                        " %s service.") % subscription.infoservice.name
+                        " \"%s\" service.") % subscription.infoservice.name
     
     return render_to_response('web/status_message.html', 
                               locals(),
@@ -229,7 +230,7 @@ def medicine_register_patient_save(request, id):
     success = True
     title = _("Registration successful")
     message = _("The patient will receive a messages once the medicine "
-                " %s is available in the clinic again.") \
+                " \"%s\" is available in the clinic again.") \
                 % subscription.infoservice.name
     
     return render_to_response('web/status_message.html', 
@@ -305,7 +306,7 @@ def medicine_send_message(request):
             
             success = True
             title = _("Message created")
-            message = _("All patients who were waiting for the medicine %s" + \
+            message = _("All patients who were waiting for the medicine \"%s\"" + \
                         "will be informed") %medicine.name
         
             return render_to_response('web/status_message.html', 
