@@ -89,7 +89,7 @@ class Voicecall:
             """
         if(self.asterisk_datacard):
             output = """
-Channel: Local/2000
+Channel: Local/3000
 MaxRetries: 20
 RetryTime: 20
 WaitTime: 30

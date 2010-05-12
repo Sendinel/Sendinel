@@ -47,7 +47,7 @@ Archive: true
         salutation_file = "salutation"
         self.vc.asterisk_datacard = True 
         output_should = """
-Channel: Local/2000
+Channel: Local/3000
 MaxRetries: 20
 RetryTime: 20
 WaitTime: 30
