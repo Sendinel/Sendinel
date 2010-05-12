@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 
 from sendinel.backend.models import Patient, Hospital
 from sendinel.notifications.models import HospitalAppointment, AppointmentType
-from sendinel.settings import   AUTH, \
+from sendinel.settings import   AUTHENTICATION_ENABLED, \
                                 DEFAULT_SEND_TIME
 from sendinel.logger import logger, log_request
 from sendinel.notifications.forms import NotificationValidationForm
@@ -48,7 +48,7 @@ def create_appointment(request, appointment_type_name = None):
                 return HttpResponseRedirect(reverse("web_list_devices") + \
                                 "?next=" + reverse("web_appointment_send"))
             elif appointment.way_of_communication in ('sms', 'voice' ):
-                if AUTH:
+                if AUTHENTICATION_ENABLED:
                     return HttpResponseRedirect( \
                         reverse("web_authenticate_phonenumber") + "?next=" + \
                         reverse("web_appointment_save"))

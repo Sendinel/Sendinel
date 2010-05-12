@@ -5,7 +5,7 @@ from django.test import TestCase, Client
 
 from sendinel.backend.models import Hospital, Patient, ScheduledEvent
 from sendinel.notifications.models import HospitalAppointment, AppointmentType
-from sendinel.settings import AUTH
+from sendinel.settings import AUTHENTICATION_ENABLED
 from sendinel.groups.forms import  NotificationValidationForm2, \
                                 DateValidationForm
 from sendinel import settings
@@ -120,7 +120,7 @@ class AppointmentViewTest(TestCase):
     def create_appointment_woc(self, way_of_communication):
         response = self.create_appointment(way_of_communication)
        
-        if AUTH:
+        if AUTHENTICATION_ENABLED:
             self.assertRedirects(response, 
                              reverse('web_authenticate_phonenumber') + \
                              "?next=" + \

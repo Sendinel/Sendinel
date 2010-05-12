@@ -14,7 +14,7 @@ from sendinel.groups.views import create_messages_for_group, \
                                   set_session_variables_for_register, \
                                   subscription_save
 from sendinel.logger import logger, log_request
-from sendinel.settings import AUTH, AUTH_NUMBER, MEDICINE_MESSAGE_TEMPLATE
+from sendinel.settings import AUTHENTICATION_ENABLED, AUTH_NUMBER, MEDICINE_MESSAGE_TEMPLATE
 from sendinel.web.views import fill_authentication_session_variable, \
                                render_status_success
 
@@ -58,7 +58,7 @@ def register_patient(request):
             auth_number = AUTH_NUMBER
             backurl = reverse('web_index')
             
-            if AUTH:
+            if AUTHENTICATION_ENABLED:
                 return HttpResponseRedirect(
                         reverse('web_authenticate_phonenumber') \
                         + "?next=" + \

@@ -33,15 +33,15 @@ class MedicineTest(TestCase):
     
     def test_register_patient(self):
         # disable authentication
-        original_value = medicine_views.AUTH
-        medicine_views.AUTH = False
+        original_value = medicine_views.AUTHENTICATION_ENABLED
+        medicine_views.AUTHENTICATION_ENABLED = False
         
         redirection_path = reverse('medicine_register_patient_save',
                                          kwargs={'id': '3'})
         self.register_patient_with_assertions(redirection_path)
         
         # enable authentication
-        medicine_views.AUTH = True
+        medicine_views.AUTHENTICATION_ENABLED = True
         
         redirection_path = reverse('web_authenticate_phonenumber') \
                     + "?next=" + \
@@ -50,7 +50,7 @@ class MedicineTest(TestCase):
         self.register_patient_with_assertions( redirection_path)
         
         # restore authentication to original value
-        medicine_views.AUTH = original_value
+        medicine_views.AUTHENTICATION_ENABLED = original_value
         
         
     def register_patient_with_assertions(self,redirection_path): 

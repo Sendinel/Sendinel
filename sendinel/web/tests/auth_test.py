@@ -78,8 +78,8 @@ class AuthenticateViewTests(TestCase):
         # make sure there are no AuthenticationCall objects in the db
         AuthenticationCall.objects.all().delete()
                
-        auth_save = notification_views.AUTH
-        notification_views.AUTH = True
+        auth_save = notification_views.AUTHENTICATION_ENABLED
+        notification_views.AUTHENTICATION_ENABLED = True
                 
         self.client.post("/web/authenticate_phonenumber/", 
             {'number':'01234 / 56789012'})
@@ -107,4 +107,4 @@ class AuthenticateViewTests(TestCase):
     
         web_views.AUTHENTICATION_CALL_TIMEOUT = real_timeout
         
-        notification_views.AUTH = auth_save
+        notification_views.AUTHENTICATION_ENABLED = auth_save

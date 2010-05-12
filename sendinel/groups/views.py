@@ -10,12 +10,13 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
 from sendinel.backend.models import Patient
+from sendinel.backend import authhelper
 from sendinel.groups.models import InfoService, InfoMessage, Subscription
 from sendinel.groups.forms import InfoserviceValidationForm, \
                                   InfoMessageValidationForm, \
                                   NotificationValidationForm2
 from sendinel.logger import logger, log_request
-from sendinel.settings import AUTH, AUTH_NUMBER
+from sendinel.settings import AUTHENTICATION_ENABLED, AUTH_NUMBER
 from sendinel.web.views import fill_authentication_session_variable, \
                                render_status_success
 
@@ -155,14 +156,10 @@ def register_infoservice(request, id):
             auth_number = AUTH_NUMBER
             backurl = reverse('web_index')        
 
-            if AUTH:
-                return HttpResponseRedirect(
-                        reverse('web_authenticate_phonenumber') \
-                        + "?next=" + reverse('web_infoservice_register_save', \
-                        kwargs = {'id': id}))
-                
-            return HttpResponseRedirect(
-                reverse('web_infoservice_register_save', kwargs = {'id': id}))
+            return authhelper.redirect_to_authentication_or(reverse \
+                    ('web_infoservice_register_save', kwargs = {'id': id}))
+            
+           
         else:
             logger.info("register_infoservice: Invalid form.")
        

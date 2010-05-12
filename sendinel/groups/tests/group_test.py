@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 from sendinel.backend.models import ScheduledEvent, Patient
+from sendinel.backend.tests.helper import disable_authentication
 from sendinel.groups.models import InfoService, InfoMessage, Subscription
 from sendinel.groups import views as groups_views
-from sendinel.settings import AUTH
 from sendinel.utils import last
 
 
@@ -160,11 +160,13 @@ class StaffInfoServiceTest(TestCase):
                             InfoService.objects.all().count())
         self.assertRedirects(response, reverse("groups_index",
                                         kwargs={'group_type': 'information'}))
-        
+
+
 class WebInfoServiceTest(TestCase):
     
     fixtures = ['backend_test']
     
+
     def setUp(self):
         self.info = InfoService(name = "testinfoservice", type="information")
         self.info.save()
@@ -196,28 +198,11 @@ class WebInfoServiceTest(TestCase):
             else:
                 self.assertNotContains(response, infoservice.name)
 
-        
+    @disable_authentication
     def test_register_infoservice(self):
-        original_value = groups_views.AUTH
-        
-        # test with authentication disabled
-        groups_views.AUTH = False
-        
         redirection_path = reverse('web_infoservice_register_save', \
                                     kwargs = {'id': self.info.id})
-        self.register_infoservice_with_assertions(redirection_path)
-    
-        #test with authentication enabled
-        groups_views.AUTH = True
-        
-        redirection_path = reverse('web_authenticate_phonenumber') \
-                        + "?next=" + redirection_path
-        self.register_infoservice_with_assertions(redirection_path)
-    
-        # restore AUTH value
-        groups_views.AUTH = original_value
-    
-    def register_infoservice_with_assertions(self, redirection_path):
+
         self.create_register_infoservice_form()
         response = self.client.post(reverse('web_infoservice_register', 
                                     kwargs={'id': self.info.id}),
@@ -240,20 +225,20 @@ class WebInfoServiceTest(TestCase):
 
     def test_register_infoservice_submit_validations(self):
         # disable authentication
-        original_value = groups_views.AUTH
-        groups_views.AUTH = False
+        original_value = groups_views.AUTHENTICATION_ENABLED
+        groups_views.AUTHENTICATION_ENABLED = False
         
         response = self.register_infoservice_validations()
 
         self.assertEquals(response.status_code, 302)
         
-        groups_views.AUTH = True
+        groups_views.AUTHENTICATION_ENABLED = True
         
         response = self.register_infoservice_validations()
         self.assertEquals(response.status_code, 302)
         
-        # restore AUTH value
-        groups_views.AUTH = original_value
+        # restore AUTHENTICATION_ENABLED value
+        groups_views.AUTHENTICATION_ENABLED = original_value
         
         response = self.client.post(reverse('web_infoservice_register', 
                                     kwargs={'id': self.info.id}),
