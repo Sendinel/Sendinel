@@ -56,9 +56,9 @@ def create_infomessage(request, id):
                                   locals(),
                                   context_instance = RequestContext(request))
         
-        return render_to_response("groups/message_create.html",
-                                locals(),
-                                context_instance = RequestContext(request))
+    return render_to_response("groups/message_create.html",
+                              locals(),
+                              context_instance = RequestContext(request))
 
 @log_request
 def index(request, group_type):
