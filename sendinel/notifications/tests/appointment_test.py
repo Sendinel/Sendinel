@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 
 from sendinel.backend.models import Hospital, Patient, ScheduledEvent
-# from sendinel.backend.tests.helper import disable_authentication
+from sendinel.backend.tests.helper import disable_authentication
 from sendinel.notifications.models import HospitalAppointment, AppointmentType
 from sendinel.groups.forms import  NotificationValidationForm2, \
                                 DateValidationForm
@@ -118,15 +118,15 @@ class AppointmentViewTest(TestCase):
 
         return self.client.get(reverse("web_appointment_save"))
 
-    # @disable_authentication
-    # def create_appointment_woc(self, way_of_communication):
-    #     response = self.create_appointment(way_of_communication)
-    #    
-    #     self.assertRedirects(response, reverse('web_appointment_save'))
-    # 
-    #     self.assertTrue(self.client.session.has_key('patient'))
-    #     self.assertTrue(self.client.session.has_key('appointment'))
-    #     
+    @disable_authentication
+    def create_appointment_woc(self, way_of_communication):
+        response = self.create_appointment(way_of_communication)
+       
+        self.assertRedirects(response, reverse('web_appointment_save'))
+
+        self.assertTrue(self.client.session.has_key('patient'))
+        self.assertTrue(self.client.session.has_key('appointment'))
+        
 
     def save_appointment_woc(self, way_of_communication):
         
@@ -150,13 +150,13 @@ class AppointmentViewTest(TestCase):
         # test that exactly one ScheduledEvent was created
         self.assertEquals(ScheduledEvent.objects.count(),
                             number_of_events + 1)
-    # 
-    # def test_create_appointment_sms(self):
-    #     self.create_appointment_woc('sms')
-    #     
-    # def test_create_appointment_voice(self):
-    #     self.create_appointment_woc('voice')
-    #     
+
+    def test_create_appointment_sms(self):
+        self.create_appointment_woc('sms')
+        
+    def test_create_appointment_voice(self):
+        self.create_appointment_woc('voice')
+        
     def test_create_appointment_bluetooth(self):
          response = self.create_appointment('bluetooth')
          self.assertRedirects(response, 
