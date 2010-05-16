@@ -24,8 +24,9 @@ coverage xml --omit=/usr/
 # E1101:	%s %r has no %r member Used when a variable is accessed for an unexistant member.
 # C0111:	Missing docstring
 echo "pylint running..."
-pylint -f parseable sendinel --include-ids=y --generated-members=objects \
-    --disable-msg=C0111,E1101 \
+pylint -f parseable --include-ids=y --generated-members=objects \
+    --disable=C0111,E1101 \
+    sendinel \
     > pylint.txt
 echo "pylint complete"
 
