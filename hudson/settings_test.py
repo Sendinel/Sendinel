@@ -1,3 +1,6 @@
+# allow wildcard import - explicitly listing all options here again doesn't
+#   seem to make sense
+# pylint: disable=W0614,W0401
 from sendinel.settings import * # Properly namespaced as needed.
 
 # ROOT_URLCONF = 'yourapp.settings.test.urls'

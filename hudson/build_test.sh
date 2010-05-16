@@ -21,11 +21,12 @@ coverage xml --omit=/usr/
 # pylint
 
 # the following messages are disabled
-# E1101:	%s %r has no %r member Used when a variable is accessed for an unexistant member.
-# C0111:	Missing docstring
+# C0111: Missing docstring
+# E1101: %s %r has no %r member Used when a variable is accessed for an unexistant member.
+# W0612: Unused variable %r Used when a variable is defined but not used.
 echo "pylint running..."
 pylint -f parseable --include-ids=y --generated-members=objects \
-    --disable=C0111,E1101 \
+    --disable=C0111,E1101,W0612 \
     sendinel \
     > pylint.txt
 echo "pylint complete"
