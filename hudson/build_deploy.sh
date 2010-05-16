@@ -22,7 +22,7 @@ rsync -av --delete "$DEPLOY_SOURCE/$DJANGO_PROJECT" "$DEPLOY_TARGET" || exit 1
 cp -av "$DEPLOY_SETTINGS" "$DEPLOY_TARGET/$DJANGO_PROJECT/local_settings.py" || exit 1
 
 # restart FastCGI processes
-"$DEPLOY_SOURCE/hudson/deploy_restart_fastcgi.sh" "$DEPLOY_TARGET/$DJANGO_PROJECT" "$FASTCGI_PORT"|| exit 1
+"$DEPLOY_SOURCE/hudson/deploy_restart_fastcgi.sh" "$DEPLOY_TARGET" "$FASTCGI_PORT"|| exit 1
 
 # copy docs over
 rsync -av --delete "$DEPLOY_SOURCE/html" "$DEPLOY_TARGET"
