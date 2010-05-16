@@ -2,6 +2,7 @@
 
 SENDINELPROJECT="$WORKSPACE/sendinel"
 export PYTHONPATH="$WORKSPACE"
+export DJANGO_SETTINGS_MODULE=sendinel.settings
 
 # set up settings
 cp -av "$WORKSPACE/hudson/settings_test.py" "$SENDINELPROJECT/local_settings.py"
@@ -9,24 +10,29 @@ cp -av "$WORKSPACE/hudson/settings_test.py" "$SENDINELPROJECT/local_settings.py"
 
 # compile language files
 cd "$SENDINELPROJECT"
-/usr/bin/django-admin compilemessages --settings=sendinel.settings
+/usr/bin/django-admin compilemessages
 cd "$WORKSPACE"
 
 # tests and coverage
-coverage run /usr/bin/django-admin test --settings=sendinel.settings -v2 --with-xunit
+coverage run /usr/bin/django-admin test -v2 --with-xunit
 coverage xml --omit=/usr/
 
 
 # pylint
+
+# the following messages are disabled
+# E1101:	%s %r has no %r member Used when a variable is accessed for an unexistant member.
+# C0111:	Missing docstring
 echo "pylint running..."
-pylint -f parseable sendinel --include-ids=y --generated-members=objects > pylint.txt
+pylint -f parseable sendinel --include-ids=y --generated-members=objects \
+    --disable-msg=C0111,E1101 \
+    > pylint.txt
 echo "pylint complete"
 
 
 # docs
-export DJANGO_SETTINGS_MODULE=sendinel.settings
+
 epydoc --graph all sendinel
-unset DJANGO_SETTINGS_MODULE
 
 # sloccount
 sloccount --details --wide --addlang html sendinel > sloccount
