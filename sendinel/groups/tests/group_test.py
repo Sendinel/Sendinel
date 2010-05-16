@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 from sendinel.backend.models import ScheduledEvent, Patient
-from sendinel.backend.tests.helper import disable_authentication
+# from sendinel.backend.tests.helper import disable_authentication
 from sendinel.groups.models import InfoService, InfoMessage, Subscription
 from sendinel.groups import views as groups_views
 from sendinel.utils import last
@@ -198,48 +198,48 @@ class WebInfoServiceTest(TestCase):
             else:
                 self.assertNotContains(response, infoservice.name)
 
-    @disable_authentication
-    def test_register_infoservice(self):
-        redirection_path = reverse('web_infoservice_register_save', \
-                                    kwargs = {'id': self.info.id})
-
-        self.create_register_infoservice_form()
-        response = self.client.post(reverse('web_infoservice_register', 
-                                    kwargs={'id': self.info.id}),
-                                    {'way_of_communication': 'sms',
-                                     'phone_number':'01234 / 56789012'})
-
-        self.assertTrue(self.client.session.has_key('way_of_communication'))
-        self.assertTrue(self.client.session.has_key('authenticate_phonenumber'))
-        
-        self.assertEquals(response.status_code, 302)
-        self.assertRedirects(response, redirection_path)
-        return response
-        
-
-    @disable_authentication
-    def test_register_infoservice_submit_validations(self):
-       
-        response = self.client.post(reverse('web_infoservice_register', 
-                                    kwargs={'id': self.info.id}),
-                                    {'way_of_communication': 'sms',
-                                     'phone_number':'01234 / 56789012'})
-
-        self.assertEquals(response.status_code, 302)
-
-        response = self.client.post(reverse('web_infoservice_register', 
-                                    kwargs={'id': self.info.id}),
-                                    {'way_of_communication': 'sms',
-                                     'phone_number':'0123afffg789012'})
-        self.assertContains(response, 'Please enter numbers only')
-
-        response = self.client.post(reverse('web_infoservice_register', 
-                                    kwargs={'id': self.info.id}),
-                                    {'way_of_communication': 'sms',
-                                     'phone_number':'234 / 56789012'})
-        self.assertContains(response, 'Please enter a cell phone number.')
-        
-        
+    # @disable_authentication
+    # def test_register_infoservice(self):
+    #     redirection_path = reverse('web_infoservice_register_save', \
+    #                                 kwargs = {'id': self.info.id})
+    # 
+    #     self.create_register_infoservice_form()
+    #     response = self.client.post(reverse('web_infoservice_register', 
+    #                                 kwargs={'id': self.info.id}),
+    #                                 {'way_of_communication': 'sms',
+    #                                  'phone_number':'01234 / 56789012'})
+    # 
+    #     self.assertTrue(self.client.session.has_key('way_of_communication'))
+    #     self.assertTrue(self.client.session.has_key('authenticate_phonenumber'))
+    #     
+    #     self.assertEquals(response.status_code, 302)
+    #     self.assertRedirects(response, redirection_path)
+    #     return response
+    #     
+    # 
+    # @disable_authentication
+    # def test_register_infoservice_submit_validations(self):
+    #    
+    #     response = self.client.post(reverse('web_infoservice_register', 
+    #                                 kwargs={'id': self.info.id}),
+    #                                 {'way_of_communication': 'sms',
+    #                                  'phone_number':'01234 / 56789012'})
+    # 
+    #     self.assertEquals(response.status_code, 302)
+    # 
+    #     response = self.client.post(reverse('web_infoservice_register', 
+    #                                 kwargs={'id': self.info.id}),
+    #                                 {'way_of_communication': 'sms',
+    #                                  'phone_number':'0123afffg789012'})
+    #     self.assertContains(response, 'Please enter numbers only')
+    # 
+    #     response = self.client.post(reverse('web_infoservice_register', 
+    #                                 kwargs={'id': self.info.id}),
+    #                                 {'way_of_communication': 'sms',
+    #                                  'phone_number':'234 / 56789012'})
+    #     self.assertContains(response, 'Please enter a cell phone number.')
+    #     
+    #     
 
 
         

@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from sendinel.backend.models import Patient, ScheduledEvent
-from sendinel.backend.tests.helper import disable_authentication
+# from sendinel.backend.tests.helper import disable_authentication
 from sendinel.groups.models import InfoService, Subscription
 from sendinel.medicine import views as medicine_views
 from sendinel.utils import last
@@ -32,24 +32,24 @@ class MedicineTest(TestCase):
         self.assertEquals(new_subscription.infoservice.id, 3)
         self.assertEquals(new_subscription.way_of_communication, "sms")    
     
-    @disable_authentication
-    def test_register_patient(self):
-        redirection_path = reverse('medicine_register_patient_save',
-                                         kwargs={'id': '3'})
-
-        response = self.client.post(
-                        reverse('medicine_register_patient'),
-                                    {'way_of_communication': 'sms',
-                                     'phone_number':'01234 / 56789012',
-                                     'medicine': '3'}) # pk = 3 is a medicine
-
-        self.assertTrue(self.client.session.has_key('way_of_communication'))
-        self.assertTrue(self.client.session.has_key('medicine'))
-        self.assertTrue(self.client.session.has_key \
-                                        ('authenticate_phonenumber'))
-
-        self.assertEquals(response.status_code, 302)
-        self.assertRedirects(response, redirection_path)
+    # @disable_authentication
+    # def test_register_patient(self):
+    #     redirection_path = reverse('medicine_register_patient_save',
+    #                                      kwargs={'id': '3'})
+    # 
+    #     response = self.client.post(
+    #                     reverse('medicine_register_patient'),
+    #                                 {'way_of_communication': 'sms',
+    #                                  'phone_number':'01234 / 56789012',
+    #                                  'medicine': '3'}) # pk = 3 is a medicine
+    # 
+    #     self.assertTrue(self.client.session.has_key('way_of_communication'))
+    #     self.assertTrue(self.client.session.has_key('medicine'))
+    #     self.assertTrue(self.client.session.has_key \
+    #                                     ('authenticate_phonenumber'))
+    # 
+    #     self.assertEquals(response.status_code, 302)
+    #     self.assertRedirects(response, redirection_path)
        
                                  
         
