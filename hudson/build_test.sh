@@ -33,7 +33,6 @@ echo "pylint complete"
 
 
 # docs
-
 epydoc --graph all sendinel
 
 # sloccount
