@@ -5,10 +5,12 @@ export PYTHONPATH="$WORKSPACE"
 
 # set up settings
 cp -av "$WORKSPACE/hudson/settings_test.py" "$SENDINELPROJECT/local_settings.py"
-cd "$SENDINELPROJECT"
+
 
 # compile language files
+cd "$SENDINELPROJECT"
 /usr/bin/django-admin compilemessages --settings=sendinel.settings
+cd "$WORKSPACE"
 
 # tests and coverage
 coverage run /usr/bin/django-admin test --settings=sendinel.settings -v2 --with-xunit
@@ -23,7 +25,6 @@ echo "pylint complete"
 
 # docs
 export DJANGO_SETTINGS_MODULE=sendinel.settings
-cd "$WORKSPACE"
 epydoc --graph all sendinel
 unset DJANGO_SETTINGS_MODULE
 
