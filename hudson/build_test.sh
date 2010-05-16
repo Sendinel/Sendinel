@@ -5,7 +5,7 @@ export PYTHONPATH="$WORKSPACE"
 export DJANGO_SETTINGS_MODULE=sendinel.settings
 
 # set up settings
-cp -av "$WORKSPACE/hudson/settings_test.py" "$SENDINELPROJECT/local_settings.py"
+cp -av "$WORKSPACE/hudson/settings_test.py" "$SENDINELPROJECT/local_settings.py" || exit 1
 
 
 # compile language files
@@ -14,7 +14,7 @@ cd "$SENDINELPROJECT"
 cd "$WORKSPACE"
 
 # tests and coverage
-coverage run /usr/bin/django-admin test -v2 --with-xunit
+coverage run /usr/bin/django-admin test -v2 --with-xunit || exit 1
 coverage xml --omit=/usr/
 
 
