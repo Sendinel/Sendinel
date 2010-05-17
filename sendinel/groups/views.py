@@ -21,7 +21,8 @@ from sendinel.infoservices.utils import create_messages_for_infoservice, \
 from sendinel.logger import logger, log_request
 from sendinel.settings import AUTH_NUMBER
 from sendinel.web.utils import fill_authentication_session_variable, \
-                               render_status_success
+                               render_status_success, \
+                               get_ways_of_communication
 
 @log_request
 def send_message(request, id):
@@ -48,6 +49,8 @@ def send_message(request, id):
 @log_request
 def register(request, group_id):
     ajax_url= reverse('web_check_call_received')
+    
+    ways_of_communication = get_ways_of_communication(immediate = True)
     
     if request.method == "POST":
         set_session_variables_for_register(request)

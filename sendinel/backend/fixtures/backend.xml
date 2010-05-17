@@ -1,5 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <django-objects version="1.0">
+    <object pk="1" model="backend.wayofcommunication">
+        <field type="CharField" name="name">sms</field>
+        <field type="CharField" name="verbose_name">SMS</field>
+        <field type="BooleanField" name="enabled">True</field>
+        <field type="BooleanField" name="can_send_immediately">True</field>
+    </object>
+    <object pk="2" model="backend.wayofcommunication">
+        <field type="CharField" name="name">voice</field>
+        <field type="CharField" name="verbose_name">Voice Call</field>
+        <field type="BooleanField" name="enabled">True</field>
+        <field type="BooleanField" name="can_send_immediately">True</field>
+    </object>
+    <object pk="3" model="backend.wayofcommunication">
+        <field type="CharField" name="name">bluetooth</field>
+        <field type="CharField" name="verbose_name">Bluetooth</field>
+        <field type="BooleanField" name="enabled">True</field>
+        <field type="BooleanField" name="can_send_immediately">False</field>
+    </object>
     <object pk="1" model="notifications.appointmenttype">
         <field type="CharField" name="name">vaccination</field>
         <field type="CharField" name="verbose_name">Remind of Vaccination</field>

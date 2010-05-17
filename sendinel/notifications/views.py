@@ -15,7 +15,8 @@ from sendinel.notifications.models import HospitalAppointment, AppointmentType
 from sendinel.notifications.forms import NotificationValidationForm
 from sendinel.settings import DEFAULT_SEND_TIME
 from sendinel.logger import logger, log_request
-from sendinel.web.utils import render_status_success
+from sendinel.web.utils import render_status_success, \
+                               get_ways_of_communication
                                
 @log_request
 def create_appointment(request, appointment_type_name = None):
@@ -23,6 +24,9 @@ def create_appointment(request, appointment_type_name = None):
                               filter(name = appointment_type_name)[0]
     nexturl = ""
     backurl = reverse('web_index')
+    
+    ways_of_communication = get_ways_of_communication()
+    
     if request.method == "POST":
         data = deepcopy(request.POST)
         if appointment_type.notify_immediately:
@@ -63,7 +67,7 @@ def create_appointment(request, appointment_type_name = None):
         else:
         
             logger.info("create_appointment: Invalid form.")
-
+        
     return render_to_response('notifications/create.html',
                             locals(),
                             context_instance=RequestContext(request))
