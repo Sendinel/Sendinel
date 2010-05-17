@@ -17,8 +17,7 @@ from sendinel.logger import logger, log_request
 from sendinel.settings import   AUTH_NUMBER, \
                                 AUTHENTICATION_CALL_TIMEOUT, \
                                 BLUETOOTH_SERVER_ADDRESS
-from sendinel.web.utils import render_status_success, \
-                               fill_authentication_session_variable
+from sendinel.web.utils import fill_authentication_session_variable
 
 
 @log_request

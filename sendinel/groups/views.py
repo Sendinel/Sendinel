@@ -34,7 +34,7 @@ def send_message(request, id):
                         " will get your message.") \
                                 % group.name
             
-            render_status_success(request, title, message, nexturl = nexturl)
+            return render_status_success(request, title, message, nexturl = nexturl)
 
         
     return render_to_response("groups/message_create.html",
