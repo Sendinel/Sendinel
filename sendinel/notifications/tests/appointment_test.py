@@ -46,7 +46,7 @@ class AppointmentViewTest(TestCase):
     
     def create_appointment_form(self, appointment_type_id):
         appointment_type = AppointmentType.objects.get(pk=appointment_type_id)
-        response = self.client.get(reverse('web_appointment_create', \
+        response = self.client.get(reverse('notifications_create', \
                 kwargs={"appointment_type_name": appointment_type.name }))
         self.failUnlessEqual(response.status_code, 200)
         self.assertContains(response, 'name="phone_number"')
@@ -70,14 +70,14 @@ class AppointmentViewTest(TestCase):
     
     def test_create_appointment_submit_validations(self):
         appointment_type = AppointmentType.objects.get(pk=1) #vaccination
-        response = self.client.post(reverse('web_appointment_create', \
+        response = self.client.post(reverse('notifications_create', \
             kwargs={"appointment_type_name": appointment_type.name }), 
                 {'date': '2012-08-12',
                  'phone_number': '01733685224',
                  'way_of_communication':'sms'  })
         self.assertEquals(response.status_code, 302)
             
-        response = self.client.post(reverse('web_appointment_create', \
+        response = self.client.post(reverse('notifications_create', \
                 kwargs={"appointment_type_name": appointment_type.name }), 
                     {'date': '2012-08-12',
                      'phone_number': '01733assr685224',
@@ -85,7 +85,7 @@ class AppointmentViewTest(TestCase):
 
         self.assertContains(response, 'Please enter numbers only')
 
-        response = self.client.post(reverse('web_appointment_create', \
+        response = self.client.post(reverse('notifications_create', \
             kwargs={"appointment_type_name": appointment_type.name }), 
                 {'date': '2012-08-12',
                     'phone_number': '685224',
@@ -97,13 +97,13 @@ class AppointmentViewTest(TestCase):
 
     def create_appointment(self, way_of_communication):
         appointment_type = AppointmentType.objects.get(pk=1) #vaccination
-        self.client.get(reverse('web_appointment_create', \
+        self.client.get(reverse('notifications_create', \
                 kwargs={"appointment_type_name": appointment_type.name }))
         
         data = {'date': '2012-08-12',
                 'phone_number': '01733685224',
                 'way_of_communication': way_of_communication}
-        return self.client.post(reverse('web_appointment_create', \
+        return self.client.post(reverse('notifications_create', \
                 kwargs = {"appointment_type_name": appointment_type.name }), data)
         
     def create_and_save_appointment(self, way_of_communication, phone_number):
@@ -116,13 +116,13 @@ class AppointmentViewTest(TestCase):
         self.client.post(reverse('web_authenticate_phonenumber'), \
                     {'patient': patient})
 
-        return self.client.get(reverse("web_appointment_save"))
+        return self.client.get(reverse("notifications_save"))
 
     @disable_authentication
     def create_appointment_woc(self, way_of_communication):
         response = self.create_appointment(way_of_communication)
        
-        self.assertRedirects(response, reverse('web_appointment_save'))
+        self.assertRedirects(response, reverse('notifications_save'))
 
         self.assertTrue(self.client.session.has_key('patient'))
         self.assertTrue(self.client.session.has_key('appointment'))
@@ -162,7 +162,7 @@ class AppointmentViewTest(TestCase):
          self.assertRedirects(response, 
                               reverse('web_list_devices') + \
                               "?next=" + \
-                              reverse('web_appointment_send'))
+                              reverse('notifications_send'))
          self.assertTrue(self.client.session.has_key('patient'))
          self.assertTrue(self.client.session.has_key('appointment'))
          
@@ -174,7 +174,7 @@ class AppointmentViewTest(TestCase):
          
     def test_create_appointment_with_current_date(self):
         appointment_type = AppointmentType.objects.get(pk=3) #labresults
-        response = self.client.post(reverse('web_appointment_create', \
+        response = self.client.post(reverse('notifications_create', \
             kwargs={"appointment_type_name": appointment_type.name }), 
                 {'phone_number': '01733685224',
                  'way_of_communication':'sms'  })

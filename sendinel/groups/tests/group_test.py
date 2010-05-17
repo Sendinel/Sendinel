@@ -24,7 +24,7 @@ class StaffInfoServiceTest(TestCase):
     
     
     def test_send_message_get(self):
-        response = self.client.get(reverse("staff_send_message",
+        response = self.client.get(reverse("groups_send_message",
                                    kwargs={"id":1}))
         self.assertEquals(response.status_code, 200)
                                     
@@ -34,7 +34,7 @@ class StaffInfoServiceTest(TestCase):
         counter = ScheduledEvent.objects.all().count()
         infoservice = InfoService.objects.filter(pk = 1)[0]
     
-        response = self.client.post(reverse("staff_send_message",
+        response = self.client.post(reverse("groups_send_message",
             kwargs={"id":1}), {
             "text" : "This is a testmessage",
             "date" : "2010-01-01 00:00:00"

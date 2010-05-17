@@ -24,7 +24,7 @@ def register_save(request, medicine_id):
 
     subscription = subscription_save(request, medicine_id)
     
-    backurl = reverse('medicine_register')        
+    backurl = reverse('medicines_register')        
     nexturl = reverse('web_index')
     title = _("Registration successful")
     message = _("The patient will receive a messages once the medicine "
@@ -54,7 +54,7 @@ def register(request):
             backurl = reverse('web_index')
 
             return redirect_to_authentication_or(
-                            reverse('medicine_register_save',
+                            reverse('medicines_register_save',
                                  kwargs = {'medicine_id': 
                                             request.session['medicine']}))
         else:
