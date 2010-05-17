@@ -7,6 +7,7 @@
 </div>
 <div class="input">
     <select id="select-medicine" name="medicine" size="1">
+     <option value="0">----</option>
      {% for medicine in medicines %}
      <option value={{medicine.id}}>{{medicine}}</option>
      {% endfor %}

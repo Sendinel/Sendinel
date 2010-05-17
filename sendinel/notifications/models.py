@@ -14,7 +14,7 @@ from sendinel.backend.models import Hospital, Sendable
 from sendinel.backend.output import SMSOutputData, \
                                     VoiceOutputData, \
                                     BluetoothOutputData
-from sendinel.logger import logger
+from sendinel.logger import logger     
 
 class AppointmentType(models.Model):
     """
@@ -157,5 +157,3 @@ class HospitalAppointment(Sendable):
         self.save()
         self.create_scheduled_event()    
         return self
-
-

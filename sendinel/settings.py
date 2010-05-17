@@ -110,8 +110,9 @@ INSTALLED_APPS = (
     'sendinel.web',
     'sendinel.backend',
     'sendinel.groups',
+    'sendinel.infoservices',
     'sendinel.notifications',
-    'sendinel.medicine'
+    'sendinel.medicines'
 )
 
 ####################################
@@ -154,7 +155,10 @@ AUTH_NUMBER = "CHANGE ME"
 AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = 3)
 
 # True or False to turn authentication on or off
-AUTHENTICATION_ENABLED = True
+AUTHENTICATION_ENABLED = False
+
+# enable Bluetooth as a Way of Communication
+BLUETOOTH_ENABLED = True
 
 # Salutation for SMS Template
 SMS_SALUTATION = 'Hello, '

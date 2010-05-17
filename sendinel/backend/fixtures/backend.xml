@@ -1,5 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <django-objects version="1.0">
+    <object pk="1" model="backend.wayofcommunication">
+        <field type="CharField" name="name">sms</field>
+        <field type="CharField" name="verbose_name">SMS</field>
+        <field type="BooleanField" name="enabled">True</field>
+        <field type="BooleanField" name="can_send_immediately">True</field>
+    </object>
+    <object pk="2" model="backend.wayofcommunication">
+        <field type="CharField" name="name">voice</field>
+        <field type="CharField" name="verbose_name">Voice Call</field>
+        <field type="BooleanField" name="enabled">True</field>
+        <field type="BooleanField" name="can_send_immediately">True</field>
+    </object>
+    <object pk="3" model="backend.wayofcommunication">
+        <field type="CharField" name="name">bluetooth</field>
+        <field type="CharField" name="verbose_name">Bluetooth</field>
+        <field type="BooleanField" name="enabled">True</field>
+        <field type="BooleanField" name="can_send_immediately">False</field>
+    </object>
     <object pk="1" model="notifications.appointmenttype">
         <field type="CharField" name="name">vaccination</field>
         <field type="CharField" name="verbose_name">Remind of Vaccination</field>
@@ -23,15 +41,15 @@
         <field type="CharField" name="name">Test Clinic</field>
         <field type="BooleanField" name="current_hospital">True</field>
     </object>
-   <object pk="1" model="groups.infoservice">
+   <object pk="1" model="infoservices.infoservice">
         <field type="CharField" name="name">Information about the Clinic</field>
         <field type="CharField" name="type">information</field>
     </object>
-   <object pk="2" model="groups.infoservice">
+   <object pk="2" model="infoservices.infoservice">
         <field type="CharField" name="name">Information for Pregnant Women</field>
         <field type="CharField" name="type">information</field>
     </object>
-    <object pk="2" model="groups.infoservice">
+    <object pk="2" model="infoservices.infoservice">
         <field type="CharField" name="name">Aspirin</field>
         <field type="CharField" name="type">medicine</field>
     </object>

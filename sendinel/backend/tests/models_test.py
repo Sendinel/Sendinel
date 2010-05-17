@@ -14,7 +14,7 @@ class SendableTest(TestCase):
     def setUp(self):
         # TODO see below
         # self.sendable = InfoMessage()
-        # self.sendable.way_of_communication = "sms"
+        # self.sendable.way_of_communication.name = "sms"
         # self.sendable.text = "Test Text"
         pass
 

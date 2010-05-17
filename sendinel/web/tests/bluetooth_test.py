@@ -5,11 +5,14 @@ from django.test import TestCase
 from django.test.client import Client
 
 from sendinel.backend import bluetooth
+from sendinel.backend.models import WayOfCommunication
 from sendinel.notifications.models import AppointmentType
 
 class BluetoothViewTest(TestCase):
     client = Client()
-
+    
+    fixtures = ["backend_test"]
+    
     def test_get_bluetooth_devices(self):
         first_mac = "0011223344"
         first_value = "Hans Handy"
@@ -54,12 +57,12 @@ class BluetoothViewTest(TestCase):
         
         appointment_type = AppointmentType.objects.get(pk=1)
         
-        self.client.get(reverse('web_appointment_create', \
+        self.client.get(reverse('notifications_create', \
                 kwargs={"appointment_type_name": appointment_type.name })) 
         data = {'date': '2012-02-22',
                 'phone_number': '0175685444',
-                'way_of_communication': 'bluetooth'}
-        self.client.post(reverse('web_appointment_create', \
+                'way_of_communication': "3"}
+        self.client.post(reverse('notifications_create', \
                 kwargs = {"appointment_type_name": appointment_type.name }), data)
         
         self.assertTrue(self.client.session.has_key("appointment"))
@@ -71,7 +74,7 @@ class BluetoothViewTest(TestCase):
              
         bluetooth.send_vcal = return_true
         
-        response = self.client.post(reverse("web_appointment_send"), {
+        response = self.client.post(reverse("notifications_send"), {
                          "device_mac":"123456789"})
         
         self.assertEquals(response.status_code, 200)
@@ -81,7 +84,7 @@ class BluetoothViewTest(TestCase):
         
         bluetooth.send_vcal = return_false
         
-        response = self.client.post(reverse("web_appointment_send"), {
+        response = self.client.post(reverse("notifications_send"), {
                          "device_mac":"123456789"})
                          
         self.assertEquals(response.status_code, 500)

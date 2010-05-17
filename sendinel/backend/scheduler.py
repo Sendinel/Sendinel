@@ -121,7 +121,10 @@ def run(run_only_one_time = False):
                 continue
             
             # TODO error handling
-            try:
+            if len(get_all_queued_events()) > 0:
+                break
+
+            try:                
                 logger.info("  sending: %s" % unicode(data))
                 event.filename = data.send()
                 #if not run_only_one_time:

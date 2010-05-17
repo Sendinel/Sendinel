@@ -35,11 +35,6 @@ class Patient(User):
     def __unicode__(self):
         return "Patient <%s>" % self.phone_number
 
-    # TODO remove this - django has a reverse query
-    def infoservices(self):
-        from sendinel.groups.models import InfoService 
-        return InfoService.objects.filter(members__id = self.id)
-
 class Hospital(models.Model):
     """
     Represent a Hospital.
@@ -66,6 +61,43 @@ class Hospital(models.Model):
         return hospital    
         
 
+class WayOfCommunication(models.Model):
+    """
+    Represent a possible Way of Communication like SMS
+    """
+    
+    name = models.CharField(max_length = 255, blank = False, null = False)
+    verbose_name = models.CharField(max_length = 255)
+    enabled = models.BooleanField()
+    can_send_immediately = models.BooleanField()
+    
+    def __unicode__(self):
+        return self.verbose_name
+        
+    @classmethod
+    def get_enabled_wocs(cls):
+        """
+        Return all Ways of Communication that are enabled
+        """
+        return WayOfCommunication.objects.all().filter(enabled = True)
+        
+    @classmethod
+    def get_immediate_wocs(cls):
+        """
+        Return all Ways of Communication that are enabled
+        and can be send immediately
+        """
+        return WayOfCommunication.objects.all().filter(enabled = True, \
+                                                       can_send_immediately = True)                                                    
+    
+    @classmethod
+    def get_woc(cls, woc_name):
+        """
+        Return the WayOfCommunication-Object where the name equals the 
+        given woc_name
+        """
+        return WayOfCommunication.objects.get(name = woc_name)
+        
 
 class Sendable(models.Model):
     """
@@ -74,19 +106,13 @@ class Sendable(models.Model):
 
     class Meta:
         abstract = True
-
-    WAYS_OF_COMMUNICATION = (
-        ('sms', ugettext_lazy('SMS')),
-        ('bluetooth', ugettext_lazy('Bluetooth')),
-        ('voice', ugettext_lazy('Phone Call')),
-    )
-    way_of_communication = models.CharField(max_length=9,
-                                choices=WAYS_OF_COMMUNICATION)
+        
+    way_of_communication = models.ForeignKey(WayOfCommunication)
 
     recipient = models.ForeignKey(Patient)
     
     def __unicode__(self):
-        return "%s %s" % (unicode(self.recipient), self.way_of_communication)
+        return "%s %s" % (unicode(self.recipient), self.way_of_communication.verbose_name)
     
     def get_data_for_sending(self):
         """
@@ -94,7 +120,7 @@ class Sendable(models.Model):
         Return an object of a subclass of OutputData.
         """
         
-        call = "self.get_data_for_%s()" % self.way_of_communication      
+        call = "self.get_data_for_%s()" % self.way_of_communication.name      
         logger.info("sendable.get_data_for_sending() calling method: " + call)        
         return eval(call)
         
@@ -113,10 +139,9 @@ class ScheduledEvent(models.Model):
     Define a ScheduledEvent for sending at a specific date.
     """
     def __unicode__(self):
-        return "Scheduled " + self.sendable.way_of_communication + ": " + \
-                              self.sendable.recipient.phone_number  + \
-                              " (" + str(self.send_time) + ")"
-
+        return "Scheduled " + self.sendable.way_of_communication.verbose_name + ": " +  self.sendable.recipient.phone_number \
+            + " (" + str(self.send_time) + ")"
+ 
     sendable_type = models.ForeignKey(ContentType)
     sendable_id = models.PositiveIntegerField()
     sendable = generic.GenericForeignKey('sendable_type', 'sendable_id')

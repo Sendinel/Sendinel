@@ -1,8 +1,10 @@
 from django.test import TestCase
 from datetime import datetime, timedelta
 
-from sendinel.backend.models import ScheduledEvent, Patient
-from sendinel.groups.models import InfoMessage
+from sendinel.backend.models import ScheduledEvent, \
+                                    Patient, \
+                                    WayOfCommunication
+from sendinel.infoservices.models import InfoMessage
 from sendinel.backend import output, scheduler
 
 class SchedulerTest(TestCase):    
@@ -94,7 +96,8 @@ Status: Failed
         patient = Patient()
         patient.save()
 
-        sendable = InfoMessage(text="Test Message")
+        sendable = InfoMessage(text="Test Message",
+                               way_of_communication = WayOfCommunication.get_woc("sms"))
         sendable.recipient = patient
         sendable.save()
 
@@ -130,7 +133,8 @@ Status: Failed
         patient = Patient()
         patient.save()
         
-        sendable = InfoMessage(text="Test Message")
+        sendable = InfoMessage(text="Test Message",
+                               way_of_communication = WayOfCommunication.get_woc("sms"))
         sendable.recipient = patient
         sendable.save()
         

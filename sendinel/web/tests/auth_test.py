@@ -1,4 +1,3 @@
-import copy
 from datetime import datetime, timedelta
 from django.core.urlresolvers import reverse
 from django.test import TestCase
@@ -20,7 +19,7 @@ class AuthenticateViewTests(TestCase):
         # infoservice.save()
         # info_text = "You want to register for" + str(infoservice)
         # self.client.post(reverse('web_authenticate_phonenumber') +"?next=" + 
-                                 # reverse('web_infoservice_register', \
+                                 # reverse('groups_register', \
                                           # kwargs={'id': infoservice.id}), \
                                 # {'infoservice_text' : info_text})
         # self.assertContains(response, 
@@ -31,12 +30,12 @@ class AuthenticateViewTests(TestCase):
         
         appointment_type = AppointmentType.objects.get(pk=1)
         
-        self.client.get(reverse('web_appointment_create', \
+        self.client.get(reverse('notifications_create', \
                 kwargs={"appointment_type_name": appointment_type.name })) 
         data = {'date': '2012-08-12',
                 'phone_number': '01733685224',
-                'way_of_communication': 'sms'}
-        self.client.post(reverse('web_appointment_create', \
+                'way_of_communication': 1}
+        self.client.post(reverse('notifications_create', \
                 kwargs = {"appointment_type_name": appointment_type.name }), data)
      
         response = self.client.post(reverse("web_authenticate_phonenumber"))
@@ -70,12 +69,12 @@ class AuthenticateViewTests(TestCase):
         original_value = authhelper.AUTHENTICATION_ENABLED
         authhelper.AUTHENTICATION_ENABLED = True
         
-        self.client.get(reverse('web_appointment_create', \
+        self.client.get(reverse('notifications_create', \
                 kwargs={"appointment_type_name": appointment_type.name })) 
         data = {'date': '2012-08-12',
                 'phone_number': '0123456789012',
-                'way_of_communication': 'sms'}
-        self.client.post(reverse('web_appointment_create', \
+                'way_of_communication': 1}
+        self.client.post(reverse('notifications_create', \
                 kwargs = {"appointment_type_name": appointment_type.name }), data)
                 
         # make sure there are no AuthenticationCall objects in the db
