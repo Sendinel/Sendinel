@@ -15,7 +15,7 @@ from sendinel.infoservices.utils import create_messages_for_infoservice, \
 from sendinel.logger import logger, log_request
 from sendinel.settings import AUTH_NUMBER, MEDICINE_MESSAGE_TEMPLATE
 from sendinel.web.utils import fill_authentication_session_variable, \
-                               render_status_success, \
+                               render_status, \
                                get_ways_of_communication
 
 
@@ -32,7 +32,7 @@ def register_save(request, medicine_id):
                 " \"%s\" is available in the clinic again.") \
                 % subscription.infoservice.name
     
-    return render_status_success(request, title, message, backurl, nexturl)
+    return render_status(request, True, title, message, backurl, nexturl)
 
 @log_request                              
 def register(request):
@@ -92,7 +92,7 @@ def send_message(request):
             message = _("All patients who were waiting for the medicine " +
                         "\"%s\" will be informed") % medicine.name
 
-            return render_status_success(request, title, message, nexturl = nexturl)
+            return render_status(request, True, title, message, nexturl = nexturl)
                                       
     medicines = InfoService.objects.all().filter(type='medicine')
     

@@ -15,7 +15,7 @@ from sendinel.notifications.models import HospitalAppointment, AppointmentType
 from sendinel.notifications.forms import NotificationValidationForm
 from sendinel.settings import DEFAULT_SEND_TIME
 from sendinel.logger import logger, log_request
-from sendinel.web.utils import render_status_success, \
+from sendinel.web.utils import render_status, \
                                get_ways_of_communication
                                
 @log_request
@@ -25,7 +25,7 @@ def create_appointment(request, appointment_type_name = None):
     nexturl = ""
     backurl = reverse('web_index')
     
-    ways_of_communication = get_ways_of_communication()
+    ways_of_communication = get_ways_of_communication(appointment_type.notify_immediately)
     
     if request.method == "POST":
         data = deepcopy(request.POST)
@@ -100,7 +100,7 @@ def save_appointment(request):
         message = _("Please tell the patient that he/she will be reminded"\
                             " one day before the appointment.")
 
-    return render_status_success(request, title, message, backurl = backurl,
+    return render_status(request, True, title, message, backurl = backurl,
                                   nexturl = nexturl)    
 
 @log_request
@@ -113,12 +113,13 @@ def send_appointment(request):
         logger.info("appointment data: " + unicode(appointment))
         
         appointment.bluetooth_mac_address = mac_address
+        appointment.bluetooth_server_address = request.META['REMOTE_ADDR'].strip()
         output_data = appointment.get_data_for_sending()
         result = output_data.send()
         if(result):
             return HttpResponse(status = 200)
         else:
-            return HttpResponse(status = 500)
+            return HttpResponse(status = 500) 
            
     backurl = reverse("web_list_devices")
     url = reverse("web_appointment_send")

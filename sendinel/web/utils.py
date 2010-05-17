@@ -6,9 +6,9 @@ from django.template import RequestContext
 from sendinel.backend.authhelper import format_and_validate_phonenumber
 from sendinel.backend.models import WayOfCommunication
 
-def render_status_success(request, title, message, \
+def render_status(request, success, title, message, \
                           backurl = None, nexturl = None):
-    success = True
+                          
     return render_to_response('web/status_message.html', 
                           locals(),
                           context_instance = RequestContext(request))
