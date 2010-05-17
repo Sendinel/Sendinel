@@ -4,7 +4,7 @@ from sendinel.backend.models import Patient, \
                                     Hospital, \
                                     ScheduledEvent, \
                                     AuthenticationCall
-from sendinel.groups.models import InfoMessage, \
+from sendinel.infoservices.models import InfoMessage, \
                                    InfoService, \
                                    Subscription, \
                                    InfoService

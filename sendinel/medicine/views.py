@@ -6,7 +6,7 @@ from django.utils.translation import ugettext as _
 
 from sendinel.backend.models import Hospital
 from sendinel.backend.authhelper import redirect_to_authentication_or
-from sendinel.groups.models import InfoService
+from sendinel.infoservices.models import InfoService
 from sendinel.groups.forms import MedicineMessageValidationForm, \
                                   RegisterPatientForMedicineForm
 from sendinel.infoservices.utils import create_messages_for_infoservice, \
@@ -14,7 +14,7 @@ from sendinel.infoservices.utils import create_messages_for_infoservice, \
                                         subscription_save
 from sendinel.logger import logger, log_request
 from sendinel.settings import AUTH_NUMBER, MEDICINE_MESSAGE_TEMPLATE
-from sendinel.web.views import fill_authentication_session_variable, \
+from sendinel.web.utils import fill_authentication_session_variable, \
                                render_status_success
 
 
@@ -26,8 +26,6 @@ def register_save(request, medicine_id):
     
     backurl = reverse('medicine_register')        
     nexturl = reverse('web_index')
-    
-    success = True
     title = _("Registration successful")
     message = _("The patient will receive a messages once the medicine "
                 " \"%s\" is available in the clinic again.") \
@@ -64,7 +62,7 @@ def register(request):
        
     backurl = reverse("web_index")
     
-    return render_to_response('medicine/medicine_register.html', 
+    return render_to_response('medicine/register.html', 
                               locals(),
                               context_instance = RequestContext(request))
 

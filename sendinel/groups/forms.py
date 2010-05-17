@@ -4,7 +4,7 @@ from django.utils.translation import ugettext as _
 
 from sendinel.backend.authhelper import format_and_validate_phonenumber
 from sendinel.backend.models import Sendable
-from sendinel.groups.models import InfoMessage, InfoService
+from sendinel.infoservices.models import InfoMessage, InfoService
 
 class InfoMessageForm(ModelForm):
     

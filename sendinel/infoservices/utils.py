@@ -1,7 +1,9 @@
 from datetime import datetime
 
 from sendinel.backend.models import Patient
-from sendinel.groups.models import InfoMessage, InfoService, Subscription
+from sendinel.infoservices.models import InfoMessage, \
+                                         InfoService, \
+                                         Subscription
 from sendinel.logger import logger
 
 

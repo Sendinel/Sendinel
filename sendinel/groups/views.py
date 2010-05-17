@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
 from sendinel.backend.authhelper import redirect_to_authentication_or
-from sendinel.groups.models import InfoService, Subscription
+from sendinel.infoservices.models import InfoService, Subscription
 from sendinel.groups.forms import InfoMessageValidationForm, \
                                   NotificationValidationForm2
 from sendinel.infoservices.utils import create_messages_for_infoservice, \
@@ -16,7 +16,7 @@ from sendinel.infoservices.utils import create_messages_for_infoservice, \
                                         subscription_save
 from sendinel.logger import logger, log_request
 from sendinel.settings import AUTH_NUMBER
-from sendinel.web.views import fill_authentication_session_variable, \
+from sendinel.web.utils import fill_authentication_session_variable, \
                                render_status_success
 
 @log_request
@@ -75,7 +75,6 @@ def save_registration_infoservice(request, group_id):
     
     subscription = subscription_save(request, group_id)
     
-    success = True
     title = _("Registration successful")
     message = _("The patient will now receive all messages from the "
                         " \"%s\" service.") % subscription.infoservice.name

@@ -39,30 +39,30 @@
         <field type="CharField" name="name">Another Clinic</field>
         <field type="BooleanField" name="current_hospital">False</field>        
     </object>    
-    <object pk="1" model="groups.infoservice">
+    <object pk="1" model="infoservices.infoservice">
         <field type="CharField" name="name">Bachelorproject</field>
         <field type="CharField" name="type">information</field>
     </object>
-    <object pk="1" model="groups.subscription">
+    <object pk="1" model="infoservices.subscription">
         <field to="backend.patient" name="patient" rel="ManyToOneRel">1</field>
-        <field to="groups.infoservice" name="infoservice" rel="ManyToOneRel">1</field>
+        <field to="infoservices.infoservice" name="infoservice" rel="ManyToOneRel">1</field>
         <field type="CharField" name="way_of_communication">sms</field>
     </object>
-    <object pk="2" model="groups.subscription">
+    <object pk="2" model="infoservices.subscription">
         <field to="backend.patient" name="patient" rel="ManyToOneRel">2</field>
-        <field to="groups.infoservice" name="infoservice" rel="ManyToOneRel">1</field>
+        <field to="infoservices.infoservice" name="infoservice" rel="ManyToOneRel">1</field>
         <field type="CharField" name="way_of_communication">voice</field>
     </object>
-    <object pk="3" model="groups.subscription">
+    <object pk="3" model="infoservices.subscription">
        <field to="backend.patient" name="patient" rel="ManyToOneRel">2</field>
-       <field to="groups.infoservice" name="infoservice" rel="ManyToOneRel">3</field>
+       <field to="infoservices.infoservice" name="infoservice" rel="ManyToOneRel">3</field>
        <field type="CharField" name="way_of_communication">voice</field>
    </object>
-    <object pk="2" model="groups.infoservice">
+    <object pk="2" model="infoservices.infoservice">
         <field type="CharField" name="name">Sendinel-Tester</field>
         <field type="CharField" name="type">information</field>
     </object>
-    <object pk="3" model="groups.infoservice">
+    <object pk="3" model="infoservices.infoservice">
         <field type="CharField" name="name">Medicine-Test</field>
         <field type="CharField" name="type">medicine</field>
     </object>
@@ -79,7 +79,7 @@
         <field type="DateTimeField" name="send_time">2010-02-08 18:43:07</field>
         <field type="CharField" name="state">new</field>
     </object>
-    <object pk="1" model="groups.infomessage">
+    <object pk="1" model="infoservices.infomessage">
         <field type="CharField" name="way_of_communication">sms</field>
         <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
         <field type="TextField" name="text">Das ist eine Nachricht</field>

@@ -5,7 +5,9 @@ from django.core.urlresolvers import reverse
 
 from sendinel.backend.models import ScheduledEvent, Patient
 from sendinel.backend.tests.helper import disable_authentication
-from sendinel.groups.models import InfoService, InfoMessage, Subscription
+from sendinel.infoservices.models import InfoMessage, \
+                                         InfoService, \
+                                         Subscription 
 from sendinel.groups import views as groups_views
 from sendinel.utils import last
 

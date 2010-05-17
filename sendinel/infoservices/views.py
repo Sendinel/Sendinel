@@ -4,10 +4,10 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
-from sendinel.groups.models import InfoService, Subscription
+from sendinel.infoservices.models import InfoService, Subscription
 from sendinel.groups.forms import InfoserviceValidationForm
 from sendinel.logger import logger, log_request
-from sendinel.web.views import render_status_success
+from sendinel.web.utils import render_status_success
 
 @log_request
 def index(request, infoservice_type):
@@ -40,8 +40,6 @@ def create_infoservice(request, infoservice_type):
                               kwargs={'infoservice_type': infoservice_type})
             backurl = reverse('infoservices_create', 
                               kwargs={'infoservice_type': infoservice_type})
-                        
-            success = True
             title = _("Creation successful")
             message = _("The \"%(infoservice_name)s\" " + \
                         "%(infoservice_type)s has been created.") \
