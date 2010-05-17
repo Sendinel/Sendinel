@@ -35,11 +35,6 @@ class Patient(User):
     def __unicode__(self):
         return "Patient <%s>" % self.phone_number
 
-    # TODO remove this - django has a reverse query
-    def infoservices(self):
-        from sendinel.groups.models import InfoService 
-        return InfoService.objects.filter(members__id = self.id)
-
 class Hospital(models.Model):
     """
     Represent a Hospital.

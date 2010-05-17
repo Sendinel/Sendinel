@@ -19,7 +19,7 @@ class AuthenticateViewTests(TestCase):
         # infoservice.save()
         # info_text = "You want to register for" + str(infoservice)
         # self.client.post(reverse('web_authenticate_phonenumber') +"?next=" + 
-                                 # reverse('web_infoservice_register', \
+                                 # reverse('groups_register', \
                                           # kwargs={'id': infoservice.id}), \
                                 # {'infoservice_text' : info_text})
         # self.assertContains(response, 

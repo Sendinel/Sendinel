@@ -12,11 +12,11 @@ from sendinel.backend.models import Patient, \
                                     WayOfCommunication
 from sendinel.backend.authhelper import redirect_to_authentication_or
 from sendinel.notifications.models import HospitalAppointment, AppointmentType
+from sendinel.notifications.forms import NotificationValidationForm
 from sendinel.settings import DEFAULT_SEND_TIME
 from sendinel.logger import logger, log_request
-from sendinel.notifications.forms import NotificationValidationForm
+from sendinel.web.utils import render_status_success
                                
-
 @log_request
 def create_appointment(request, appointment_type_name = None):
     appointment_type = AppointmentType.objects. \
@@ -88,7 +88,6 @@ def save_appointment(request):
     
     appointment.save_with_patient(patient)
         
-    success = True
     title = _("The \"%s\" notification has been created.") \
                         % appointment.appointment_type.verbose_name
     if appointment.appointment_type.notify_immediately:
@@ -97,9 +96,8 @@ def save_appointment(request):
         message = _("Please tell the patient that he/she will be reminded"\
                             " one day before the appointment.")
 
-    return render_to_response('web/status_message.html', 
-                              locals(),
-                              context_instance = RequestContext(request))
+    return render_status_success(request, title, message, backurl = backurl,
+                                  nexturl = nexturl)    
 
 @log_request
 def send_appointment(request):

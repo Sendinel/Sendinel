@@ -10,14 +10,15 @@ from django.utils.translation import ugettext as _
 
 from sendinel.backend import bluetooth
 from sendinel.backend.authhelper import check_and_delete_authentication_call, \
-                                    delete_timed_out_authentication_calls, \
-                                    format_and_validate_phonenumber
-from sendinel.groups.models import InfoService
+                                    delete_timed_out_authentication_calls
+from sendinel.infoservices.models import InfoService
 from sendinel.notifications.models import AppointmentType
 from sendinel.logger import logger, log_request
 from sendinel.settings import   AUTH_NUMBER, \
                                 AUTHENTICATION_CALL_TIMEOUT, \
                                 BLUETOOTH_SERVER_ADDRESS
+from sendinel.web.utils import render_status_success, \
+                               fill_authentication_session_variable
 
 
 @log_request
@@ -118,20 +119,3 @@ def get_bluetooth_devices(request):
         logger.error("get_bluetooth_devices from %s failed: %s" %
                         (BLUETOOTH_SERVER_ADDRESS, str(e)))
         return HttpResponse(status = 500)
-
-@log_request
-def fill_authentication_session_variable(request):
-    number = request.session["patient"].phone_number
-    number = format_and_validate_phonenumber(number)
-    request.session['authenticate_phonenumber'] = \
-                            { 'number': number,
-                              'start_time': datetime.now() }
-    return number
-
-
-def render_status_success(request, title, message, \
-                          backurl = None, nexturl = None):
-    success = True
-    return render_to_response('web/status_message.html', 
-                          locals(),
-                          context_instance = RequestContext(request))

@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from sendinel.backend.models import ScheduledEvent, \
                                     Patient, \
                                     WayOfCommunication
-from sendinel.groups.models import InfoMessage
+from sendinel.infoservices.models import InfoMessage
 from sendinel.backend import output, scheduler
 
 class SchedulerTest(TestCase):    

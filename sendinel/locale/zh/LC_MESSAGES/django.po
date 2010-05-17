@@ -53,12 +53,12 @@ msgstr "#TRANSLATED#"
 msgid "Your username and password didn't match. Please try again."
 msgstr "#TRANSLATED#"
 
-#: templates/staff/create_infomessage.html:4
+#: templates/staff/send_message.html:4
 #, fuzzy, python-format
 msgid "Send a message to %(infoservice)s"
 msgstr "#TRANSLATED#"
 
-#: templates/staff/create_infomessage.html:13
+#: templates/staff/send_message.html:13
 #: templates/staff/infoservice_members.html:25
 msgid "Back to Infoservices"
 msgstr "#TRANSLATED#"
