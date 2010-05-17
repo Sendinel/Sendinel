@@ -24,7 +24,6 @@ def send_message(request, id):
     group = get_object_or_404(InfoService, pk = id)
     if(request.method == "POST"):
         form = InfoMessageValidationForm(request.POST)
-        
         if form.is_valid():
             create_messages_for_infoservice(group, form.cleaned_data['text'])
             
@@ -33,7 +32,6 @@ def send_message(request, id):
             message = _("All members of the \"%s\" service" + \
                         " will get your message.") \
                                 % group.name
-            
             return render_status_success(request, title, message, nexturl = nexturl)
 
         
