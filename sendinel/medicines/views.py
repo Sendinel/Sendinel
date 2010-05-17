@@ -24,7 +24,7 @@ def register_save(request, medicine_id):
 
     subscription = subscription_save(request, medicine_id)
     
-    backurl = reverse('medicine_register')        
+    backurl = reverse('medicines_register')        
     nexturl = reverse('web_index')
     title = _("Registration successful")
     message = _("The patient will receive a messages once the medicine "
@@ -54,7 +54,7 @@ def register(request):
             backurl = reverse('web_index')
 
             return redirect_to_authentication_or(
-                            reverse('medicine_register_save',
+                            reverse('medicines_register_save',
                                  kwargs = {'medicine_id': 
                                             request.session['medicine']}))
         else:
@@ -84,12 +84,13 @@ def send_message(request):
                 
             medicine.delete()
             
+            backurl = reverse('medicines_send_message')
             nexturl = reverse('web_index')
             title = _("Message created")
             message = _("All patients who were waiting for the medicine " +
                         "\"%s\" will be informed") % medicine.name
 
-            return render_status_success(request, title, message, nexturl = nexturl)
+            return render_status_success(request, title, message, backurl, nexturl)
                                       
     medicines = InfoService.objects.all().filter(type='medicine')
     

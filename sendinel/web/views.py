@@ -57,7 +57,7 @@ def authenticate_phonenumber(request):
         number = fill_authentication_session_variable(request)
         logger.info("Starting authentication with %s" % AUTH_NUMBER)
         auth_number = AUTH_NUMBER
-        next = request.GET.get('next', reverse('web_appointment_save'))
+        next = request.GET.get('next', reverse('notifications_save'))
         return render_to_response('web/authenticate_phonenumber_call.html', 
                           locals(),
                           context_instance = RequestContext(request))
@@ -89,7 +89,7 @@ def check_call_received(request):
 @log_request
 def list_bluetooth_devices(request):
     next = request.GET.get('next', '')
-    backurl = reverse("web_appointment_create", kwargs=
+    backurl = reverse("notifications_create", kwargs=
                        {"appointment_type_name":
                            request.session["appointment"].appointment_type.name})
     return render_to_response('web/list_devices.html',

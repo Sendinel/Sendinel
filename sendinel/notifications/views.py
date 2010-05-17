@@ -46,10 +46,10 @@ def create_appointment(request, appointment_type_name = None):
                             appointment.way_of_communication)
             if appointment.way_of_communication == 'bluetooth':
                 return HttpResponseRedirect(reverse("web_list_devices") + \
-                                "?next=" + reverse("web_appointment_send"))
+                                "?next=" + reverse("notifications_send"))
             elif appointment.way_of_communication in ('sms', 'voice' ):
                 return redirect_to_authentication_or(
-                                reverse("web_appointment_save"))
+                                reverse("notifications_save"))
 
             else:
                 logger.error("Unknown way of communication selected.")
@@ -70,7 +70,7 @@ def save_appointment(request):
     patient = request.session.get('patient', None)
     
     nexturl = reverse("web_index")
-    backurl = reverse("web_appointment_create", kwargs={'appointment_type_name':
+    backurl = reverse("notifications_create", kwargs={'appointment_type_name':
                                             appointment.appointment_type.name })
     
     if not appointment or not patient:
@@ -113,7 +113,7 @@ def send_appointment(request):
             return HttpResponse(status = 500)
            
     backurl = reverse("web_list_devices")
-    url = reverse("web_appointment_send")
+    url = reverse("notifications_send")
     next = reverse("web_index")
     mac_address = request.GET['device_mac'].strip()
 

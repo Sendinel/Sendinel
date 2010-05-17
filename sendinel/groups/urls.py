@@ -7,7 +7,7 @@ urlpatterns = patterns("",
     url(r"^groups/register/save/(?P<group_id>\d+)/$",
         'sendinel.groups.views.save_registration_infoservice', 
         name = 'groups_register_save'),   
-    url(r"^send_message/(?P<id>\d+)/$", 
+    url(r"^groups/send_message/(?P<id>\d+)/$", 
         'sendinel.groups.views.send_message', 
-        name = 'staff_send_message')
+        name = 'groups_send_message')
 )

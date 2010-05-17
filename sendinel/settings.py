@@ -112,7 +112,7 @@ INSTALLED_APPS = (
     'sendinel.groups',
     'sendinel.infoservices',
     'sendinel.notifications',
-    'sendinel.medicine'
+    'sendinel.medicines'
 )
 
 ####################################

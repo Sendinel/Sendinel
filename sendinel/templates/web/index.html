@@ -13,12 +13,12 @@
             <div>
             
             {% if medicine_count > 0 %}
-                <a href="{% url medicine_register %}">
+                <a href="{% url medicines_register %}">
                     <div class="menu-hover groups-link groups-link-register float-left rounded-corners">
                         {% trans "Register Patient" %}
                     </div>
                 </a>
-                <a href="{% url medicine_send_message %}" class="menu_secondlink">
+                <a href="{% url medicines_send_message %}" class="menu_secondlink">
                     <div class="menu-hover groups-link groups-link-send float-left rounded-corners">
                         {% trans "Send Message" %}
                     </div>
@@ -46,7 +46,7 @@
       <h3>{% trans "Notifications" %}</h3>
         {% for appointment_type in appointment_types %}
         <div class="menu-item menu-hover background-grey rounded-corners">
-             <a href="{% url web_appointment_create appointment_type_name=appointment_type.name %}">
+             <a href="{% url notifications_create appointment_type_name=appointment_type.name %}">
                 <div class="menu-item-name">
                    {{ appointment_type.verbose_name }}
                 </div>
@@ -67,7 +67,7 @@
                         </div>
                     </a>
                     {% if service.members.count > 0 %}
-                        <a href="{% url staff_send_message id=service.id %}" class="menu_secondlink">
+                        <a href="{% url groups_send_message id=service.id %}" class="menu_secondlink">
                             <div class="menu-hover groups-link groups-link-send float-left rounded-corners">
                                 {% trans "Send Message" %}
                             </div>

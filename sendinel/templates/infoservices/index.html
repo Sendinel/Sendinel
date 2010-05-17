@@ -46,7 +46,7 @@
                         {% comment %}
                         <td>
                             <input  type="button" 
-                                    onclick="Sendinel.Utils.goto_url('{% url staff_send_message id=infoservice.id %}')"
+                                    onclick="Sendinel.Utils.goto_url('{% url groups_send_message id=infoservice.id %}')"
                                     value='{% trans "Send message" %}'
                                     {% if infoservice.member_count == 0 %}
                                         disabled="disabled"
