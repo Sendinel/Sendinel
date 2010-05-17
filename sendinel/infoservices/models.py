@@ -4,7 +4,9 @@ from django.db import models
 from django.utils.translation import ugettext_lazy
 
 from sendinel.backend import texthelper
-from sendinel.backend.models import Patient, Sendable
+from sendinel.backend.models import Patient, \
+                                    Sendable, \
+                                    WayOfCommunication
 from sendinel.backend.output import SMSOutputData, \
                                     VoiceOutputData
 
@@ -119,8 +121,7 @@ class Subscription(models.Model):
     patient = models.ForeignKey(Patient)
     infoservice = models.ForeignKey(InfoService)
 
-    way_of_communication = models.CharField(max_length = 9,
-                                choices=Sendable.WAYS_OF_COMMUNICATION)
+    way_of_communication = models.ForeignKey(WayOfCommunication)
 
     def __unicode__(self):
         return "%s %s" % (unicode(self.infoservice), \

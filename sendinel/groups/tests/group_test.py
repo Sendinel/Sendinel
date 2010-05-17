@@ -3,7 +3,9 @@ from django.test.client import Client
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
-from sendinel.backend.models import ScheduledEvent, Patient
+from sendinel.backend.models import ScheduledEvent, \
+                                    Patient, \
+                                    WayOfCommunication
 from sendinel.backend.tests.helper import disable_authentication
 from sendinel.infoservices.models import InfoMessage, \
                                          InfoService, \
@@ -97,7 +99,7 @@ class StaffInfoServiceTest(TestCase):
         
         subscription = Subscription(infoservice = info, 
                                     patient = patient,
-                                    way_of_communication = "voice")
+                                    way_of_communication = WayOfCommunication.get_woc("voice"))
         subscription.save()
         
         response = self.client.get(reverse("infoservices_index",
@@ -175,7 +177,7 @@ class WebInfoServiceTest(TestCase):
         self.patient = Patient(name="eu",phone_number = "01234")
         self.patient.save()
         self.subscription = Subscription(infoservice = self.info, 
-                                         way_of_communication = "sms", 
+                                         way_of_communication = WayOfCommunication.get_woc("sms"), 
                                          patient = self.patient)
         self.subscription.save()
      
@@ -208,7 +210,7 @@ class WebInfoServiceTest(TestCase):
         self.create_register_form()
         response = self.client.post(reverse('groups_register', 
                                     kwargs={'group_id': self.info.id}),
-                                    {'way_of_communication': 'sms',
+                                    {'way_of_communication': 1,
                                      'phone_number':'01234 / 56789012'})
 
         self.assertTrue(self.client.session.has_key('way_of_communication'))
@@ -224,20 +226,20 @@ class WebInfoServiceTest(TestCase):
        
         response = self.client.post(reverse('groups_register', 
                                     kwargs={'group_id': self.info.id}),
-                                    {'way_of_communication': 'sms',
+                                    {'way_of_communication': 1,
                                      'phone_number':'01234 / 56789012'})
 
         self.assertEquals(response.status_code, 302)
 
         response = self.client.post(reverse('groups_register', 
                                     kwargs={'group_id': self.info.id}),
-                                    {'way_of_communication': 'sms',
+                                    {'way_of_communication': 1,
                                      'phone_number':'0123afffg789012'})
         self.assertContains(response, 'Please enter numbers only')
 
         response = self.client.post(reverse('groups_register', 
                                     kwargs={'group_id': self.info.id}),
-                                    {'way_of_communication': 'sms',
+                                    {'way_of_communication': 1,
                                      'phone_number':'234 / 56789012'})
         self.assertContains(response, 'Please enter a cell phone number.')
         
@@ -250,7 +252,7 @@ class WebInfoServiceTest(TestCase):
 
         self.client.post(reverse('groups_register',
                          kwargs={'group_id': self.info.id}),
-                         {"way_of_communication": "sms",
+                         {"way_of_communication": 1,
                           "phone_number": "0123456"})
                           
         response = self.client.get(reverse('groups_register_save',
@@ -261,7 +263,7 @@ class WebInfoServiceTest(TestCase):
         new_subscription = last(Subscription)
         self.assertEquals(new_subscription.patient.phone_number, "0123456")
         self.assertEquals(new_subscription.infoservice, self.info)
-        self.assertEquals(new_subscription.way_of_communication, "sms")
+        self.assertEquals(new_subscription.way_of_communication, WayOfCommunication.get_woc("sms"))
         
 
     

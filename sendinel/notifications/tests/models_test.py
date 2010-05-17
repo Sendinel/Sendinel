@@ -5,12 +5,16 @@ from django.test import TestCase
 from django.db import IntegrityError
 
 from sendinel import settings
-from sendinel.backend.models import Patient, ScheduledEvent 
-from sendinel.notifications.models import AppointmentType, HospitalAppointment
-from sendinel.backend.output import VoiceOutputData, SMSOutputData, \
+from sendinel.backend.models import Patient, ScheduledEvent
+from sendinel.notifications.models import AppointmentType, \
+                                    HospitalAppointment
+from sendinel.backend.output import VoiceOutputData, \
+                                    SMSOutputData, \
                                     BluetoothOutputData
 
 
+
+                                    
 class HospitalAppointmentTest(TestCase):
     fixtures = ['backend_test']
     

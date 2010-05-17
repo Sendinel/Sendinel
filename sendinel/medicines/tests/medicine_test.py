@@ -2,7 +2,9 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from sendinel.backend.models import Patient, ScheduledEvent
+from sendinel.backend.models import Patient, \
+                                    ScheduledEvent, \
+                                    WayOfCommunication
 from sendinel.backend.tests.helper import disable_authentication
 from sendinel.infoservices.models import InfoService, Subscription
 from sendinel.medicines import views as medicine_views
@@ -17,7 +19,7 @@ class MedicineTest(TestCase):
 
         # pk = 3 is a medicine in fixtures
         self.client.post(reverse('medicines_register'),
-                         {"way_of_communication": "sms",
+                         {"way_of_communication": 1,
                           "phone_number": "0123456",
                           "medicine": "3"})
                           
@@ -30,7 +32,7 @@ class MedicineTest(TestCase):
         new_subscription = last(Subscription)
         self.assertEquals(new_subscription.patient.phone_number, "0123456")
         self.assertEquals(new_subscription.infoservice.id, 3)
-        self.assertEquals(new_subscription.way_of_communication, "sms")    
+        self.assertEquals(new_subscription.way_of_communication, WayOfCommunication.get_woc("sms"))    
     
     @disable_authentication
     def test_register(self):
@@ -39,7 +41,7 @@ class MedicineTest(TestCase):
 
         response = self.client.post(
                         reverse('medicines_register'),
-                                    {'way_of_communication': 'sms',
+                                    {'way_of_communication': 1,
                                      'phone_number':'01234 / 56789012',
                                      'medicine': '3'}) # pk = 3 is a medicine
 
@@ -77,11 +79,11 @@ class MedicineTest(TestCase):
         a_medicine = InfoService(name='Malarone', type='medicine')
         a_medicine.save()
         subscription = Subscription(patient = Patient.objects.all()[0],
-                                way_of_communication = "sms",
+                                way_of_communication = WayOfCommunication.get_woc("sms"),
                                 infoservice = a_medicine)
         subscription.save()
         subscription = Subscription(patient = Patient.objects.all()[1],
-                                way_of_communication = "sms",
+                                way_of_communication = WayOfCommunication.get_woc("sms"),
                                 infoservice = a_medicine)
         subscription.save()
         info_service_count = InfoService.objects.all().count()

@@ -5,11 +5,14 @@ from django.test import TestCase
 from django.test.client import Client
 
 from sendinel.backend import bluetooth
+from sendinel.backend.models import WayOfCommunication
 from sendinel.notifications.models import AppointmentType
 
 class BluetoothViewTest(TestCase):
     client = Client()
-
+    
+    fixtures = ["backend_test"]
+    
     def test_get_bluetooth_devices(self):
         first_mac = "0011223344"
         first_value = "Hans Handy"
@@ -58,7 +61,7 @@ class BluetoothViewTest(TestCase):
                 kwargs={"appointment_type_name": appointment_type.name })) 
         data = {'date': '2012-02-22',
                 'phone_number': '0175685444',
-                'way_of_communication': 'bluetooth'}
+                'way_of_communication': "3"}
         self.client.post(reverse('notifications_create', \
                 kwargs = {"appointment_type_name": appointment_type.name }), data)
         

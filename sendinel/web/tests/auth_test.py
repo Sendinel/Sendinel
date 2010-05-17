@@ -1,4 +1,3 @@
-import copy
 from datetime import datetime, timedelta
 from django.core.urlresolvers import reverse
 from django.test import TestCase
@@ -35,7 +34,7 @@ class AuthenticateViewTests(TestCase):
                 kwargs={"appointment_type_name": appointment_type.name })) 
         data = {'date': '2012-08-12',
                 'phone_number': '01733685224',
-                'way_of_communication': 'sms'}
+                'way_of_communication': 1}
         self.client.post(reverse('notifications_create', \
                 kwargs = {"appointment_type_name": appointment_type.name }), data)
      
@@ -74,7 +73,7 @@ class AuthenticateViewTests(TestCase):
                 kwargs={"appointment_type_name": appointment_type.name })) 
         data = {'date': '2012-08-12',
                 'phone_number': '0123456789012',
-                'way_of_communication': 'sms'}
+                'way_of_communication': 1}
         self.client.post(reverse('notifications_create', \
                 kwargs = {"appointment_type_name": appointment_type.name }), data)
                 

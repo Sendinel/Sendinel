@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from sendinel.backend.models import Patient
+from sendinel.backend.models import Patient, \
+                                    WayOfCommunication
 from sendinel.infoservices.models import InfoMessage, \
                                          InfoService, \
                                          Subscription
@@ -41,8 +42,9 @@ def create_messages_for_infoservice(infoservice, text):
         logger.info("Created %s", str(info_message))
         
 def set_session_variables_for_register(request):
-    request.session['way_of_communication'] = \
-                                    request.POST['way_of_communication']
+    woc = WayOfCommunication.objects.get(pk = request.POST['way_of_communication'])
+    request.session['way_of_communication'] = woc
+                                    
     patient = Patient()
     patient.phone_number = request.POST['phone_number']
     request.session['patient'] = patient  
