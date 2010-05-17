@@ -99,10 +99,10 @@ def list_bluetooth_devices(request):
 @log_request
 def get_bluetooth_devices(request):
     response_dict = {}
-    devices_list = []
+    devices_list = []    
     
     try:
-        devices = bluetooth.get_discovered_devices(BLUETOOTH_SERVER_ADDRESS)
+        devices = bluetooth.get_discovered_devices(request.META["REMOTE_ADDR"])
         for device in devices.items():
             device_dict = {}
             device_dict["name"] = device[1]
@@ -116,5 +116,5 @@ def get_bluetooth_devices(request):
                             content_type = "application/json")
     except Exception, e:
         logger.error("get_bluetooth_devices from %s failed: %s" %
-                        (BLUETOOTH_SERVER_ADDRESS, str(e)))
+                        (request.META["REMOTE_ADDR"], str(e)))
         return HttpResponse(status = 500)

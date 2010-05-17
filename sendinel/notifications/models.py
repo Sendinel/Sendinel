@@ -78,7 +78,7 @@ class HospitalAppointment(Sendable):
         
         data = BluetoothOutputData()
         data.bluetooth_mac_address = self.bluetooth_mac_address
-        data.server_address = BLUETOOTH_SERVER_ADDRESS
+        data.server_address = self.bluetooth_server_address
         
         logger.info("Sending to Bluetooth Mac Address " + data.bluetooth_mac_address +
                     " and Bluetooth Server " + data.server_address)

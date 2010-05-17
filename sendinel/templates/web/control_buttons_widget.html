@@ -1,21 +1,21 @@
 {% load i18n %}
 <div name="control-buttons-widget" id="control_buttons" class="control-buttons">
-<table width="100%">
-<tr>
-<td align="left">
+    <table width="100%">
+        <tr>
+            <td align="left">
 
-    <div class="button button-left button-no-margin background-grey menu-hover link rounded-corners" onClick="javascript:location.href='{{ backurl }}'">
-    {% trans "New" %}
-    </div>
+                <div class="button button-left button-no-margin background-grey menu-hover link rounded-corners" onClick="javascript:location.href='{{ backurl }}'">
+                {% trans "New" %}
+                </div>
 
-</td>
-<td align="right">
-    <input type="hidden" id="next-button-link" value="{% url web_index %}">
-    <div class="button button-right button-no-margin background-grey menu-hover link rounded-corners" id="next-button-link" onClick="javascript:location.href='{% url web_index %}'">
-    {% trans "Main Menu" %}
-    </div>
+            </td>
+            <td align="right">
+                <input type="hidden" id="next-button-link" value="{% url web_index %}">
+                <div class="button button-right button-no-margin background-grey menu-hover link rounded-corners" id="next-button-link" onClick="javascript:location.href='{% url web_index %}'">
+                {% trans "Main Menu" %}
+                </div>
 
-
-</td></tr>
-</table>
+            </td>
+        </tr>
+    </table>
 </div>

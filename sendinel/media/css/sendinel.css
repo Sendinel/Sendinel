@@ -340,6 +340,8 @@ strong.big {
     
     width: inherit;
     height:120px;
+    
+    z-index: 99999;
 }
 
 #sendinel-logo {

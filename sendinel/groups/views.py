@@ -21,7 +21,7 @@ from sendinel.infoservices.utils import create_messages_for_infoservice, \
 from sendinel.logger import logger, log_request
 from sendinel.settings import AUTH_NUMBER
 from sendinel.web.utils import fill_authentication_session_variable, \
-                               render_status_success, \
+                               render_status, \
                                get_ways_of_communication
 
 @log_request
@@ -38,7 +38,8 @@ def send_message(request, id):
             message = _("All members of the \"%s\" service" + \
                         " will get your message.") \
                                 % group.name
-            return render_status_success(request, title, message, backurl, nexturl)
+            
+            render_status(request, True, title, message, nexturl = nexturl)
 
         
     return render_to_response("groups/message_create.html",
@@ -85,7 +86,7 @@ def save_registration_infoservice(request, group_id):
     message = _("The patient will now receive all messages from the "
                         " \"%s\" service.") % subscription.infoservice.name
     
-    return render_status_success(request, title, message, 
+    return render_status(request, True, title, message, 
                                  backurl = backurl, nexturl = nexturl)                                
                                            
     
