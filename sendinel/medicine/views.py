@@ -42,7 +42,7 @@ def register_patient_save(request, id):
 def register_patient(request):
     '''
     Register a patient to the waitinglist of a medicine, i.e.
-    a new subscription to the infoservice is created.
+    a new subscription if the infoservice is created.
     '''
     ajax_url= reverse('web_check_call_received')
     medicines = InfoService.objects.all().filter(type='medicine')
@@ -63,7 +63,7 @@ def register_patient(request):
                             reverse('medicine_register_patient_save',
                                  kwargs = {'id': request.session['medicine']}))
         else:
-            logger.info("register_infoservice: Invalid form.")
+            logger.info("register patient for medicine: Invalid form.")
        
     backurl = reverse("web_index")
     

@@ -37,7 +37,7 @@
                 </div>
             <div style="clear:both"></div>    
         </div>
-        <a href="{% url groups_index group_type='medicine' %}">
+        <a href="{% url infoservices_index infoservice_type='medicine' %}">
             <div class="menu-item menu-hover menu-item-name groups-manage background-grey rounded-corners">
                {% trans "Manage Waiting Lists for Medicine" %}
             </div>
@@ -61,13 +61,13 @@
             <div class="menu-item background-grey rounded-corners">
                 <div class="menu-item-name groups-name float-left"><strong>{{ service }}</strong></div>
                 <div>
-                    <a href="{% url web_infoservice_register id=service.id %}">
+                    <a href="{% url groups_register group_id=service.id %}">
                         <div class="menu-hover groups-link groups-link-register float-left rounded-corners">
                             {% trans "Register Patient" %}
                         </div>
                     </a>
                     {% if service.members.count > 0 %}
-                        <a href="{% url staff_create_infomessage id=service.id %}" class="menu_secondlink">
+                        <a href="{% url staff_send_message id=service.id %}" class="menu_secondlink">
                             <div class="menu-hover groups-link groups-link-send float-left rounded-corners">
                                 {% trans "Send Message" %}
                             </div>
@@ -81,7 +81,7 @@
                 <div style="clear:both"></div>    
             </div>
         {% endfor %}
-         <a href="{% url groups_index group_type='information' %}">
+         <a href="{% url infoservices_index infoservice_type='information' %}">
             <div class="menu-item menu-hover menu-item-name groups-manage background-grey rounded-corners">
                {% trans "Manage Information Groups" %}
             </div>

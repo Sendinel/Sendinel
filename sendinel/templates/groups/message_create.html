@@ -11,8 +11,8 @@
 {% block content %}
 
     <div id="contentform">
-        <h3>{% blocktrans with infoservice.name as infoservice %}Send a message to {{ infoservice }}{% endblocktrans %}</h3>
-            <form name="infoservice" action="" method="post">
+        <h3>{% blocktrans with group.name as group %}Send a message to {{ group }}{% endblocktrans %}</h3>
+            <form name="group" action="" method="post">
             <br />
                 <div class="button button-left float-left background-grey link menu-hover rounded-corners" onClick="javascript:location.href='{% url web_index %}'">
                     {% trans "Back" %}
