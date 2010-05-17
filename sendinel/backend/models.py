@@ -33,7 +33,7 @@ class Patient(User):
     phone_number = models.CharField(max_length = 20)
     
     def __unicode__(self):
-        return self.name or "unnamed patient"
+        return "Patient <%s>" % self.phone_number
 
     # TODO remove this - django has a reverse query
     def infoservices(self):

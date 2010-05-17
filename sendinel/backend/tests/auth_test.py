@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime
 
 from django.core.exceptions import ValidationError
-
+from django.core.urlresolvers import reverse
 from sendinel.backend.authhelper import check_and_delete_authentication_call, \
                                         format_and_validate_phonenumber, \
                                         delete_timed_out_authentication_calls
@@ -119,3 +119,25 @@ agi_threadid: -1258067088
         delete_timed_out_authentication_calls()
 
         self.assertEquals(1, AuthenticationCall.objects.all().count())
+        
+    
+        
+    def test_redirect_to_authentication_or(self):
+        url = '/testurl/'
+        
+        # switch authentication on
+        original_value = authhelper.AUTHENTICATION_ENABLED
+        authhelper.AUTHENTICATION_ENABLED = True
+        
+        response = authhelper.redirect_to_authentication_or(url)
+        self.assertEquals(response['Location'], reverse('web_authenticate_phonenumber')
+                                               + "?next=" + url )
+                                               
+        #switch authentication off
+        authhelper.AUTHENTICATION_ENABLED = False
+        response = authhelper.redirect_to_authentication_or(url)     
+        self.assertEquals(response['Location'], url)
+        
+        authhelper.AUTHENTICATION_ENABLED = original_value
+                        
+                        

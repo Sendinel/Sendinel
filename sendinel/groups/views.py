@@ -12,15 +12,15 @@ from django.utils.translation import ugettext as _
 from sendinel.backend.models import Patient, \
                                     Hospital, \
                                     WayOfCommunication
+from sendinel.backend.authhelper import redirect_to_authentication_or
 from sendinel.groups.models import InfoService, InfoMessage, Subscription
 from sendinel.groups.forms import InfoserviceValidationForm, \
                                   InfoMessageValidationForm, \
-                                  MedicineMessageValidationForm, \
-                                  NotificationValidationForm2, \
-                                  RegisterPatientForMedicineForm
+                                  NotificationValidationForm2
 from sendinel.logger import logger, log_request
-from sendinel.settings import AUTH, AUTH_NUMBER, MEDICINE_MESSAGE_TEMPLATE
-from sendinel.web.views import fill_authentication_session_variable
+from sendinel.settings import AUTH_NUMBER
+from sendinel.web.views import fill_authentication_session_variable, \
+                               render_status_success
 
 
 @log_request                              
@@ -33,38 +33,25 @@ def logout_staff(request):
 
 @log_request
 def create_infomessage(request, id):
-    infoservice = InfoService.objects.filter(pk = id)[0]
-    
-    if(request.method == "GET"):
-          
-        return render_to_response("staff/create_infomessage.html",
-                                    locals(),
-                                    context_instance = RequestContext(request))
-    elif(request.method == "POST"):
-        
-        data = deepcopy(request.POST)
-        form = InfoMessageValidationForm(data)
+    if(request.method == "POST"):
+        form = InfoMessageValidationForm(request.POST)
         
         if form.is_valid():
-        
-            for patient in infoservice.members.all():
-                create_scheduled_event(patient, infoservice, 
-                                            form.cleaned_data['text'])
+            infoservice = get_object_or_404(InfoService, pk = id)
+            create_messages_for_group(infoservice, form.cleaned_data['text'])
             
             nexturl = reverse('web_index')
-            
-            success = True
             title = _("Message created")
-            message = _("All members of the \"%s\" service will get your message.") \
+            message = _("All members of the \"%s\" service" + \
+                        " will get your message.") \
                                 % infoservice.name
+            
+            render_status_success(request, title, message, nexturl = nexturl)
+
         
-            return render_to_response('web/status_message.html', 
-                                      locals(),
-                                      context_instance = RequestContext(request))
-        
-        return render_to_response("staff/create_infomessage.html",
-                                locals(),
-                                context_instance = RequestContext(request))
+    return render_to_response("groups/message_create.html",
+                              locals(),
+                              context_instance = RequestContext(request))
 
 @log_request
 def index(request, group_type):
@@ -143,7 +130,8 @@ def delete_members_of_infoservice(request, id):
     
     if request.method == "POST" and request.POST.has_key('subscription_id'):
         
-        subscription = Subscription.objects.get(id = request.POST["subscription_id"])        
+        subscription = Subscription.objects.get(
+                                        id = request.POST["subscription_id"])        
         subscription.delete()
         
     return HttpResponseRedirect(reverse("staff_infoservice_members", 
@@ -170,24 +158,17 @@ def register_infoservice(request, id):
             auth_number = AUTH_NUMBER
             backurl = reverse('web_index')        
 
-            if AUTH:
-                return HttpResponseRedirect(
-                        reverse('web_authenticate_phonenumber') \
-                        + "?next=" + reverse('web_infoservice_register_save', \
-                        kwargs = {'id': id}))
-                
-            return HttpResponseRedirect(
-                reverse('web_infoservice_register_save', kwargs = {'id': id}))
+            return redirect_to_authentication_or(reverse \
+                    ('web_infoservice_register_save', kwargs = {'id': id}))
+            
+           
         else:
             logger.info("register_infoservice: Invalid form.")
-            return render_to_response('web/infoservice_register.html', 
-                                locals(),
-                                context_instance=RequestContext(request))
        
     infoservice = InfoService.objects.filter(pk = id)[0].name
     backurl = reverse("web_index")
     
-    return render_to_response('web/infoservice_register.html', 
+    return render_to_response('groups/register.html', 
                               locals(),
                               context_instance = RequestContext(request))
 
@@ -222,124 +203,26 @@ def save_registration_infoservice(request, id):
                               locals(),
                               context_instance = RequestContext(request))
 
-@log_request
-def medicine_register_patient_save(request, id):
-    backurl = reverse('groups_medicine_register_patient')        
-    nexturl = reverse('web_index')
-    
-    subscription = subscription_save(request, id)
-    
-    success = True
-    title = _("Registration successful")
-    message = _("The patient will receive a messages once the medicine "
-                " \"%s\" is available in the clinic again.") \
-                % subscription.infoservice.name
-    
-    return render_to_response('web/status_message.html', 
-                              locals(),
-                              context_instance = RequestContext(request))
-                              
 
-@log_request                              
-def medicine_register_patient(request):
-    '''
-    Register a patient to the waitinglist of a medicine, i.e.
-    a new subscription to the infoservice is created.
-    '''
-    ajax_url= reverse('web_check_call_received')
-    medicines = InfoService.objects.all().filter(type='medicine')
-     
-    if request.method == "POST":
-        set_session_variables_for_register(request)
-        request.session['medicine'] = request.POST.get('medicine', '')
-        
-        data = deepcopy(request.POST)
-        form = RegisterPatientForMedicineForm(data)
-        
-        if form.is_valid():
-            number = fill_authentication_session_variable(request) 
-            auth_number = AUTH_NUMBER
-            backurl = reverse('web_index')
-            
-            if AUTH:
-                return HttpResponseRedirect(
-                        reverse('web_authenticate_phonenumber') \
-                        + "?next=" + \
-                        reverse('groups_medicine_register_patient_save', \
-                        kwargs= {'id': request.session['medicine']}))
-                
-            return HttpResponseRedirect( \
-                            reverse('groups_medicine_register_patient_save',
-                                kwargs = {'id': request.session['medicine']}))
-        else:
-            logger.info("register_infoservice: Invalid form.")
-            return render_to_response('groups/medicine_register_patient.html', 
-                                locals(),
-                                context_instance=RequestContext(request))
-       
-    backurl = reverse("web_index")
-    
-    return render_to_response('groups/medicine_register_patient.html', 
-                              locals(),
-                              context_instance = RequestContext(request))
-
-                              
-@log_request
-def medicine_send_message(request):
-    '''
-        Display the form and send a message to all 
-        patients waiting for the medicine. 
-        Afterwards, the medicine information group is deleted.
-    '''
-    if request.method == 'POST':
-        data = deepcopy(request.POST)
-        form = MedicineMessageValidationForm(data)
-        
-        if form.is_valid():
-            med_id = form.cleaned_data['medicine'].pk
-            medicine = InfoService.objects.filter(pk = med_id)[0]
-            for patient in medicine.members.all():
-                create_scheduled_event(patient, medicine, 
-                                    form.cleaned_data['text'])
-                
-            medicine.delete()
-            
-            nexturl = reverse('web_index')
-            
-            success = True
-            title = _("Message created")
-            message = _("All patients who were waiting for the medicine \"%s\"" + \
-                        "will be informed") %medicine.name
-        
-            return render_to_response('web/status_message.html', 
-                                      locals(),
-                                      context_instance = RequestContext(request))
-                                      
-    medicines = InfoService.objects.all().filter(type='medicine')
-    
-    current_hospital = Hospital.objects.all().filter(current_hospital = True)[0]
-    template_text = MEDICINE_MESSAGE_TEMPLATE
-    template_text = template_text.replace("$hospital", current_hospital.name)
-    return render_to_response('groups/medicine_send_message.html',
-                              locals(),
-                              context_instance = RequestContext(request))
                               
 
                               
-def create_scheduled_event(patient, infoservice, text):
+def create_messages_for_group(group, text):
     '''
         Put together all information for an infomessage and
         calls InfoService.create_scheduled_event
     '''
-    info_message = InfoMessage()
-    info_message.text = text
-    subscription = Subscription.objects.filter(patient = patient,
-                                        infoservice = infoservice)[0]
-    info_message.recipient = patient
-    info_message.send_time = datetime.now()
-    info_message.way_of_communication = \
-                    subscription.way_of_communication
-    info_message.save()        
-    info_message.create_scheduled_event(datetime.now())
-    logger.info("Created %s", str(info_message))
+    
+    for patient in group.members.all():
+        info_message = InfoMessage()
+        info_message.text = text
+        subscription = Subscription.objects.filter(patient = patient,
+                                            infoservice = group)[0]
+        info_message.recipient = patient
+        info_message.send_time = datetime.now()
+        info_message.way_of_communication = \
+                        subscription.way_of_communication
+        info_message.save()        
+        info_message.create_scheduled_event(datetime.now())
+        logger.info("Created %s", str(info_message))
     

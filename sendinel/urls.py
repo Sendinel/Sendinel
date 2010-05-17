@@ -13,8 +13,9 @@ js_info_web = {
 
 urlpatterns = patterns('',
     url(r'^$', redirect_to, {'url': 'web/'}),
-    (r'^web/', include('sendinel.web.urls')),
     (r'^groups/', include('sendinel.groups.urls')),
+    (r'^medicine/', include('sendinel.medicine.urls')),
+    (r'^web/', include('sendinel.web.urls')),
     (r'^notifications/', include('sendinel.notifications.urls')),
     (r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^jsi18n/', 'django.views.i18n.javascript_catalog', js_info_web,

@@ -13,12 +13,12 @@
             <div>
             
             {% if medicine_count > 0 %}
-                <a href="{% url groups_medicine_register_patient %}">
+                <a href="{% url medicine_register_patient %}">
                     <div class="menu-hover groups-link groups-link-register float-left rounded-corners">
                         {% trans "Register Patient" %}
                     </div>
                 </a>
-                <a href="{% url groups_medicine_send_message %}" class="menu_secondlink">
+                <a href="{% url medicine_send_message %}" class="menu_secondlink">
                     <div class="menu-hover groups-link groups-link-send float-left rounded-corners">
                         {% trans "Send Message" %}
                     </div>

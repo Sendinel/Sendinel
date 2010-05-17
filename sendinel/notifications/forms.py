@@ -8,7 +8,8 @@ from sendinel.backend.models import Sendable, WayOfCommunication
 class NotificationValidationForm(Form):
     phone_number = CharField(validators = [format_and_validate_phonenumber],
             error_messages={'required':_('Please enter a phone number')})
-        
+
+    
     way_of_communication = ModelChoiceField(
                         queryset = WayOfCommunication.get_enabled_wocs(),
                         error_messages={'required': \

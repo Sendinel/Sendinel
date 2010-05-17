@@ -7,8 +7,8 @@ from sendinel.backend.models import Hospital, \
                                     Patient, \
                                     ScheduledEvent, \
                                     WayOfCommunication
+from sendinel.backend.tests.helper import disable_authentication
 from sendinel.notifications.models import HospitalAppointment, AppointmentType
-from sendinel.settings import AUTH
 from sendinel.groups.forms import  NotificationValidationForm2, \
                                 DateValidationForm
 from sendinel import settings
@@ -23,7 +23,7 @@ class AppointmentViewTest(TestCase):
         
     def test_notification_form_validation(self):
         data = {"phone_number" : "0123456789",
-                "way_of_communication" : 3}
+                "way_of_communication" : WayOfCommunication.get_woc('sms').id}
         form = NotificationValidationForm2(data)
         self.assertTrue(form.is_valid())
         
@@ -109,23 +109,27 @@ class AppointmentViewTest(TestCase):
         patient = Patient()
         patient.phone_number = phone_number
         # fake authentication
-                
+        # TODO remove this
         self.client.post(reverse('web_authenticate_phonenumber'), \
                     {'patient': patient})
                     
         return self.client.get(reverse("web_appointment_save"))
 
-    def create_appointment_woc(self, way_of_communication):
-        response = self.create_appointment(way_of_communication)
-       
-        if AUTH:
-            self.assertRedirects(response, 
-                             reverse('web_authenticate_phonenumber') + \
-                             "?next=" + \
-                             reverse('web_appointment_save'))
-
+    @disable_authentication
+    def test_valid_create_appointment(self):
+        response = self.create_appointment(WayOfCommunication.get_woc('sms'))
+        
+        self.assertRedirects(response, reverse('web_appointment_save'))
         self.assertTrue(self.client.session.has_key('patient'))
         self.assertTrue(self.client.session.has_key('appointment'))
+        
+    @disable_authentication
+    def test_invalid_create_appointment(self):
+        response = self.create_appointment(WayOfCommunication.get_woc('voice'))
+        
+        self.failUnlessEqual(response.status_code, 200)        
+        self.assertFalse(self.client.session.has_key('patient'))
+        self.assertFalse(self.client.session.has_key('appointment'))
         
 
     def save_appointment_woc(self, way_of_communication):
@@ -150,12 +154,6 @@ class AppointmentViewTest(TestCase):
         # test that exactly one ScheduledEvent was created
         self.assertEquals(ScheduledEvent.objects.count(),
                             number_of_events + 1)
-
-    def test_create_appointment_sms(self):
-        self.create_appointment_woc(WayOfCommunication.get_woc('sms'))
-        
-    def test_create_appointment_voice(self):
-        self.create_appointment_woc(WayOfCommunication.get_woc('voice'))
         
     def test_create_appointment_bluetooth(self):
          response = self.create_appointment(WayOfCommunication.get_woc('bluetooth'))

@@ -110,7 +110,8 @@ INSTALLED_APPS = (
     'sendinel.web',
     'sendinel.backend',
     'sendinel.groups',
-    'sendinel.notifications'
+    'sendinel.notifications',
+    'sendinel.medicine'
 )
 
 ####################################
@@ -153,7 +154,7 @@ AUTH_NUMBER = "CHANGE ME"
 AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = 3)
 
 # True or False to turn authentication on or off
-AUTH = False
+AUTHENTICATION_ENABLED = True
 
 # enable Bluetooth as a Way of Communication
 BLUETOOTH_ENABLED = True

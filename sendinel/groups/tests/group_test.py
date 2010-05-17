@@ -6,9 +6,9 @@ from django.core.urlresolvers import reverse
 from sendinel.backend.models import ScheduledEvent, \
                                     Patient, \
                                     WayOfCommunication
+from sendinel.backend.tests.helper import disable_authentication
 from sendinel.groups.models import InfoService, InfoMessage, Subscription
 from sendinel.groups import views as groups_views
-from sendinel.settings import AUTH
 from sendinel.utils import last
 
 
@@ -22,7 +22,14 @@ class StaffInfoServiceTest(TestCase):
         User.objects.create_user('john', 'l@example.com', 'passwd')
         self.client.login(username='john', password="passwd")
     
-    def test_create_infomessage(self):
+    
+    def test_create_infomessage_get(self):
+        response = self.client.get(reverse("staff_create_infomessage",
+                                   kwargs={"id":1}))
+        self.assertEquals(response.status_code, 200)
+                                    
+    
+    def test_create_infomessage_post(self):
     
         counter = ScheduledEvent.objects.all().count()
         infoservice = InfoService.objects.filter(pk = 1)[0]
@@ -155,11 +162,13 @@ class StaffInfoServiceTest(TestCase):
                             InfoService.objects.all().count())
         self.assertRedirects(response, reverse("groups_index",
                                         kwargs={'group_type': 'information'}))
-        
+
+
 class WebInfoServiceTest(TestCase):
     
     fixtures = ['backend_test']
     
+
     def setUp(self):
         self.info = InfoService(name = "testinfoservice", type="information")
         self.info.save()
@@ -191,28 +200,11 @@ class WebInfoServiceTest(TestCase):
             else:
                 self.assertNotContains(response, infoservice.name)
 
-        
+    @disable_authentication
     def test_register_infoservice(self):
-        original_value = groups_views.AUTH
-        
-        # test with authentication disabled
-        groups_views.AUTH = False
-        
         redirection_path = reverse('web_infoservice_register_save', \
                                     kwargs = {'id': self.info.id})
-        self.register_infoservice_with_assertions(redirection_path)
-    
-        #test with authentication enabled
-        groups_views.AUTH = True
-        
-        redirection_path = reverse('web_authenticate_phonenumber') \
-                        + "?next=" + redirection_path
-        self.register_infoservice_with_assertions(redirection_path)
-    
-        # restore AUTH value
-        groups_views.AUTH = original_value
-    
-    def register_infoservice_with_assertions(self, redirection_path):
+
         self.create_register_infoservice_form()
         response = self.client.post(reverse('web_infoservice_register', 
                                     kwargs={'id': self.info.id}),
@@ -226,30 +218,17 @@ class WebInfoServiceTest(TestCase):
         self.assertRedirects(response, redirection_path)
         return response
         
-        
-    def register_infoservice_validations(self):
-        return self.client.post(reverse('web_infoservice_register', 
+
+    @disable_authentication
+    def test_register_infoservice_submit_validations(self):
+       
+        response = self.client.post(reverse('web_infoservice_register', 
                                     kwargs={'id': self.info.id}),
                                     {'way_of_communication': 1,
                                      'phone_number':'01234 / 56789012'})
 
-    def test_register_infoservice_submit_validations(self):
-        # disable authentication
-        original_value = groups_views.AUTH
-        groups_views.AUTH = False
-        
-        response = self.register_infoservice_validations()
+        self.assertEquals(response.status_code, 302)
 
-        self.assertEquals(response.status_code, 302)
-        
-        groups_views.AUTH = True
-        
-        response = self.register_infoservice_validations()
-        self.assertEquals(response.status_code, 302)
-        
-        # restore AUTH value
-        groups_views.AUTH = original_value
-        
         response = self.client.post(reverse('web_infoservice_register', 
                                     kwargs={'id': self.info.id}),
                                     {'way_of_communication': 1,

@@ -10,9 +10,9 @@ from django.utils.translation import ugettext as _
 from sendinel.backend.models import Patient, \
                                     Hospital, \
                                     WayOfCommunication
+from sendinel.backend.authhelper import redirect_to_authentication_or
 from sendinel.notifications.models import HospitalAppointment, AppointmentType
-from sendinel.settings import   AUTH, \
-                                DEFAULT_SEND_TIME
+from sendinel.settings import DEFAULT_SEND_TIME
 from sendinel.logger import logger, log_request
 from sendinel.notifications.forms import NotificationValidationForm
                                
@@ -39,9 +39,9 @@ def create_appointment(request, appointment_type_name = None):
             appointment.date = form.cleaned_data['date']
             appointment.appointment_type = appointment_type
             appointment.hospital = Hospital.get_current_hospital()
-                        
-            appointment.way_of_communication = form.cleaned_data['way_of_communication']
-
+            appointment.way_of_communication = \
+                                    form.cleaned_data['way_of_communication']
+                                    
             request.session['appointment'] = appointment
             request.session['patient'] = patient            
             
@@ -51,12 +51,9 @@ def create_appointment(request, appointment_type_name = None):
                 return HttpResponseRedirect(reverse("web_list_devices") + \
                                 "?next=" + reverse("web_appointment_send"))
             elif appointment.way_of_communication.name in ('sms', 'voice' ):
-                if AUTH:
-                    return HttpResponseRedirect( \
-                        reverse("web_authenticate_phonenumber") + "?next=" + \
-                        reverse("web_appointment_save"))
-                return HttpResponseRedirect( \
-                        reverse("web_appointment_save"))
+                return redirect_to_authentication_or(
+                                reverse("web_appointment_save"))
+
             else:
                 logger.error("Unknown way of communication selected.")
                 raise Exception ("Unknown way of communication %s " \
@@ -64,18 +61,12 @@ def create_appointment(request, appointment_type_name = None):
                                    "(this is neither bluetooth nor sms or voice)") 
                                 
         else:
-            
         
             logger.info("create_appointment: Invalid form.")
-            return render_to_response('web/appointment_create.html',
-                                locals(),
-                                context_instance=RequestContext(request))
-    else:
-        #TODO: initiale Dateneintraege
-        
-        return render_to_response('web/appointment_create.html',
-                                locals(),
-                                context_instance=RequestContext(request))
+
+    return render_to_response('notifications/create.html',
+                            locals(),
+                            context_instance=RequestContext(request))
 
 @log_request
 def save_appointment(request):
@@ -83,8 +74,8 @@ def save_appointment(request):
     patient = request.session.get('patient', None)
     
     nexturl = reverse("web_index")
-    backurl = reverse("web_appointment_create", 
-                kwargs={'appointment_type_name' : appointment.appointment_type.name })
+    backurl = reverse("web_appointment_create", kwargs={'appointment_type_name':
+                                            appointment.appointment_type.name })
     
     if not appointment or not patient:
         logger.warning("save_appointment: no appointment/patient in session")

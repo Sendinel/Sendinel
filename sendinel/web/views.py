@@ -129,4 +129,9 @@ def fill_authentication_session_variable(request):
     return number
 
 
-
+def render_status_success(request, title, message, \
+                          backurl = None, nexturl = None):
+    success = True
+    return render_to_response('web/status_message.html', 
+                          locals(),
+                          context_instance = RequestContext(request))
