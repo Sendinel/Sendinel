@@ -9,6 +9,7 @@ export COPYFILE_DISABLE=true
 
 tar cvzf Sendinel.tar.gz --exclude='Sendinel/MockUp' \
                          --exclude='Sendinel/Flash' \
+                         --exclude='Sendinel/hudson' \
                          --exclude="Sendinel/.git" \
                          --exclude="Sendinel/BluetoothServer" \
                          --exclude="Sendinel/make_package.sh" \

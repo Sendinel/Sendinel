@@ -7,7 +7,7 @@ installInitScripts=true
 user='sendinel'
 group='sendinel'
 requiredPackages='asterisk asterisk-dev festival lighttpd sudo build-essential python-flup python-setuptools wget' # wget only for django install
-requiredPythonPackages='python-daemon lockfile'
+requiredPythonPackages='python-daemon==1.5.5 lockfile'
 ###pythonVersion='python2.6' # name of the binary that should exist in PATH #### refactor this
 tempDir="/tmp"
 
@@ -165,8 +165,10 @@ fi
 
 
 # package installs
+# TODO supress asterisk country code question
 echo "Installing required packages: $requiredPackages..."
 errorMessage='Installing required packages failed. You may manually install them.'
+apt-get update || warning
 apt-get install $requiredPackages || warning
 message_done
 
@@ -214,6 +216,7 @@ errorMessage="Copying files failed. Look for errors above."
 cp -a "$sourceDir/sendinel" "$sourceDir/configs" "$targetDir/" >> $installLog || error
 message_done
 
+
 echo "Installing sendinel configuration..."
 localSettingsSrc="$sourceDir/configs/sendinel/local_settings.py"
 localSettings="$targetDir/sendinel/local_settings.py"
@@ -243,7 +246,7 @@ message_done
 echo "Configuring permissions for phone authentication in /etc/sudoers..."
 sudoersFile="/etc/sudoers"
 backup_file "$sudoersFile"
-sudoLine="asterisk      ALL = ($user)NOPASSWD: /usr/bin/python '$targetDir/sendinel/asterisk/log_call.py'"
+sudoLine="asterisk      ALL = ($user)NOPASSWD: /usr/bin/python $targetDir/sendinel/asterisk/log_call.py"
 
 errorMessage='Writing the sudoers file failed. You can try to add the following line manually using visudo:'
 errorMessage="$errorMessage\n$sudoLine"
@@ -279,7 +282,7 @@ mkdir -p "$agiLinkSource" || general_warning
 symlink_or_warning "$agiLinkSource/$agiFileName" "$agiLinkTarget"
 
 
-backup_file "$file"
+backup_file "$agiLinkTarget"
 replace_in_file "$agiLinkTarget" '%targetDir%' "$targetDir" 
 replace_in_file "$agiLinkTarget" '%user%' "$user"
 message_done
@@ -366,7 +369,11 @@ chmod 755 "$initSendinelScheduler" || warning
 update-rc.d sendinel-scheduler defaults || warning
 message_done
 
-echo "Starting sendinel..."
+
+"$targetDir/configs/sendinel/create_initial_settings.sh" "$targetDir/sendinel/local_settings.py"
+
+
+echo "Starting sendinel services..."
 /etc/init.d/sendinel start
 /etc/init.d/sendinel-scheduler start
 message_done
