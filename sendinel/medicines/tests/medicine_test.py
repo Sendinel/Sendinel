@@ -5,7 +5,7 @@ from django.test import TestCase
 from sendinel.backend.models import Patient, ScheduledEvent
 from sendinel.backend.tests.helper import disable_authentication
 from sendinel.infoservices.models import InfoService, Subscription
-from sendinel.medicine import views as medicine_views
+from sendinel.medicines import views as medicine_views
 from sendinel.utils import last
 
 class MedicineTest(TestCase):

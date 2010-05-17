@@ -84,12 +84,13 @@ def send_message(request):
                 
             medicine.delete()
             
+            backurl = reverse('medicines_send_message')
             nexturl = reverse('web_index')
             title = _("Message created")
             message = _("All patients who were waiting for the medicine " +
                         "\"%s\" will be informed") % medicine.name
 
-            return render_status_success(request, title, message, nexturl = nexturl)
+            return render_status_success(request, title, message, backurl, nexturl)
                                       
     medicines = InfoService.objects.all().filter(type='medicine')
     

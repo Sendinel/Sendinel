@@ -27,12 +27,13 @@ def send_message(request, id):
         if form.is_valid():
             create_messages_for_infoservice(group, form.cleaned_data['text'])
             
+            backurl = reverse('groups_send_message', kwargs= {'id': id})
             nexturl = reverse('web_index')
             title = _("Message created")
             message = _("All members of the \"%s\" service" + \
                         " will get your message.") \
                                 % group.name
-            return render_status_success(request, title, message, nexturl = nexturl)
+            return render_status_success(request, title, message, backurl, nexturl)
 
         
     return render_to_response("groups/message_create.html",
