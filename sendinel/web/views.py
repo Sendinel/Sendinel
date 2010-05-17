@@ -53,7 +53,7 @@ def authenticate_phonenumber(request):
     logger.info("Deleting timed out authentication calls.")
     delete_timed_out_authentication_calls()
     
-    try:
+    try:    
         number = fill_authentication_session_variable(request)
         logger.info("Starting authentication with %s" % AUTH_NUMBER)
         auth_number = AUTH_NUMBER

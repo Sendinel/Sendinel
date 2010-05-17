@@ -7,7 +7,9 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
-from sendinel.backend.models import Patient, Hospital
+from sendinel.backend.models import Patient, \
+                                    Hospital, \
+                                    WayOfCommunication
 from sendinel.notifications.models import HospitalAppointment, AppointmentType
 from sendinel.settings import   AUTH, \
                                 DEFAULT_SEND_TIME
@@ -29,6 +31,7 @@ def create_appointment(request, appointment_type_name = None):
         else:
             data['date'] = data.get('date', '') + ' ' + DEFAULT_SEND_TIME
         form = NotificationValidationForm(data)
+        
         if form.is_valid():
             appointment = HospitalAppointment()
             patient = Patient()
@@ -36,17 +39,18 @@ def create_appointment(request, appointment_type_name = None):
             appointment.date = form.cleaned_data['date']
             appointment.appointment_type = appointment_type
             appointment.hospital = Hospital.get_current_hospital()
+                        
             appointment.way_of_communication = form.cleaned_data['way_of_communication']
-            
+
             request.session['appointment'] = appointment
             request.session['patient'] = patient            
             
             logger.info("Create appointment via %s" %
-                            appointment.way_of_communication)
-            if appointment.way_of_communication == 'bluetooth':
+                            appointment.way_of_communication.verbose_name)
+            if appointment.way_of_communication == WayOfCommunication.get_woc('bluetooth'):
                 return HttpResponseRedirect(reverse("web_list_devices") + \
                                 "?next=" + reverse("web_appointment_send"))
-            elif appointment.way_of_communication in ('sms', 'voice' ):
+            elif appointment.way_of_communication.name in ('sms', 'voice' ):
                 if AUTH:
                     return HttpResponseRedirect( \
                         reverse("web_authenticate_phonenumber") + "?next=" + \
@@ -56,9 +60,12 @@ def create_appointment(request, appointment_type_name = None):
             else:
                 logger.error("Unknown way of communication selected.")
                 raise Exception ("Unknown way of communication %s " \
-                                   %appointment.way_of_communication + "(this is neither bluetooth nor sms or voice)") 
+                                   %appointment.way_of_communication.verbose_name + \
+                                   "(this is neither bluetooth nor sms or voice)") 
                                 
         else:
+            
+        
             logger.info("create_appointment: Invalid form.")
             return render_to_response('web/appointment_create.html',
                                 locals(),

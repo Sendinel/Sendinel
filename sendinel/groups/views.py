@@ -9,7 +9,9 @@ from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
-from sendinel.backend.models import Patient, Hospital
+from sendinel.backend.models import Patient, \
+                                    Hospital, \
+                                    WayOfCommunication
 from sendinel.groups.models import InfoService, InfoMessage, Subscription
 from sendinel.groups.forms import InfoserviceValidationForm, \
                                   InfoMessageValidationForm, \
@@ -193,7 +195,7 @@ def register_infoservice(request, id):
 def subscription_save(request, id):
     patient = request.session['patient']
     patient.save()
-    way_of_communication = request.session['way_of_communication']
+    way_of_communication = WayOfCommunication.objects.get(pk = request.session['way_of_communication'])
     infoservice = InfoService.objects.filter(pk = id)[0]
     subscription = Subscription(patient = patient,
                                 way_of_communication = way_of_communication,
