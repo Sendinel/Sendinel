@@ -1,5 +1,3 @@
-from copy import deepcopy
-
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
@@ -11,9 +9,9 @@ from sendinel.backend.authhelper import redirect_to_authentication_or
 from sendinel.groups.models import InfoService
 from sendinel.groups.forms import MedicineMessageValidationForm, \
                                   RegisterPatientForMedicineForm
-from sendinel.groups.views import create_messages_for_group, \
-                                  set_session_variables_for_register, \
-                                  subscription_save
+from sendinel.infoservices.utils import create_messages_for_infoservice, \
+                                        set_session_variables_for_register, \
+                                        subscription_save
 from sendinel.logger import logger, log_request
 from sendinel.settings import AUTH_NUMBER, MEDICINE_MESSAGE_TEMPLATE
 from sendinel.web.views import fill_authentication_session_variable, \
@@ -22,11 +20,12 @@ from sendinel.web.views import fill_authentication_session_variable, \
 
 
 @log_request
-def register_patient_save(request, id):
-    backurl = reverse('medicine_register_patient')        
-    nexturl = reverse('web_index')
+def register_save(request, medicine_id):
+
+    subscription = subscription_save(request, medicine_id)
     
-    subscription = subscription_save(request, id)
+    backurl = reverse('medicine_register')        
+    nexturl = reverse('web_index')
     
     success = True
     title = _("Registration successful")
@@ -34,12 +33,10 @@ def register_patient_save(request, id):
                 " \"%s\" is available in the clinic again.") \
                 % subscription.infoservice.name
     
-    return render_to_response('web/status_message.html', 
-                              locals(),
-                              context_instance = RequestContext(request))
+    return render_status_success(request, title, message, backurl, nexturl)
 
 @log_request                              
-def register_patient(request):
+def register(request):
     '''
     Register a patient to the waitinglist of a medicine, i.e.
     a new subscription if the infoservice is created.
@@ -51,8 +48,7 @@ def register_patient(request):
         set_session_variables_for_register(request)
         request.session['medicine'] = request.POST.get('medicine', '')
         
-        data = deepcopy(request.POST)
-        form = RegisterPatientForMedicineForm(data)
+        form = RegisterPatientForMedicineForm(request.POST)
         
         if form.is_valid():
             number = fill_authentication_session_variable(request) 
@@ -60,8 +56,9 @@ def register_patient(request):
             backurl = reverse('web_index')
 
             return redirect_to_authentication_or(
-                            reverse('medicine_register_patient_save',
-                                 kwargs = {'id': request.session['medicine']}))
+                            reverse('medicine_register_save',
+                                 kwargs = {'medicine_id': 
+                                            request.session['medicine']}))
         else:
             logger.info("register patient for medicine: Invalid form.")
        
@@ -85,7 +82,7 @@ def send_message(request):
         if form.is_valid():
             med_id = form.cleaned_data['medicine'].pk
             medicine = get_object_or_404(InfoService, pk = med_id)
-            create_messages_for_group(medicine, form.cleaned_data['text'])
+            create_messages_for_infoservice(medicine, form.cleaned_data['text'])
                 
             medicine.delete()
             
@@ -94,7 +91,7 @@ def send_message(request):
             message = _("All patients who were waiting for the medicine " +
                         "\"%s\" will be informed") % medicine.name
 
-            render_status_success(request, title, message, nexturl = nexturl)
+            return render_status_success(request, title, message, nexturl = nexturl)
                                       
     medicines = InfoService.objects.all().filter(type='medicine')
     
