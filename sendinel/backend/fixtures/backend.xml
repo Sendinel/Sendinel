@@ -36,11 +36,6 @@
         <field type="CharField" name="template">your lab results have arrived at the $hospital</field>
         <field type="BooleanField" name="notify_immediately">True</field>
     </object>
-    <object pk="1" model="backend.hospital">
-        <!-- it's important to have UTF8 umlauts in here-->
-        <field type="CharField" name="name">Test Clinic</field>
-        <field type="BooleanField" name="current_hospital">True</field>
-    </object>
    <object pk="1" model="infoservices.infoservice">
         <field type="CharField" name="name">Information about the Clinic</field>
         <field type="CharField" name="type">information</field>
