@@ -110,7 +110,7 @@ Status: Failed
         patient.save()
 
         sendable = InfoMessage(text="Test Message",
-                               way_of_communication = WayOfCommunication.get_woc("sms"))
+                               way_of_communication = get_woc("sms"))
         sendable.recipient = patient
         sendable.save()
 
