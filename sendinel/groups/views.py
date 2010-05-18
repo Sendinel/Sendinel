@@ -49,7 +49,10 @@ def send_message(request, id):
 def register(request, group_id):
     ajax_url= reverse('web_check_call_received')
     
-    ways_of_communication = get_ways_of_communication(immediate = True)
+    # ways_of_communication = get_ways_of_communication(immediate = True)
+    ways_of_communication = WayOfCommunication.objects.filter(
+                                                    enabled = True,
+                                                    can_send_immediately = True)
     
     if request.method == "POST":
         set_session_variables_for_register(request)

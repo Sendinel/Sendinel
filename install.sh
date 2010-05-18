@@ -7,14 +7,16 @@ installInitScripts=true
 user='sendinel'
 group='sendinel'
 requiredPackages='asterisk asterisk-dev festival lighttpd sudo build-essential python-flup python-setuptools wget' # wget only for django install
-requiredPythonPackages='python-daemon==1.5.5 lockfile'
-###pythonVersion='python2.6' # name of the binary that should exist in PATH #### refactor this
+#requiredPythonPackages='Django python-daemon==1.5.5 lockfile'
+requiredPythonPackages='Django-1.2.tar.gz lockfile-0.8.tar.gz python-daemon-1.5.5.tar.gz'
+#easyInstallArguments='-i http://pypi.python.jp'
 tempDir="/tmp"
 
 # targetDir="./installTest"
 
 sourceDir=$(readlink -f "$0")
 sourceDir=$(dirname "$sourceDir")
+pythonPackageDir="$sourceDir/packages"
 installLog="$sourceDir/install.log"
 targetParentDir="$(dirname $targetDir)"
 # timestamp in form 2010-05-03-16-27-15
@@ -151,19 +153,6 @@ if  test ! -w "$targetParentDir"; then
     error
 fi
 
-
-# TODO check which python versions work
-# eventually write scripts to start sendinel using python2.6
-# $pythonVersion
-# if type -P "$pythonVersion" > /dev/null; then
-#     pythonPath=$(type -P "$pythonVersion")
-#     echo "Python found: $pythonPath"
-# else
-#     errorMessage="The python executable '$pythonVersion' was not found in PATH."
-#     warning
-# fi
-
-
 # package installs
 # TODO supress asterisk country code question
 echo "Installing required packages: $requiredPackages..."
@@ -172,25 +161,23 @@ apt-get update || warning
 apt-get install $requiredPackages || warning
 message_done
 
+
+# check python version
+python -c 'import sys; exit( not (sys.version_info >= (2,4) and sys.version_info < (2,7)))' \
+        || warning "Sendinel was tested with Python 2.5 and 2.6. Other versions may not work."
+
 # python package installs
 echo "Installing required python packages: $requiredPythonPackages"
 errorMessage='Installing required python packages failed. You may manually install them.'
-easy_install -q $requiredPythonPackages || warning
+#easy_install -q $easyInstallArguments $requiredPythonPackages || warning
+# install local packages
+for package in $requiredPythonPackages; do
+    easy_install "$pythonPackageDir/$package" || warning
+done
 message_done
 
-# django 1.2 beta until final release is available
-echo "Downloading and installing django 1.2 beta 1..."
-url="http://www.djangoproject.com/download/1.2-beta-1/tarball/"
-subDirectory="Django-1.2-beta-1"
-download_extract_and_cd_to_targz "$url" "$subDirectory"
-
-errorMessage="Django installation failed. Look for errors above."
-"$pythonBin" setup.py -q install || warning
-cleanup_extraction
+# determine django directory
 djangoDir=$("$pythonBin" -c 'import django; print django.__path__[0]')
-echo "################"
-echo "Django dir: $djangoDir"
-message_done
 
 # sendinel user and group
 echo "Creating user '$user' and group '$group'..."
@@ -379,6 +366,16 @@ echo "Starting sendinel services..."
 message_done
 
 echo "Congratulations - if you didn't see any error messages, sendinel should be installed and reachable at:"
-echo "http://localhost/"
-echo "If your computer has network access, sendinel is also reachable over the network. Just replace localhost with your computers IP address."
+if eth0_ip=$(ifconfig eth0 | awk '/inet addr/ {split ($2,A,":"); print A[2]}'); then
+    echo "http://$eth0_ip/"
+    echo "If the address above does not work, you can try the following ones:"
+else
+    echo "Your computer seems not to use the default ethernet device eth0. - you may try one of the following addresses:"
+fi
+
+for ip in $(ifconfig | awk '/inet addr/ {split ($2,A,":"); print A[2]}'); do 
+    # TODO exclude eth0 ip
+    echo "http://$ip/"
+done
+
 

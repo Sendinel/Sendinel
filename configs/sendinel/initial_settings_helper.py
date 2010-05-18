@@ -26,7 +26,7 @@ try:
 except KeyError:
     usage()
 
-# from sendinel.backend.models import WayOfCommunication
-# bluetooth = WayOfCommunication.objects.get(name = "bluetooth")
-# bluetooth.enabled = bluetooth_enabled
-# bluetooth.save()
+from sendinel.backend.models import WayOfCommunication
+bluetooth = WayOfCommunication.objects.get(name = "bluetooth")
+bluetooth.enabled = bluetooth_enabled
+bluetooth.save()

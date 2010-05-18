@@ -61,8 +61,8 @@ ask_for_and_write "DEFAULT_HOSPITAL_NAME" string "Please enter the clinic's name
 
 ask_for_and_write "COUNTRY_CODE_PHONE" string "Please enter your country's calling code prefixed with two zeros (e.g. 0049 for Germany): "
 
-ask_for "_BLUETOOTH_ENABLED" boolean "Do you want to enable the bluetooth functionality - this requires Bluetooth hardware on client computers? "
-bluetoothEnabled=$settingValue
+ask_for "_BLUETOOTH_ENABLED" boolean "Do you want to enable the bluetooth functionality - this requires Bluetooth hardware on client computers (True/False)? "
+bluetoothEnabled="$_settingValue"
 
 
 
