@@ -92,6 +92,16 @@ Status: Failed
         scheduler.openFile = real_open
         MockFile.counter = 0
         
+    def test_check_spool_files(self):
+        def get_mocK_status(filename):
+            return filename
+        scheduler.get_spoolfile_status = get_mock_status
+
+        class MockEvent():
+            state = "new"
+        event1 = MockEvent()
+
+
     def test_get_all_queued_events(self):
         patient = Patient()
         patient.save()
