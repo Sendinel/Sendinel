@@ -6,7 +6,8 @@ from django.test import TestCase, Client
 from sendinel.backend.models import Hospital, \
                                     Patient, \
                                     ScheduledEvent, \
-                                    WayOfCommunication
+                                    WayOfCommunication, \
+                                    get_woc
 from sendinel.backend.tests.helper import disable_authentication
 from sendinel.notifications.models import HospitalAppointment, AppointmentType
 from sendinel.groups.forms import  NotificationValidationForm2, \
@@ -23,7 +24,7 @@ class AppointmentViewTest(TestCase):
         
     def test_notification_form_validation(self):
         data = {"phone_number" : "0123456789",
-                "way_of_communication" : WayOfCommunication.get_woc('sms').id}
+                "way_of_communication" : get_woc('sms').id}
         form = NotificationValidationForm2(data)
         self.assertTrue(form.is_valid())
         
@@ -117,7 +118,7 @@ class AppointmentViewTest(TestCase):
 
     @disable_authentication
     def test_valid_create_appointment(self):
-        response = self.create_appointment(WayOfCommunication.get_woc('sms'))
+        response = self.create_appointment(get_woc('sms'))
         
         self.assertRedirects(response, reverse('notifications_save'))
         self.assertTrue(self.client.session.has_key('patient'))
@@ -125,7 +126,7 @@ class AppointmentViewTest(TestCase):
         
     @disable_authentication
     def test_invalid_create_appointment(self):
-        response = self.create_appointment(WayOfCommunication.get_woc('voice'))
+        response = self.create_appointment(get_woc('voice'))
         
         self.failUnlessEqual(response.status_code, 200)        
         self.assertFalse(self.client.session.has_key('patient'))
@@ -156,7 +157,7 @@ class AppointmentViewTest(TestCase):
                             number_of_events + 1)
         
     def test_create_appointment_bluetooth(self):
-         response = self.create_appointment(WayOfCommunication.get_woc('bluetooth'))
+         response = self.create_appointment(get_woc('bluetooth'))
          self.assertRedirects(response, 
                               reverse('web_list_devices') + \
                               "?next=" + \
@@ -165,17 +166,17 @@ class AppointmentViewTest(TestCase):
          self.assertTrue(self.client.session.has_key('appointment'))
          
     def test_save_appointment_sms(self):
-         self.save_appointment_woc(WayOfCommunication.get_woc('sms'))
+         self.save_appointment_woc(get_woc('sms'))
 
     def test_save_appointment_voice(self):
-        woc_voice = WayOfCommunication.get_woc("voice")
+        woc_voice = get_woc("voice")
         
         status_save = woc_voice.enabled
         
         woc_voice.enabled = True
         woc_voice.save()
     
-        self.save_appointment_woc(WayOfCommunication.get_woc('voice'))
+        self.save_appointment_woc(get_woc('voice'))
         
         woc_voice.enabled = status_save
         woc_voice.save()

@@ -3,9 +3,11 @@ from datetime import datetime, timedelta
 
 from sendinel.backend.models import ScheduledEvent, \
                                     Patient, \
-                                    WayOfCommunication
+                                    WayOfCommunication, \
+                                    get_woc
 from sendinel.infoservices.models import InfoMessage
 from sendinel.backend import output, scheduler
+from sendinel import settings
 
 class SchedulerTest(TestCase):    
     
@@ -92,12 +94,96 @@ Status: Failed
         scheduler.openFile = real_open
         MockFile.counter = 0
         
-    def test_get_all_queued_events(self):
+    def test_check_spool_files(self):
+        def get_mock_status(filename):
+            """
+                This is a mock method to represent check_spoolfile_status
+                It is told which status to return by using the (in this case
+                useless) filename parameter
+            """
+            return filename
+
+        original_get_spoolfile_status = scheduler.get_spoolfile_status
+        scheduler.get_spoolfile_status = get_mock_status
+
         patient = Patient()
         patient.save()
 
         sendable = InfoMessage(text="Test Message",
                                way_of_communication = WayOfCommunication.get_woc("sms"))
+        sendable.recipient = patient
+        sendable.save()
+
+        event1 = ScheduledEvent(sendable=sendable,
+                               send_time=datetime.now(),
+                               state = "queued",
+                               filename = "Completed")
+        event1.save()
+
+        event2 = ScheduledEvent(sendable=sendable,
+                               send_time=datetime.now(),
+                               state = "queued",
+                               filename = "Expired")
+        event2.save()
+
+
+        # now: the real testing
+               
+        scheduler.check_spool_files()
+       
+        self.assertEquals(ScheduledEvent.objects.get(pk = event1.pk).state, \
+                                    "done")
+
+        self.assertEquals(ScheduledEvent.objects.get(pk = event2.pk).state, \
+                                    "new")
+
+        event2.filename = "Expired"
+        event2.save()
+
+        scheduler.check_spool_files()
+
+        self.assertEquals(ScheduledEvent.objects.get(pk = event2.pk).state, \
+                                    "new")
+
+        self.assertEquals(ScheduledEvent.objects.get(pk = event2.pk).retry, 1)
+
+        event2.retry = settings.ASTERISK_RETRY
+        event2.filename = "Expired"
+        event2.save()
+
+        scheduler.check_spool_files()
+
+        self.assertEquals(ScheduledEvent.objects.get(pk = event2.pk).state, \
+                                    "failed")
+
+        event3 = ScheduledEvent(sendable=sendable,
+                               send_time=datetime.now(),
+                               state = "queued",
+                               filename = "Failed")
+
+
+        event3.save()
+        scheduler.check_spool_files()
+
+
+        self.assertEquals(ScheduledEvent.objects.get(pk = event3.pk).state, \
+                                    "failed")
+
+
+
+        # change everything back to normal
+        event1.delete()
+        event2.delete()
+        event3.delete()
+
+        scheduler.get_spoolfile_status = original_get_spoolfile_status
+
+    def test_get_all_queued_events(self):
+        patient = Patient()
+        patient.save()
+
+        sendable = InfoMessage(text="Test Message",
+                               way_of_communication = get_woc("sms"))
         sendable.recipient = patient
         sendable.save()
 
@@ -134,7 +220,7 @@ Status: Failed
         patient.save()
         
         sendable = InfoMessage(text="Test Message",
-                               way_of_communication = WayOfCommunication.get_woc("sms"))
+                               way_of_communication = get_woc("sms"))
         sendable.recipient = patient
         sendable.save()
         

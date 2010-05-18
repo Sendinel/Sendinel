@@ -46,3 +46,4 @@ def send_vcal(server_address, mac, data):
     result = conn.Actions.sendVCalFile(mac, data, "reminder.vcs")
     logger.info("Result of Sending: " + str(result))
     return (result == "done")
+        

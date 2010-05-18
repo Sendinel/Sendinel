@@ -2,7 +2,7 @@ import time
 import sys
 
 from os.path import abspath, dirname
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.core.management import setup_environ
 
@@ -33,6 +33,7 @@ def get_spoolfile_status(filename):
         @param filename: Filename of the Spool file
         @type  filename: String
     """
+    filename = settings.ASTERISK_DONE_SPOOL_DIR + filename
     spoolfile = openFile(filename)
     while True:
         line = spoolfile.readline()
@@ -76,17 +77,16 @@ def check_spool_files():
     queued_events = get_all_queued_events()
     for event in queued_events:
         try:
-            filename = settings.ASTERISK_DONE_SPOOL_DIR + event.filename
-            status = get_spoolfile_status(filename)
+            status = get_spoolfile_status(event.filename)
             if status == "Completed":
                 logger.info("Completed sending %s" % unicode(event.sendable))
                 event.state = "done"
             elif status == "Expired":
                 # Handle what to do if asterisk gave up
                 event.retry += 1
-                if event.retry > settings.ASTERISK_RETRY:
+                if event.retry < settings.ASTERISK_RETRY:
                     logger.info("%s expired; rescheduling" % unicode(event.sendable))
-                    event.send_time = event.send_time + \
+                    event.send_time = datetime.now() + \
                         timedelta(minutes = settings.ASTERISK_RETRY_TIME)
                     event.state = "new"
                 else:
@@ -103,7 +103,7 @@ def check_spool_files():
             pass
 
 def run(run_only_one_time = False):
-    while True:        
+    while True:
         check_spool_files()         
         due_events = get_all_due_events()
                          
@@ -135,7 +135,6 @@ def run(run_only_one_time = False):
                 event.state = "failed"
                 event.save()
                     
-            
             event.state = 'queued'
             event.save()
             del data

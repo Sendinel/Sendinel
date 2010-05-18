@@ -9,14 +9,14 @@ from django.utils.translation import ugettext as _
 
 from sendinel.backend.models import Patient, \
                                     Hospital, \
-                                    WayOfCommunication
+                                    WayOfCommunication, \
+                                    get_woc
 from sendinel.backend.authhelper import redirect_to_authentication_or
 from sendinel.notifications.models import HospitalAppointment, AppointmentType
 from sendinel.notifications.forms import NotificationValidationForm
 from sendinel.settings import DEFAULT_SEND_TIME
 from sendinel.logger import logger, log_request
-from sendinel.web.utils import render_status_success, \
-                               get_ways_of_communication
+from sendinel.web.utils import get_ways_of_communication
                                
 @log_request
 def create_appointment(request, appointment_type_name = None):
@@ -25,7 +25,7 @@ def create_appointment(request, appointment_type_name = None):
     nexturl = ""
     backurl = reverse('web_index')
     
-    ways_of_communication = get_ways_of_communication()
+    ways_of_communication = get_ways_of_communication(appointment_type.notify_immediately)
     
     if request.method == "POST":
         data = deepcopy(request.POST)
@@ -51,7 +51,7 @@ def create_appointment(request, appointment_type_name = None):
             
             logger.info("Create appointment via %s" %
                             appointment.way_of_communication.verbose_name)
-            if appointment.way_of_communication == WayOfCommunication.get_woc('bluetooth'):
+            if appointment.way_of_communication == get_woc('bluetooth'):
                 return HttpResponseRedirect(reverse("web_list_devices") + \
                                 "?next=" + reverse("notifications_send"))
             elif appointment.way_of_communication.name in ('sms', 'voice' ):
@@ -94,14 +94,18 @@ def save_appointment(request):
         
     title = _("The \"%s\" notification has been created.") \
                         % appointment.appointment_type.verbose_name
+    new_button_label = _("New notification")
+    
     if appointment.appointment_type.notify_immediately:
         message = _("The patient will be informed immediately.")
     else:
         message = _("Please tell the patient that he/she will be reminded"\
                             " one day before the appointment.")
-
-    return render_status_success(request, title, message, backurl = backurl,
-                                  nexturl = nexturl)    
+    success = True
+    
+    return render_to_response('web/status_message.html', 
+                          locals(),
+                          context_instance = RequestContext(request))  
 
 @log_request
 def send_appointment(request):
@@ -113,18 +117,19 @@ def send_appointment(request):
         logger.info("appointment data: " + unicode(appointment))
         
         appointment.bluetooth_mac_address = mac_address
+        appointment.bluetooth_server_address = request.META['REMOTE_ADDR'].strip()
         output_data = appointment.get_data_for_sending()
         result = output_data.send()
         if(result):
             return HttpResponse(status = 200)
         else:
-            return HttpResponse(status = 500)
+            return HttpResponse(status = 500) 
            
     backurl = reverse("web_list_devices")
     url = reverse("notifications_send")
     next = reverse("web_index")
     mac_address = request.GET['device_mac'].strip()
-
+    
     return render_to_response('web/send_bluetooth_appointment.html',
                                 locals(),
                                 context_instance=RequestContext(request))

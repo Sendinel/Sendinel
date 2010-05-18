@@ -5,7 +5,8 @@ from django.core.urlresolvers import reverse
 
 from sendinel.backend.models import ScheduledEvent, \
                                     Patient, \
-                                    WayOfCommunication
+                                    WayOfCommunication, \
+                                    get_woc
 from sendinel.backend.tests.helper import disable_authentication
 from sendinel.infoservices.models import InfoMessage, \
                                          InfoService, \
@@ -99,7 +100,7 @@ class StaffInfoServiceTest(TestCase):
         
         subscription = Subscription(infoservice = info, 
                                     patient = patient,
-                                    way_of_communication = WayOfCommunication.get_woc("voice"))
+                                    way_of_communication = get_woc("voice"))
         subscription.save()
         
         response = self.client.get(reverse("infoservices_index",
@@ -177,7 +178,7 @@ class WebInfoServiceTest(TestCase):
         self.patient = Patient(name="eu",phone_number = "01234")
         self.patient.save()
         self.subscription = Subscription(infoservice = self.info, 
-                                         way_of_communication = WayOfCommunication.get_woc("sms"), 
+                                         way_of_communication = get_woc("sms"), 
                                          patient = self.patient)
         self.subscription.save()
      
@@ -263,7 +264,7 @@ class WebInfoServiceTest(TestCase):
         new_subscription = last(Subscription)
         self.assertEquals(new_subscription.patient.phone_number, "0123456")
         self.assertEquals(new_subscription.infoservice, self.info)
-        self.assertEquals(new_subscription.way_of_communication, WayOfCommunication.get_woc("sms"))
+        self.assertEquals(new_subscription.way_of_communication, get_woc("sms"))
         
 
     
