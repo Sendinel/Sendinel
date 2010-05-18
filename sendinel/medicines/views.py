@@ -104,7 +104,7 @@ def send_message(request):
                                       
     medicines = InfoService.objects.all().filter(type='medicine')
     
-    current_hospital = Hospital.objects.all().filter(current_hospital = True)[0]
+    current_hospital = Hospital.get_current_hospital()
     template_text = MEDICINE_MESSAGE_TEMPLATE
     template_text = template_text.replace("$hospital", current_hospital.name)
     return render_to_response('medicine/message_create.html',

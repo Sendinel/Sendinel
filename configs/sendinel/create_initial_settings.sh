@@ -11,8 +11,9 @@ localSettings="$1"
 
 
 ask_for_and_write() {
-    ask_for "$@"
-    echo "$_settingName = $_settingValue" >> $localSettings
+    if ask_for "$@"; then
+        echo "$_settingName = $_settingValue" >> $localSettings
+    fi
 }
 
 ask_for() {
@@ -28,7 +29,7 @@ ask_for() {
     
         case "$_settingType" in 
             boolean)
-                if echo "$REPLY" | grep -qE "True|False"; then
+                if echo "$REPLY" | grep -qE "^(True|False)$"; then
                     _resultFound=true
                     _settingValue=$REPLY
                 fi
