@@ -40,7 +40,7 @@ warning() {
     
     echo -e "WARNING: $message"
     read -p "Do you want to continue anyway - this may not work? (y/n)"
-    if [ "$REPLY" != "y" && "$REPLY" != "yes" ]; then
+    if [ "$REPLY" != "y" ]; then
         echo "Sendinel installation aborted."
         exit 1
     fi
@@ -145,6 +145,9 @@ cleanup_extraction() {
 }
 
 # TODO check /etc/debian_version
+echo "-------------------------------------"
+echo "Welcome to the sendinel installation!"
+echo "-------------------------------------"
 
 # test wether target dir already exists
 if [ -e "$targetDir" ]; then
@@ -163,10 +166,10 @@ fi
 
 # package installs
 # TODO supress asterisk country code question
-echo "Installing required packages: $requiredPackages..."
+echo "Installing required packages: $requiredPackages... this may take a while..."
 errorMessage='Installing required packages failed. You may manually install them.'
-apt-get update || warning
-apt-get install $requiredPackages || warning
+apt-get -qq update || warning
+DEBIAN_FRONTEND='noninteractive' apt-get -o Dpkg::Options::='--force-confnew' -y -qq -y install $requiredPackages || warning
 message_done
 
 

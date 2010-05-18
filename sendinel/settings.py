@@ -166,7 +166,7 @@ SMS_SALUTATION = 'Hello, '
 CALL_SALUTATION = "This is an automated call from your clinic"
 
 # Template for Medicine Notification Messages
-MEDICINE_MESSAGE_TEMPLATE = "The medicine $medicine is now available " + \
+MEDICINE_MESSAGE_TEMPLATE = "the medicine $medicine is now available " + \
                             "at the $hospital. Please come and pick it up."
 
 # used for marking the vcal uid
