@@ -7,7 +7,6 @@ from django.utils.translation import ugettext as _
 from sendinel.infoservices.models import InfoService, Subscription
 from sendinel.groups.forms import InfoserviceValidationForm
 from sendinel.logger import logger, log_request
-from sendinel.web.utils import render_status
 
 @log_request
 def index(request, infoservice_type):
@@ -44,9 +43,14 @@ def create_infoservice(request, infoservice_type):
             message = _("The \"%(infoservice_name)s\" " + \
                         "%(infoservice_type)s has been created.") \
                         % {'infoservice_name': infoservice.name,
-                           'infoservice_type': infoservice_textblocks["name"]}          
-            return render_status(request, True, title, message, backurl = backurl,
-                                  nexturl = nexturl)    
+                           'infoservice_type': infoservice_textblocks["name"]}
+            new_button_label = _("Create another %(infoservice_type)s") \
+                            % {'infoservice_type': infoservice_textblocks['name']}
+            success = True
+            
+            return render_to_response('web/status_message.html', 
+                          locals(),
+                          context_instance = RequestContext(request))    
         
     return render_to_response("infoservices/create.html",
                                 locals(),

@@ -15,8 +15,7 @@ from sendinel.infoservices.models import InfoService
 from sendinel.notifications.models import AppointmentType
 from sendinel.logger import logger, log_request
 from sendinel.settings import   AUTH_NUMBER, \
-                                AUTHENTICATION_CALL_TIMEOUT, \
-                                BLUETOOTH_SERVER_ADDRESS
+                                AUTHENTICATION_CALL_TIMEOUT
 from sendinel.web.utils import fill_authentication_session_variable
 
 

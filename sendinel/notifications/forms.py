@@ -2,7 +2,9 @@ from django.forms import CharField, ModelChoiceField, DateTimeField, Form
 from django.utils.translation import ugettext as _
 
 from sendinel.backend.authhelper import format_and_validate_phonenumber
-from sendinel.backend.models import Sendable, WayOfCommunication
+from sendinel.backend.models import Sendable, \
+                                    WayOfCommunication, \
+                                    get_enabled_wocs
 
 
 class NotificationValidationForm(Form):
@@ -11,7 +13,7 @@ class NotificationValidationForm(Form):
 
     
     way_of_communication = ModelChoiceField(
-                        queryset = WayOfCommunication.get_enabled_wocs(),
+                        queryset = get_enabled_wocs(),
                         error_messages={'required': \
                                 _('Please choose a way of communication')})
     date = DateTimeField(error_messages={ \
