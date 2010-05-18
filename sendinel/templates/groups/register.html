@@ -11,10 +11,10 @@
 {% block content %}
 
     <div id="contentform">
-        <h3>{% trans "Register patient for " %} {{infoservice}}</h3>
+        <h3>{% trans "Register patient for " %} {{group.name}}</h3>
     	<p>{% trans "Please enter the patient's phone number and the way the patient wants to receive the messages." %}</p>
         <br />
-        <form name="infoservice" method="post" class="selectable_container" action='#' autocomplete="off">
+        <form name="infoservice" id="content_form" method="post" action='#' autocomplete="off">
 
             <div class="button button-left background-grey link menu-hover rounded-corners float-left" onClick="javascript:location.href='{{ backurl }}'">
                 {% trans "Back" %}

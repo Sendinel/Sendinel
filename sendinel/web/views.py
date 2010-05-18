@@ -10,14 +10,13 @@ from django.utils.translation import ugettext as _
 
 from sendinel.backend import bluetooth
 from sendinel.backend.authhelper import check_and_delete_authentication_call, \
-                                    delete_timed_out_authentication_calls, \
-                                    format_and_validate_phonenumber
-from sendinel.groups.models import InfoService
+                                    delete_timed_out_authentication_calls
+from sendinel.infoservices.models import InfoService
 from sendinel.notifications.models import AppointmentType
 from sendinel.logger import logger, log_request
 from sendinel.settings import   AUTH_NUMBER, \
-                                AUTHENTICATION_CALL_TIMEOUT, \
-                                BLUETOOTH_SERVER_ADDRESS
+                                AUTHENTICATION_CALL_TIMEOUT
+from sendinel.web.utils import fill_authentication_session_variable
 
 
 @log_request
@@ -53,11 +52,11 @@ def authenticate_phonenumber(request):
     logger.info("Deleting timed out authentication calls.")
     delete_timed_out_authentication_calls()
     
-    try:
+    try:    
         number = fill_authentication_session_variable(request)
         logger.info("Starting authentication with %s" % AUTH_NUMBER)
         auth_number = AUTH_NUMBER
-        next = request.GET.get('next', reverse('web_appointment_save'))
+        next = request.GET.get('next', reverse('notifications_save'))
         return render_to_response('web/authenticate_phonenumber_call.html', 
                           locals(),
                           context_instance = RequestContext(request))
@@ -89,7 +88,7 @@ def check_call_received(request):
 @log_request
 def list_bluetooth_devices(request):
     next = request.GET.get('next', '')
-    backurl = reverse("web_appointment_create", kwargs=
+    backurl = reverse("notifications_create", kwargs=
                        {"appointment_type_name":
                            request.session["appointment"].appointment_type.name})
     return render_to_response('web/list_devices.html',
@@ -99,10 +98,10 @@ def list_bluetooth_devices(request):
 @log_request
 def get_bluetooth_devices(request):
     response_dict = {}
-    devices_list = []
+    devices_list = []    
     
     try:
-        devices = bluetooth.get_discovered_devices(BLUETOOTH_SERVER_ADDRESS)
+        devices = bluetooth.get_discovered_devices(request.META["REMOTE_ADDR"])
         for device in devices.items():
             device_dict = {}
             device_dict["name"] = device[1]
@@ -116,17 +115,5 @@ def get_bluetooth_devices(request):
                             content_type = "application/json")
     except Exception, e:
         logger.error("get_bluetooth_devices from %s failed: %s" %
-                        (BLUETOOTH_SERVER_ADDRESS, str(e)))
+                        (request.META["REMOTE_ADDR"], str(e)))
         return HttpResponse(status = 500)
-
-@log_request
-def fill_authentication_session_variable(request):
-    number = request.session["patient"].phone_number
-    number = format_and_validate_phonenumber(number)
-    request.session['authenticate_phonenumber'] = \
-                            { 'number': number,
-                              'start_time': datetime.now() }
-    return number
-
-
-

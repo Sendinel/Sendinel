@@ -3,8 +3,11 @@ from django.forms import CharField, ChoiceField, DateTimeField, Textarea, \
 from django.utils.translation import ugettext as _
 
 from sendinel.backend.authhelper import format_and_validate_phonenumber
-from sendinel.backend.models import Sendable
-from sendinel.groups.models import InfoMessage, InfoService
+from sendinel.backend.models import Sendable, \
+                                    WayOfCommunication, \
+                                    get_enabled_wocs, \
+                                    get_immediate_wocs
+from sendinel.infoservices.models import InfoMessage, InfoService
 
 class InfoMessageForm(ModelForm):
     
@@ -33,16 +36,16 @@ class InfoMessageValidationForm(Form):
 class NotificationValidationForm2(Form):
     phone_number = CharField(validators = [format_and_validate_phonenumber],
             error_messages={'required':_('Please enter a phone number')})
-    way_of_communication = ChoiceField(
-                        choices = Sendable.WAYS_OF_COMMUNICATION,
+    way_of_communication = ModelChoiceField(
+                        queryset = get_immediate_wocs(),
                         error_messages={'required': \
                                 _('Please choose a way of communication')})
 
 class RegisterPatientForMedicineForm(Form):  
     phone_number = CharField(validators = [format_and_validate_phonenumber],
             error_messages={'required':_('Please enter a phone number')})
-    way_of_communication = ChoiceField(
-                        choices = Sendable.WAYS_OF_COMMUNICATION,
+    way_of_communication = ModelChoiceField(
+                        queryset = get_enabled_wocs(),
                         error_messages={'required': \
                                 _('Please choose a way of communication')})                              
     medicine = ModelChoiceField(

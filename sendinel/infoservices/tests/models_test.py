@@ -5,8 +5,10 @@ from django.test import TestCase
 from django.db import IntegrityError
 
 from sendinel import settings
-from sendinel.backend.models import Patient
-from sendinel.groups.models import InfoMessage, InfoService, Subscription
+from sendinel.backend.models import Patient, \
+                                    WayOfCommunication, \
+                                    get_woc
+from sendinel.infoservices.models import InfoMessage, InfoService, Subscription
 from sendinel.backend.output import VoiceOutputData, SMSOutputData
 
 
@@ -57,23 +59,27 @@ class InfoServiceModelTest(TestCase):
 
 class SubscriptionTest(TestCase):
     
+    fixtures = ["backend_test"]
+    
     def setUp(self):
-        self.infoservice = InfoService(name = "Gruppe", type = "information")
+        self.woc = get_woc("sms")
+    
+        self.infoservice = InfoService(name = "Gruppe", 
+                                       type = "information")
         self.infoservice.save()
         self.patient = Patient()
         self.patient.save()
         self.subscription = Subscription(patient = self.patient, 
-                                         infoservice = self.infoservice)
+                                         infoservice = self.infoservice,
+                                         way_of_communication = self.woc)
         self.subscription.save()
         
     def test_infoservice_member_relation_add(self):
         self.assertTrue(self.patient in self.infoservice.members.all())
-        self.assertTrue(self.infoservice in self.patient.infoservices())
 
     def test_infoservice_member_relation_delete(self):
         self.subscription.delete()
         self.assertTrue(self.patient not in self.infoservice.members.all())
-        self.assertTrue(self.infoservice not in self.patient.infoservices())
         
     def test_subscription_creation(self):
         subscription = Subscription()        
@@ -85,10 +91,10 @@ class SubscriptionTest(TestCase):
         
         subscription.patient = self.patient
         subscription.infoservice = infoservice
+        subscription.way_of_communication = self.woc
         
         subscription.save()
         
         self.assertEquals(self.infoservice.members.all().count(), 1)
         self.assertEquals(self.infoservice.members.all()[0], self.patient)
-        self.assertTrue(self.infoservice in self.patient.infoservices())
         self.assertTrue(subscription in Subscription.objects.all())

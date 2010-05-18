@@ -3,24 +3,24 @@
 {% block content %}
 
     <div id="contentform">
-        <h3>{% blocktrans with group_textblocks.name as group_type_name %}
-                Create a new {{ group_type_name }}
+        <h3>{% blocktrans with infoservice_textblocks.name as infoservice_type_name %}
+                Create a new {{ infoservice_type_name }}
             {% endblocktrans %}
             </h3>
-        <p>{% blocktrans  with group_textblocks.name as group_type_name %}
-                Please enter the name of the {{ group_type_name }} you want to create
+        <p>{% blocktrans  with infoservice_textblocks.name as infoservice_type_name %}
+                Please enter the name of the {{ infoservice_type_name }} you want to create
             {% endblocktrans %}
         </p>
 
-        <form name="infoservice" method="post" action='#' autocomplete="off">
+        <form name="infoservice" id="content_form" method="post" action='#' autocomplete="off">
             <br />
             <div    class="button button-left link menu-hover background-grey float-left rounded-corners" 
-                    onClick="javascript:location.href='{% url groups_index group_type=group_type %}'">
+                    onClick="javascript:location.href='{% url infoservices_index infoservice_type=infoservice_type %}'">
                     {% trans "Back" %}
             </div>
             <div class="field float-left lastfield">
                 <div class="head">
-                    {{ group_textblocks.form_field_description }}
+                    {{ infoservice_textblocks.form_field_description }}
                     {% if form.name.errors %}
                         {{ form.name.errors }}
                     {% endif %}

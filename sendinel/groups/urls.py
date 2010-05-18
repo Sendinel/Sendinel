@@ -1,14 +1,10 @@
 from django.conf.urls.defaults import patterns, url
-from django.core.urlresolvers import reverse
-from django.views.generic.simple import redirect_to
-
 
 urlpatterns = patterns("",
-    url(r"^infoservice/register/(?P<id>\d+)/$",
-        'sendinel.groups.views.register_infoservice', 
-        name = 'web_infoservice_register'),     
-    
-    url(r"^infoservice/register/save/(?P<id>\d+)/$",
+    url(r"^register/(?P<group_id>\d+)/$",
+        'sendinel.groups.views.register', 
+        name = 'groups_register'),
+    url(r"^register/save/(?P<group_id>\d+)/$",
         'sendinel.groups.views.save_registration_infoservice', 
         name = 'web_infoservice_register_save'),
     # previous staff urls

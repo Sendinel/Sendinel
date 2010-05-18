@@ -34,7 +34,7 @@
     {% endif %}
     
     
-    <form name="appointment_create" action="./" method="post" autocomplete="off" >
+    <form name="appointment_create" id="content_form" action="./" method="post" autocomplete="off" >
     
         <div class="button button-left background-grey link menu-hover rounded-corners float-left" onClick="javascript:location.href='{{ backurl }}'">
             {% trans "Back" %}
@@ -67,27 +67,11 @@
             </div>
         </div>
         {% endif %}
-        <div class="field float-left lastfield">
-            <div class="head">
-                Way of communication:&nbsp;
-                    {% if form.way_of_communication.errors %}
-                        {{ form.way_of_communication.errors }}
-                    {% endif %}
-            </div>
-            <div class="input">
-                <select name="way_of_communication" id="id_way_of_communication">
-                        <option value="" selected="selected">---------</option>
-                        <option value="sms">SMS</option>
-            {% comment %} 
-                    bluetooth as a way of communication is comming soon    
-                        {% if not appointment_type.notify_immediately %}
-                            <option value="bluetooth">Bluetooth</option>
-                        {% endif %}
-            {% endcomment %}
-                        <option value="voice">Voice Call</option>
-                    </select>
-            </div>
+        
+        <div class="field field-groups float-left lastfield">
+            {% include "utils/way_of_communication_widget.html" %}
         </div>
+            
         <div class="button button-right float-left background-grey menu-hover link rounded-corners" onClick="appointment_create.submit();">{% trans "Next" %}</div>
         <div style="clear:both;"></div>        
 

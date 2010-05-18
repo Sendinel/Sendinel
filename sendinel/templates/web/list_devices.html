@@ -8,26 +8,28 @@
 {% endblock %}
 
 {% block content %}
+    <div id="contentform">
+        <h3>Available Bluetooth Devices</h3>
 
-    <h3>Available Bluetooth Devices</h3>
-
-    <div>
         {% trans "Please turn on your Bluetooth now. Please assure that it is in the Bluetooth visibility mode." %}
-    </div>
-    <br />
-    <p>
-        <div class="selectable_container">
-            <ul id="bluetooth_devices"></ul>
-            <div id="spinner" class="centered">
-                <img src="{{ MEDIA_URL }}/img/progress_bar.gif" /><br />
-                {% trans "Looking for further devices" %}
-            </div>
-            <span id="csrf">{% csrf_token %}</span>
-            <input type="hidden" id="next" value="{{ next }}">
-            {% include "web/control_buttons_back_only_widget.html" %}
-        </div>
-    </p>
 
+        <br /><br />
+        <p>
+            <div class="selectable_container">
+                <ul id="bluetooth_devices"></ul>
+                <div id="spinner" class="centered">
+                    <img src="{{ MEDIA_URL }}/img/progress_bar.gif" /><br />
+                    {% trans "Looking for further devices" %}
+                </div>
+                <span id="csrf">{% csrf_token %}</span>
+                <input type="hidden" id="next" value="{{ next }}">
+
+                <br /><br />
+                
+                {% include "web/control_buttons_back_only_widget.html" %}
+            </div>
+        </p>
+    </div>
 {% endblock %}
 
 {% block infotext %}

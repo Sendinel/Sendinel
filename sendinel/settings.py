@@ -110,7 +110,9 @@ INSTALLED_APPS = (
     'sendinel.web',
     'sendinel.backend',
     'sendinel.groups',
-    'sendinel.notifications'
+    'sendinel.infoservices',
+    'sendinel.notifications',
+    'sendinel.medicines'
 )
 
 ####################################
@@ -153,7 +155,10 @@ AUTH_NUMBER = "CHANGE ME"
 AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = 3)
 
 # True or False to turn authentication on or off
-AUTH = False
+AUTHENTICATION_ENABLED = False
+
+# enable Bluetooth as a Way of Communication
+BLUETOOTH_ENABLED = True
 
 # Salutation for SMS Template
 SMS_SALUTATION = 'Hello, '
@@ -163,9 +168,6 @@ CALL_SALUTATION = "This is an automated call from your clinic"
 # Template for Medicine Notification Messages
 MEDICINE_MESSAGE_TEMPLATE = "The medicine $medicine is now available " + \
                             "at the $hospital. Please come and pick it up."
-
-# IP address to bluetooth server
-BLUETOOTH_SERVER_ADDRESS = '127.0.0.1'
 
 # used for marking the vcal uid
 VCAL_UID_SLUG = 'sendinel.org'

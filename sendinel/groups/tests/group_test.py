@@ -3,10 +3,15 @@ from django.test.client import Client
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
-from sendinel.backend.models import ScheduledEvent, Patient
-from sendinel.groups.models import InfoService, InfoMessage, Subscription
+from sendinel.backend.models import ScheduledEvent, \
+                                    Patient, \
+                                    WayOfCommunication, \
+                                    get_woc
+from sendinel.backend.tests.helper import disable_authentication
+from sendinel.infoservices.models import InfoMessage, \
+                                         InfoService, \
+                                         Subscription 
 from sendinel.groups import views as groups_views
-from sendinel.settings import AUTH
 from sendinel.utils import last
 
 
@@ -20,12 +25,19 @@ class StaffInfoServiceTest(TestCase):
         User.objects.create_user('john', 'l@example.com', 'passwd')
         self.client.login(username='john', password="passwd")
     
-    def test_create_infomessage(self):
+    
+    def test_send_message_get(self):
+        response = self.client.get(reverse("groups_send_message",
+                                   kwargs={"id":1}))
+        self.assertEquals(response.status_code, 200)
+                                    
+    
+    def test_send_message_post(self):
     
         counter = ScheduledEvent.objects.all().count()
         infoservice = InfoService.objects.filter(pk = 1)[0]
     
-        response = self.client.post(reverse("staff_create_infomessage",
+        response = self.client.post(reverse("groups_send_message",
             kwargs={"id":1}), {
             "text" : "This is a testmessage",
             "date" : "2010-01-01 00:00:00"
@@ -46,41 +58,41 @@ class StaffInfoServiceTest(TestCase):
             self.assertEquals(message.way_of_communication,
                               subscription.way_of_communication)                  
     
-    def create_group(self, group_type, title, field_title):
-        response = self.client.get(reverse("groups_create",
-                                    kwargs={'group_type': group_type}))
+    def create_infoservice(self, infoservice_type, title, field_title):
+        response = self.client.get(reverse("infoservices_create",
+                                    kwargs={'infoservice_type': infoservice_type}))
         
         self.assertContains(response, 'name="name"')
         self.assertContains(response, title)
         self.assertContains(response, field_title)
         
-        response = self.client.post(reverse("groups_create",
-                                    kwargs={'group_type': group_type}), 
-                                {"name" : "This is a name for a group"})
+        response = self.client.post(reverse("infoservices_create",
+                                    kwargs={'infoservice_type': infoservice_type}), 
+                                    {"name" : "This is a name for a group"})
         
         self.assertEquals(response.status_code, 200)
         self.assertContains(response, "This is a name for a group")
         self.assertContains(response, title)
         
-        response = self.client.get(reverse("groups_index",
-                                    kwargs={'group_type': group_type}))
+        response = self.client.get(reverse("infoservices_index",
+                                    kwargs={'infoservice_type': infoservice_type}))
                                     
         self.assertContains(response, "This is a name for a group")
         self.assertContains(response, title)
            
     def test_create_information_group(self):
-        self.create_group('information', 
+        self.create_infoservice('information', 
                      'information group', 
                      "Inform patients about")
     
     def text_create_medicine_group(self):                 
-        self.create_group('medicine', 
+        self.create_infoservice('medicine', 
                      'waiting list for medicine',
                      'The patients are waiting for the following medicine:')
     
-    def manage_groups(self, group_type, table_head, member_button, 
+    def manage_groups(self, infoservice_type, table_head, member_button, 
                       remove_button, remove_patient_button, group_name):
-        info = InfoService(name = "testgroup", type = group_type)
+        info = InfoService(name = "testgroup", type = infoservice_type)
         info.save()
         
         patient = Patient(phone_number = "012345")
@@ -88,16 +100,16 @@ class StaffInfoServiceTest(TestCase):
         
         subscription = Subscription(infoservice = info, 
                                     patient = patient,
-                                    way_of_communication = "voice")
+                                    way_of_communication = get_woc("voice"))
         subscription.save()
         
-        response = self.client.get(reverse("groups_index",
-                                    kwargs = {'group_type': group_type}))
+        response = self.client.get(reverse("infoservices_index",
+                                    kwargs = {'infoservice_type': infoservice_type}))
         self.assertContains(response, member_button)
         self.assertContains(response, remove_button)
         self.assertContains(response, table_head)
         
-        response = self.client.get(reverse("staff_infoservice_members", 
+        response = self.client.get(reverse("infoservices_members", 
                                                    kwargs={"id": info.id,
                                                    }))
                                                            
@@ -121,14 +133,14 @@ class StaffInfoServiceTest(TestCase):
                            "Remove patient from list",
                            "waiting list for medicine")
     
-    def delete_members_of_group(self, group_type):
-        infoservice = InfoService.objects.filter(type = group_type)[0]
+    def delete_members_of_group(self, infoservice_type):
+        infoservice = InfoService.objects.filter(type = infoservice_type)[0]
         subscription_count = Subscription.objects.all().count()
         patient = infoservice.members.all()[0]
         subscription = Subscription.objects.get(patient=patient, 
                                             infoservice=infoservice)
                                             
-        response = self.client.post(reverse("staff_infoservice_members_delete",
+        response = self.client.post(reverse("infoservices_members_delete",
                                             kwargs={"id" : infoservice.id}),
                                     {'subscription_id' : subscription.id})
                                     
@@ -136,7 +148,7 @@ class StaffInfoServiceTest(TestCase):
         self.assertTrue(not subscription in Subscription.objects.all())
         self.assertEquals(subscription_count - 1, 
                             Subscription.objects.all().count())
-        self.assertRedirects(response, reverse("staff_infoservice_members",
+        self.assertRedirects(response, reverse("infoservices_members",
                                                kwargs={"id": infoservice.id}))
         
     def test_delete_members_of_infoservice(self):
@@ -146,31 +158,33 @@ class StaffInfoServiceTest(TestCase):
     def test_delete_infoservice(self):
         infoservices_count = InfoService.objects.all().count()
         infoservice = InfoService.objects.get(id = 1)
-        response = self.client.post(reverse("staff_infoservice_delete"), 
-                                    {'infoservice_id' : infoservice.id})
+        response = self.client.post(reverse("infoservices_delete"), 
+                                    {'group_id' : infoservice.id})
         self.assertTrue(not infoservice in InfoService.objects.all())
         self.assertEquals(infoservices_count - 1, 
                             InfoService.objects.all().count())
-        self.assertRedirects(response, reverse("groups_index",
-                                        kwargs={'group_type': 'information'}))
-        
+        self.assertRedirects(response, reverse("infoservices_index",
+                                        kwargs={'infoservice_type': 'information'}))
+
+
 class WebInfoServiceTest(TestCase):
     
     fixtures = ['backend_test']
     
+
     def setUp(self):
         self.info = InfoService(name = "testinfoservice", type="information")
         self.info.save()
         self.patient = Patient(name="eu",phone_number = "01234")
         self.patient.save()
         self.subscription = Subscription(infoservice = self.info, 
-                                         way_of_communication = "sms", 
+                                         way_of_communication = get_woc("sms"), 
                                          patient = self.patient)
         self.subscription.save()
      
-    def create_register_infoservice_form(self):
-        response = self.client.get(reverse('web_infoservice_register', 
-                                    kwargs={'id': self.info.id}))
+    def create_register_form(self):
+        response = self.client.get(reverse('groups_register', 
+                                    kwargs={'group_id': self.info.id}))
         self.failUnlessEqual(response.status_code, 200)
         self.assertContains(response, 'name="phone_number"')
         self.assertContains(response, 'name="way_of_communication"')
@@ -184,37 +198,20 @@ class WebInfoServiceTest(TestCase):
             if infoservice.type == "information":
                 self.assertContains(response, infoservice.name)
                 self.assertContains(response, 
-                                reverse('web_infoservice_register',
-                                         kwargs={'id': infoservice.id}))
+                                reverse('groups_register',
+                                         kwargs={'group_id': infoservice.id}))
             else:
                 self.assertNotContains(response, infoservice.name)
 
-        
-    def test_register_infoservice(self):
-        original_value = groups_views.AUTH
-        
-        # test with authentication disabled
-        groups_views.AUTH = False
-        
-        redirection_path = reverse('web_infoservice_register_save', \
-                                    kwargs = {'id': self.info.id})
-        self.register_infoservice_with_assertions(redirection_path)
-    
-        #test with authentication enabled
-        groups_views.AUTH = True
-        
-        redirection_path = reverse('web_authenticate_phonenumber') \
-                        + "?next=" + redirection_path
-        self.register_infoservice_with_assertions(redirection_path)
-    
-        # restore AUTH value
-        groups_views.AUTH = original_value
-    
-    def register_infoservice_with_assertions(self, redirection_path):
-        self.create_register_infoservice_form()
-        response = self.client.post(reverse('web_infoservice_register', 
-                                    kwargs={'id': self.info.id}),
-                                    {'way_of_communication': 'sms',
+    @disable_authentication
+    def test_register(self):
+        redirection_path = reverse('groups_register_save', \
+                                    kwargs = {'group_id': self.info.id})
+
+        self.create_register_form()
+        response = self.client.post(reverse('groups_register', 
+                                    kwargs={'group_id': self.info.id}),
+                                    {'way_of_communication': 1,
                                      'phone_number':'01234 / 56789012'})
 
         self.assertTrue(self.client.session.has_key('way_of_communication'))
@@ -224,39 +221,26 @@ class WebInfoServiceTest(TestCase):
         self.assertRedirects(response, redirection_path)
         return response
         
-        
-    def register_infoservice_validations(self):
-        return self.client.post(reverse('web_infoservice_register', 
-                                    kwargs={'id': self.info.id}),
-                                    {'way_of_communication': 'sms',
+
+    @disable_authentication
+    def test_register_submit_validations(self):
+       
+        response = self.client.post(reverse('groups_register', 
+                                    kwargs={'group_id': self.info.id}),
+                                    {'way_of_communication': 1,
                                      'phone_number':'01234 / 56789012'})
 
-    def test_register_infoservice_submit_validations(self):
-        # disable authentication
-        original_value = groups_views.AUTH
-        groups_views.AUTH = False
-        
-        response = self.register_infoservice_validations()
+        self.assertEquals(response.status_code, 302)
 
-        self.assertEquals(response.status_code, 302)
-        
-        groups_views.AUTH = True
-        
-        response = self.register_infoservice_validations()
-        self.assertEquals(response.status_code, 302)
-        
-        # restore AUTH value
-        groups_views.AUTH = original_value
-        
-        response = self.client.post(reverse('web_infoservice_register', 
-                                    kwargs={'id': self.info.id}),
-                                    {'way_of_communication': 'sms',
+        response = self.client.post(reverse('groups_register', 
+                                    kwargs={'group_id': self.info.id}),
+                                    {'way_of_communication': 1,
                                      'phone_number':'0123afffg789012'})
         self.assertContains(response, 'Please enter numbers only')
 
-        response = self.client.post(reverse('web_infoservice_register', 
-                                    kwargs={'id': self.info.id}),
-                                    {'way_of_communication': 'sms',
+        response = self.client.post(reverse('groups_register', 
+                                    kwargs={'group_id': self.info.id}),
+                                    {'way_of_communication': 1,
                                      'phone_number':'234 / 56789012'})
         self.assertContains(response, 'Please enter a cell phone number.')
         
@@ -267,20 +251,20 @@ class WebInfoServiceTest(TestCase):
     def test_save_registration_infoservice(self):
         subscription_count = Subscription.objects.all().count()
 
-        self.client.post(reverse('web_infoservice_register',
-                         kwargs={'id': self.info.id}),
-                         {"way_of_communication": "sms",
+        self.client.post(reverse('groups_register',
+                         kwargs={'group_id': self.info.id}),
+                         {"way_of_communication": 1,
                           "phone_number": "0123456"})
                           
-        response = self.client.get(reverse('web_infoservice_register_save',
-                                   kwargs={'id': self.info.id}))
+        response = self.client.get(reverse('groups_register_save',
+                                   kwargs={'group_id': self.info.id}))
                                                                
         self.assertEquals(Subscription.objects.all().count(),
                           subscription_count + 1)
         new_subscription = last(Subscription)
         self.assertEquals(new_subscription.patient.phone_number, "0123456")
         self.assertEquals(new_subscription.infoservice, self.info)
-        self.assertEquals(new_subscription.way_of_communication, "sms")
+        self.assertEquals(new_subscription.way_of_communication, get_woc("sms"))
         
 
     

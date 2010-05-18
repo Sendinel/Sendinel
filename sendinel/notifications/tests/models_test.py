@@ -5,12 +5,16 @@ from django.test import TestCase
 from django.db import IntegrityError
 
 from sendinel import settings
-from sendinel.backend.models import Patient, ScheduledEvent 
-from sendinel.notifications.models import AppointmentType, HospitalAppointment
-from sendinel.backend.output import VoiceOutputData, SMSOutputData, \
+from sendinel.backend.models import Patient, ScheduledEvent
+from sendinel.notifications.models import AppointmentType, \
+                                    HospitalAppointment
+from sendinel.backend.output import VoiceOutputData, \
+                                    SMSOutputData, \
                                     BluetoothOutputData
 
 
+
+                                    
 class HospitalAppointmentTest(TestCase):
     fixtures = ['backend_test']
     
@@ -46,13 +50,14 @@ class HospitalAppointmentTest(TestCase):
         appointment.date = datetime(2010, 4, 4)
         appointment.appointment_type = AppointmentType.objects.get(pk = 1)
         appointment.bluetooth_mac_address = "00AA11BB22"
+        appointment.bluetooth_server_address = "123.456.789.1"
                 
         output_data = appointment.get_data_for_bluetooth()
         
         self.assertEquals(type(output_data), BluetoothOutputData)
         self.assertEquals(output_data.bluetooth_mac_address, "00AA11BB22")
         self.assertEquals(output_data.server_address, \
-                          settings.BLUETOOTH_SERVER_ADDRESS)
+                          '123.456.789.1')
         self.assertEquals(type(output_data.data).__name__, "unicode") 
     
     def test_get_data_for_sms(self):
