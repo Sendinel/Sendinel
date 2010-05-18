@@ -15,6 +15,8 @@
             {% trans "Back" %}
         </div>
        
+       <div class="list-box">
+       {% if infoservices %}
         <table id="infoservice-list" class="float-left" cellspacing="0">
             <thead>
                 <tr>        
@@ -55,19 +57,32 @@
                     </tr>
                         {% endcomment %}
                 </form>
-        
-            {% endfor %}
+            {% endfor %}                
             </tbody>
         </table>
-
+        {% else %}
+        <table id="infoservice-list-empty" class="float-left" cellspacing="0">
+            <thead>
+                <tr>        
+                    <th></th>
+                </tr>
+            </thead>        
+            <tbody>
+                <tr><td>
+                    <p>{% trans "There is no" %} {{ infoservice_textblocks.name }} {% trans "here at the moment." %}</p>
+                    <p>{% trans "Click on the button below to add one." %}</p>
+                </td></tr>
+            </tbody>
+        </table>
+        {% endif %}
         <br />
-        
-        <div id="infoservice-create">
-            <img src="{{ MEDIA_URL }}/img/add.png" style="margin-bottom:-8px" />
-            <input  type="button" 
-                onclick="Sendinel.Utils.goto_url('{% url infoservices_create infoservice_type=infoservice_type %}')"
-                value='{% trans "Create" %} {{ infoservice_textblocks.name }}' />
-        </div>
+          <div id="infoservice-create">
+              <img src="{{ MEDIA_URL }}/img/add.png" style="margin-bottom:-8px" />
+              <input  type="button" 
+                  onclick="Sendinel.Utils.goto_url('{% url infoservices_create infoservice_type=infoservice_type %}')"
+                  value='{% trans "Create" %} {{ infoservice_textblocks.name }}' />
+          </div>
+        </div>        
 
         <br />    
 
