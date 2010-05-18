@@ -16,8 +16,79 @@ import sendinel.backend.voicecall
 import sendinel.settings    
 
 class VoicecallTest(unittest.TestCase):
+
     def setUp(self):
         self.vc = sendinel.backend.voicecall.Voicecall()
+
+    def test_conduct_sms(self):
+
+        input_text = "This is a sample text"
+        self.return_text = "This text was returned"
+        input_number = "012345"
+        input_context = "context-test"
+        self.content_to_be_returned = "dummy-content"
+        self.mock_return = "i was called"
+
+        temporary_filename = "tmp"
+
+        self.mock_input_text = ""
+        self.mock_input_text2 = ""
+        self.mock_input_number = ""
+        self.mock_input_context = ""
+        self.mock_input_filename = ""
+        self.mock_input_filename2 = ""
+        self.mock_content = ""
+        
+        def mock_replace_special_characters(text):
+            self.mock_input_text = text
+            return self.return_text
+
+        def mock_create_sms_spool_content(text, number):
+            self.mock_input_text2 = text
+            self.mock_input_number = number            
+            return self.content_to_be_returned
+
+        def mock_create_spool_file(filename, content):
+            self.mock_input_filename = filename
+            self.mock_content = content
+
+        def mock_move_spool_file(filename):
+            self.mock_input_filename2 = filename
+            return self.mock_return
+
+        create_spool_file_backup = self.vc.create_spool_file
+        self.vc.create_spool_file = mock_create_spool_file
+
+        move_spool_file_backup = self.vc.move_spool_file
+        self.vc.move_spool_file = mock_move_spool_file
+
+        create_sms_spool_content_backup = self.vc.create_sms_spool_content
+        self.vc.create_sms_spool_content = mock_create_sms_spool_content        
+
+        replace_special_characters_backup = self.vc.replace_special_characters
+        self.vc.replace_special_characters = mock_replace_special_characters
+
+        # run the whole thing
+
+        self.assertEquals(\
+            self.vc.conduct_sms(input_number, input_text, input_context),
+            self.mock_return)
+
+        # let's see if everything was called correctly
+        self.assertEquals(input_text, self.mock_input_text)
+        self.assertEquals(self.return_text, self.mock_input_text2)
+        self.assertEquals(input_number, self.mock_input_number)
+        self.assertEquals(self.mock_input_text2, self.return_text)
+        self.assertEquals(self.mock_input_number, input_number)
+        self.assertEquals(self.mock_content, self.content_to_be_returned)
+        self.assertEquals(self.mock_input_filename, temporary_filename)
+        self.assertEquals(self.mock_input_filename2, temporary_filename)
+
+        # restore everything back to normal
+        self.vc.move_spool_file = move_spool_file_backup
+        self.vc.create_spool_file = create_spool_file_backup
+        self.vc.replace_special_characters = replace_special_characters_backup
+        self.vc.create_sms_spool_content = create_sms_spool_content_backup
 
     def test_sms_spool_content_creation(self):
         text = "This is a test"

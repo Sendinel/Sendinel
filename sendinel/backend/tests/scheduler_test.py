@@ -125,12 +125,16 @@ Archive: true
 
         MockFile.counter = 0
 
+        # pay attention to the space in the empty line, because in a real
+        # file an empty line behaves more like a line with a space in it
+
         MockFile.fake_data = """Channel: Local/2000
 WaitTime: 2
 RetryTime: 5
 MaxRetries: 8000
 Data: datacard0,0123456,This is a Test
 Archive: true
+ 
 Status: Failed
 """
 
