@@ -41,7 +41,7 @@ class Hospital(models.Model):
     """
     
     name = models.CharField(max_length = 255)
-    current_hospital = models.BooleanField()
+    current_hospital = models.BooleanField(default=True)
     
     def __unicode__(self):
         return self.name

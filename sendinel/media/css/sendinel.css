@@ -337,14 +337,25 @@ strong.big {
     opacity: 0.35;    
 }
 
+.list-box {
+    display: block;
+    float: right;
+}
 /* IDs */
 
 #infoservice-create {
     display: inline;
+    padding-left: 22px;
 }
 
 #infoservice-list {
     margin-bottom: 20px;
+}
+
+#infoservice-list-empty {
+    margin-bottom: 20px;
+    margin-top: 80px;
+    margin-left: 20px;
 }
 
 #header {    
