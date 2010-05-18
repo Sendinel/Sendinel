@@ -1,18 +1,8 @@
 from datetime import datetime
 
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-
 from sendinel.backend.authhelper import format_and_validate_phonenumber
 from sendinel.backend.models import get_enabled_wocs, \
                                     get_immediate_wocs
-
-def render_status(request, success, title, message, \
-                          backurl = None, nexturl = None):
-                          
-    return render_to_response('web/status_message.html', 
-                          locals(),
-                          context_instance = RequestContext(request))
                           
 def fill_authentication_session_variable(request):
     number = request.session["patient"].phone_number

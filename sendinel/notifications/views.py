@@ -16,8 +16,7 @@ from sendinel.notifications.models import HospitalAppointment, AppointmentType
 from sendinel.notifications.forms import NotificationValidationForm
 from sendinel.settings import DEFAULT_SEND_TIME
 from sendinel.logger import logger, log_request
-from sendinel.web.utils import render_status, \
-                               get_ways_of_communication
+from sendinel.web.utils import get_ways_of_communication
                                
 @log_request
 def create_appointment(request, appointment_type_name = None):
@@ -95,14 +94,18 @@ def save_appointment(request):
         
     title = _("The \"%s\" notification has been created.") \
                         % appointment.appointment_type.verbose_name
+    new_button_label = _("New notification")
+    
     if appointment.appointment_type.notify_immediately:
         message = _("The patient will be informed immediately.")
     else:
         message = _("Please tell the patient that he/she will be reminded"\
                             " one day before the appointment.")
-
-    return render_status(request, True, title, message, backurl = backurl,
-                                  nexturl = nexturl)    
+    success = True
+    
+    return render_to_response('web/status_message.html', 
+                          locals(),
+                          context_instance = RequestContext(request))  
 
 @log_request
 def send_appointment(request):
