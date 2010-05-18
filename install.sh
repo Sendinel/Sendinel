@@ -145,6 +145,9 @@ cleanup_extraction() {
 }
 
 # TODO check /etc/debian_version
+echo "-------------------------------------"
+echo "Welcome to the sendinel installation!"
+echo "-------------------------------------"
 
 # test wether target dir already exists
 if [ -e "$targetDir" ]; then
