@@ -21,6 +21,13 @@ a:active { color:#000; text-decoration:none; }
 
 img { border: 0px; }
 
+form#content_form {
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
 textarea, body {
     font: 14pt/20pt 'Lucida Grande', Verdana, Helvetica, sans-serif;
 }
@@ -41,9 +48,10 @@ tr.odd td, tr.even td {
     border-bottom: 1px solid #C4C4C4;
 }
 
-input[type=text] {
+input[type=text], select {
     font-size: 14pt;    
     min-height: 30px;
+    width: 100%;
 }
 
 h3 {
@@ -227,7 +235,8 @@ strong.big {
 }
 
 .button {
-    width:100px;
+    max-width: 200px;
+    min-width: 100px;
     
     border: 1px solid #8e8e8e;
     
@@ -248,6 +257,10 @@ strong.big {
 
 .button-no-margin {
     margin: 0px;
+}
+
+.button-redo {
+    background-image: url(../img/redo.png);
 }
 
 .button-left{
