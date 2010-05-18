@@ -169,9 +169,6 @@ CALL_SALUTATION = "This is an automated call from your clinic"
 MEDICINE_MESSAGE_TEMPLATE = "The medicine $medicine is now available " + \
                             "at the $hospital. Please come and pick it up."
 
-# IP address to bluetooth server
-BLUETOOTH_SERVER_ADDRESS = '127.0.0.1'
-
 # used for marking the vcal uid
 VCAL_UID_SLUG = 'sendinel.org'
 ####################################
