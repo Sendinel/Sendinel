@@ -4,6 +4,7 @@
     <script src="{{MEDIA_URL}}/js/bluetooth.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(Bluetooth.check_for_devices);
+        var next = "{{ next }}";
     </script>
 {% endblock %}
 
@@ -22,8 +23,6 @@
                     {% trans "Looking for further devices" %}
                 </div>
                 <span id="csrf">{% csrf_token %}</span>
-                <input type="hidden" id="next" value="{{ next }}">
-
                 <br /><br />
                 
                 {% include "web/control_buttons_back_only_widget.html" %}

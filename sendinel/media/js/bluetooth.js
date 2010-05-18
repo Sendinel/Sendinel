@@ -15,7 +15,7 @@ var Bluetooth = {
                     $(json.devices).each(function(index, device) {                
                         var deviceHTML = 
                         "<li>"+
-                            "<a href='/notifications/send?device_mac=" + device.mac + "' class='selectable'>" + 
+                            "<a href='" + next + "?device_mac=" + device.mac + "' class='selectable'>" + 
                                 device.name + 
                             "</a>"+
                         "</li>";

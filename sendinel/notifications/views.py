@@ -126,7 +126,7 @@ def send_appointment(request):
     url = reverse("notifications_send")
     next = reverse("web_index")
     mac_address = request.GET['device_mac'].strip()
-
+    
     return render_to_response('web/send_bluetooth_appointment.html',
                                 locals(),
                                 context_instance=RequestContext(request))
