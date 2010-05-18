@@ -9,7 +9,8 @@ from django.utils.translation import ugettext as _
 
 from sendinel.backend.models import Patient, \
                                     Hospital, \
-                                    WayOfCommunication
+                                    WayOfCommunication, \
+                                    get_woc
 from sendinel.backend.authhelper import redirect_to_authentication_or
 from sendinel.notifications.models import HospitalAppointment, AppointmentType
 from sendinel.notifications.forms import NotificationValidationForm
@@ -50,7 +51,7 @@ def create_appointment(request, appointment_type_name = None):
             
             logger.info("Create appointment via %s" %
                             appointment.way_of_communication.verbose_name)
-            if appointment.way_of_communication == WayOfCommunication.get_woc('bluetooth'):
+            if appointment.way_of_communication == get_woc('bluetooth'):
                 return HttpResponseRedirect(reverse("web_list_devices") + \
                                 "?next=" + reverse("notifications_send"))
             elif appointment.way_of_communication.name in ('sms', 'voice' ):

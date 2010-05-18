@@ -6,7 +6,8 @@ from django.db import IntegrityError
 
 from sendinel import settings
 from sendinel.backend.models import Patient, \
-                                    WayOfCommunication
+                                    WayOfCommunication, \
+                                    get_woc
 from sendinel.infoservices.models import InfoMessage, InfoService, Subscription
 from sendinel.backend.output import VoiceOutputData, SMSOutputData
 
@@ -61,7 +62,7 @@ class SubscriptionTest(TestCase):
     fixtures = ["backend_test"]
     
     def setUp(self):
-        self.woc = WayOfCommunication.get_woc("sms")
+        self.woc = get_woc("sms")
     
         self.infoservice = InfoService(name = "Gruppe", 
                                        type = "information")

@@ -74,30 +74,26 @@ class WayOfCommunication(models.Model):
     def __unicode__(self):
         return self.verbose_name
         
-    @classmethod
-    def get_enabled_wocs(cls):
-        """
-        Return all Ways of Communication that are enabled
-        """
-        return WayOfCommunication.objects.all().filter(enabled = True)
-        
-    @classmethod
-    def get_immediate_wocs(cls):
-        """
-        Return all Ways of Communication that are enabled
-        and can be send immediately
-        """
-        return WayOfCommunication.objects.all().filter(enabled = True, \
-                                                       can_send_immediately = True)                                                    
+def get_enabled_wocs():
+    """
+    Return all Ways of Communication that are enabled
+    """
+    return WayOfCommunication.objects.all().filter(enabled = True)
     
-    @classmethod
-    def get_woc(cls, woc_name):
-        """
-        Return the WayOfCommunication-Object where the name equals the 
-        given woc_name
-        """
-        return WayOfCommunication.objects.get(name = woc_name)
-        
+def get_immediate_wocs():
+    """
+    Return all Ways of Communication that are enabled
+    and can be send immediately
+    """
+    return WayOfCommunication.objects.all().filter(enabled = True, \
+                                                   can_send_immediately = True)                                                    
+
+def get_woc(woc_name):
+    """
+    Return the WayOfCommunication-Object where the name equals the 
+    given woc_name
+    """
+    return WayOfCommunication.objects.get(name = woc_name)        
 
 class Sendable(models.Model):
     """

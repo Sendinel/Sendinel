@@ -7,8 +7,7 @@ from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 
-from sendinel.settings import BLUETOOTH_SERVER_ADDRESS, \
-                              REMINDER_TIME_BEFORE_APPOINTMENT
+from sendinel.settings import REMINDER_TIME_BEFORE_APPOINTMENT
 from sendinel.backend import texthelper, vcal
 from sendinel.backend.models import Hospital, Sendable
 from sendinel.backend.output import SMSOutputData, \
