@@ -95,6 +95,11 @@ Status: Failed
         
     def test_check_spool_files(self):
         def get_mock_status(filename):
+            """
+                This is a mock method to represent check_spoolfile_status
+                It is told which status to return by using the (in this case
+                useless) filename parameter
+            """
             return filename
 
         original_get_spoolfile_status = scheduler.get_spoolfile_status
@@ -122,8 +127,7 @@ Status: Failed
 
 
         # now: the real testing
-        settings.ASTERISK_RETRY_TIME = 2
-                
+               
         scheduler.check_spool_files()
        
         self.assertEquals(ScheduledEvent.objects.get(pk = event1.pk).state, \
@@ -142,7 +146,7 @@ Status: Failed
 
         self.assertEquals(ScheduledEvent.objects.get(pk = event2.pk).retry, 1)
 
-        event2.retry = 5
+        event2.retry = settings.ASTERISK_RETRY
         event2.filename = "Expired"
         event2.save()
 
