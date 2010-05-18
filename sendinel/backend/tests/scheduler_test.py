@@ -19,9 +19,19 @@ class SchedulerTest(TestCase):
         def scheduled_events_count(state = 'new'):
             
             return scheduler.get_all_due_events().count()
+
+        def queued_events_count(state = 'queued'):
+            
+            return scheduler.get_all_queued_events().count()
+
             
         def send(data):
             SchedulerTest.counter += 1
+
+        def mock_process_events():
+            for event in scheduler.get_all_queued_events():
+                event.state = "done"
+                event.save()
         
         sms_send_old = output.SMSOutputData.send
         bluetooth_send_old = output.BluetoothOutputData.send
@@ -39,10 +49,47 @@ class SchedulerTest(TestCase):
         # assert that all scheduled events have been processed by send()
         # as defined in fixtures there is one usergroup with 2 members and
         # one single patient
+        # exactly two messages were scheduled and had the state "new"
+
+        # we expect only one message to be processed at a time, so
+        # the second one has to stay with state "new"
         self.assertEquals(1, SchedulerTest.counter)
-        # assert that no events with state new exist anymore
+
+        # assert that one event has been processed and one is left
+        self.assertEquals(scheduled_events_count(), 1)
+        self.assertEquals(queued_events_count(), 1)
+
+        # running the scheduler again should not change the situation,
+        # because the fact that the file is still in queue means that
+        # has not been processed yet
+
+        scheduler.run(run_only_one_time = True)
+
+        self.assertEquals(1, SchedulerTest.counter)
+        self.assertEquals(scheduled_events_count(), 1)
+        self.assertEquals(queued_events_count(), 1)
+
+        # let's pretend the Asterisk server has processed the file
+
+        mock_process_events()
+        self.assertEquals(queued_events_count(), 0)
+
+        # now the scheduler is run again and should process the one event left
+
+        scheduler.run(run_only_one_time = True)
+
+        # assert that no events with state new exist anymore and one is queued
         self.assertEquals(scheduled_events_count(), 0)
+        self.assertEquals(queued_events_count(), 1)
         
+        # Now we also process the last event and ensure there's none left
+        mock_process_events()
+        self.assertEquals(queued_events_count(), 0)
+
+        # Running the scheduler without any due event should be no problem
+
+        scheduler.run(run_only_one_time = True)
+
         output.SMSOutputData.send = sms_send_old
         output.BluetoothOutputData.send = bluetooth_send_old
         output.VoiceOutputData.send = voice_send_old
@@ -219,12 +266,13 @@ Status: Failed
         patient = Patient()
         patient.save()
         
+        # The fixtures already contain two due events        
+        self.assertEquals(scheduler.get_all_due_events().count(), 2)
+        
         sendable = InfoMessage(text="Test Message",
                                way_of_communication = get_woc("sms"))
         sendable.recipient = patient
         sendable.save()
-        
-        self.assertEquals(scheduler.get_all_due_events().count(), 1)
         
         schedule1 = ScheduledEvent(sendable=sendable, send_time=datetime.now())
         schedule1.save()
@@ -237,7 +285,7 @@ Status: Failed
                                send_time=(datetime.now() + timedelta(days=1)))
         schedule3.save()
         
-        self.assertEquals(scheduler.get_all_due_events().count(), 3)
+        self.assertEquals(scheduler.get_all_due_events().count(), 4)
         self.assertTrue(schedule1 in scheduler.get_all_due_events())
         self.assertTrue(schedule2 in scheduler.get_all_due_events())
         self.assertFalse(schedule3 in scheduler.get_all_due_events())
@@ -252,7 +300,7 @@ Status: Failed
                                state = "sent")
         schedule5.save()
         
-        self.assertEquals(scheduler.get_all_due_events().count(), 3)
+        self.assertEquals(scheduler.get_all_due_events().count(), 4)
         
         schedule1.delete()
         schedule2.delete()

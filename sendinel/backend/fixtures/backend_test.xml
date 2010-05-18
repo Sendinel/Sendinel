@@ -91,12 +91,23 @@
         <field to="backend.hospital" name="hospital" rel="ManyToOneRel">1</field>
         <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
     </object>
+
     <object pk="1" model="backend.scheduledevent">
         <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>notifications</natural><natural>hospitalappointment</natural></field>
         <field type="PositiveIntegerField" name="sendable_id">1</field>
         <field type="DateTimeField" name="send_time">2010-02-08 18:43:07</field>
         <field type="CharField" name="state">new</field>
     </object>
+
+    <object pk="2" model="backend.scheduledevent">
+        <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>notifications</natural><natural>hospitalappointment</natural></field>
+        <field type="PositiveIntegerField" name="sendable_id">1</field>
+        <field type="DateTimeField" name="send_time">2010-02-08 15:43:07</field>
+        <field type="CharField" name="state">new</field>
+    </object>
+
+
+
     <object pk="1" model="infoservices.infomessage">
         <field to="backend.wayofcommunication" name="way_of_communication" rel="ManyToOneRel">1</field>
         <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
