@@ -16,7 +16,7 @@ tempDir="/tmp"
 
 sourceDir=$(readlink -f "$0")
 sourceDir=$(dirname "$sourceDir")
-pythonPackageDir="$sourceDir/packages"
+packageDir="$sourceDir/packages"
 installLog="$sourceDir/install.log"
 targetParentDir="$(dirname $targetDir)"
 # timestamp in form 2010-05-03-16-27-15
@@ -40,7 +40,7 @@ warning() {
     
     echo -e "WARNING: $message"
     read -p "Do you want to continue anyway - this may not work? (y/n)"
-    if [ "$REPLY" != "y" ]; then
+    if [ "$REPLY" != "y" && "$REPLY" != "yes" ]; then
         echo "Sendinel installation aborted."
         exit 1
     fi
@@ -117,19 +117,27 @@ download_extract_and_cd_to_targz() {
     url="$1"
     subDirectory="$2"
     tempFile=$(mktemp "$tempDir/sendinel-install-temp-XXXXXXXXXXXX")
-    extractionTempDir="$tempFile-extracted"
+    
+    wget --no-verbose -O "$tempFile" "$url" || warning "The download and extraction of $url failed. See above for errors."
+    extract_and_cd_to_targz "$tempFile" "$subDirectory"
+    rm $tempFile || warning
+}
+extract_and_cd_to_targz() {
+    archiveFile="$1"
+    subDirectory="$2"
+    
+    extractionTempDir=$(mktemp -d "$tempDir/sendinel-install-extr-XXXXXXXXXXXX" || warning)
     extractionOldPwd="$(pwd)"
     
     errorMessage="The download and extraction of $url failed. See above for errors."
     
-    mkdir -p "$extractionTempDir" && \
-    wget --no-verbose -O "$tempFile" "$url" && \
-    tar xzf "$tempFile" -C "$extractionTempDir" && \
-    rm $tempFile || warning
+    tar xzf "$archiveFile" -C "$extractionTempDir" || warning
+
     extractionDir="$extractionTempDir/$subDirectory"
-    errorMessage="Could not cd to directory '$extractionDir'. You may manually install $url."
-    cd "$extractionDir" || warning
+
+    cd "$extractionDir" || warning "Could not cd to directory '$extractionDir'. You may manually install $url."
 }
+
 
 cleanup_extraction() {
     cd "$extractionOldPwd" && \
@@ -172,7 +180,7 @@ errorMessage='Installing required python packages failed. You may manually insta
 #easy_install -q $easyInstallArguments $requiredPythonPackages || warning
 # install local packages
 for package in $requiredPythonPackages; do
-    easy_install "$pythonPackageDir/$package" || warning
+    easy_install "$packageDir/$package" || warning
 done
 message_done
 
@@ -289,9 +297,10 @@ message_done
 
 # download and compile datacard
 echo "Downloading and compiling Asterisk chan_datacard module for 3G stick support..."
-url="http://github.com/thomasklingbeil/chan_datacard/tarball/28dffc8a5ed498581ab0421ddca0da322777aec2"
+#url="http://github.com/thomasklingbeil/chan_datacard/tarball/28dffc8a5ed498581ab0421ddca0da322777aec2"
+package="$packageDir/thomasklingbeil-chan_datacard-28dffc8.tar.gz"
 subDirectory="thomasklingbeil-chan_datacard-28dffc8"
-download_extract_and_cd_to_targz "$url" "$subDirectory"
+extract_and_cd_to_targz "$package" "$subDirectory"
 
 errorMessage="chan_datacard installation failed. Look for errors above."
 make && \
@@ -368,14 +377,16 @@ message_done
 echo "Congratulations - if you didn't see any error messages, sendinel should be installed and reachable at:"
 if eth0_ip=$(ifconfig eth0 | awk '/inet addr/ {split ($2,A,":"); print A[2]}'); then
     echo "http://$eth0_ip/"
-    echo "If the address above does not work, you can try the following ones:"
+    echo "If the address above does not work, you can try the following one(s):"
 else
     echo "Your computer seems not to use the default ethernet device eth0. - you may try one of the following addresses:"
 fi
 
 for ip in $(ifconfig | awk '/inet addr/ {split ($2,A,":"); print A[2]}'); do 
-    # TODO exclude eth0 ip
-    echo "http://$ip/"
+    # exclude eth0 ip
+    if [ "$ip" != "$eth0_ip" ]; then
+        echo "http://$ip/"
+    fi
 done
 
 
