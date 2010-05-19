@@ -26,6 +26,7 @@ from sendinel.web.utils import fill_authentication_session_variable, \
 @log_request
 def send_message(request, id):
     group = get_object_or_404(InfoService, pk = id)
+    member_count = str(group.members.count())
     if(request.method == "POST"):
         form = InfoMessageValidationForm(request.POST)
         if form.is_valid():
