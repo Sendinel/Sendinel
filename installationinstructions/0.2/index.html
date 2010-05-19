@@ -1,0 +1,990 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  
+  "http://www.w3.org/TR/html4/loose.dtd">  
+<html > 
+<head><title>Installation Manual for Sendinel
+</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"> 
+<!-- html --> 
+<meta name="src" content="installation_manual_v1.tex"> 
+<meta name="date" content="2010-05-19 10:44:00"> 
+<link rel="stylesheet" type="text/css" href="installation_manual_v1.css"> 
+</head><body 
+>
+  <div class="maketitle">
+                                                                                     
+                                                                                     
+<div class="minipage">                 <img 
+src="installation_manual_v10x.png" alt="PIC" class="graphics" width="228.22922pt" height="85.35826pt" ><!--tex4ht:graphics  
+name="installation_manual_v10x.png" src="utils/Sendinel_logo.pdf"  
+--> <img 
+src="installation_manual_v11x.png" alt="PIC" class="graphics"><!--tex4ht:graphics  
+name="installation_manual_v11x.png" src="utils/hpi_logo_text.pdf"  
+--></div>
+
+<h2 class="titleHead">Installation Manual for Sendinel<br />
+</h2>
+<span 
+class="phvb8t-x-x-114">Sending SMS and Phone Calls to Patients</span><br />
+<span 
+class="phvb8t-x-x-114">http://www.sendinel.org</span>
+ <div class="author" ></div><br />
+<div class="date" ><span 
+class="pplr8t-x-x-144">Potsdam, May 2010</span></div>
+                                                                                     
+                                                                                     
+  </div>
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+<div class="center" 
+>
+<!--l. 86--><p class="noindent" >
+<!--l. 87--><p class="noindent" >[This page intentionally left blank]</div>
+                                                                                     
+                                                                                     
+  <h3 class="likesectionHead"><a 
+ id="x1-1000"></a>Contents</h3>
+  <div class="tableofcontents">
+  <span class="sectionToc" >1 <a 
+href="#x1-20001" id="QQ2-1-2">What is Sendinel for?</a></span>
+<br />  <span class="sectionToc" >2 <a 
+href="#x1-30002" id="QQ2-1-3">Setting up Sendinel</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >2.1 <a 
+href="#x1-40002.1" id="QQ2-1-4">Requirements</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >2.2 <a 
+href="#x1-50002.2" id="QQ2-1-5">Preparation</a></span>
+<br />  <span class="sectionToc" >3 <a 
+href="#x1-60003" id="QQ2-1-6">The Automatic Installation Script</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >3.1 <a 
+href="#x1-70003.1" id="QQ2-1-7">Getting the installation package</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >3.2 <a 
+href="#x1-80003.2" id="QQ2-1-12">Installing Sendinel</a></span>
+<br />  &#x00A0;&#x00A0;<span class="subsubsectionToc" >3.2.1 <a 
+href="#x1-90003.2.1" id="QQ2-1-15">Individual Configuration</a></span>
+<br />  <span class="sectionToc" >4 <a 
+href="#x1-140004" id="QQ2-1-20">(manual) off-line installation</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >4.1 <a 
+href="#x1-150004.1" id="QQ2-1-21">installing the needed packages</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >4.2 <a 
+href="#x1-160004.2" id="QQ2-1-22">Setting up festival text-to-speech synthesis</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >4.3 <a 
+href="#x1-170004.3" id="QQ2-1-23">Configuring the Asterisk Telephony Server</a></span>
+<br />  &#x00A0;&#x00A0;<span class="subsubsectionToc" >4.3.1 <a 
+href="#x1-180004.3.1" id="QQ2-1-24">the datacard channel</a></span>
+<br />  &#x00A0;&#x00A0;<span class="subsubsectionToc" >4.3.2 <a 
+href="#x1-190004.3.2" id="QQ2-1-25">Asterisk configuration files</a></span>
+<br />  &#x00A0;&#x00A0;<span class="subsubsectionToc" >4.3.3 <a 
+href="#x1-200004.3.3" id="QQ2-1-26">Other</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >4.4 <a 
+href="#x1-210004.4" id="QQ2-1-27">Installing Sendinel</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >4.5 <a 
+href="#x1-220004.5" id="QQ2-1-28">The lighttpd server</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >4.6 <a 
+href="#x1-230004.6" id="QQ2-1-29">Init-Scripts</a></span>
+<br />  <span class="sectionToc" >5 <a 
+href="#x1-240005" id="QQ2-1-30">Bluetooth</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >5.1 <a 
+href="#x1-250005.1" id="QQ2-1-31">Enabling Bluetooth in Sendinel</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >5.2 <a 
+href="#x1-260005.2" id="QQ2-1-32">Installing the Java-Client</a></span>
+<br />  <span class="sectionToc" >6 <a 
+href="#x1-270006" id="QQ2-1-33">Possible settings for Sendinel</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >6.1 <a 
+href="#x1-280006.1" id="QQ2-1-34">Country Settings</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >6.2 <a 
+href="#x1-310006.2" id="QQ2-1-37">Asterisk Settings</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >6.3 <a 
+href="#x1-370006.3" id="QQ2-1-43">Text-to-Speech settings</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >6.4 <a 
+href="#x1-390006.4" id="QQ2-1-45">Sendinel Settings</a></span>
+<br />  <span class="sectionToc" >7 <a 
+href="#x1-450007" id="QQ2-1-51">Administration Backend</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >7.1 <a 
+href="#x1-460007.1" id="QQ2-1-52">Logging into Admin</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >7.2 <a 
+href="#x1-470007.2" id="QQ2-1-55">Change Hospital Name</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >7.3 <a 
+href="#x1-480007.3" id="QQ2-1-56">Add an appointment type</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >7.4 <a 
+href="#x1-490007.4" id="QQ2-1-60">Enabling/Disabling Bluetooth/SMS/Voice Call</a></span>
+  </div>
+                                                                                     
+                                                                                     
+  <h3 class="sectionHead"><span class="titlemark">1  </span> <a 
+ id="x1-20001"></a>What is Sendinel for?</h3>
+<!--l. 3--><p class="noindent" >Sendinel aims at improving the communication between clinics and patients. It allows clinics to
+reach the patients on their cell phones. For example the clinic staff can inform patients if their lab
+results or medicine have arrived. This quick information transfer avoids useless trips to the clinic for
+the patients and improves the treatment. The clinic staff can also regularly send messages to a group
+of people.For example, they can inform all subscribers to "Information about the Clinic" if a specialist
+is coming the next day.
+<!--l. 5--><p class="noindent" >
+  <h3 class="sectionHead"><span class="titlemark">2  </span> <a 
+ id="x1-30002"></a>Setting up Sendinel</h3>
+<!--l. 7--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">2.1  </span> <a 
+ id="x1-40002.1"></a>Requirements</h4>
+<!--l. 8--><p class="noindent" >First, please make sure that the basic system requirements are met:
+     <ul class="itemize1">
+     <li class="itemize">a running Linux installation - for the automated installer Ubuntu or Debian is required.
+     In this linux distribution at least Asterisk 1.6 and Python 2.5 have to be supported
+     </li>
+     <li class="itemize">If the asterisk telephony server is not present yet, at least 150MB of free disk space are
+     needed and 50MB have to be downloaded
+     </li>
+     <li class="itemize">a working network connection
+     </li>
+     <li class="itemize">an internet connection if the packages are to be installed from a web resource (at least
+     60MB have to be downloaded)
+     </li>
+     <li class="itemize">a free USB port to connect the 3G Stick
+     </li>
+     <li class="itemize">a Huawei E169 (also known as Vodafone K3520) - other devices will not work!</li></ul>
+                                                                                     
+                                                                                     
+<!--l. 19--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">2.2  </span> <a 
+ id="x1-50002.2"></a>Preparation</h4>
+<!--l. 20--><p class="noindent" >Please make sure that you have inserted a working SIM-Card <span 
+class="pplri8t-x-x-109">without PIN protection </span>into the 3G stick.
+Connect the stick to the system.
+<!--l. 1--><p class="noindent" >
+  <h3 class="sectionHead"><span class="titlemark">3  </span> <a 
+ id="x1-60003"></a>The Automatic Installation Script</h3>
+<!--l. 2--><p class="noindent" >To use the automatic installation script your system has to run either Debian or Ubuntu. A internet
+connection is required - as a lot of data has to be downloaded a broadband connection is
+recommended. On Debian at least 50 MB have to be downloaded.
+<!--l. 4--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">3.1  </span> <a 
+ id="x1-70003.1"></a>Getting the installation package</h4>
+<!--l. 5--><p class="noindent" >Either go to http://github.com/Sendinel/Sendinel/ and choose <span 
+class="pplri8t-x-x-109">Download Source </span>to get the Sendinel
+archive or use the direct link <span 
+class="pplri8t-x-x-109">http://github.com/Sendinel/Sendinel/tarball/master</span>.
+<!--l. 7--><p class="indent" >  To download the file you may use your preferred browser, like Firefox. You may also use the
+command line tool wget.
+<!--l. 9--><p class="indent" >  To do that, you first have to open a <span 
+class="pplri8t-x-x-109">terminal</span>, sometimes also called <span 
+class="pplri8t-x-x-109">command line</span>. On Debian it can
+be found in the <span 
+class="pplri8t-x-x-109">upper menu bar </span><span 
+class="zplmr7y-x-x-109">&#x2192; </span><span 
+class="pplri8t-x-x-109">Applications </span><span 
+class="zplmr7y-x-x-109">&#x2192; </span><span 
+class="pplri8t-x-x-109">Accessories </span><span 
+class="zplmr7y-x-x-109">&#x2192; </span><span 
+class="pplri8t-x-x-109">Terminal</span>
+<!--l. 11--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+<a 
+ id="x1-7001r1"></a>
+                                                                                     
+                                                                                     
+
+<!--l. 13--><p class="noindent" ><img 
+src="images/open_terminal.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;1: </span><span  
+class="content">opening a terminal on Debian</span></div><!--tex4ht:label?: x1-7001r1 -->
+                                                                                     
+                                                                                     
+<!--l. 15--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 18--><p class="indent" >  After the terminal has been opened, you may create a new folder with <span 
+class="pplri8t-x-x-109">mkdir [Foldername] </span>or you
+may just use your home directory.
+<!--l. 20--><p class="indent" >  To download the Sendinel core files with wget, enter <!--l. 21-->
+  <div class="lstlisting" id="listing-1"><span class="label"><a 
+ id="x1-7002r1"></a></span>wget&#x00A0;http://github.com/Sendinel/Sendinel/tarball/master
+  
+  </div>
+<!--l. 24--><p class="indent" >  and press the <span 
+class="pplri8t-x-x-109">Return </span>key on your keyboard.
+<!--l. 26--><p class="indent" >  The download progress will be displayed, as seen in this screenshot.
+<!--l. 28--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+<a 
+ id="x1-7003r2"></a>
+                                                                                     
+                                                                                     
+
+<!--l. 30--><p class="noindent" ><img 
+src="images/wget_download.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;2: </span><span  
+class="content">downloading Sendinel with wget</span></div><!--tex4ht:label?: x1-7003r2 -->
+                                                                                     
+                                                                                     
+<!--l. 32--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 34--><p class="indent" >  After the file has been downloaded, it has to be extracted. This is to be done with the command
+<!--l. 34-->
+  <div class="lstlisting" id="listing-2"><span class="label"><a 
+ id="x1-7004r1"></a></span>tar&#x00A0;<span 
+class="zplmr7y-x-x-109">-</span>xzf&#x00A0;[Name&#x00A0;of&#x00A0;the&#x00A0;downloaded&#x00A0;file]
+  
+  </div>
+<!--l. 38--><p class="indent" >  You may also just enter <span 
+class="pplri8t-x-x-109">tar -xzf   </span>and the first letters of the filename (S in this case - please pay
+attention to Uppercase/Lowercase) and press the <span 
+class="pplri8t-x-x-109">TAB</span>-key to let the terminal enter the right name.
+Afterwards use <span 
+class="pplri8t-x-x-109">cd </span>to change to the directory where you have just extracted the files. Also here you
+may use the auto completion feature of the terminal.
+<!--l. 40--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+<a 
+ id="x1-7005r3"></a>
+                                                                                     
+                                                                                     
+
+<!--l. 42--><p class="noindent" ><img 
+src="images/untar.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;3: </span><span  
+class="content">extracting the archive and changing the directory</span></div><!--tex4ht:label?: x1-7005r3 -->
+                                                                                     
+                                                                                     
+<!--l. 44--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 46--><p class="indent" >  If your are using debian, use <span 
+class="pplri8t-x-x-109">su </span>to become the superuser (root), which is equivalent to the
+<span 
+class="pplri8t-x-x-109">Administrator </span>on Windows.
+<!--l. 48--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+<a 
+ id="x1-7006r4"></a>
+                                                                                     
+                                                                                     
+
+<!--l. 50--><p class="noindent" ><img 
+src="images/su.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;4: </span><span  
+class="content">extracting the archive and changing the directory</span></div><!--tex4ht:label?: x1-7006r4 -->
+                                                                                     
+                                                                                     
+<!--l. 52--><p class="indent" >  </div><hr class="endfigure">
+  <h4 class="subsectionHead"><span class="titlemark">3.2  </span> <a 
+ id="x1-80003.2"></a>Installing Sendinel</h4>
+<!--l. 56--><p class="noindent" >To start the installation enter <!--l. 57-->
+  <div class="lstlisting" id="listing-3"><span class="label"><a 
+ id="x1-8001r1"></a></span>./install.sh
+  
+  </div>
+<!--l. 61--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+<a 
+ id="x1-8002r5"></a>
+                                                                                     
+                                                                                     
+
+<!--l. 63--><p class="noindent" ><img 
+src="images/start_install.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;5: </span><span  
+class="content">starting the Sendinel installer</span></div><!--tex4ht:label?: x1-8002r5 -->
+                                                                                     
+                                                                                     
+<!--l. 65--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 67--><p class="indent" >  After some seconds (this may also take a little bit longer), the system displays how much has to be
+downloaded and asks for confirmation. If it is okay, simply press the <span 
+class="pplri8t-x-x-109">Return </span>key and start the
+download.
+<!--l. 69--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+<a 
+ id="x1-8003r6"></a>
+                                                                                     
+                                                                                     
+
+<!--l. 71--><p class="noindent" ><img 
+src="images/continue.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;6: </span><span  
+class="content">Download Confirmation</span></div><!--tex4ht:label?: x1-8003r6 -->
+                                                                                     
+                                                                                     
+<!--l. 73--><p class="indent" >  </div><hr class="endfigure">
+  <h5 class="subsubsectionHead"><span class="titlemark">3.2.1  </span> <a 
+ id="x1-90003.2.1"></a>Individual Configuration</h5>
+<!--l. 77--><p class="noindent" >During the setup you will be asked if you want to create an <span 
+class="pplri8t-x-x-109">administrative user</span>. It is recommended to
+do so. Enter name, password and e-mail address.<br 
+class="newline" />
+<!--l. 79--><p class="indent" >  Later, you will be asked a few questions concerning the individual configuration:
+<!--l. 81--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-100003.2.1"></a><span 
+class="pplb8t-x-x-109">"Do you want the patient to authenticate against the system via ringing a mobile phone number</span>
+<span 
+class="pplb8t-x-x-109">(True/False)? "</span></span>
+     <ul class="itemize1">
+     <li class="itemize">If you enter "True", every time patients want to register for a group or waiting list or
+     want to enter an appointment, they have to call the system. This way Sendinel ensures,
+     that the phone number really belongs to the patient. Then you will be asked: "Please
+     enter the phone number of the SIM card in the 3G stick: ". Please do so.
+     </li>
+     <li class="itemize">If you enter "False", phone numbers are not checked for correctness.</li></ul>
+<!--l. 87--><p class="indent" >  If you want to change your decisions, you can do that in the local_settings.py as explained in the
+section "Possible settings for Sendinel". Answering the first question will enter the settings variable
+&#8221;AUTHENTICATION_ENABLED&#8221;, the second question fills &#8221;AUTH_NUMBER&#8221;.<br 
+class="newline" />
+<!--l. 89--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-110003.2.1"></a> <span 
+class="pplb8t-x-x-109">&#8221;Please enter the clinic&#8217;s name: &#8221;</span></span>
+  Here you have to enter the name of the clinic. If you want to change the name later on, you can do
+that via the <span 
+class="pplri8t-x-x-109">admin interface </span>(see the corresponding section).<br 
+class="newline" />
+<!--l. 93--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-120003.2.1"></a><span 
+class="pplb8t-x-x-109">&#8221;Please enter your country&#8217;s calling code prefixed with two zeros (e.g. 0049 for Germany):</span>
+<span 
+class="pplb8t-x-x-109">&#8221;</span></span>
+  This questions asks you for your country code (COUNTRY_CODE_PHONE): &#8217;. If you don&#8217;t know
+it, it can be found on Wikipedia: <br 
+class="newline" />http://en.wikipedia.org/wiki/List_of_country_calling_codes. Do not enter the <span 
+class="pplri8t-x-x-109">+ </span>but only the
+digits. <br 
+class="newline" />
+                                                                                     
+                                                                                     
+<!--l. 98--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-130003.2.1"></a><span 
+class="pplb8t-x-x-109">"Do you want to enable the bluetooth functionality - this requires Bluetooth hardware on client</span>
+<span 
+class="pplb8t-x-x-109">computers (True/False)? "</span></span>
+  This is the last question . If you enable bluetooth, the transfer of calendar entries via bluetooth to
+the patients&#8217; mobile phones is added as way of communication. So when appointments are made
+and &#8217;bluetooth&#8217; is selected, the patient will be reminded by a calendar entry and not by an sms or a
+phonecall. If you want to change your decision, you need to use the <span 
+class="pplri8t-x-x-109">admin interface </span>(see the
+corresponding section). <br 
+class="newline" />
+<!--l. 103--><p class="indent" >  The setup process may take some time and will tell you if errors occur. In that case, you will be
+asked if you want to continue with the installation. You should only continue, if you understood
+what went wrong.
+  <h3 class="sectionHead"><span class="titlemark">4  </span> <a 
+ id="x1-140004"></a>(manual) off-line installation</h3>
+<!--l. 3--><p class="noindent" >If you are either not able to install from online package sources or you want to control the
+installation by yourself (maybe because you are using another Linux distribution), you should
+follow this guide.
+<!--l. 5--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">4.1  </span> <a 
+ id="x1-150004.1"></a>installing the needed packages</h4>
+<!--l. 6--><p class="noindent" >Please make sure the following packages are installed on your system; on Ubuntu/Debian you may
+use <span 
+class="pplri8t-x-x-109">apt-get install </span>to install them
+     <ul class="itemize1">
+     <li class="itemize">asterisk
+     </li>
+     <li class="itemize">festival
+     </li>
+     <li class="itemize">lighttpd
+     </li>
+     <li class="itemize">sudo
+     </li>
+     <li class="itemize">build-essential
+     </li>
+     <li class="itemize">python-setuptools
+     </li>
+     <li class="itemize">wget</li></ul>
+<!--l. 18--><p class="indent" >  You should make sure you have asterisk 1.6.x installed.
+<!--l. 20--><p class="indent" >  The following python packages also have to be installed. For that you may use <!--l. 21-->
+                                                                                     
+                                                                                     
+  <div class="lstlisting" id="listing-4"><span class="label"><a 
+ id="x1-15001r1"></a></span>easy\_install&#x00A0;Django&#x00A0;python<span 
+class="zplmr7y-x-x-109">-</span>daemon&#x00A0;lockfile}
+  
+  </div>
+<!--l. 24--><p class="indent" >  If you get an error like lockfile-0.9 can&#8217;t be found, use the following command: <span 
+class="pplri8t-x-x-109">easy_install Django</span>
+<span 
+class="pplri8t-x-x-109">python-daemon==1.5.5 lockfile</span>
+<!--l. 27--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">4.2  </span> <a 
+ id="x1-160004.2"></a>Setting up festival text-to-speech synthesis</h4>
+<!--l. 28--><p class="noindent" >To get a working festival installation, installing the package should be enough. If you like to change
+the default voice, please refer to the festival documentation.
+<!--l. 30--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">4.3  </span> <a 
+ id="x1-170004.3"></a>Configuring the Asterisk Telephony Server</h4>
+<!--l. 31--><p class="noindent" >
+  <h5 class="subsubsectionHead"><span class="titlemark">4.3.1  </span> <a 
+ id="x1-180004.3.1"></a>the datacard channel</h5>
+<!--l. 32--><p class="noindent" >Download the latest revision of chan datacard from github: <!--l. 33-->
+  <div class="lstlisting" id="listing-5"><span class="label"><a 
+ id="x1-18001r1"></a></span>http://github.com/thomasklingbeil/chan\_datacard
+  
+  </div>
+<!--l. 37--><p class="indent" >  You can either use git or download a tarball of the source code from <!--l. 38-->
+  <div class="lstlisting" id="listing-6"><span class="label"><a 
+ id="x1-18002r1"></a></span>http://github.com/thomasklingbeil/chan\_datacard/tarball/master
+  
+  </div>
+<!--l. 42--><p class="indent" >  If you have downloaded the tarball you&#8217;ve got to untar it, using
+  <!--l. 44-->
+  <div class="lstlisting" id="listing-7"><span class="label"><a 
+ id="x1-18003r1"></a></span>tar&#x00A0;<span 
+class="zplmr7y-x-x-109">-</span>xvzf&#x00A0;[name&#x00A0;of&#x00A0;the&#x00A0;file]
+  
+  </div>
+<!--l. 49--><p class="indent" >  Change the directory to the folder where you extracted the files and run the following commands
+make make install
+<!--l. 53--><p class="indent" >  If you want to configure the datacard by yourself, you can use the datacard.conf from the
+repository as a template. Else, you can also use the version from the Sendinel repository. In each case
+the file has to be copied to <span 
+class="pplri8t-x-x-109">/etc/asterisk/datacard.conf</span>
+                                                                                     
+                                                                                     
+<!--l. 55--><p class="noindent" >
+  <h5 class="subsubsectionHead"><span class="titlemark">4.3.2  </span> <a 
+ id="x1-190004.3.2"></a>Asterisk configuration files</h5>
+<!--l. 56--><p class="noindent" >If you have a plain Asterisk installation it is recommended to use the <span 
+class="pplri8t-x-x-109">extensions.conf  </span>file from
+the Sendinel repository. It includes all necessary settings for the Asterisk server to run
+Sendinel.
+<!--l. 58--><p class="indent" >  Manual configuration: If authentication is to be used, an extension in the default call context has to
+be created which runs a special AGI script for each incoming call; This script created an entry
+into the Sendinel call log. If such an entry is already existing, extend it to run the AGI
+script.
+  <!--l. 60-->
+  <div class="lstlisting" id="listing-8"><span class="label"><a 
+ id="x1-19001r1"></a></span>[default]&#x00A0;<br /><span class="label"><a 
+ id="x1-19002r2"></a></span>...&#x00A0;<br /><span class="label"><a 
+ id="x1-19003r3"></a></span>exten&#x00A0;=&#x003E;&#x00A0;s,1,AGI(call_log.agi)&#x00A0;<br /><span class="label"><a 
+ id="x1-19004r4"></a></span>exten&#x00A0;=&#x003E;&#x00A0;s,n,Wait(20)&#x00A0;<br /><span class="label"><a 
+ id="x1-19005r5"></a></span>...
+  
+  </div>
+<!--l. 68--><p class="indent" >  For sending outbound short messages, add the following extension into the default
+context:
+  <!--l. 70-->
+  <div class="lstlisting" id="listing-9"><span class="label"><a 
+ id="x1-19006r1"></a></span>exten&#x00A0;=&#x003E;&#x00A0;2000,1,Answer()&#x00A0;<br /><span class="label"><a 
+ id="x1-19007r2"></a></span>exten&#x00A0;=&#x003E;&#x00A0;2000,n,DatacardSendSMS(datacard0,${SmsNumber},${Text})&#x00A0;<br /><span class="label"><a 
+ id="x1-19008r3"></a></span>exten&#x00A0;=&#x003E;&#x00A0;2000,n,Hangup()
+  
+  </div>
+<!--l. 76--><p class="indent" >  To be able to send automatic outbound calls, the context <span 
+class="pplri8t-x-x-109">"outbound call" </span>has to be created. Here,
+you may also adapt the waiting times between the messages.
+  <!--l. 78-->
+  <div class="lstlisting" id="listing-10"><span class="label"><a 
+ id="x1-19009r1"></a></span>[outbound<span 
+class="zplmr7y-x-x-109">-</span>call]&#x00A0;<br /><span class="label"><a 
+ id="x1-19010r2"></a></span>exten&#x00A0;=&#x003E;&#x00A0;s,1,Wait(2)&#x00A0;<br /><span class="label"><a 
+ id="x1-19011r3"></a></span>exten&#x00A0;=&#x003E;&#x00A0;s,n,Playback(${Salutation})&#x00A0;<br /><span class="label"><a 
+ id="x1-19012r4"></a></span>exten&#x00A0;=&#x003E;&#x00A0;s,n,Wait(1)&#x00A0;<br /><span class="label"><a 
+ id="x1-19013r5"></a></span>exten&#x00A0;=&#x003E;&#x00A0;s,n,Playback(${PassedInfo})&#x00A0;<br /><span class="label"><a 
+ id="x1-19014r6"></a></span>exten&#x00A0;=&#x003E;&#x00A0;s,n,Wait(1)&#x00A0;<br /><span class="label"><a 
+ id="x1-19015r7"></a></span>exten&#x00A0;=&#x003E;&#x00A0;s,n,Playback(${PassedInfo})&#x00A0;<br /><span class="label"><a 
+ id="x1-19016r8"></a></span>exten&#x00A0;=&#x003E;&#x00A0;s,n,Hangup()
+  
+  </div>
+<!--l. 89--><p class="indent" >  To ensure the system does not hang when there is an incoming SMS on the data card, add the
+following context. Incoming short messages will be saved to <span 
+class="pplri8t-x-x-109">/var/log/asterisk/sms.txt</span>. You may also
+change this path.
+  <!--l. 91-->
+  <div class="lstlisting" id="listing-11"><span class="label"><a 
+ id="x1-19017r1"></a></span>[datacard<span 
+class="zplmr7y-x-x-109">-</span>incoming]&#x00A0;<br /><span class="label"><a 
+ id="x1-19018r2"></a></span>exten&#x00A0;=&#x003E;&#x00A0;sms,1,Verbose(Incoming&#x00A0;SMS&#x00A0;from&#x00A0;${SMSSRC}&#x00A0;${SMSTXT})&#x00A0;<br /><span class="label"><a 
+ id="x1-19019r3"></a></span>exten&#x00A0;=&#x003E;&#x00A0;sms,n,System(echo&#x00A0;&#8217;${STRFTIME(${EPOCH},,%Y<span 
+class="zplmr7y-x-x-109">-</span>%m<span 
+class="zplmr7y-x-x-109">-</span>%d&#x00A0;%H:%M:%S)}&#x00A0;<span 
+class="zplmr7y-x-x-109">-</span>&#x00A0;<br /><span class="label"><a 
+ id="x1-19020r4"></a></span>&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;${CHANNEL}&#x00A0;<span 
+class="zplmr7y-x-x-109">-</span>&#x00A0;${SMSSRC}:&#x00A0;${SMSTXT}&#8217;&#x00A0;&#x003E;&#x003E;&#x00A0;/var/log/asterisk/sms.txt)&#x00A0;<br /><span class="label"><a 
+ id="x1-19021r5"></a></span>&#x00A0;<br /><span class="label"><a 
+ id="x1-19022r6"></a></span>exten&#x00A0;=&#x003E;&#x00A0;sms,n,Hangup()&#x00A0;<br /><span class="label"><a 
+ id="x1-19023r7"></a></span>&#x00A0;<br /><span class="label"><a 
+ id="x1-19024r8"></a></span>exten&#x00A0;=&#x003E;&#x00A0;cusd,1,Verbose(Incoming&#x00A0;CUSD:&#x00A0;${CUSDTXT})&#x00A0;<br /><span class="label"><a 
+ id="x1-19025r9"></a></span>exten&#x00A0;=&#x003E;&#x00A0;cusd,n,System(echo&#x00A0;&#8217;${STRFTIME(${EPOCH},,%Y<span 
+class="zplmr7y-x-x-109">-</span>%m<span 
+class="zplmr7y-x-x-109">-</span>%d&#x00A0;%H:%M:%S)}&#x00A0;<span 
+class="zplmr7y-x-x-109">-</span>&#x00A0;<br /><span class="label"><a 
+ id="x1-19026r10"></a></span>&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;${CHANNEL}:&#x00A0;${CUSDTXT}&#8217;&#x00A0;&#x003E;&#x003E;&#x00A0;/var/log/asterisk/cusd.txt)&#x00A0;<br /><span class="label"><a 
+ id="x1-19027r11"></a></span>&#x00A0;<br /><span class="label"><a 
+ id="x1-19028r12"></a></span>exten&#x00A0;=&#x003E;&#x00A0;cusd,n,Hangup()
+  
+  </div>
+<!--l. 106--><p class="noindent" >
+  <h5 class="subsubsectionHead"><span class="titlemark">4.3.3  </span> <a 
+ id="x1-200004.3.3"></a>Other</h5>
+<!--l. 107--><p class="noindent" >Please ensure that the user the system is running as, is able to write to the asterisk spool directory
+(by default <span 
+class="pplri8t-x-x-109">ASTERISK_SPOOL_DIR </span>is configured as /var/spool/asterisk/outgoing). This can either
+be achieved by adding the user sendinel to the group <span 
+class="pplri8t-x-x-109">asterisk </span>or by granting <span 
+class="pplri8t-x-x-109">any </span>user the right of
+writen to that directory (chmod 777). The latter is usually a bad idea.
+                                                                                     
+                                                                                     
+<!--l. 109--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">4.4  </span> <a 
+ id="x1-210004.4"></a>Installing Sendinel</h4>
+<!--l. 110--><p class="noindent" >Download the source code package from the project page. Extract it and move/copy the contained
+folder Sendinel to <span 
+class="pplri8t-x-x-109">/opt/</span>, so that the file <span 
+class="pplri8t-x-x-109">manage.py </span>should reside in <span 
+class="pplri8t-x-x-109">/opt/sendinel/manage.py</span>
+<!--l. 113--><p class="indent" >  Change the directory to <span 
+class="pplri8t-x-x-109">/opt/sendinel </span>and run
+  <!--l. 115-->
+  <div class="lstlisting" id="listing-12"><span class="label"><a 
+ id="x1-21001r1"></a></span>python&#x00A0;manage.py&#x00A0;syncdb
+  
+  </div>
+<!--l. 119--><p class="indent" >  You will be asked if you want to create an <span 
+class="pplri8t-x-x-109">administrative user</span>. It is recommended to do so. Enter
+name, password and e-mail address. After this step you may load some basic data into the system by
+running
+  <!--l. 121-->
+  <div class="lstlisting" id="listing-13"><span class="label"><a 
+ id="x1-21002r1"></a></span>python&#x00A0;manage.py&#x00A0;loaddata&#x00A0;backend
+  
+  </div>
+<!--l. 126--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">4.5  </span> <a 
+ id="x1-220004.5"></a>The lighttpd server</h4>
+<!--l. 127--><p class="noindent" >An example configuration for the lighttpd server can be found in the folder <span 
+class="pplri8t-x-x-109">configs/lighttpd</span>. You can
+either copy those files to the corresponding folder (<span 
+class="pplri8t-x-x-109">/etc/lighttpd/</span>) or adapt your existing
+configuration.<br 
+class="newline" />
+<!--l. 129--><p class="indent" >  At least you should replace the following text blocks in <span 
+class="pplri8t-x-x-109">10-sendinel.conf </span>:
+     <ul class="itemize1">
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">%mediaPath% </span>with <span 
+class="pplri8t-x-x-109">/opt/sendinel/sendinel/media</span>
+     </li>
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">%adminMediaPath%  </span>with  <span 
+class="pplri8t-x-x-109">DJANGO_DIR/contrib/admin/media  </span>where  DJANGO_DIR  is
+     the directory where django is installed</li></ul>
+<!--l. 134--><p class="noindent" >Now you should restart lighttpd: <!--l. 135-->
+  <div class="lstlisting" id="listing-14"><span class="label"><a 
+ id="x1-22001r1"></a></span>&#x00A0;&#x00A0;&#x00A0;&#x00A0;/etc/init.d/lighttpd&#x00A0;restart
+  
+  </div>
+<!--l. 139--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">4.6  </span> <a 
+ id="x1-230004.6"></a>Init-Scripts</h4>
+<!--l. 140--><p class="noindent" >Copy the init scripts <span 
+class="pplri8t-x-x-109">sendinel </span>and <span 
+class="pplri8t-x-x-109">sendinel-scheduler </span>from <span 
+class="pplri8t-x-x-109">configs/init-scripts/ </span>to <span 
+class="pplri8t-x-x-109">/etc/init.d/</span>.
+                                                                                     
+                                                                                     
+<!--l. 142--><p class="indent" >  Please adapt the scripts and replace <span 
+class="pplri8t-x-x-109">%targetDir% </span>with <span 
+class="pplri8t-x-x-109">/opt/sendinel </span>and <span 
+class="pplri8t-x-x-109">%user% </span>with user
+sendinel.
+<!--l. 144--><p class="indent" >  run <!--l. 145-->
+  <div class="lstlisting" id="listing-15"><span class="label"><a 
+ id="x1-23001r1"></a></span>update<span 
+class="zplmr7y-x-x-109">-</span>rc.d&#x00A0;sendinel&#x00A0;defaults
+  
+  </div>
+<!--l. 149--><p class="indent" >  and
+  <!--l. 151-->
+  <div class="lstlisting" id="listing-16"><span class="label"><a 
+ id="x1-23002r1"></a></span>update<span 
+class="zplmr7y-x-x-109">-</span>rc.d&#x00A0;sendinel<span 
+class="zplmr7y-x-x-109">-</span>scheduler&#x00A0;defaults
+  
+  </div>
+<!--l. 1--><p class="noindent" >
+  <h3 class="sectionHead"><span class="titlemark">5  </span> <a 
+ id="x1-240005"></a>Bluetooth</h3>
+<!--l. 4--><p class="noindent" >Sendinel supports sending SMS and VoiceCalls by default. As an additional feature Bluetooth is also
+available for reminders but has to be turned on manually.
+<!--l. 6--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">5.1  </span> <a 
+ id="x1-250005.1"></a>Enabling Bluetooth in Sendinel</h4>
+<!--l. 11--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">5.2  </span> <a 
+ id="x1-260005.2"></a>Installing the Java-Client</h4>
+<!--l. 16--><p class="noindent" >For using Bluetooth a Bluetooth Server must be runnning on the client computer. To run this
+Bluetooth Server you have to download the installer first.
+<!--l. 19--><p class="indent" >  Before installation of the bluetooth client, make sure your bluetooth device at the client is working
+correctly.
+<!--l. 21--><p class="indent" >
+     <ol  class="enumerate1" >
+     <li 
+  class="enumerate" id="x1-26002x1">Go    to    "&#8217;http://SENDINELSERVERIP/media/bluetooth/installbluetooth.exe&#8217;"    by
+     typing it in a browser and download the file (SENDINELSERVERIP must be replaced
+     with the IP address you got at the Sendinel Server Installation
+     </li>
+     <li 
+  class="enumerate" id="x1-26004x2">Open the file with a double click
+     </li>
+     <li 
+  class="enumerate" id="x1-26006x3">Accept any security questions
+                                                                                     
+                                                                                     
+     </li>
+     <li 
+  class="enumerate" id="x1-26008x4">If the intallation is done press the "&#8217;close&#8217;" button
+     </li>
+     <li 
+  class="enumerate" id="x1-26010x5">After installing the downloaded file, restart the computer
+     </li>
+     <li 
+  class="enumerate" id="x1-26012x6">If you can see a Security Question from the windows firewall at startup, press the "&#8217;do
+     not block&#8217;" button to enable the bluetooth communication</li></ol>
+<!--l. 30--><p class="indent" >  Now the Bluetooth Server is running at the startup of the computer
+<!--l. 32--><p class="indent" >  If the bluetooth is not working correctly, this could be, because the bluetooth server is not started
+at the client. To do this manually, double click on the shortcut at the Desktop with the name
+"&#8217;SendinelBluetoothServer&#8217;"
+<!--l. 1--><p class="noindent" >
+  <h3 class="sectionHead"><span class="titlemark">6  </span> <a 
+ id="x1-270006"></a>Possible settings for Sendinel</h3>
+<!--l. 3--><p class="noindent" >To configure the system, create the file <span 
+class="pplri8t-x-x-109">local_settings.py </span>in the sendinel directory.
+<!--l. 6--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">6.1  </span> <a 
+ id="x1-280006.1"></a>Country Settings</h4>
+<!--l. 8--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-290006.1"></a><span 
+class="pplb8t-x-x-109">COUNTRY_CODE_PHONE</span></span>
+  Prefix of the country the system is going to be used in
+<!--l. 12--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-300006.1"></a><span 
+class="pplb8t-x-x-109">START_MOBILE_PHONE</span></span>
+  Beginning of mobile phone numbers for validation purposes.
+<!--l. 15--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">6.2  </span> <a 
+ id="x1-310006.2"></a>Asterisk Settings</h4>
+<!--l. 16--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-320006.2"></a><span 
+class="pplb8t-x-x-109">ASTERISK_USER and ASTERISK_GROUP</span></span>
+  Group and user asterisk is running as. In most cases both is <span 
+class="pplri8t-x-x-109">asterisk</span>
+                                                                                     
+                                                                                     
+<!--l. 19--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-330006.2"></a><span 
+class="pplb8t-x-x-109">ASTERISK_SPOOL_DIR</span></span>
+  The directory asterisk uses for scheduling calls. default: /var/spool/asterisk/outgoing/
+<!--l. 23--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-340006.2"></a><span 
+class="pplb8t-x-x-109">ASTERISK_DATACARD</span></span>
+  select whether to use an external datacard for conducting the calls and the short messages. If False
+is selected, another SIP account has to be configured in the asterisk server manually. Sending short
+messages is only possible with a connected data card.
+<!--l. 29--><p class="indent" >  possible values: True/False (pay attention to the Upcase first letter) default: True
+<!--l. 32--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-350006.2"></a><span 
+class="pplb8t-x-x-109">ASTERISK_EXTENSION</span></span>
+  asterisk extension to be used for outbound calls
+<!--l. 35--><p class="indent" >  default: <span 
+class="pplri8t-x-x-109">s</span>
+<!--l. 37--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-360006.2"></a><span 
+class="pplb8t-x-x-109">ASTERISK_SIP_ACCOUNT</span></span>
+  SIP account to be used for asterisk for datacard use, this should be set to <span 
+class="pplri8t-x-x-109">ext-sip-account</span>,
+corresponding to the setting in <span 
+class="pplri8t-x-x-109">datacard.conf</span>
+<!--l. 42--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">6.3  </span> <a 
+ id="x1-370006.3"></a>Text-to-Speech settings</h4>
+<!--l. 44--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-380006.3"></a><span 
+class="pplb8t-x-x-109">FESTIVAL_CACHE</span></span>
+  Directory used for caching the speech sound files For use on a plug computer with Debian this
+should be set to <span 
+class="pplri8t-x-x-109">/lib/init/rw</span>
+<!--l. 48--><p class="indent" >  default: <span 
+class="pplri8t-x-x-109">tmp</span>
+<!--l. 50--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">6.4  </span> <a 
+ id="x1-390006.4"></a>Sendinel Settings</h4>
+<!--l. 52--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-400006.4"></a><span 
+class="pplb8t-x-x-109">ENABLE_AUTHENTICATION</span></span>
+  Enable/Disable authentication for entered phone numbers. If used, also <span 
+class="pplri8t-x-x-109">AUTH NUMBER </span>has to
+be set.
+<!--l. 56--><p class="indent" >  possible values: True, False
+<!--l. 58--><p class="indent" >  default: False
+                                                                                     
+                                                                                     
+<!--l. 60--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-410006.4"></a><span 
+class="pplb8t-x-x-109">AUTH_NUMBER</span></span>
+  This setting is only required if authentication is enabled. This entry has to be set to the number of
+the used SIM-Card/SIP-Account. It is used for display purposes only.
+<!--l. 65--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-420006.4"></a><span 
+class="pplb8t-x-x-109">AUTHENTICATION_CALL_TIMEOUT</span></span>
+  This setting is only required if authentication is enabled. Time after which the authentication
+request gets invalid.
+<!--l. 69--><p class="indent" >  default: timedelta(minutes = 3)
+<!--l. 71--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-430006.4"></a><span 
+class="pplb8t-x-x-109">CALL_SALUTATION</span></span>
+  This text is played before the information when a user is called.
+<!--l. 74--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-440006.4"></a><span 
+class="pplb8t-x-x-109">SMS_SALUTATION</span></span>
+  This text is put in front of each short message sent through the system.
+  <h3 class="sectionHead"><span class="titlemark">7  </span> <a 
+ id="x1-450007"></a>Administration Backend</h3>
+<!--l. 5--><p class="noindent" >To provide better control over the data that is saved by Sendinel, a administration backend (further
+called "admin") is provided. Following explained is the usage of the admin and some of the tasks
+one can accomplish with it.
+<!--l. 7--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">7.1  </span> <a 
+ id="x1-460007.1"></a>Logging into Admin</h4>
+<!--l. 10--><p class="noindent" >To login, you have to open a web browser and enter the address of the admin in the address field.
+The address is serveradress<span 
+class="pplri8t-x-x-109">/admin </span>and usually looks something like this:
+     <ul class="itemize1">
+     <li class="itemize">http://localhost/admin
+     </li>
+     <li class="itemize">http://192.168.1.1/admin</li></ul>
+<!--l. 17--><p class="indent" >  The address of the server is displayed at the end of the installation as well.
+<!--l. 19--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+<a 
+ id="x1-46001r7"></a>
+                                                                                     
+                                                                                     
+
+<!--l. 21--><p class="noindent" ><img 
+src="images/admin_login.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;7: </span><span  
+class="content">This screen should be displayed once you have accessed the admin.</span></div><!--tex4ht:label?: x1-46001r7 -->
+                                                                                     
+                                                                                     
+<!--l. 23--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 25--><p class="indent" >  To log-in you use the e-mail and password you have chosen during the installation.
+<!--l. 27--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+<a 
+ id="x1-46002r8"></a>
+                                                                                     
+                                                                                     
+
+<!--l. 29--><p class="noindent" ><img 
+src="images/admin_main.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;8: </span><span  
+class="content">Once you are logged in, the screen should look like this.</span></div><!--tex4ht:label?: x1-46002r8 -->
+                                                                                     
+                                                                                     
+<!--l. 31--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 33--><p class="indent" >  You can see a list of data categories. Click on a name and you can get in, add new data or change
+and delete existing one. Please be careful since it is possible to break the entire system here, if you do
+something wrong.
+<!--l. 35--><p class="indent" >  Following are some common tasks explained, which you can do with the admin.
+  <h4 class="subsectionHead"><span class="titlemark">7.2  </span> <a 
+ id="x1-470007.2"></a>Change Hospital Name</h4>
+<!--l. 40--><p class="noindent" >To change the hospitals name, click on "Hospitals" in the main menu. You then should see the
+following screen, possibly with another name than "your hospital". To change the name, click on the
+hospital and change the name in the following form. Click on "Save" in the right bottom corner and
+you are done.
+<!--l. 42--><p class="indent" >  If no hospital is displayed, click on "Add hospital" in the upper right corner. Enter the hospitals
+name. make sure to click "Current hospital" and click "Save".
+<!--l. 44--><p class="indent" >  Note: Best is if you always only have one hospital here. And this one hospital should always have
+"Current hospital" checked.
+<!--l. 46--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">7.3  </span> <a 
+ id="x1-480007.3"></a>Add an appointment type</h4>
+<!--l. 49--><p class="noindent" >Sendinel offers the possibility to remind people of appointments in the hospital. There are
+different things patients should be reminded of. Sendinel already delivers three of the:
+"Remind of Follow-Up Consultation", "Remind of Vaccination" and "Inform about Lab
+Results". Each one is having it&#8217;s own point in the main menu, it&#8217;s own text that is send to the
+patient.
+<!--l. 51--><p class="indent" >  It is possible to add new types. In this example we will add "Remind of Dentist Consultation" to
+the appointment reminders.
+<!--l. 53--><p class="indent" >  Go to the main menu. Click on "Appointment types". There you can see a list of all currently
+available appointment reminder types. By default this list looks like this:
+<!--l. 55--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+<a 
+ id="x1-48001r9"></a>
+                                                                                     
+                                                                                     
+
+<!--l. 57--><p class="noindent" ><img 
+src="images/admin_appointment_type_list.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;9: </span><span  
+class="content">List of all default appointment types.</span></div><!--tex4ht:label?: x1-48001r9 -->
+                                                                                     
+                                                                                     
+<!--l. 59--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 61--><p class="indent" >  To add a new appointment type click on the button labeled "Add appointment type" in the upper
+right corner.
+<!--l. 63--><p class="indent" >  You can now have to enter three fields:
+     <ul class="itemize1">
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">name</span>: a short word describing the type
+     </li>
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">verbose name</span>: the title which will be displayed in the main menu
+     </li>
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">template</span>: the text which will be sent via sms, voicecall or be displayed in the title of the
+     bluetooth calendar entry</li></ul>
+<!--l. 71--><p class="indent" >  The template has two special words:
+     <ul class="itemize1">
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">$hospital </span>will be replaced with the hospital name
+     </li>
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">$date </span>will be replaced with the date of the appointment</li></ul>
+<!--l. 77--><p class="indent" >  Be sure to include both special words. Also keep in mind, that the overall lenth of the used
+templates with the replaced special words shall not exceed 160 characters.
+     <ul class="itemize1">
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">name</span>: dentist
+     </li>
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">verbose name</span>:Remind of Dentist Consultation
+     </li>
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">template</span>: please remember your dentist consultation at the $hospital on $date</li></ul>
+<!--l. 85--><p class="indent" >  In our example we add the following: <hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+<a 
+ id="x1-48002r10"></a>
+                                                                                     
+                                                                                     
+
+<!--l. 88--><p class="noindent" ><img 
+src="images/admin_appointment_type_add.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;10: </span><span  
+class="content">Adding a new appointment type.</span></div><!--tex4ht:label?: x1-48002r10 -->
+                                                                                     
+                                                                                     
+<!--l. 90--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 92--><p class="indent" >  The new appointment type now shows up in the Sendinel Main Menu as seen here:
+<hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+<a 
+ id="x1-48003r11"></a>
+                                                                                     
+                                                                                     
+
+<!--l. 95--><p class="noindent" ><img 
+src="images/admin_appointment_type_main_menu.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;11: </span><span  
+class="content">The new appointment type "Remind of Dentist" appears in the main menu.</span></div><!--tex4ht:label?: x1-48003r11 -->
+                                                                                     
+                                                                                     
+<!--l. 97--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 99--><p class="indent" >  Of course you can also change the name and template text of existing appointment types or delete
+them in the appointment type menu in the administration backend.
+  <h4 class="subsectionHead"><span class="titlemark">7.4  </span> <a 
+ id="x1-490007.4"></a>Enabling/Disabling Bluetooth/SMS/Voice Call</h4>
+<!--l. 102--><p class="noindent" >Bluetooth is one way to remind patients of appointments. You can enable or disable the Bluetooth
+functionality in the admin.
+<!--l. 104--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+<a 
+ id="x1-49001r12"></a>
+                                                                                     
+                                                                                     
+
+<!--l. 106--><p class="noindent" ><img 
+src="images/admin_woc_list.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;12: </span><span  
+class="content">You can see all ways of communications in this list.</span></div><!--tex4ht:label?: x1-49001r12 -->
+                                                                                     
+                                                                                     
+<!--l. 108--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 110--><p class="indent" >  Click on "Way of communication" in the main menu. Click on Bluetooth afterwards. In the next
+menu you can enable or disable Bluetooth by toggling the box "Enabled". Click on Save afterwards.
+<hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+<a 
+ id="x1-49002r13"></a>
+                                                                                     
+                                                                                     
+
+<!--l. 113--><p class="noindent" ><img 
+src="images/admin_woc_bluetooth.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;13: </span><span  
+class="content">You can change the Bluetooth settings here.</span></div><!--tex4ht:label?: x1-49002r13 -->
+                                                                                     
+                                                                                     
+<!--l. 115--><p class="indent" >  </div><hr class="endfigure">
+<!--l. 117--><p class="indent" >  The following data can be added:
+     <ul class="itemize1">
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">Name</span>: a short word describing the way of communication
+     </li>
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">Verbose name</span>: the title of the way of communication, which will be displayed in the user
+     interface
+     </li>
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">Enabled </span>If this checkbox is on, the way of communication is enabled
+     </li>
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">Can send immediately </span>If this checkbox is on, this way of communication can always be
+     sent without the need of a patient present on-site</li></ul>
+<!--l. 125--><p class="indent" >  The same like with Bluetooth can be done for SMS and Voicecalls. In this way, you have a good
+control over what options for sending are available.
+   
+</body></html> 
+
+                                                                                     
+
+
