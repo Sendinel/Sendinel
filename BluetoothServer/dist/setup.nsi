@@ -64,6 +64,19 @@ SetOutPath "$INSTDIR"
 
   ;create autostart shortcut
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Run" "StartBluetoothServer" "$INSTDIR\${MUI_PRODUCT}.lnk"
+  ;create desktop shortcut
+  ;CreateShortCut "$DESKTOP\${MUI_PRODUCT}.lnk" "$INSTDIR\start_win.cmd" ""
+  CreateShortCut "$DESKTOP\${MUI_PRODUCT}.lnk" "$INSTDIR\start_win.cmd" \
+  "" "$INSTDIR\start_win.cmd" 2 SW_SHOWMINIMIZED 
+  
+  
+  
+  
+ 
+;create start-menu items
+  CreateDirectory "$SMPROGRAMS\${MUI_PRODUCT}"
+  CreateShortCut "$SMPROGRAMS\${MUI_PRODUCT}\Uninstall.lnk" "$INSTDIR\Uninstall.exe" "" "$INSTDIR\Uninstall.exe" 0
+  CreateShortCut "$SMPROGRAMS\${MUI_PRODUCT}\${MUI_PRODUCT}.lnk" "$INSTDIR\start_win.cmd" "" "$INSTDIR\start_win.cmd" 0
   
   
   SetOutPath "$INSTDIR\lib"
@@ -74,22 +87,6 @@ SetOutPath "$INSTDIR"
   File "lib\xmlrpc-client-3.1.3.jar"
   File "lib\xmlrpc-common-3.1.3.jar"
   File "lib\xmlrpc-server-3.1.3.jar"
-
-
- 
-;create desktop shortcut
-  ;CreateShortCut "$DESKTOP\${MUI_PRODUCT}.lnk" "$INSTDIR\start_win.cmd" ""
-  CreateShortCut "$DESKTOP\${MUI_PRODUCT}.lnk" "$INSTDIR\start_win.cmd" \
-  "" "$INSTDIR\start_win.cmd" 2 SW_SHOWMINIMIZED 
-
- 
-;create start-menu items
-  CreateDirectory "$SMPROGRAMS\${MUI_PRODUCT}"
-  CreateShortCut "$SMPROGRAMS\${MUI_PRODUCT}\Uninstall.lnk" "$INSTDIR\Uninstall.exe" "" "$INSTDIR\Uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\${MUI_PRODUCT}\${MUI_PRODUCT}.lnk" "$INSTDIR\start_win.cmd" "" "$INSTDIR\start_win.cmd" 0
-  
-  
-  
 
 	
 ;write uninstall information to the registry
