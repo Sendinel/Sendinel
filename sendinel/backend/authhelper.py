@@ -1,11 +1,14 @@
 import re
 from datetime import datetime
 
+from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
+from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 
 from sendinel.backend.models import AuthenticationCall
-from sendinel.settings import AUTHENTICATION_CALL_TIMEOUT, \
+from sendinel.settings import AUTHENTICATION_ENABLED, \
+                              AUTHENTICATION_CALL_TIMEOUT, \
                               COUNTRY_CODE_PHONE, \
                               START_MOBILE_PHONE
 
@@ -69,3 +72,9 @@ def delete_timed_out_authentication_calls():
     
     timeout = datetime.now() - AUTHENTICATION_CALL_TIMEOUT
     AuthenticationCall.objects.filter(time__lt = timeout).delete()
+    
+def redirect_to_authentication_or(url):
+    if AUTHENTICATION_ENABLED:
+        return HttpResponseRedirect(
+            reverse('web_authenticate_phonenumber') + "?next=" + url)
+    return HttpResponseRedirect(url)

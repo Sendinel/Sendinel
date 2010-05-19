@@ -6,7 +6,6 @@
 }
 
 html, body, #page {
-    height:100%;
     width: 100%;
 }
 
@@ -21,6 +20,13 @@ a:hover { color:#915413; text-decoration:none; }
 a:active { color:#000; text-decoration:none; }
 
 img { border: 0px; }
+
+form#content_form {
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 textarea, body {
     font: 14pt/20pt 'Lucida Grande', Verdana, Helvetica, sans-serif;
@@ -42,9 +48,10 @@ tr.odd td, tr.even td {
     border-bottom: 1px solid #C4C4C4;
 }
 
-input[type=text] {
+input[type=text], select {
     font-size: 14pt;    
     min-height: 30px;
+    width: 100%;
 }
 
 h3 {
@@ -70,6 +77,12 @@ strong.big {
 }
 
 /* Classes */
+
+.content-spacer {
+    background-image: url("../img/content-spacer.png");
+    background-repeat: repeat-y;
+    background-position: 50% 0%;
+}
 
 .centered {
     text-align: center;
@@ -207,10 +220,6 @@ strong.big {
     margin-right: auto;
     
     padding: 50px;
-    text-align: center;
-    
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
 }
 
 .success {
@@ -226,7 +235,8 @@ strong.big {
 }
 
 .button {
-    width:100px;
+    max-width: 200px;
+    min-width: 100px;
     
     border: 1px solid #8e8e8e;
     
@@ -247,6 +257,10 @@ strong.big {
 
 .button-no-margin {
     margin: 0px;
+}
+
+.button-redo {
+    background-image: url(../img/redo.png);
 }
 
 .button-left{
@@ -272,22 +286,86 @@ strong.big {
     text-align: center;     
 }
 
+#contentform .ui-datepicker-prev, #contentform .ui-datepicker-next {
+    display: none;
+}
+
+.ui-sendinel-datepicker-button {
+    border: 1px solid #ddd;
+    
+    font-size: 0.7em;
+    display: block;
+    
+    margin-top: 5px;
+    padding: 2%;
+}
+
+.ui-sendinel-datepicker-prev {
+    
+    width: 75px;
+    
+    float: left;
+    display: block;
+    
+    background-image:url("../img/datepicker-prev.png");
+    background-repeat: no-repeat;
+    background-position: 5px 50%;
+    
+    padding-left: 25px;
+}
+
+.ui-sendinel-datepicker-next {
+    width: 75px;
+    float:right;
+    display: block;
+    
+    text-align: right;
+    
+    background-image:url("../img/datepicker-next.png");
+    background-repeat: no-repeat;
+    background-position: 95px 50%;
+    
+    padding-right: 30px;
+}
+
+.ui-datepicker-month, .ui-datepicker-year {
+    font-size: 1.1em;
+}
+
+.disabled {
+    cursor: default !important;
+    opacity: 0.35;    
+}
+
+.list-box {
+    display: block;
+    float: right;
+}
 /* IDs */
 
 #infoservice-create {
     display: inline;
+    padding-left: 22px;
 }
 
 #infoservice-list {
     margin-bottom: 20px;
 }
 
-#page {
-    position: absolute;
+#infoservice-list-empty {
+    margin-bottom: 20px;
+    margin-top: 80px;
+    margin-left: 20px;
 }
 
 #header {    
+    position: fixed;
+    top: 0;
+    
+    width: inherit;
     height:120px;
+    
+    z-index: 99999;
 }
 
 #sendinel-logo {
@@ -299,33 +377,40 @@ strong.big {
     background-position: 20px 30px;    
 }
 
+#header-notification {    
+    height: inherit;
+        
+    text-align: center;    
+    font-weight: bold;
+}
+
 #hpi-logo{
     height: inherit;
+    width: 245px;
     
     background-image: url("../img/hpi-logo-80px.png");
     background-repeat: no-repeat;
     background-position: 100% 30px;
-    
-    text-align: center;
 }
 
 #footer {
+    position: fixed;    
+    bottom: 0;
+    
+    width: inherit;
     height: 30px;
 }
 
-#notifications, #groups {
+#left-side, #groups {
     width: 50%;
 }
 
-#content{
-    overflow: auto;
-    
+#content{    
     padding-left: 25px;
     padding-right: 25px;
     
-    background-image: url("../img/content-spacer.png");
-    background-repeat: repeat-y;
-    background-position: 50% 0%;
+    margin-top: 120px;
+    margin-bottom: 30px;
 }
 
 #contentform {
@@ -337,28 +422,14 @@ strong.big {
     background-color: #fff;    
 }
 
-#infotext{
-    font-size:0.5em;
-    position:absolute;
-    left:40px;
-    float:left;
-    min-width:300px;
-    max-width:500px;
-    min-height: 40px;
-    max-height: 60px;
-    line-height:2em;
-    padding-left: 50px;
-    padding-top: 7px;
-    background-position:10px 10px;
-    background-image: url(../img/info_sign.png);
-    background-repeat: no-repeat;
+#infotext {
+    /* Opt-in */
+    display: none;
 }
 
-#contact{
+#contact {
     padding-top:5px;
     text-align:center;
     line-height:2em;
-    float:left;
-    width:100%;
     font-size:0.5em;
 }

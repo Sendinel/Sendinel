@@ -15,7 +15,7 @@ var Bluetooth = {
                     $(json.devices).each(function(index, device) {                
                         var deviceHTML = 
                         "<li>"+
-                            "<a href='../appointment/send?device_mac=" + device.mac + "' class='selectable'>" + 
+                            "<a href='" + next + "?device_mac=" + device.mac + "' class='selectable'>" + 
                                 device.name + 
                             "</a>"+
                         "</li>";
@@ -40,12 +40,13 @@ var Bluetooth = {
     },
     
     redirect_to_next: function() {
-        window.location = $("#next").val();
+        Sendinel.Utils.goto_url($("#next").val());
     },
     
     send_file: function() {
         var url = $("#url").val();
-        
+        var nextButton = $(".button-right")
+        nextButton.hide();
         $.ajax({
             url: url,
             type: "POST",
@@ -58,14 +59,11 @@ var Bluetooth = {
                 
                 $("#auth_spinner").hide();
                 var next = $("#next").val();
-                statusText.addClass("success");
+                statusText.addClass("status success rounded-corners centered");
                 statusText.text(gettext("Thank you! The appointment has been send to your mobile phone."));   
-            
-                var next = $("#next").val();
-                var next_button = $("<div class='next-button'>" +
-                            "<input type='submit' id='id_next' value='Next -&gt;' name='form_submit' class='subselectable' />" +
-                            '<input type="hidden" value="' + next +'" name="next-button-link" /></div>');
-                $("#control_buttons").append(next_button);
+                
+                nextButton.show();
+                
     
                 window.setTimeout("Bluetooth.redirect_to_next()", 10000);
             },

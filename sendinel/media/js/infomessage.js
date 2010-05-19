@@ -11,7 +11,7 @@ $(document).ready(function() {
         
         var offset = (e.keyCode !== 46 && e.keyCode !== 8) ? 1 : 0;
         
-        // text_length have to be incremented because current key would be added to length
+        // text_length has to be incremented because current key would be added to length
         var text_length = $(this).val().length + offset;
     
     

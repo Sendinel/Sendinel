@@ -1,0 +1,13 @@
+{% load i18n %}
+<div class="head">
+    {% trans "Message Text: " %}
+    {% if form.text.errors %}
+        {{ form.text.errors }}
+    {% endif %}
+</div>
+<div class="input">
+    <textarea id="id_text" rows="5" cols="35" name="text"></textarea>
+    <div id="character-number">
+    {% trans "Characters left: " %} <div id="chars-left" class="chars-left float-right">160</div>        
+    </div>
+</div>

@@ -8,6 +8,7 @@ from sendinel import settings
 
 class VcalTest(TestCase):
     """
+        Tests for the Vcal class
     """
     
     fixtures = ['backend_test']
@@ -18,7 +19,7 @@ class VcalTest(TestCase):
         
     
     def test_create_vcal_string(self):
-        startDate = datetime(2010, 04, 04, 12, 00, 00)
+        start_date = datetime(2010, 04, 04, 12, 00, 00)
         location = Hospital(name = "aHospital")
         content = "aContent in some language"
         uid = "43"        
@@ -28,8 +29,8 @@ class VcalTest(TestCase):
                 
         vcal.datetime = self.FakeDatetime()
             
-        vcalData = vcal.create_vcal_string(startDate, location, content, uid)
-        self.assertEquals(vcalData,
+        vcal_data = vcal.create_vcal_string(start_date, location, content, uid)
+        self.assertEquals(vcal_data,
 """BEGIN:VCALENDAR
 VERSION:1.0
 BEGIN:VEVENT

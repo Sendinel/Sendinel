@@ -2,32 +2,113 @@ import time
 import sys
 
 from os.path import abspath, dirname
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.core.management import setup_environ
 
 # fix paths for run from commandline
-project_path = dirname(abspath(__file__)) + "/../../"
-sys.path.insert(0, project_path)
+PROJECT_PATH = dirname(abspath(__file__)) + "/../../"
+sys.path.insert(0, PROJECT_PATH)
 from sendinel import settings
 setup_environ(settings) # this must be run before any model etc imports
 
 from sendinel.backend.models import ScheduledEvent
 from sendinel.logger import logger
 
+def openFile(filename):
+    """
+        Open the specified file; wrapping needed so tests can run
+
+        @param filename: Filename of the file to be opened
+        @type  filename: String
+
+        @return A file object
+    """
+    return open(filename)
+
+def get_spoolfile_status(filename):
+    """
+        Get the status of a spooled Asterisk operation
+        
+        @param filename: Filename of the Spool file
+        @type  filename: String
+    """
+    filename = settings.ASTERISK_DONE_SPOOL_DIR + filename
+    spoolfile = openFile(filename)
+    while True:
+        line = spoolfile.readline()
+        if not line:
+            status = "Queued"
+            break
+        try:
+            (key, value) = line.split(":", 1)
+        except:
+            (key, value) = (None, None)
+        if key == "Status":
+            status = value.strip()
+            break
+    return status
 
 def get_all_due_events():
+    """
+        Get all scheduled events from the database that are due
+
+        @return All due elements
+    """
     return ScheduledEvent.objects \
                     .filter(state__exact = 'new') \
                     .filter(send_time__lte=datetime.now())
 
+def get_all_queued_events():
+    """
+        Get all scheduled events from the database that are queued
+
+        @return All queued elements
+    """
+    return ScheduledEvent.objects \
+                    .filter(state__exact = 'queued')
+
+def check_spool_files():
+    """
+        Check all queued spoolfiles if they have already been processed
+        by the Asterisk telephony server;
+        Set the corresponding status for the scheduled events
+    """
+    queued_events = get_all_queued_events()
+    for event in queued_events:
+        try:
+            status = get_spoolfile_status(event.filename)
+            if status == "Completed":
+                logger.info("Completed sending %s" % unicode(event.sendable))
+                event.state = "done"
+            elif status == "Expired":
+                # Handle what to do if asterisk gave up
+                event.retry += 1
+                if event.retry < settings.ASTERISK_RETRY:
+                    logger.info("%s expired; rescheduling" % unicode(event.sendable))
+                    event.send_time = datetime.now() + \
+                        timedelta(minutes = settings.ASTERISK_RETRY_TIME)
+                    event.state = "new"
+                else:
+                    event.state = "failed"
+                    logger.error("Sending %s failed" % unicode(event.sendable))
+            elif status == "Failed":
+                # Something really, really went wrong
+                event.state = "failed"
+                logger.error("Sending %s failed" % unicode(event.sendable))
+            event.save()
+        except:
+            # This means the file has not been found in the done folder
+            # nothing has to be done here.
+            pass
 
 def run(run_only_one_time = False):
-    while True:        
-                 
+    while True:
+        check_spool_files()         
         due_events = get_all_due_events()
                          
         for event in due_events:
+            event.state = 'pending'
             try:
                 data = event.sendable.get_data_for_sending()
                 logger.info("Trying to send: %s" % unicode(event.sendable))
@@ -40,25 +121,28 @@ def run(run_only_one_time = False):
                 continue
             
             # TODO error handling
-            try:
+            if len(get_all_queued_events()) > 0:
+                break
+
+            try:                
                 logger.info("  sending: %s" % unicode(data))
-                data.send()
-                if not run_only_one_time:
-                    time.sleep(20)
+                event.filename = data.send()
+                #if not run_only_one_time:
+                    #time.sleep(20)
             except Exception, e:
                 logger.error("Failed to send: " + unicode(data) + \
                              " exception " + unicode(e))
                 event.state = "failed"
                 event.save()
                     
-            
-            event.state = 'sent'
+            event.state = 'queued'
             event.save()
             del data
         del due_events
             #TODO Exception Handling
-        if run_only_one_time: break
-        time.sleep(5)
+        if run_only_one_time: 
+             break
+        time.sleep(1)
 
 
 if __name__ == "__main__":
@@ -71,19 +155,18 @@ if __name__ == "__main__":
         try:
             import daemon
             from daemon import pidlockfile
-            import lockfile
         except ImportError:
             print "Error: daemon and lockfile libraries are needed for" + \
                     " running the scheduler. " + \
                     " Install with: easy_install daemon; easy_install lockfile"
             exit(1)
     
-        pid_file = sys.argv[1]
-        working_directory = settings.PROJECT_PATH
+        PID_FILE = sys.argv[1]
+        WORKING_DIRECTORY = settings.PROJECT_PATH
     
         context = daemon.DaemonContext(
-                    working_directory = working_directory,
-                    pidfile = pidlockfile.PIDLockFile(pid_file),
+                    working_directory = WORKING_DIRECTORY,
+                    pidfile = pidlockfile.PIDLockFile(PID_FILE),
                     detach_process = True)
     
         context.__enter__()

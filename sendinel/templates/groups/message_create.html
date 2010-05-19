@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block script %}
+    <script src="{{ MEDIA_URL }}/js/infomessage.js" type="text/javascript"></script>
+    <script src="{{ MEDIA_URL }}/js/validate_sms_input.js" type="text/javascript"></script>
+    <script src="{{ MEDIA_URL }}/js/jVal.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/jval/jVal.css">
+{% endblock %}
+
+{% block content %}
+
+    <div id="contentform">
+        <h3>{% blocktrans with group.name as group %}Send a message to 
+                {{ group }} {% endblocktrans %}<br />
+            ({% blocktrans %}{{member_count}} people will receive this 
+                message{% endblocktrans %})</h3>
+            <form name="group" id="content_form" action="" method="post">
+            <br />
+                <div class="button button-left float-left background-grey link menu-hover rounded-corners" onClick="javascript:location.href='{% url web_index %}'">
+                    {% trans "Back" %}
+                </div>
+                <div class="field float-left lastfield">
+                    {% include "utils/enter_message_widget.html" %}
+                </div>
+            
+                <div class="button button-right link menu-hover background-grey float-left rounded-corners" onClick="group.submit();">{% trans "Next" %}</div>
+                <div style="clear:both;"></div>
+            
+            </form>
+
+        <br />
+
+     </div>
+
+{% endblock %}

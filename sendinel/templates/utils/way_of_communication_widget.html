@@ -1,0 +1,14 @@
+{% load i18n %}
+<div class="head">
+    {% trans "Way of communication: " %}
+        {% if form.way_of_communication.errors %}
+            {{ form.way_of_communication.errors }}
+        {% endif %}
+</div>
+<div class="input">
+    <select name="way_of_communication" id="id_way_of_communication">
+        {% for woc in ways_of_communication %}
+            <option value="{{ woc.id }}">{{ woc.verbose_name }}</option>
+        {% endfor %}
+    </select> 
+</div>

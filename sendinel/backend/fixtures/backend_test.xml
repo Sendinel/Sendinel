@@ -1,34 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <django-objects version="1.0">
-    <object pk="1" model="backend.appointmenttype">
+    <object pk="1" model="backend.wayofcommunication">
+        <field type="CharField" name="name">sms</field>
+        <field type="CharField" name="verbose_name">SMS</field>
+        <field type="BooleanField" name="enabled">True</field>
+        <field type="BooleanField" name="can_send_immediately">True</field>
+    </object>
+    <object pk="2" model="backend.wayofcommunication">
+        <field type="CharField" name="name">voice</field>
+        <field type="CharField" name="verbose_name">Voice Call</field>
+        <field type="BooleanField" name="enabled">False</field>
+        <field type="BooleanField" name="can_send_immediately">True</field>
+    </object>
+    <object pk="3" model="backend.wayofcommunication">
+        <field type="CharField" name="name">bluetooth</field>
+        <field type="CharField" name="verbose_name">Bluetooth</field>
+        <field type="BooleanField" name="enabled">True</field>
+        <field type="BooleanField" name="can_send_immediately">False</field>
+    </object>
+    <object pk="1" model="notifications.appointmenttype">
         <field type="CharField" name="name">vaccination</field>
         <field type="CharField" name="verbose_name">Vaccination</field>
         <field type="CharField" name="template">please remember the vaccination at the $hospital on $date</field>
         <field type="BooleanField" name="notify_immediately">False</field> 
     </object>
-    <object pk="2" model="backend.appointmenttype">
+    <object pk="2" model="notifications.appointmenttype">
         <field type="CharField" name="name">consultation</field>
         <field type="CharField" name="verbose_name">Follow-Up Consultation</field>
         <field type="CharField" name="template">please remember your consultation at the $hospital on $date</field>
         <field type="BooleanField" name="notify_immediately">False</field>
     </object>
-    <object pk="3" model="backend.appointmenttype">
+    <object pk="3" model="notifications.appointmenttype">
         <field type="CharField" name="name">labresult</field>
         <field type="CharField" name="verbose_name">Lab Result</field>
         <field type="CharField" name="template">your lab results have arrived at the $hospital</field>
         <field type="BooleanField" name="notify_immediately">True</field>
     </object>
     <object pk="1" model="backend.patient">
-        <field type="CharField" name="name">Daniel</field>
-        <field type="CharField" name="phone_number">01621785295</field>
+        <field type="CharField" name="name">a_person</field>
+        <field type="CharField" name="phone_number">01567778899</field>
     </object>
     <object pk="2" model="backend.patient">
-        <field type="CharField" name="name">Philipp</field>
-        <field type="CharField" name="phone_number">015222502372</field>
+        <field type="CharField" name="name">another_person</field>
+        <field type="CharField" name="phone_number">01233333333</field>
     </object>
     <object pk="3" model="backend.patient">
-        <field type="CharField" name="name">Office</field>
-        <field type="CharField" name="phone_number">03315509256</field>
+        <field type="CharField" name="name">personthree</field>
+        <field type="CharField" name="phone_number">012345</field>
     </object>
     <object pk="1" model="backend.hospital">
         <!-- it's important to have UTF8 umlauts in here-->
@@ -39,38 +57,60 @@
         <field type="CharField" name="name">Another Clinic</field>
         <field type="BooleanField" name="current_hospital">False</field>        
     </object>    
-    <object pk="1" model="backend.infoservice">
+    <object pk="1" model="infoservices.infoservice">
         <field type="CharField" name="name">Bachelorproject</field>
+        <field type="CharField" name="type">information</field>
     </object>
-    <object pk="1" model="backend.subscription">
+    <object pk="1" model="infoservices.subscription">
         <field to="backend.patient" name="patient" rel="ManyToOneRel">1</field>
-        <field to="backend.infoservice" name="infoservice" rel="ManyToOneRel">1</field>
-        <field type="CharField" name="way_of_communication">sms</field>
+        <field to="infoservices.infoservice" name="infoservice" rel="ManyToOneRel">1</field>
+        <field to="backend.wayofcommunication" name="way_of_communication" rel="ManyToOneRel">1</field>
     </object>
-    <object pk="2" model="backend.subscription">
+    <object pk="2" model="infoservices.subscription">
         <field to="backend.patient" name="patient" rel="ManyToOneRel">2</field>
-        <field to="backend.infoservice" name="infoservice" rel="ManyToOneRel">1</field>
-        <field type="CharField" name="way_of_communication">voice</field>
+        <field to="infoservices.infoservice" name="infoservice" rel="ManyToOneRel">1</field>
+        <field to="backend.wayofcommunication" name="way_of_communication" rel="ManyToOneRel">2</field>
     </object>
-    <object pk="2" model="backend.infoservice">
+    <object pk="3" model="infoservices.subscription">
+       <field to="backend.patient" name="patient" rel="ManyToOneRel">2</field>
+       <field to="infoservices.infoservice" name="infoservice" rel="ManyToOneRel">3</field>
+       <field to="backend.wayofcommunication" name="way_of_communication" rel="ManyToOneRel">2</field>
+   </object>
+    <object pk="2" model="infoservices.infoservice">
         <field type="CharField" name="name">Sendinel-Tester</field>
+        <field type="CharField" name="type">information</field>
     </object>
-    <object pk="1" model="backend.hospitalappointment">
-        <field type="CharField" name="way_of_communication">sms</field>
+    <object pk="3" model="infoservices.infoservice">
+        <field type="CharField" name="name">Medicine-Test</field>
+        <field type="CharField" name="type">medicine</field>
+    </object>
+    <object pk="1" model="notifications.hospitalappointment">
+        <field to="backend.wayofcommunication" name="way_of_communication" rel="ManyToOneRel">1</field>
         <field type="DateTimeField" name="date">2010-02-08 18:43:07</field>       
-        <field to="backend.appointmenttype" name="appointment_type" rel="ManyToOneRel">1</field>
+        <field to="notifications.appointmenttype" name="appointment_type" rel="ManyToOneRel">1</field>
         <field to="backend.hospital" name="hospital" rel="ManyToOneRel">1</field>
         <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
     </object>
+
     <object pk="1" model="backend.scheduledevent">
-        <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>backend</natural><natural>hospitalappointment</natural></field>
+        <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>notifications</natural><natural>hospitalappointment</natural></field>
         <field type="PositiveIntegerField" name="sendable_id">1</field>
         <field type="DateTimeField" name="send_time">2010-02-08 18:43:07</field>
         <field type="CharField" name="state">new</field>
     </object>
-    <object pk="1" model="backend.infomessage">
-        <field type="CharField" name="way_of_communication">sms</field>
+
+    <object pk="2" model="backend.scheduledevent">
+        <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>notifications</natural><natural>hospitalappointment</natural></field>
+        <field type="PositiveIntegerField" name="sendable_id">1</field>
+        <field type="DateTimeField" name="send_time">2010-02-08 15:43:07</field>
+        <field type="CharField" name="state">new</field>
+    </object>
+
+
+
+    <object pk="1" model="infoservices.infomessage">
+        <field to="backend.wayofcommunication" name="way_of_communication" rel="ManyToOneRel">1</field>
         <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
         <field type="TextField" name="text">Das ist eine Nachricht</field>
-    </object>    
+    </object>
 </django-objects>

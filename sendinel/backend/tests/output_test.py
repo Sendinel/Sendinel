@@ -1,5 +1,8 @@
 from django.test import TestCase
-from sendinel.backend.output import *
+from sendinel.backend.output import VoiceOutputData, SMSOutputData, \
+                                    BluetoothOutputData, OutputData
+
+from sendinel.backend import bluetooth, voicecall
 
 class OutputTest(TestCase):
     def setUp(self):
@@ -9,23 +12,6 @@ class OutputTest(TestCase):
         outputData = OutputData()
         self.assertRaises(NotImplementedError, outputData.send)
     
-    def test_send_smsoutputobject(self):
-        message = "test"
-        number = "1234"
-    
-        smsoutput = SMSOutputData()
-        smsoutput.data = message
-        smsoutput.phone_number = number
-        
-        def send_sms1(recipient, message2):
-            self.assertEquals(message2, message)
-            self.assertEquals(recipient, number)
-            
-        send_sms_old = sms.send_sms
-        sms.send_sms = send_sms1
-        smsoutput.send()
-        sms.send_sms = send_sms_old
-        
     def test_send_bluetoothoutputobject(self):
         data = "test"
         mac = "1234"

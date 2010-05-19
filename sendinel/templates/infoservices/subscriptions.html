@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+    <div id="contentform">
+        <h3>{% trans "Members of " %}{{ infoservice }}</h3>
+        <div id="confirmation" style="display:none; text-align:center">
+              {% blocktrans with infoservice_textblocks.name as infoservice_name%}
+                Do you really want to remove this patient from the {{ infoservice_name }}?
+              {% endblocktrans %}
+        </div>
+        
+        <div class="button button-left background-grey link menu-hover rounded-corners float-left" 
+             onclick="Sendinel.Utils.goto_url('{% url infoservices_index infoservice_type=infoservice.type %}')">
+            {% trans "Back" %}
+        </div>
+        <table id="infoservice-list" class="float-left" cellspacing="0" cellpadding="3">
+            <tr>   
+                <th>{% trans "Phone Number" %}</td>
+                <th>{% trans "Way of Communication" %}</td>
+                <th />
+            </tr>
+        {% for subscription in subscriptions %}
+            <form method="post" id="form_{{ subscription.id }}" action="{% url infoservices_members_delete id=infoservice.id %}">
+                <input type="hidden" name="subscription_id" value="{{ subscription.id }}" />
+                <tr class="{% cycle 'odd' 'even' %}">
+                    <td>{{ subscription.patient.phone_number }}</td>
+                    <td class="centered">{{ subscription.way_of_communication }}</td>
+                    <td><input 
+                            type="button" 
+                            onclick="Sendinel.Utils.confirmForm($('#form_{{ subscription.id }}')[0], 'Please confirm')" 
+                            value='{{ infoservice_textblocks.remove_patient_button }}' /></td>
+                </tr>
+            </form>
+        {% endfor %}
+    
+        </table>
+        <br />
+
+    </div>
+
+{% endblock %}

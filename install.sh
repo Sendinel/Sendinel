@@ -7,14 +7,16 @@ installInitScripts=true
 user='sendinel'
 group='sendinel'
 requiredPackages='asterisk asterisk-dev festival lighttpd sudo build-essential python-flup python-setuptools wget' # wget only for django install
-requiredPythonPackages='python-daemon lockfile'
-###pythonVersion='python2.6' # name of the binary that should exist in PATH #### refactor this
+#requiredPythonPackages='Django python-daemon==1.5.5 lockfile'
+requiredPythonPackages='Django-1.2.tar.gz lockfile-0.8.tar.gz python-daemon-1.5.5.tar.gz'
+#easyInstallArguments='-i http://pypi.python.jp'
 tempDir="/tmp"
 
 # targetDir="./installTest"
 
 sourceDir=$(readlink -f "$0")
 sourceDir=$(dirname "$sourceDir")
+packageDir="$sourceDir/packages"
 installLog="$sourceDir/install.log"
 targetParentDir="$(dirname $targetDir)"
 # timestamp in form 2010-05-03-16-27-15
@@ -115,19 +117,27 @@ download_extract_and_cd_to_targz() {
     url="$1"
     subDirectory="$2"
     tempFile=$(mktemp "$tempDir/sendinel-install-temp-XXXXXXXXXXXX")
-    extractionTempDir="$tempFile-extracted"
+    
+    wget --no-verbose -O "$tempFile" "$url" || warning "The download and extraction of $url failed. See above for errors."
+    extract_and_cd_to_targz "$tempFile" "$subDirectory"
+    rm $tempFile || warning
+}
+extract_and_cd_to_targz() {
+    archiveFile="$1"
+    subDirectory="$2"
+    
+    extractionTempDir=$(mktemp -d "$tempDir/sendinel-install-extr-XXXXXXXXXXXX" || warning)
     extractionOldPwd="$(pwd)"
     
     errorMessage="The download and extraction of $url failed. See above for errors."
     
-    mkdir -p "$extractionTempDir" && \
-    wget --no-verbose -O "$tempFile" "$url" && \
-    tar xzf "$tempFile" -C "$extractionTempDir" && \
-    rm $tempFile || warning
+    tar xzf "$archiveFile" -C "$extractionTempDir" || warning
+
     extractionDir="$extractionTempDir/$subDirectory"
-    errorMessage="Could not cd to directory '$extractionDir'. You may manually install $url."
-    cd "$extractionDir" || warning
+
+    cd "$extractionDir" || warning "Could not cd to directory '$extractionDir'. You may manually install $url."
 }
+
 
 cleanup_extraction() {
     cd "$extractionOldPwd" && \
@@ -135,6 +145,9 @@ cleanup_extraction() {
 }
 
 # TODO check /etc/debian_version
+echo "-------------------------------------"
+echo "Welcome to the sendinel installation!"
+echo "-------------------------------------"
 
 # test wether target dir already exists
 if [ -e "$targetDir" ]; then
@@ -151,44 +164,31 @@ if  test ! -w "$targetParentDir"; then
     error
 fi
 
-
-# TODO check which python versions work
-# eventually write scripts to start sendinel using python2.6
-# $pythonVersion
-# if type -P "$pythonVersion" > /dev/null; then
-#     pythonPath=$(type -P "$pythonVersion")
-#     echo "Python found: $pythonPath"
-# else
-#     errorMessage="The python executable '$pythonVersion' was not found in PATH."
-#     warning
-# fi
-
-
 # package installs
-echo "Installing required packages: $requiredPackages..."
+# TODO supress asterisk country code question
+echo "Installing required packages: $requiredPackages... this may take a while..."
 errorMessage='Installing required packages failed. You may manually install them.'
-apt-get install $requiredPackages || warning
+apt-get -qq update || warning
+DEBIAN_FRONTEND='noninteractive' apt-get -o Dpkg::Options::='--force-confnew' -y -qq -y install $requiredPackages || warning
 message_done
+
+
+# check python version
+python -c 'import sys; exit( not (sys.version_info >= (2,4) and sys.version_info < (2,7)))' \
+        || warning "Sendinel was tested with Python 2.5 and 2.6. Other versions may not work."
 
 # python package installs
 echo "Installing required python packages: $requiredPythonPackages"
 errorMessage='Installing required python packages failed. You may manually install them.'
-easy_install -q $requiredPythonPackages || warning
+#easy_install -q $easyInstallArguments $requiredPythonPackages || warning
+# install local packages
+for package in $requiredPythonPackages; do
+    easy_install "$packageDir/$package" || warning
+done
 message_done
 
-# django 1.2 beta until final release is available
-echo "Downloading and installing django 1.2 beta 1..."
-url="http://www.djangoproject.com/download/1.2-beta-1/tarball/"
-subDirectory="Django-1.2-beta-1"
-download_extract_and_cd_to_targz "$url" "$subDirectory"
-
-errorMessage="Django installation failed. Look for errors above."
-"$pythonBin" setup.py -q install || warning
-cleanup_extraction
+# determine django directory
 djangoDir=$("$pythonBin" -c 'import django; print django.__path__[0]')
-echo "################"
-echo "Django dir: $djangoDir"
-message_done
 
 # sendinel user and group
 echo "Creating user '$user' and group '$group'..."
@@ -213,6 +213,7 @@ fi
 errorMessage="Copying files failed. Look for errors above."
 cp -a "$sourceDir/sendinel" "$sourceDir/configs" "$targetDir/" >> $installLog || error
 message_done
+
 
 echo "Installing sendinel configuration..."
 localSettingsSrc="$sourceDir/configs/sendinel/local_settings.py"
@@ -243,7 +244,7 @@ message_done
 echo "Configuring permissions for phone authentication in /etc/sudoers..."
 sudoersFile="/etc/sudoers"
 backup_file "$sudoersFile"
-sudoLine="asterisk      ALL = ($user)NOPASSWD: /usr/bin/python '$targetDir/sendinel/asterisk/log_call.py'"
+sudoLine="asterisk      ALL = ($user)NOPASSWD: /usr/bin/python $targetDir/sendinel/asterisk/log_call.py"
 
 errorMessage='Writing the sudoers file failed. You can try to add the following line manually using visudo:'
 errorMessage="$errorMessage\n$sudoLine"
@@ -279,7 +280,7 @@ mkdir -p "$agiLinkSource" || general_warning
 symlink_or_warning "$agiLinkSource/$agiFileName" "$agiLinkTarget"
 
 
-backup_file "$file"
+backup_file "$agiLinkTarget"
 replace_in_file "$agiLinkTarget" '%targetDir%' "$targetDir" 
 replace_in_file "$agiLinkTarget" '%user%' "$user"
 message_done
@@ -299,9 +300,10 @@ message_done
 
 # download and compile datacard
 echo "Downloading and compiling Asterisk chan_datacard module for 3G stick support..."
-url="http://github.com/thomasklingbeil/chan_datacard/tarball/28dffc8a5ed498581ab0421ddca0da322777aec2"
+#url="http://github.com/thomasklingbeil/chan_datacard/tarball/28dffc8a5ed498581ab0421ddca0da322777aec2"
+package="$packageDir/thomasklingbeil-chan_datacard-28dffc8.tar.gz"
 subDirectory="thomasklingbeil-chan_datacard-28dffc8"
-download_extract_and_cd_to_targz "$url" "$subDirectory"
+extract_and_cd_to_targz "$package" "$subDirectory"
 
 errorMessage="chan_datacard installation failed. Look for errors above."
 make && \
@@ -366,12 +368,28 @@ chmod 755 "$initSendinelScheduler" || warning
 update-rc.d sendinel-scheduler defaults || warning
 message_done
 
-echo "Starting sendinel..."
+
+"$targetDir/configs/sendinel/create_initial_settings.sh" "$targetDir/sendinel/local_settings.py"
+
+
+echo "Starting sendinel services..."
 /etc/init.d/sendinel start
 /etc/init.d/sendinel-scheduler start
 message_done
 
 echo "Congratulations - if you didn't see any error messages, sendinel should be installed and reachable at:"
-echo "http://localhost/"
-echo "If your computer has network access, sendinel is also reachable over the network. Just replace localhost with your computers IP address."
+if eth0_ip=$(ifconfig eth0 | awk '/inet addr/ {split ($2,A,":"); print A[2]}'); then
+    echo "http://$eth0_ip/"
+    echo "If the address above does not work, you can try the following one(s):"
+else
+    echo "Your computer seems not to use the default ethernet device eth0. - you may try one of the following addresses:"
+fi
+
+for ip in $(ifconfig | awk '/inet addr/ {split ($2,A,":"); print A[2]}'); do 
+    # exclude eth0 ip
+    if [ "$ip" != "$eth0_ip" ]; then
+        echo "http://$ip/"
+    fi
+done
+
 

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block script %}
+    <script src="{{ MEDIA_URL }}/js/phone_input_validation.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ MEDIA_URL }}/js/way_of_communication.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ MEDIA_URL }}/js/jVal.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/jval/jVal.css">
+{% endblock %}
+ 
+{% block content %}
+
+    <div id="contentform">
+        <h3>{% trans "Register patient for Waiting List for Medicine" %}</h3>
+    	<p>{% trans "Please enter the patient's phone number and the way the patient wants to receive the notification." %}</p>
+        <p>{% trans "Then choose the medicine the patient is waiting for." %}</p>        
+        <br />
+        <form name="infoservice" method="post" id="content_form" action='#' autocomplete="off">
+
+            <div class="button button-left background-grey link menu-hover rounded-corners float-left" onClick="javascript:location.href='{{ backurl }}'">
+                {% trans "Back" %}
+            </div>
+            <div class="field field-groups float-left">
+                {% include "utils/phone_number_widget.html" %}
+            </div>
+
+            <div class="field field-groups float-left ">
+                {% include "utils/way_of_communication_widget.html" %}
+            </div>
+            <div class="field field-groups float-left lastfield">
+                {% include "utils/medicine_widget.html" %}
+            </div>
+            <div class="button button-right link menu-hover background-grey rounded-corners float-left" onClick="infoservice.submit();">{% trans "Next" %}</div>
+            <div style="clear:both;"></div>
+        </form>    
+    </div>
+
+{% endblock %}
