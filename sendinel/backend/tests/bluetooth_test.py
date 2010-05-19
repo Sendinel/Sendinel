@@ -52,8 +52,8 @@ class BluetoothTest(unittest.TestCase):
         sendinel.backend.bluetooth.send_vcal(BluetoothTest.serverAddress,
                                             BluetoothTest.mac,
                                             BluetoothTest.data)
-        self.assertEquals(BluetoothTest.mac, BluetoothTest.macResult);
-        self.assertEquals(BluetoothTest.data, BluetoothTest.dataResult);
-        self.assertEquals(BluetoothTest.filename, BluetoothTest.filenameResult);
+        self.assertEquals(BluetoothTest.mac, BluetoothTest.macResult)
+        self.assertEquals(BluetoothTest.data, BluetoothTest.dataResult)
+        self.assertEquals(BluetoothTest.filename, BluetoothTest.filenameResult)
 
         sendinel.backend.bluetooth.set_connection_to_bluetooth = temp

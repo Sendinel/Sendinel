@@ -2,7 +2,7 @@ from random import random
 
 from sendinel import settings
 
-linux_available = False
+LINUX_AVAILABLE = False
 
 try:
     import grp
@@ -13,7 +13,7 @@ try:
 
     from hashlib import md5
     
-    linux_available = True
+    LINUX_AVAILABLE = True
     
 except ImportError:
     print "Warning: Linux is required for voicecall functionality"
@@ -24,6 +24,10 @@ import re
 # TODO Test this!
 
 class Voicecall:
+    """
+        This class takes responsibility for sending voicecalls and short messages
+        through the asterisk telephony server
+    """
     def __init__(self):
         self.asterisk_user = settings.ASTERISK_USER
         self.asterisk_group = settings.ASTERISK_GROUP
@@ -35,7 +39,16 @@ class Voicecall:
         self.salutation = settings.CALL_SALUTATION
 
     def create_voicefile(self, text):
-        text_hash = md5(str(random())).hexdigest()
+        """
+            Create a soundfile for the given text, using a TTS engine
+    
+            @param  text:   the text to be read
+            @type   text:   String
+    
+            @return The full file name of the sound file containing the text
+        """
+
+        text_hash = md5(text).hexdigest()
         filename = "%s/%s.ulaw" % (self.asterisk_festivalcache, text_hash)
         if not os.path.exists(filename):
             args = "-o %s -otype ulaw -" % (filename)
@@ -74,23 +87,25 @@ class Voicecall:
             
             @return The text which can be put to a file, to make asterisk conduct the call
             """
-	if(self.asterisk_datacard):
+        if(self.asterisk_datacard):
             output = """
-Channel: Datacard/%s/%s
-MaxRetries: 3
+Channel: Local/3000
+MaxRetries: 20
 RetryTime: 20
 WaitTime: 30
 Context: %s
 Extension: %s
 Priority: 1
+Set: Receipient=Datacard/%s/%s
 Set: PassedInfo=%s
 Set: Salutation=%s
-""" %(sip_account, number, context, extension, voicefile, salutation)
+Archive: true
+""" % (context, extension, sip_account, number, voicefile, salutation)
      
         else:
             output = """
 Channel: SIP/%s@%s
-MaxRetries: 3
+MaxRetries: 20
 RetryTime: 20
 WaitTime: 30
 Context: %s
@@ -98,20 +113,33 @@ Extension: %s
 Priority: 1
 Set: PassedInfo=%s
 Set: Salutation=%s
-""" %(number, sip_account, context, extension, voicefile, salutation)
+Archive: true
+""" % (number, sip_account, context, extension, voicefile, salutation)
 
         return output
        
-    def create_sms_spool_content(self, text, number, extension, context):
+    def create_sms_spool_content(self, text, number):
+        """
+            Create the asterisk spool file for a short message
+            
+            @param  text:   The text to be sent
+            @type   text:   String
+            
+            @param  number:    The receipient's mobile phone number
+            @type   number:    String
+        """
+
         output = """
 Channel: Local/2000
-Context: %s
-Extension: %s
 WaitTime: 2
-Priority: 1
+RetryTime: 5
+MaxRetries: 8000
+Context: outbound-sms
+Extension: s
 Set: SmsNumber=%s
 Set: Text=%s
-""" %(context, extension, number, text)
+Archive: true
+""" % (number, text)
 
         return output
  
@@ -148,9 +176,10 @@ Set: Text=%s
             os.chown(filename, uid, gid)
             # set permissions to unix 666
             os.chmod(filename, 438)
-            filepath = self.asterisk_spool_dir + str(time.time())
+            filename_new = str(time.time())
+            filepath = self.asterisk_spool_dir + filename_new
             shutil.move(filename, filepath)
-            return True
+            return filename_new
             
         except:
             return False
@@ -169,7 +198,7 @@ Set: Text=%s
 
     def conduct_sms(self, number, text, context):
         text = self.replace_special_characters(text)
-        content = self.create_sms_spool_content(text, number, self.asterisk_extension, context)
+        content = self.create_sms_spool_content(text, number)
         self.create_spool_file("tmp", content)
         return self.move_spool_file("tmp")
 
@@ -190,9 +219,9 @@ Set: Text=%s
             @return True if spooling the call succeeded, if not False
         """
         
-        if linux_available:
+        if LINUX_AVAILABLE:
             text = self.replace_special_characters(text)
-	    salutation = self.create_voicefile(self.salutation)
+            salutation = self.create_voicefile(self.salutation)
             voicefile = self.create_voicefile(text)
             content = self.create_spool_content(number,
                                                 voicefile,

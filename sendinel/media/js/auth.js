@@ -5,7 +5,8 @@ var toNext = function(){
 
 var check_for_call = function() {
     var url = $("#ajax_url").val();
-    $("#id_next").hide();
+    var statusMessage = $("#auth_message");
+    
     $.post(url,
         {
             number: $("#number").val()
@@ -13,38 +14,24 @@ var check_for_call = function() {
         function(json) {
    
             if(json && json.status) {
-                var statusText = $("#auth_status");
                 
                 switch(json.status) {                
                     case "waiting":                        
-                        statusText.text(gettext("Waiting for your call"));
+                        $("#auth_spinner_status").text(gettext("Waiting for your call"));
                        
                         window.setTimeout("check_for_call()", 1000);
                     break;
                     
                     case "received":                    
-                        $("#auth_spinner").hide();
-                        
-                        var next = $("#next").val();
-                        
-                        statusText.addClass("success");
-                        statusText.text(gettext("Thank you! We have received your call, please hang up now."));                        
-                        
-                        var next_button = $("<div class='next-button'>" +
-                            "<input type='submit' id='id_next' value='Next -&gt;' name='form_submit' class='subselectable' />" +
-                            '<input type="hidden" value="' + next +'" name="next-button-link" /></div>');
-                        
-                        $("#control_buttons").append(next_button);
-                        $("#id_back").hide();
-                        
-                        window.setTimeout("toNext()", 5000);
+                        toNext();
                     break;
                     
                     case "failed":
-                        statusText.addClass("errorlist");
-                        statusText.text(gettext("Sorry, the authentication of your telephone number failed. Please try again."));
+                        statusMessage.addClass("error");
+                        statusMessage.text(gettext("Sorry, the authentication of your telephone number failed. Please try again."));
+                        statusMessage.show();
                         
-                        $("#auth_spinner").hide();                                                
+                        $("#auth_spinner").hide();
                     break;
                 }
             }

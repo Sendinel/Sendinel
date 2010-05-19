@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime
 
 from django.core.exceptions import ValidationError
-
+from django.core.urlresolvers import reverse
 from sendinel.backend.authhelper import check_and_delete_authentication_call, \
                                         format_and_validate_phonenumber, \
                                         delete_timed_out_authentication_calls
@@ -22,17 +22,26 @@ class AuthTest(unittest.TestCase):
         authhelper.START_MOBILE_PHONE = "07"
     
         number = "+27723456789"
-        self.assertEquals(authhelper.format_and_validate_phonenumber(number), "0723456789")          
+        self.assertEquals(authhelper.format_and_validate_phonenumber(number), 
+                                                "0723456789")          
         number = "+277 234/567 89"
-        self.assertEquals(authhelper.format_and_validate_phonenumber(number), "0723456789")    
+        self.assertEquals(authhelper.format_and_validate_phonenumber(number), 
+                                                "0723456789")    
         number = "07 234-56789"
-        self.assertEquals(authhelper.format_and_validate_phonenumber(number), "0723456789")
+        self.assertEquals(authhelper.format_and_validate_phonenumber(number), 
+                                                "0723456789")
         number = "0123a45678"
-        self.assertRaises(ValidationError, authhelper.format_and_validate_phonenumber, number)
+        self.assertRaises(ValidationError, 
+                authhelper.format_and_validate_phonenumber, 
+                number)
         number = "0049123456789"
-        self.assertRaises(ValidationError, authhelper.format_and_validate_phonenumber, number)
+        self.assertRaises(ValidationError, 
+                authhelper.format_and_validate_phonenumber, 
+                number)
         number = "030123456789"
-        self.assertRaises(ValidationError, authhelper.format_and_validate_phonenumber, number)          
+        self.assertRaises(ValidationError, 
+                authhelper.format_and_validate_phonenumber, 
+                number)          
         
         
         authhelper.COUNTRY_CODE_PHONE = country_code_phone
@@ -63,7 +72,10 @@ agi_accountcode:
 agi_threadid: -1258067088
 """
             def readline(input):
-                data = MockFile.fake_data.splitlines()[MockFile.counter]
+                try:
+                    data = MockFile.fake_data.splitlines()[MockFile.counter]
+                except:
+                    return None
                 MockFile.counter += 1
                 return data
 
@@ -107,3 +119,25 @@ agi_threadid: -1258067088
         delete_timed_out_authentication_calls()
 
         self.assertEquals(1, AuthenticationCall.objects.all().count())
+        
+    
+        
+    def test_redirect_to_authentication_or(self):
+        url = '/testurl/'
+        
+        # switch authentication on
+        original_value = authhelper.AUTHENTICATION_ENABLED
+        authhelper.AUTHENTICATION_ENABLED = True
+        
+        response = authhelper.redirect_to_authentication_or(url)
+        self.assertEquals(response['Location'], reverse('web_authenticate_phonenumber')
+                                               + "?next=" + url )
+                                               
+        #switch authentication off
+        authhelper.AUTHENTICATION_ENABLED = False
+        response = authhelper.redirect_to_authentication_or(url)     
+        self.assertEquals(response['Location'], url)
+        
+        authhelper.AUTHENTICATION_ENABLED = original_value
+                        
+                        

@@ -1,10 +1,12 @@
-import copy
 from datetime import datetime, timedelta
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from sendinel.backend.models import AuthenticationCall, AppointmentType
-from sendinel.web import views
+from sendinel.backend.models import AuthenticationCall
+from sendinel.backend import authhelper
+from sendinel.notifications.models import AppointmentType
+from sendinel.notifications import views as notification_views
+from sendinel.web import views as web_views
 
 
 class AuthenticateViewTests(TestCase):
@@ -17,7 +19,7 @@ class AuthenticateViewTests(TestCase):
         # infoservice.save()
         # info_text = "You want to register for" + str(infoservice)
         # self.client.post(reverse('web_authenticate_phonenumber') +"?next=" + 
-                                 # reverse('web_infoservice_register', \
+                                 # reverse('groups_register', \
                                           # kwargs={'id': infoservice.id}), \
                                 # {'infoservice_text' : info_text})
         # self.assertContains(response, 
@@ -28,12 +30,12 @@ class AuthenticateViewTests(TestCase):
         
         appointment_type = AppointmentType.objects.get(pk=1)
         
-        self.client.get(reverse('web_appointment_create', \
+        self.client.get(reverse('notifications_create', \
                 kwargs={"appointment_type_name": appointment_type.name })) 
         data = {'date': '2012-08-12',
                 'phone_number': '01733685224',
-                'way_of_communication': 'sms'}
-        self.client.post(reverse('web_appointment_create', \
+                'way_of_communication': 1}
+        self.client.post(reverse('notifications_create', \
                 kwargs = {"appointment_type_name": appointment_type.name }), data)
      
         response = self.client.post(reverse("web_authenticate_phonenumber"))
@@ -59,25 +61,24 @@ class AuthenticateViewTests(TestCase):
         # self.failUnlessEqual(response.status_code, 200)
         
         # self.assertContains(response, 'name="name"')
-        
+    
+    
     def test_check_call_received(self):        
         # settings up the environment
-        
         appointment_type = AppointmentType.objects.get(pk=1)
+        original_value = authhelper.AUTHENTICATION_ENABLED
+        authhelper.AUTHENTICATION_ENABLED = True
         
-        self.client.get(reverse('web_appointment_create', \
+        self.client.get(reverse('notifications_create', \
                 kwargs={"appointment_type_name": appointment_type.name })) 
         data = {'date': '2012-08-12',
                 'phone_number': '0123456789012',
-                'way_of_communication': 'sms'}
-        self.client.post(reverse('web_appointment_create', \
+                'way_of_communication': 1}
+        self.client.post(reverse('notifications_create', \
                 kwargs = {"appointment_type_name": appointment_type.name }), data)
                 
         # make sure there are no AuthenticationCall objects in the db
         AuthenticationCall.objects.all().delete()
-               
-        auth_save = views.AUTH
-        views.AUTH = True
                 
         self.client.post("/web/authenticate_phonenumber/", 
             {'number':'01234 / 56789012'})
@@ -95,14 +96,14 @@ class AuthenticateViewTests(TestCase):
         self.assertContains(response, "received")
     
         # make sure timeout is over
-        real_timeout = views.AUTHENTICATION_CALL_TIMEOUT
-        views.AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = -1)
+        real_timeout = web_views.AUTHENTICATION_CALL_TIMEOUT
+        web_views.AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = -1)
     
         response = self.client.post("/web/check_call_received/")  
     
         self.failUnlessEqual(response.status_code, 200)
         self.assertContains(response, "failed")      
     
-        views.AUTHENTICATION_CALL_TIMEOUT = real_timeout
+        web_views.AUTHENTICATION_CALL_TIMEOUT = real_timeout
         
-        views.AUTH = auth_save
+        authhelper.AUTHENTICATION_ENABLED = original_value

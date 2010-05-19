@@ -1,64 +1,92 @@
 {% extends "base.html" %}
 {% load i18n %} 
-{% block script %}
-{% endblock %}
+
+{% block body_attributes %} class="content-spacer" {% endblock %}
+
 {% block content %}
 
- 
-    <div class="menulist" id="notifications">
+
+    <div class="float-left" id="left-side">
+      <h3>{% trans "Waiting Lists for Medicine" %}</h3>
+        <div class="menu-item background-grey rounded-corners">
+            <div class="menu-item-name groups-name float-left"><strong>Currently Missing Medicine</strong></div>
+            <div>
+            
+            {% if medicine_count > 0 %}
+                <a href="{% url medicines_register %}">
+                    <div class="menu-hover groups-link groups-link-register float-left rounded-corners">
+                        {% trans "Register Patient" %}
+                    </div>
+                </a>
+                <a href="{% url medicines_send_message %}" class="menu_secondlink">
+                    <div class="menu-hover groups-link groups-link-send float-left rounded-corners">
+                        {% trans "Send Message" %}
+                    </div>
+                </a>
+                
+            {% else %}
+            
+                <div class="groups-link groups-link-register float-left disabled">
+                    {% trans "Register Patient" %}
+                </div>
+                <div class="groups-link groups-link-send float-left disabled">
+                    {% trans "Send Message" %}
+                </div>
+          
+            {% endif %}
+                </div>
+            <div style="clear:both"></div>    
+        </div>
+        <a href="{% url infoservices_index infoservice_type='medicine' %}">
+            <div class="menu-item menu-hover menu-item-name groups-manage background-grey rounded-corners">
+               {% trans "Manage Waiting Lists for Medicine" %}
+            </div>
+        </a>
+
       <h3>{% trans "Notifications" %}</h3>
         {% for appointment_type in appointment_types %}
-        <div class="menulistNotificationItem">
-             <a href="{% url web_appointment_create appointment_type_name=appointment_type.name %}">
-                <div class="notificationName">
+        <div class="menu-item menu-hover background-grey rounded-corners">
+             <a href="{% url notifications_create appointment_type_name=appointment_type.name %}">
+                <div class="menu-item-name">
                    {{ appointment_type.verbose_name }}
                 </div>
             </a>
         </div>
         {% endfor %}     
-        <div class="menulistNotificationItem">
-             <a href="{% url not_implemented %}">
-                <div class="notificationName">
-                   {% trans "Inform about Arrival of Medicine" %}
-                </div>
-            </a>
-        </div>
-
     </div>
-   
-    <div id="groups">
-    <h3>{% trans "Groups" %}</h3>
-        {% for service in information_services %}
-            <div class="menulistGroupsItem">
-                <div class="groupName"><strong>{{ service }}</strong></div>
-                <div class="links">
-                <a href="{% url web_infoservice_register id=service.id %}">
-                    <div class="groups groupRegister">
-                        {% trans "Register Patient" %}
+
+    <div id="groups" class="float-left">
+    <h3>{% trans "Groups " %}</h3>
+        {% for service in groups %}
+            <div class="menu-item background-grey rounded-corners">
+                <div class="menu-item-name groups-name float-left"><strong>{{ service }}</strong></div>
+                <div>
+                    <a href="{% url groups_register group_id=service.id %}">
+                        <div class="menu-hover groups-link groups-link-register float-left rounded-corners">
+                            {% trans "Register Patient" %}
+                        </div>
+                    </a>
+                    {% if service.members.count > 0 %}
+                        <a href="{% url groups_send_message id=service.id %}" class="menu_secondlink">
+                            <div class="menu-hover groups-link groups-link-send float-left rounded-corners">
+                                {% trans "Send Message" %}
+                            </div>
+                        </a>
+                    {% else %}
+                        <div class="groups-link groups-link-send float-left disabled">
+                            {% trans "Send Message" %}
+                        </div>
+                    {% endif %}
                     </div>
-                </a>
-                {% if service.members.count > 0 %}
-                <a href="{% url staff_create_infomessage id=service.id %}" class="menu_secondlink">
-                    <div class="groups groupSend">
-                        {% trans "Send Message" %}
-                    </div>
-                </a>
-                {% else %}
-                <div class="groups-empty float-left"></div>
-                {% endif %}
-                </div>
-                <div style="clear:both"></div>
-    
+                <div style="clear:both"></div>    
             </div>
         {% endfor %}
-         <a href="{% url staff_list_infoservices %}">
-            <div  class="menulistManageGroups">
+         <a href="{% url infoservices_index infoservice_type='information' %}">
+            <div class="menu-item menu-hover menu-item-name groups-manage background-grey rounded-corners">
                {% trans "Manage Information Groups" %}
             </div>
         </a>
     </div>
-
-
 
 {% endblock %}
 {% block infotext %}

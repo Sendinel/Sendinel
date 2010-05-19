@@ -13,13 +13,13 @@ $(document).ready(function() {
     .hide()
     .after(target)
     .children("option[value!=]").each(function(index) {
-        var img_url = img_path + $(this).val() + ".png";
+        var img_url = img_path + "woc_" + $(this).val() + ".png";
         var img = $('<img />')
                     .attr('src', img_url)
                     .attr('alt', $(this).text());
 
         var value = $(this).val()
-        img.addClass("clickable")
+        img.addClass("link")
             .click(function() {
                 selectItem(this, value);
             });

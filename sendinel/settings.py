@@ -109,7 +109,10 @@ INSTALLED_APPS = (
     'sendinel',
     'sendinel.web',
     'sendinel.backend',
-    'sendinel.staff',
+    'sendinel.groups',
+    'sendinel.infoservices',
+    'sendinel.notifications',
+    'sendinel.medicines'
 )
 
 ####################################
@@ -127,15 +130,21 @@ START_MOBILE_PHONE = "0" # "0" for South Africa (07/08..), "01" for Germany
 ASTERISK_USER = "sendinel"
 ASTERISK_GROUP = "sendinel"
 ASTERISK_SPOOL_DIR = "/var/spool/asterisk/outgoing/"
+ASTERISK_DONE_SPOOL_DIR = "/var/spool/asterisk/outgoing_done/"
+
+ASTERISK_RETRY = 5
+ASTERISK_RETRY_TIME = 5
 
 # to or of authentication
 # and to turn it on and off again ss
 ASTERISK_DATACARD = True 
-
-
 ASTERISK_EXTENSION = "s"
 ASTERISK_SIP_ACCOUNT = "datacard0"
 #ASTERISK_SIP_ACCOUNT = "ext-sip-account"
+
+# Specify a COM Port for SMS
+# for windows maybe it starts at 0
+SERIALPORTSMS = '/dev/rfcomm0'
 
 # FESTIVAL_CACHE = "/lib/init/rw"
 FESTIVAL_CACHE = "/tmp"
@@ -145,20 +154,20 @@ AUTH_NUMBER = "CHANGE ME"
 # time a user has to call the system to authenticate
 AUTHENTICATION_CALL_TIMEOUT = timedelta(minutes = 3)
 
+# True or False to turn authentication on or off
+AUTHENTICATION_ENABLED = False
+
+# enable Bluetooth as a Way of Communication
+BLUETOOTH_ENABLED = True
+
+# Salutation for SMS Template
+SMS_SALUTATION = 'Hello, '
+# Salutation for phone calls
 CALL_SALUTATION = "This is an automated call from your clinic"
 
-# True or False to turn authentication on or off
-AUTH = False
-
-#Salutation for SMS Template
-SMS_SALUTATION = 'Hello, '
-
-# Specify a COM Port for SMS
-# for windows maybe it starts at 0
-SERIALPORTSMS = '/dev/rfcomm0'
-
-# IP address to bluetooth server
-BLUETOOTH_SERVER_ADDRESS = '127.0.0.1'
+# Template for Medicine Notification Messages
+MEDICINE_MESSAGE_TEMPLATE = "the medicine $medicine is now available " + \
+                            "at the $hospital. Please come and pick it up."
 
 # used for marking the vcal uid
 VCAL_UID_SLUG = 'sendinel.org'

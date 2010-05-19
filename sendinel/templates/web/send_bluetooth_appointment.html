@@ -8,21 +8,23 @@
 {% endblock %}
 
 {% block content %}
-<div id="content-padding">
-    <h3>{% trans "Sending your appointment" %}</h3>
-    <p>{% trans "Please accept the file on your mobile" %}</p>
-    
-    <input type="hidden" id="next" value="{{ next }}">
-    <input type="hidden" id="url" value="{{ url }}">
-    <input type="hidden" id="device_mac" value="{{ mac_address }}">
-    
-    <div id="spinner" class="centered">
-        <img src="{{ MEDIA_URL }}/ajax-loader.gif" alt="Spinner" id="auth_spinner"/>
-        <div id="status">{% trans "Sending your appointment" %}</div>
+
+    <div id="contentform">
+        <h3>{% trans "Sending your appointment" %}</h3>
+        <p>{% trans "Please accept the file on your mobile" %}</p>
+        
+        <input type="hidden" id="next" value="{{ next }}">
+        <input type="hidden" id="url" value="{{ url }}">
+        <input type="hidden" id="device_mac" value="{{ mac_address }}">
+        
+        <div id="spinner" class="centered">
+            <img src="{{ MEDIA_URL }}/ajax-loader.gif" alt="Spinner" id="auth_spinner"/>
+            <div id="status">{% trans "Sending your appointment" %}</div>
+        </div>
+        <br />
+        <div id="nav_buttons" class="selectable_container">
+          {% include "web/control_buttons_widget.html" %}	      
+        </div>
     </div>
-    <br />
-    <div id="nav_buttons" class="selectable_container">
-      {% include "web/control_buttons_back_only_widget.html" %}	      
-    </div>
-</div>
+        
 {% endblock %}

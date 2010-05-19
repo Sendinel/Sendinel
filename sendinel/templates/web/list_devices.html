@@ -4,30 +4,31 @@
     <script src="{{MEDIA_URL}}/js/bluetooth.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(Bluetooth.check_for_devices);
+        var next = "{{ next }}";
     </script>
 {% endblock %}
 
 {% block content %}
-<div id="content-padding">
-    <h3>Available Bluetooth Devices</h3>
+    <div id="contentform">
+        <h3>Available Bluetooth Devices</h3>
 
-    <div>
         {% trans "Please turn on your Bluetooth now. Please assure that it is in the Bluetooth visibility mode." %}
-    </div>
-    <br />
-    <p>
-        <div class="selectable_container">
-            <ul id="bluetooth_devices"></ul>
-            <div id="spinner" class="centered">
-                <img src="{{ MEDIA_URL }}/img/progress_bar.gif" /><br />
-                {% trans "Looking for further devices" %}
+
+        <br /><br />
+        <p>
+            <div class="selectable_container">
+                <ul id="bluetooth_devices"></ul>
+                <div id="spinner" class="centered">
+                    <img src="{{ MEDIA_URL }}/img/progress_bar.gif" /><br />
+                    {% trans "Looking for further devices" %}
+                </div>
+                <span id="csrf">{% csrf_token %}</span>
+                <br /><br />
+                
+                {% include "web/control_buttons_back_only_widget.html" %}
             </div>
-            <span id="csrf">{% csrf_token %}</span>
-            <input type="hidden" id="next" value="{{ next }}">
-            {% include "web/control_buttons_back_only_widget.html" %}
-        </div>
-    </p>
-</div>
+        </p>
+    </div>
 {% endblock %}
 
 {% block infotext %}

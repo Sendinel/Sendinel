@@ -5,25 +5,32 @@
 {% endblock %}
 
 {% block content %}
-<div id="content-padding">
-    <div id="message" class="message"></div>
 
-    <h3>{% trans "Authenticate Phonenumber" %}</h3>
+    <div id="contentform">
+        
+        <div id="message" class="message"></div>
 
-    <p><strong class="big">{% trans "Please ring " %}</strong>{{auth_number}}</p>
-    <p>{% trans 'This will be <strong>free</strong>.' %}</p>
-    {#  <p>{{number}}</p> #}
+        <h3>{% trans "Authenticate Phonenumber" %}</h3>
+        
+        <p><strong class="big">{% trans "Please ring " %}</strong>{{auth_number}}</p>
+        <p>{% trans 'This will be <strong>free</strong>.' %}</p>
+        {#  <p>{{number}}</p> #}
     
-    {# <p>{% trans "Your mobile's function send own number must be activated. This is the default on most phones. If the authentication does not work, your can try to enable it by calling the number *31#" %}</p> #}
-    <input type="hidden" id="number" value="{{number}}" />
-    <input type="hidden" id="next" value="{{ next }}" />
-    <input type="hidden" id="ajax_url" value="{{ ajax_url }}" />
-    <div id="auth" class="centered">
-        <img src="{{ MEDIA_URL }}/ajax-loader.gif" alt="Spinner" id="auth_spinner"/>
-        <div id="auth_status"></div><br />
+        {# <p>{% trans "Your mobile's function send own number must be activated. This is the default on most phones. If the authentication does not work, your can try to enable it by calling the number *31#" %}</p> #}
+        <input type="hidden" id="number" value="{{number}}" />
+        <input type="hidden" id="next" value="{{ next }}" />
+        <input type="hidden" id="ajax_url" value="{{ ajax_url }}" />
+
+        <div class="centered">
+            <div id="auth_spinner" class="status">
+                <img src="{{ MEDIA_URL }}/ajax-loader.gif" />
+                <p id="auth_spinner_status"></p>
+            </div>
+            <div id="auth_message" class="status rounded-corners" style="display:none"></div>
+        </div>
+        
+                
+        {% include "web/control_buttons_back_only_widget.html" %}	      
+
     </div>
-    <div id="nav_buttons" class="selectable_container">
-      {% include "web/control_buttons_back_only_widget.html" %}	      
-    </div>
-</div>
 {% endblock %}
