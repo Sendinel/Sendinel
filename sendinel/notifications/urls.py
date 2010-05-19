@@ -8,6 +8,6 @@ urlpatterns = patterns('',
         'sendinel.notifications.views.create_appointment',
         name = 'notifications_create'),
     url(r'^send$',
-        'sendinel.notifications.views.send_appointment',
+        'sendinel.notifications.views.send_appointment_via_bluetooth',
         name = 'notifications_send'),
 )

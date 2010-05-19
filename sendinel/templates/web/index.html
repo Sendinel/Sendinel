@@ -67,7 +67,7 @@
                         </div>
                     </a>
                     {% if service.members.count > 0 %}
-                        <a href="{% url groups_send_message id=service.id %}" class="menu_secondlink">
+                        <a href="{% url groups_send_message group_id=service.id %}" class="menu_secondlink">
                             <div class="menu-hover groups-link groups-link-send float-left rounded-corners">
                                 {% trans "Send Message" %}
                             </div>

@@ -9,6 +9,10 @@ from sendinel.logger import logger
 
 
 def subscription_save(request, id):
+    '''
+        save patient and subscription
+        @return subscription
+    '''
     patient = request.session['patient']
     patient.save()
     way_of_communication = request.session['way_of_communication']
@@ -42,6 +46,10 @@ def create_messages_for_infoservice(infoservice, text):
         logger.info("Created %s", str(info_message))
         
 def set_session_variables_for_register(request):
+    '''
+        session variables way_of_communication and
+        patient are filled
+    '''
     woc = WayOfCommunication.objects.get(pk = request.POST['way_of_communication'])
     request.session['way_of_communication'] = woc
                                     

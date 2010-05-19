@@ -21,6 +21,10 @@ def index(request, infoservice_type):
                                 
 @log_request
 def create_infoservice(request, infoservice_type):
+    '''
+        Display the form and save the new infoservice.
+        Display a successmessage.
+    '''
 
     infoservice_textblocks = InfoService.TYPE_TEXTS[infoservice_type]
 

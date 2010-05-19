@@ -197,6 +197,7 @@ Archive: true
         return re.sub('[^\x00-\x8f]', "_", text) 
 
     def conduct_sms(self, number, text, context):
+        #TODO write DocString
         text = self.replace_special_characters(text)
         content = self.create_sms_spool_content(text, number)
         self.create_spool_file("tmp", content)

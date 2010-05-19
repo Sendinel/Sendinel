@@ -58,6 +58,9 @@ class HospitalAppointment(Sendable):
         return Template(self.appointment_type.template)
         
     def reminder_text(self, contents = False, is_sms = True):
+        """
+        Return the generated reminder text
+        """
         if not contents:
             contents = {'date': unicode(self.date.date()),
                         'time': unicode(self.date.time()),

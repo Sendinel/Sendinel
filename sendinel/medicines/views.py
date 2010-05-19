@@ -21,7 +21,10 @@ from sendinel.web.utils import fill_authentication_session_variable, \
 
 @log_request
 def register_save(request, medicine_id):
-
+    '''
+        Save the subscription of the patient to the medicine waiting list.
+        Display the success message.
+    '''
     subscription = subscription_save(request, medicine_id)
     
     backurl = reverse('medicines_register')        
@@ -41,7 +44,7 @@ def register_save(request, medicine_id):
 def register(request):
     '''
     Register a patient to the waitinglist of a medicine, i.e.
-    a new subscription if the infoservice is created.
+    a new subscription of the infoservice is created.
     '''
     ajax_url= reverse('web_check_call_received')
     medicines = InfoService.objects.all().filter(type='medicine')

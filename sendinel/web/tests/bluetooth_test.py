@@ -51,7 +51,7 @@ class BluetoothViewTest(TestCase):
         
         bluetooth.get_discovered_devices = get_discovered_devices_old
         
-    def test_send_appointment(self):   
+    def test_send_appointment_via_bluetooth(self):   
         appointment_type = AppointmentType(name = "vaccination")
         appointment_type.save()
         

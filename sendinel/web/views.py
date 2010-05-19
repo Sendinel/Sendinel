@@ -35,6 +35,7 @@ def choose_language(request):
                               context_instance = RequestContext(request))
 
 def jsi18n(request):
+#TODO write docstring
     js_info_web = {
         'packages': ('sendinel')
     }
@@ -87,6 +88,9 @@ def check_call_received(request):
 
 @log_request
 def list_bluetooth_devices(request):
+    '''
+        display the view where bluetooth devices are listed
+    '''
     next = request.GET.get('next', '')
     backurl = reverse("notifications_create", kwargs=
                        {"appointment_type_name":
@@ -97,6 +101,10 @@ def list_bluetooth_devices(request):
 
 @log_request
 def get_bluetooth_devices(request):
+    '''
+    Help to asynchronically show all available bluetooth devices
+    This method is used by bluetooth.js
+    '''
     response_dict = {}
     devices_list = []    
     

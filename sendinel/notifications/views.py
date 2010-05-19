@@ -20,6 +20,10 @@ from sendinel.web.utils import get_ways_of_communication
                                
 @log_request
 def create_appointment(request, appointment_type_name = None):
+    '''
+        Display the form and creates a new appointment, but does not
+        save it yet. Redirect to authentication if switched on
+    '''
     appointment_type = AppointmentType.objects. \
                               filter(name = appointment_type_name)[0]
     nexturl = ""
@@ -108,7 +112,7 @@ def save_appointment(request):
                           context_instance = RequestContext(request))  
 
 @log_request
-def send_appointment(request):
+def send_appointment_via_bluetooth(request):
     if (request.method == "POST"):
         appointment = request.session.get('appointment', None)
         mac_address = request.POST['device_mac'].strip()
