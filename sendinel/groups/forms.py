@@ -62,6 +62,8 @@ class MedicineMessageValidationForm(Form):
     medicine = ModelChoiceField(
                 queryset=InfoService.objects.all().filter(type='medicine'),
                 error_messages={'required': \
+                                _('Please choose a medicine'), \
+                                'invalid_choice':  \
                                 _('Please choose a medicine')})                            
     text = CharField(error_messages={ \
                         'required': _('Please enter a text to send'), \

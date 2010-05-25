@@ -22,7 +22,11 @@ from sendinel.web.utils import fill_authentication_session_variable
 @log_request
 def index(request):
     groups = InfoService.objects.all().filter(type="information")
-    medicine_count = InfoService.objects.all().filter(type="medicine").count()
+    medicine_empty = True
+    for medicine in InfoService.objects.all().filter(type="medicine"):
+        if medicine.members.count() > 0:
+            medicine_empty = False
+            break
     appointment_types = AppointmentType.objects.all()
     return render_to_response('web/index.html',
                               locals(),  
