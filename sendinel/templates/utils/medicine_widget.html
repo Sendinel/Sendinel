@@ -9,7 +9,7 @@
     <select id="select-medicine" name="medicine" size="1">
      <option value="0">please choose</option>
      {% for medicine in medicines %}
-     <option value={{medicine.id}}>{{medicine}} ({{medicine.members.count}})</option>
+            <option value={{medicine.id}}>{{medicine}} ({{medicine.members.count}})</option>
      {% endfor %}
     </select> 
 </div>

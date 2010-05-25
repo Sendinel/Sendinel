@@ -71,8 +71,11 @@ class MedicineTest(TestCase):
             self.assertContains(response, unicode(medicine))
         
     def test_send_message_form(self):
+        a_medicine = InfoService(name='Malarone', type='medicine')
+        a_medicine.save()
         response = self.client.get(reverse('medicines_send_message'))
         self.failUnlessEqual(response.status_code, 200)
+        self.assertNotContains(response, 'Malarone')
         self.assertContains(response, 'name="medicine"')
         self.assertContains(response, 'textarea')
     

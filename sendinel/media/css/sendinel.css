@@ -213,6 +213,8 @@ strong.big {
 }
 
 .status {
+    font-size: 20px;
+    
     width: 500px;
     
     margin: 50px;
@@ -225,7 +227,7 @@ strong.big {
 .success {
     color: #C96A04;    
     border: 1px solid #F0A10E;    
-    background-color: #FFEECF;   
+    background-color: #FFEECF;
 }
 
 .error {

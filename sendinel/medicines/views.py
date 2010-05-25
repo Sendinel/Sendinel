@@ -105,7 +105,10 @@ def send_message(request):
                           locals(),
                           context_instance = RequestContext(request))
                                       
-    medicines = InfoService.objects.all().filter(type='medicine')
+    medicines = []
+    for medicine in InfoService.objects.all().filter(type='medicine'):
+        if medicine.members.count() > 0:
+            medicines.append(medicine)
     
     current_hospital = Hospital.get_current_hospital()
     template_text = MEDICINE_MESSAGE_TEMPLATE
