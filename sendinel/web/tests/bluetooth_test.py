@@ -51,7 +51,7 @@ class BluetoothViewTest(TestCase):
         
         bluetooth.get_discovered_devices = get_discovered_devices_old
         
-    def test_send_appointment_via_bluetooth(self):   
+    def test_send_notification_via_bluetooth(self):   
         notification_type = NotificationType(name = "vaccination")
         notification_type.save()
         
@@ -65,7 +65,7 @@ class BluetoothViewTest(TestCase):
         self.client.post(reverse('notifications_create', \
                 kwargs = {"notification_type_name": notification_type.name }), data)
         
-        self.assertTrue(self.client.session.has_key("appointment"))
+        self.assertTrue(self.client.session.has_key("notification"))
     
         old_send_vcal = bluetooth.send_vcal
              

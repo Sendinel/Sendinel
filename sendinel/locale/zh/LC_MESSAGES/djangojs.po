@@ -34,5 +34,5 @@ msgid "The Bluetooth device doesn't work correctly. Please inform the clerk."
 msgstr "#TRANSLATED#"
 
 #: media/js/bluetooth.js:58
-msgid "Failed to send appointment"
+msgid "Failed to send notification"
 msgstr "#TRANSLATED#"

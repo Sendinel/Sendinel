@@ -139,22 +139,22 @@ msgstr "#TRANSLATED#"
 msgid "Back to Main Menu"
 msgstr "#TRANSLATED#"
 
-#: templates/web/appointment_create.html:15
+#: templates/web/notification_create.html:15
 msgid "Appointment"
 msgstr "#TRANSLATED#"
 
-#: templates/web/appointment_create.html:16
-msgid "Please enter the appointment details."
+#: templates/web/notification_create.html:16
+msgid "Please enter the notification details."
 msgstr "#TRANSLATED#"
 
-#: templates/web/appointment_saved.html:16
-msgid "The appointment has been created."
+#: templates/web/notification_saved.html:16
+msgid "The notification has been created."
 msgstr "#TRANSLATED#"
 
-#: templates/web/appointment_saved.html:17
+#: templates/web/notification_saved.html:17
 msgid ""
 "Please tell the patient that he/she will be reminded one day before the "
-"appointment."
+"notification."
 msgstr "#TRANSLATED#"
 
 #: templates/web/authenticate_phonenumber.html:23
@@ -260,11 +260,11 @@ msgstr "#TRANSLATED#"
 msgid "We are working on that and hope to get it running until June 2010."
 msgstr "#TRANSLATED#"
 
-#: templates/web/send_bluetooth_appointment.html:11
-#: templates/web/send_bluetooth_appointment.html:20
-msgid "Sending your appointment"
+#: templates/web/send_bluetooth_notification.html:11
+#: templates/web/send_bluetooth_notification.html:20
+msgid "Sending your notification"
 msgstr "#TRANSLATED#"
 
-#: templates/web/send_bluetooth_appointment.html:12
+#: templates/web/send_bluetooth_notification.html:12
 msgid "Please accept the file on your mobile"
 msgstr "#TRANSLATED#"

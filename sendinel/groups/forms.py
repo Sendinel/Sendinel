@@ -1,11 +1,9 @@
-from django.forms import CharField, ChoiceField, DateTimeField, Textarea, \
+from django.forms import CharField, DateTimeField, Textarea, \
                             Form, ModelForm, ModelChoiceField
 from django.utils.translation import ugettext as _
 
 from sendinel.backend.authhelper import format_and_validate_phonenumber
-from sendinel.backend.models import Sendable, \
-                                    WayOfCommunication, \
-                                    get_enabled_wocs, \
+from sendinel.backend.models import get_enabled_wocs, \
                                     get_immediate_wocs
 from sendinel.infoservices.models import InfoMessage, InfoService
 
@@ -66,5 +64,3 @@ class MedicineMessageValidationForm(Form):
     text = CharField(error_messages={ \
                         'required': _('Please enter a text to send'), \
                         'invalid': _('The text contains invalid characters')})
-
-

@@ -94,7 +94,7 @@ def list_bluetooth_devices(request):
     next = request.GET.get('next', '')
     backurl = reverse("notifications_create", kwargs=
                        {"notification_type_name":
-                           request.session["appointment"].notification_type.name})
+                           request.session["notification"].notification_type.name})
     return render_to_response('web/list_devices.html',
                                 locals(),
                                 context_instance=RequestContext(request))
