@@ -12,7 +12,7 @@ from sendinel.backend import bluetooth
 from sendinel.backend.authhelper import check_and_delete_authentication_call, \
                                     delete_timed_out_authentication_calls
 from sendinel.infoservices.models import InfoService
-from sendinel.notifications.models import AppointmentType
+from sendinel.notifications.models import NotificationType
 from sendinel.logger import logger, log_request
 from sendinel.settings import   AUTH_NUMBER, \
                                 AUTHENTICATION_CALL_TIMEOUT
@@ -23,7 +23,7 @@ from sendinel.web.utils import fill_authentication_session_variable
 def index(request):
     groups = InfoService.objects.all().filter(type="information")
     medicine_count = InfoService.objects.all().filter(type="medicine").count()
-    appointment_types = AppointmentType.objects.all()
+    notification_types = NotificationType.objects.all()
     return render_to_response('web/index.html',
                               locals(),  
                               context_instance = RequestContext(request))
@@ -93,8 +93,8 @@ def list_bluetooth_devices(request):
     '''
     next = request.GET.get('next', '')
     backurl = reverse("notifications_create", kwargs=
-                       {"appointment_type_name":
-                           request.session["appointment"].appointment_type.name})
+                       {"notification_type_name":
+                           request.session["appointment"].notification_type.name})
     return render_to_response('web/list_devices.html',
                                 locals(),
                                 context_instance=RequestContext(request))

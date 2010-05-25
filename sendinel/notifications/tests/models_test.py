@@ -6,8 +6,8 @@ from django.db import IntegrityError
 
 from sendinel import settings
 from sendinel.backend.models import Patient, ScheduledEvent
-from sendinel.notifications.models import AppointmentType, \
-                                    HospitalAppointment
+from sendinel.notifications.models import NotificationType, \
+                                    Notification
 from sendinel.backend.output import VoiceOutputData, \
                                     SMSOutputData, \
                                     BluetoothOutputData
@@ -15,11 +15,11 @@ from sendinel.backend.output import VoiceOutputData, \
 
 
                                     
-class HospitalAppointmentTest(TestCase):
+class NotificationTest(TestCase):
     fixtures = ['backend_test']
     
     def setUp(self):
-        self.appointment = HospitalAppointment.objects.get(id = 1)
+        self.appointment = Notification.objects.get(id = 1)
 
     def test_create_scheduled_event(self):
         number_of_events = ScheduledEvent.objects.count()
@@ -46,9 +46,9 @@ class HospitalAppointmentTest(TestCase):
         
     def test_get_data_for_bluetooth(self):
         #create new appointment without saving
-        appointment = HospitalAppointment()        
+        appointment = Notification()        
         appointment.date = datetime(2010, 4, 4)
-        appointment.appointment_type = AppointmentType.objects.get(pk = 1)
+        appointment.notification_type = NotificationType.objects.get(pk = 1)
         appointment.bluetooth_mac_address = "00AA11BB22"
         appointment.bluetooth_server_address = "123.456.789.1"
                 
@@ -61,7 +61,7 @@ class HospitalAppointmentTest(TestCase):
         self.assertEquals(type(output_data.data).__name__, "unicode") 
     
     def test_get_data_for_sms(self):
-        self.appointment.appointment_type.template = "This is a template with a $date " + \
+        self.appointment.notification_type.template = "This is a template with a $date " + \
             "for the $hospital and a $time and, " + \
             "we use this long template to check if it is reduced before sending it via SMS"
         self.appointment.recipient.phone_number = "012345678"
@@ -75,7 +75,7 @@ class HospitalAppointmentTest(TestCase):
         self.assertTrue(len(output_data.data) <= 160)
         
     def test_get_data_for_voice(self):
-        self.appointment.appointment_type.template = "This is a very long template with a $date " + \
+        self.appointment.notification_type.template = "This is a very long template with a $date " + \
             "for the $hospital and also has a $time and is much longer than 160 characters, " + \
             "we use this long template to check if it is reduced before sending it via SMS"
         self.appointment.recipient.phone_number = "012345678"
@@ -86,4 +86,4 @@ class HospitalAppointmentTest(TestCase):
         self.assertEquals(type(output_data.data), unicode)
         
         self.assertTrue(len(output_data.data) > \
-            len(self.appointment.appointment_type.template))
+            len(self.appointment.notification_type.template))

@@ -4,7 +4,7 @@ from django.test import TestCase
 
 from sendinel.backend.models import AuthenticationCall
 from sendinel.backend import authhelper
-from sendinel.notifications.models import AppointmentType
+from sendinel.notifications.models import NotificationType
 from sendinel.notifications import views as notification_views
 from sendinel.web import views as web_views
 
@@ -28,15 +28,15 @@ class AuthenticateViewTests(TestCase):
         
     def test_authenticate_phonenumber(self):
         
-        appointment_type = AppointmentType.objects.get(pk=1)
+        notification_type = NotificationType.objects.get(pk=1)
         
         self.client.get(reverse('notifications_create', \
-                kwargs={"appointment_type_name": appointment_type.name })) 
+                kwargs={"notification_type_name": notification_type.name })) 
         data = {'date': '2012-08-12',
                 'phone_number': '01733685224',
                 'way_of_communication': 1}
         self.client.post(reverse('notifications_create', \
-                kwargs = {"appointment_type_name": appointment_type.name }), data)
+                kwargs = {"notification_type_name": notification_type.name }), data)
      
         response = self.client.post(reverse("web_authenticate_phonenumber"))
 
@@ -65,17 +65,17 @@ class AuthenticateViewTests(TestCase):
     
     def test_check_call_received(self):        
         # settings up the environment
-        appointment_type = AppointmentType.objects.get(pk=1)
+        notification_type = NotificationType.objects.get(pk=1)
         original_value = authhelper.AUTHENTICATION_ENABLED
         authhelper.AUTHENTICATION_ENABLED = True
         
         self.client.get(reverse('notifications_create', \
-                kwargs={"appointment_type_name": appointment_type.name })) 
+                kwargs={"notification_type_name": notification_type.name })) 
         data = {'date': '2012-08-12',
                 'phone_number': '0123456789012',
                 'way_of_communication': 1}
         self.client.post(reverse('notifications_create', \
-                kwargs = {"appointment_type_name": appointment_type.name }), data)
+                kwargs = {"notification_type_name": notification_type.name }), data)
                 
         # make sure there are no AuthenticationCall objects in the db
         AuthenticationCall.objects.all().delete()
