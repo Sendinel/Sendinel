@@ -17,9 +17,9 @@ var Bluetooth = {
                     $(json.devices).each(function(index, device) {                
                         var deviceHTML = 
                         "<a href='" + next + "?device_mac=" + device.mac + "'>" + 
-                            "<li class='menu-item menu-item-name menu-hover background-grey rounded-corners'>"+
+                            "<div class='menu-item menu-item-name menu-hover background-grey rounded-corners'>"+
                                     device.name + 
-                            "</li>"+
+                            "</div>"+
                         "</a>";
                     
                         $(deviceList).append($(deviceHTML));                        
