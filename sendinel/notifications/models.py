@@ -17,7 +17,7 @@ from sendinel.logger import logger
 
 class NotificationType(models.Model):
     """
-    Represent an appointment type like follow-up consultation.
+    Represent an notification type like follow-up consultation.
     """
     
     name = models.CharField(max_length = 255)
@@ -72,7 +72,7 @@ class Notification(Sendable):
     def get_data_for_bluetooth(self):
         """
         Prepare OutputData for voice.
-        Generate the message for an Notification.
+        Generate the message for a Notification.
         Return BluetoothOutputData for sending.
 
         """
@@ -140,7 +140,7 @@ class Notification(Sendable):
 
     def create_scheduled_event(self, send_time=None):
         """
-        Create a scheduled event for sending a reminder for an appointment. 
+        Create a scheduled event for sending a notification. 
         @param send_time: Datetime object with the time of the reminder
         If send_time is not give, REMINDER_TIME_BEFORE_APPOINTMENT is used.
         Calls Sendable.create_scheduled_event() to create the ScheduledEvent
@@ -151,7 +151,7 @@ class Notification(Sendable):
        
     def save_with_patient(self, patient):
         """
-        Save appointment with patient & hospital and create a scheduled event
+        Save notification with patient & hospital and create a scheduled event
         """
         patient.save()
 

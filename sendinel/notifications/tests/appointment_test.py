@@ -1,20 +1,17 @@
-from datetime import datetime
-
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 
 from sendinel.backend.models import Hospital, \
                                     Patient, \
                                     ScheduledEvent, \
-                                    WayOfCommunication, \
                                     get_woc
 from sendinel.backend.tests.helper import disable_authentication
 from sendinel.notifications.models import Notification, NotificationType
 from sendinel.groups.forms import  NotificationValidationForm2, \
                                 DateValidationForm
-from sendinel import settings
 
-class AppointmentViewTest(TestCase):
+
+class NotificationViewTest(TestCase):
     fixtures = ['backend_test']
     urls = 'sendinel.urls'
     
@@ -45,8 +42,9 @@ class AppointmentViewTest(TestCase):
         self.assertFalse(form_date.is_valid())         
         self.assertEquals(len(form_date['date'].errors), 1)   
     
-    def create_appointment_form(self, notification_type_id):
-        notification_type = NotificationType.objects.get(pk=notification_type_id)
+    def create_notification_form(self, notification_type_id):
+        notification_type = NotificationType.objects.get(
+                                                    pk=notification_type_id)
         response = self.client.get(reverse('notifications_create', \
                 kwargs={"notification_type_name": notification_type.name }))
         self.failUnlessEqual(response.status_code, 200)
@@ -56,20 +54,20 @@ class AppointmentViewTest(TestCase):
 
     
     
-    def test_create_appointment_form_notify_immediately(self):
+    def test_create_notification_form_notify_immediately(self):
         #labresult
-        response = self.create_appointment_form(3)
+        response = self.create_notification_form(3)
         self.assertNotContains(response, 'name="date"')
        
     
-    def test_create_appointment_form_dont_notify_immediately(self):
+    def test_create_notification_form_dont_notify_immediately(self):
         #vaccination
-        response = self.create_appointment_form(1)
+        response = self.create_notification_form(1)
         self.assertContains(response, 'name="date"')
 
     
     
-    def test_create_appointment_submit_validations(self):
+    def test_create_notification_submit_validations(self):
         notification_type = NotificationType.objects.get(pk=1) #vaccination
         response = self.client.post(reverse('notifications_create', \
             kwargs={"notification_type_name": notification_type.name }), 
@@ -93,7 +91,7 @@ class AppointmentViewTest(TestCase):
                     'way_of_communication': 1  })
         self.assertContains(response, 'Please enter a cell phone number.')        
 
-    def create_appointment(self, way_of_communication):    
+    def create_notification(self, way_of_communication):    
         notification_type = NotificationType.objects.get(pk=1) #vaccination
         self.client.get(reverse('notifications_create', \
                 kwargs={"notification_type_name": notification_type.name }))
@@ -101,45 +99,44 @@ class AppointmentViewTest(TestCase):
         data = {'date': '2012-08-12',
                 'phone_number': '01733685224',
                 'way_of_communication': str(way_of_communication.id)}
-        return self.client.post(reverse('notifications_create', \
-                kwargs = {"notification_type_name": notification_type.name }), data)
+        return self.client.post(reverse('notifications_create',
+                kwargs = {"notification_type_name": notification_type.name }),
+                data)
         
-    def create_and_save_appointment(self, way_of_communication, phone_number):
-        self.create_appointment(way_of_communication)
+    def create_and_save_notification(self, way_of_communication, phone_number):
+        self.create_notification(way_of_communication)
         
         patient = Patient()
         patient.phone_number = phone_number
-        # fake authentication
-        # TODO remove this
         self.client.post(reverse('web_authenticate_phonenumber'), \
                     {'patient': patient})
                     
         return self.client.get(reverse("notifications_save"))
 
     @disable_authentication
-    def test_valid_create_appointment(self):
-        response = self.create_appointment(get_woc('sms'))
+    def test_valid_create_notification(self):
+        response = self.create_notification(get_woc('sms'))
         
         self.assertRedirects(response, reverse('notifications_save'))
         self.assertTrue(self.client.session.has_key('patient'))
-        self.assertTrue(self.client.session.has_key('appointment'))
+        self.assertTrue(self.client.session.has_key('notification'))
         
     @disable_authentication
-    def test_invalid_create_appointment(self):
-        response = self.create_appointment(get_woc('voice'))
+    def test_invalid_create_notification(self):
+        response = self.create_notification(get_woc('voice'))
         
         self.failUnlessEqual(response.status_code, 200)        
         self.assertFalse(self.client.session.has_key('patient'))
-        self.assertFalse(self.client.session.has_key('appointment'))
+        self.assertFalse(self.client.session.has_key('notification'))
         
 
-    def save_appointment_woc(self, way_of_communication):
+    def save_notification_woc(self, way_of_communication):
         
-        number_of_appointments = Notification.objects.count()
+        number_of_notifications = Notification.objects.count()
         number_of_events = ScheduledEvent.objects.count()
         
         phone_number = "01733685224"
-        response = self.create_and_save_appointment(way_of_communication, \
+        response = self.create_and_save_notification(way_of_communication, \
                                                     phone_number)
         
         self.failUnlessEqual(response.status_code, 200)
@@ -148,7 +145,7 @@ class AppointmentViewTest(TestCase):
         self.assertEquals(unicode(appoint.recipient.phone_number), phone_number)
         # test that exactly one Notification was created
         self.assertEquals(Notification.objects.count(),
-                            number_of_appointments + 1)
+                            number_of_notifications + 1)
         
         event = ScheduledEvent.objects.order_by("id").reverse()[:1][0]
         self.assertEquals(event.sendable, appoint)
@@ -156,19 +153,19 @@ class AppointmentViewTest(TestCase):
         self.assertEquals(ScheduledEvent.objects.count(),
                             number_of_events + 1)
         
-    def test_create_appointment_bluetooth(self):
-         response = self.create_appointment(get_woc('bluetooth'))
-         self.assertRedirects(response, 
-                              reverse('web_list_devices') + \
-                              "?next=" + \
-                              reverse('notifications_send'))
-         self.assertTrue(self.client.session.has_key('patient'))
-         self.assertTrue(self.client.session.has_key('appointment'))
+    def test_create_notification_bluetooth(self):
+        response = self.create_notification(get_woc('bluetooth'))
+        self.assertRedirects(response, 
+                             reverse('web_list_devices') + \
+                             "?next=" + \
+                             reverse('notifications_send'))
+        self.assertTrue(self.client.session.has_key('patient'))
+        self.assertTrue(self.client.session.has_key('notification'))
          
-    def test_save_appointment_sms(self):
-         self.save_appointment_woc(get_woc('sms'))
+    def test_save_notification_sms(self):
+         self.save_notification_woc(get_woc('sms'))
 
-    def test_save_appointment_voice(self):
+    def test_save_notification_voice(self):
         woc_voice = get_woc("voice")
         
         status_save = woc_voice.enabled
@@ -176,12 +173,12 @@ class AppointmentViewTest(TestCase):
         woc_voice.enabled = True
         woc_voice.save()
     
-        self.save_appointment_woc(get_woc('voice'))
+        self.save_notification_woc(get_woc('voice'))
         
         woc_voice.enabled = status_save
         woc_voice.save()
          
-    def test_create_appointment_with_current_date(self):
+    def test_create_notification_with_current_date(self):
         notification_type = NotificationType.objects.get(pk=3) #labresults
         response = self.client.post(reverse('notifications_create', \
             kwargs={"notification_type_name": notification_type.name }), 

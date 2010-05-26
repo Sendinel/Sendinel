@@ -28,13 +28,13 @@
     <div id="contentform">
     <h3>{{ notification_type.verbose_name }}</h3>
     {% if not notification_type.notify_immediately %}
-        <p>{% trans "Please enter the appointment details." %}</p>
+        <p>{% trans "Please enter the notification details." %}</p>
     {% else %}
         <p>{% trans "Please enter the notification details." %}</p>
     {% endif %}
     
     
-    <form name="appointment_create" id="content_form" action="./" method="post" autocomplete="off" >
+    <form name="notification_create" id="content_form" action="./" method="post" autocomplete="off" >
     
         <div class="button button-left background-grey link menu-hover rounded-corners float-left" onClick="javascript:location.href='{{ backurl }}'">
             {% trans "Back" %}
@@ -72,7 +72,7 @@
             {% include "utils/way_of_communication_widget.html" %}
         </div>
             
-        <div class="button button-right float-left background-grey menu-hover link rounded-corners" onClick="appointment_create.submit();">{% trans "Next" %}</div>
+        <div class="button button-right float-left background-grey menu-hover link rounded-corners" onClick="notification_create.submit();">{% trans "Next" %}</div>
         <div style="clear:both;"></div>        
 
     </form>
