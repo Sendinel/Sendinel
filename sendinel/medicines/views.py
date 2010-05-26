@@ -118,7 +118,7 @@ def send_message(request):
             nexturl = reverse('web_index')
             title = _("Message created")
             message = _("All patients who were waiting for the medicine " +
-                        "\"%s\" will be informed") % medicine.name
+                        "\"%s\" will be informed. The waiting list will also be removed.") % medicine.name
             new_button_label = _("Send another message")
             success = True
 
