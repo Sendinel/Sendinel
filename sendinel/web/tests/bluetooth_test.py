@@ -6,7 +6,7 @@ from django.test.client import Client
 
 from sendinel.backend import bluetooth
 from sendinel.backend.models import WayOfCommunication
-from sendinel.notifications.models import AppointmentType
+from sendinel.notifications.models import NotificationType
 
 class BluetoothViewTest(TestCase):
     client = Client()
@@ -52,18 +52,18 @@ class BluetoothViewTest(TestCase):
         bluetooth.get_discovered_devices = get_discovered_devices_old
         
     def test_send_appointment_via_bluetooth(self):   
-        appointment_type = AppointmentType(name = "vaccination")
-        appointment_type.save()
+        notification_type = NotificationType(name = "vaccination")
+        notification_type.save()
         
-        appointment_type = AppointmentType.objects.get(pk=1)
+        notification_type = NotificationType.objects.get(pk=1)
         
         self.client.get(reverse('notifications_create', \
-                kwargs={"appointment_type_name": appointment_type.name })) 
+                kwargs={"notification_type_name": notification_type.name })) 
         data = {'date': '2012-02-22',
                 'phone_number': '0175685444',
                 'way_of_communication': "3"}
         self.client.post(reverse('notifications_create', \
-                kwargs = {"appointment_type_name": appointment_type.name }), data)
+                kwargs = {"notification_type_name": notification_type.name }), data)
         
         self.assertTrue(self.client.session.has_key("appointment"))
     

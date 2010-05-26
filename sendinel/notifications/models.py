@@ -15,7 +15,7 @@ from sendinel.backend.output import SMSOutputData, \
                                     BluetoothOutputData
 from sendinel.logger import logger     
 
-class AppointmentType(models.Model):
+class NotificationType(models.Model):
     """
     Represent an appointment type like follow-up consultation.
     """
@@ -29,33 +29,33 @@ class AppointmentType(models.Model):
         return self.verbose_name
     
     @classmethod
-    def get_appointment_type(cls, type_name):
+    def get_notification_type(cls, type_name):
         """
-        Return the given AppointmentType
+        Return the given NotificationType
         """
         
-        appointment_type = AppointmentType.objects.get(name = type_name)
+        notification_type = NotificationType.objects.get(name = type_name)
         
-        return appointment_type
+        return notification_type
 
 
 
-class HospitalAppointment(Sendable):
+class Notification(Sendable):
     """
-    Define a HospitalAppointment.
+    Define a Notification.
     """
     
     date = models.DateTimeField()
-    appointment_type = models.ForeignKey(AppointmentType)
+    notification_type = models.ForeignKey(NotificationType)
     hospital = models.ForeignKey(Hospital)
                          
     def __unicode__(self):
-        return "HospitalAppointment<%s>" \
+        return "Notification<%s>" \
                     % ((str(self.date) or ""))
 
     @property
     def template(self):
-        return Template(self.appointment_type.template)
+        return Template(self.notification_type.template)
         
     def reminder_text(self, contents = False, is_sms = True):
         """
@@ -72,11 +72,11 @@ class HospitalAppointment(Sendable):
     def get_data_for_bluetooth(self):
         """
         Prepare OutputData for voice.
-        Generate the message for an HospitalAppointment.
+        Generate the message for an Notification.
         Return BluetoothOutputData for sending.
 
         """
-        logger.info("starting get_data_for_bluetooth() in HospitalAppointment")
+        logger.info("starting get_data_for_bluetooth() in Notification")
         
         data = BluetoothOutputData()
         data.bluetooth_mac_address = self.bluetooth_mac_address
@@ -107,7 +107,7 @@ class HospitalAppointment(Sendable):
     def get_data_for_sms(self):
         """
         Prepare OutputData for sms.
-        Generate the message for an HospitalAppointment.
+        Generate the message for an Notification.
         Return SMSOutputData for sending.
         """
 
@@ -120,7 +120,7 @@ class HospitalAppointment(Sendable):
     def get_data_for_voice(self):
         """
         Prepare OutputData for voice.
-        Generate the message for an HospitalAppointment.
+        Generate the message for an Notification.
         Return VoiceOutputData for sending.
         """
     
@@ -147,7 +147,7 @@ class HospitalAppointment(Sendable):
         """
         if not send_time:      
             send_time = self.date - REMINDER_TIME_BEFORE_APPOINTMENT
-        super(HospitalAppointment, self).create_scheduled_event(send_time)
+        super(Notification, self).create_scheduled_event(send_time)
        
     def save_with_patient(self, patient):
         """

@@ -2,10 +2,14 @@
 {% load i18n %}
 
 {% block script %}
+    <script src="{{ MEDIA_URL }}/js/add_new_medicine.js" type="text/javascript" charset="utf-8"></script>
     <script src="{{ MEDIA_URL }}/js/phone_input_validation.js" type="text/javascript" charset="utf-8"></script>
     <script src="{{ MEDIA_URL }}/js/way_of_communication.js" type="text/javascript" charset="utf-8"></script>
     <script src="{{ MEDIA_URL }}/js/jVal.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/jval/jVal.css">
+    <script type="text/javascript">
+        var medicines_create_url = '{% url medicines_create %}';
+    </script>
 {% endblock %}
  
 {% block content %}
@@ -29,10 +33,29 @@
             </div>
             <div class="field field-groups float-left lastfield">
                 {% include "utils/medicine_widget.html" %}
+                <br />
+                <div id="infoservice-create">
+                    <img src="{{ MEDIA_URL }}/img/add.png" style="margin-bottom:-8px" />
+                    <input id="medicines_create_button" type="button" 
+                            value='{% trans "Add a new medicine" %}' />
+                </div>
             </div>
+                                    
             <div class="button button-right link menu-hover background-grey rounded-corners float-left" onClick="infoservice.submit();">{% trans "Next" %}</div>
             <div style="clear:both;"></div>
-        </form>    
+        </form>
+        
+        <div id="dialog-form" style="display: none">
+            <p class="centered">{% trans "Please enter the name of the medicine you want to add" %}</p>
+            
+            <form>
+                <br />
+                <div class="errorlist" style="display:none"></div>
+                <br />
+                <input type="text" name="name" id="medicine_input" size="10"/>
+            </form>
+        </div>
+        
     </div>
 
 {% endblock %}

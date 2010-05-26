@@ -12,28 +12,28 @@ from sendinel.backend.models import Patient, \
                                     WayOfCommunication, \
                                     get_woc
 from sendinel.backend.authhelper import redirect_to_authentication_or
-from sendinel.notifications.models import HospitalAppointment, AppointmentType
+from sendinel.notifications.models import Notification, NotificationType
 from sendinel.notifications.forms import NotificationValidationForm
 from sendinel.settings import DEFAULT_SEND_TIME
 from sendinel.logger import logger, log_request
 from sendinel.web.utils import get_ways_of_communication
                                
 @log_request
-def create_appointment(request, appointment_type_name = None):
+def create_appointment(request, notification_type_name = None):
     '''
         Display the form and creates a new appointment, but does not
         save it yet. Redirect to authentication if switched on
     '''
-    appointment_type = AppointmentType.objects. \
-                              filter(name = appointment_type_name)[0]
+    notification_type = NotificationType.objects. \
+                              filter(name = notification_type_name)[0]
     nexturl = ""
     backurl = reverse('web_index')
     
-    ways_of_communication = get_ways_of_communication(appointment_type.notify_immediately)
+    ways_of_communication = get_ways_of_communication(notification_type.notify_immediately)
     
     if request.method == "POST":
         data = deepcopy(request.POST)
-        if appointment_type.notify_immediately:
+        if notification_type.notify_immediately:
             data['date'] = date.today().strftime('%Y-%m-%d') + \
                             ' ' + DEFAULT_SEND_TIME
         else:
@@ -41,11 +41,11 @@ def create_appointment(request, appointment_type_name = None):
         form = NotificationValidationForm(data)
         
         if form.is_valid():
-            appointment = HospitalAppointment()
+            appointment = Notification()
             patient = Patient()
             patient.phone_number = form.cleaned_data['phone_number']
             appointment.date = form.cleaned_data['date']
-            appointment.appointment_type = appointment_type
+            appointment.notification_type = notification_type
             appointment.hospital = Hospital.get_current_hospital()
             appointment.way_of_communication = \
                                     form.cleaned_data['way_of_communication']
@@ -82,8 +82,8 @@ def save_appointment(request):
     patient = request.session.get('patient', None)
     
     nexturl = reverse("web_index")
-    backurl = reverse("notifications_create", kwargs={'appointment_type_name':
-                                            appointment.appointment_type.name })
+    backurl = reverse("notifications_create", kwargs={'notification_type_name':
+                                            appointment.notification_type.name })
     
     if not appointment or not patient:
         logger.warning("save_appointment: no appointment/patient in session")
@@ -97,10 +97,10 @@ def save_appointment(request):
     appointment.save_with_patient(patient)
         
     title = _("The \"%s\" notification has been created.") \
-                        % appointment.appointment_type.verbose_name
+                        % appointment.notification_type.verbose_name
     new_button_label = _("New notification")
     
-    if appointment.appointment_type.notify_immediately:
+    if appointment.notification_type.notify_immediately:
         message = _("The patient will be informed immediately.")
     else:
         message = _("Please tell the patient that he/she will be reminded"\

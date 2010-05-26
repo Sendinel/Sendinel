@@ -47,12 +47,20 @@ class RegisterPatientForMedicineForm(Form):
     way_of_communication = ModelChoiceField(
                         queryset = get_enabled_wocs(),
                         error_messages={'required': \
-                                _('Please choose a way of communication')})                              
+                                _('Please choose a way of communication')})     
     medicine = ModelChoiceField(
-                queryset=InfoService.objects.all().filter(type='medicine'),
-                error_messages={'required': \
-                                _('Please choose a medicine')})
+            queryset=InfoService.objects.all().filter(type='medicine'),
+            error_messages={'required': \
+                            _('Please choose a medicine')})
 
+class RegisterPatientForNewMedicineForm(Form):  
+    phone_number = CharField(validators = [format_and_validate_phonenumber],
+            error_messages={'required':_('Please enter a phone number')})
+    way_of_communication = ModelChoiceField(
+                        queryset = get_enabled_wocs(),
+                        error_messages={'required': \
+                                _('Please choose a way of communication')}) 
+                            
 class DateValidationForm(Form): 
     date = DateTimeField(error_messages={ \
                             'required': _('Please choose a date'), \

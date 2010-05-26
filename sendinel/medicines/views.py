@@ -1,14 +1,17 @@
 from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
+from django.utils import simplejson
 from django.utils.translation import ugettext as _
 
 from sendinel.backend.models import Hospital
 from sendinel.backend.authhelper import redirect_to_authentication_or
 from sendinel.infoservices.models import InfoService
 from sendinel.groups.forms import MedicineMessageValidationForm, \
-                                  RegisterPatientForMedicineForm
+                                  RegisterPatientForMedicineForm, \
+                                  RegisterPatientForNewMedicineForm, \
+                                  InfoserviceValidationForm 
 from sendinel.infoservices.utils import create_messages_for_infoservice, \
                                         set_session_variables_for_register, \
                                         subscription_save
@@ -53,10 +56,13 @@ def register(request):
     
     if request.method == "POST":
         set_session_variables_for_register(request)
-        request.session['medicine'] = request.POST.get('medicine', '')
         
+        infoservice = None
+        form = None
+
         form = RegisterPatientForMedicineForm(request.POST)
-        
+        request.session['medicine'] = request.POST.get('medicine', '')
+                
         if form.is_valid():
             number = fill_authentication_session_variable(request) 
             auth_number = AUTH_NUMBER
@@ -75,7 +81,22 @@ def register(request):
                               locals(),
                               context_instance = RequestContext(request))
 
-                              
+def create_medicine(request):
+    form = InfoserviceValidationForm(request.POST)
+    
+    response = {}
+    if form.is_valid():
+        infoservice = InfoService(name = request.POST["name"],
+                                          type = "medicine")
+        infoservice.save()
+        response['id'] = infoservice.id
+        response['name'] = infoservice.name
+    else:
+        response['errors'] = form.errors
+    
+    return HttpResponse(content = simplejson.dumps(response),
+                        content_type = "application/json")
+
 @log_request
 def send_message(request):
     '''

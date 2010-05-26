@@ -9,7 +9,7 @@ from sendinel.backend.models import Hospital, \
                                     WayOfCommunication, \
                                     get_woc
 from sendinel.backend.tests.helper import disable_authentication
-from sendinel.notifications.models import HospitalAppointment, AppointmentType
+from sendinel.notifications.models import Notification, NotificationType
 from sendinel.groups.forms import  NotificationValidationForm2, \
                                 DateValidationForm
 from sendinel import settings
@@ -45,10 +45,10 @@ class AppointmentViewTest(TestCase):
         self.assertFalse(form_date.is_valid())         
         self.assertEquals(len(form_date['date'].errors), 1)   
     
-    def create_appointment_form(self, appointment_type_id):
-        appointment_type = AppointmentType.objects.get(pk=appointment_type_id)
+    def create_appointment_form(self, notification_type_id):
+        notification_type = NotificationType.objects.get(pk=notification_type_id)
         response = self.client.get(reverse('notifications_create', \
-                kwargs={"appointment_type_name": appointment_type.name }))
+                kwargs={"notification_type_name": notification_type.name }))
         self.failUnlessEqual(response.status_code, 200)
         self.assertContains(response, 'name="phone_number"')
         self.assertContains(response, 'name="way_of_communication"')
@@ -70,16 +70,16 @@ class AppointmentViewTest(TestCase):
     
     
     def test_create_appointment_submit_validations(self):
-        appointment_type = AppointmentType.objects.get(pk=1) #vaccination
+        notification_type = NotificationType.objects.get(pk=1) #vaccination
         response = self.client.post(reverse('notifications_create', \
-            kwargs={"appointment_type_name": appointment_type.name }), 
+            kwargs={"notification_type_name": notification_type.name }), 
                 {'date': '2012-08-12',
                  'phone_number': '01733685224',
                  'way_of_communication': 1 })
         self.assertEquals(response.status_code, 302)
             
         response = self.client.post(reverse('notifications_create', \
-                kwargs={"appointment_type_name": appointment_type.name }), 
+                kwargs={"notification_type_name": notification_type.name }), 
                     {'date': '2012-08-12',
                      'phone_number': '01733assr685224',
                       'way_of_communication': '3' })
@@ -87,22 +87,22 @@ class AppointmentViewTest(TestCase):
         self.assertContains(response, 'Please enter numbers only')
 
         response = self.client.post(reverse('notifications_create', \
-            kwargs={"appointment_type_name": appointment_type.name }), 
+            kwargs={"notification_type_name": notification_type.name }), 
                 {'date': '2012-08-12',
                     'phone_number': '685224',
                     'way_of_communication': 1  })
         self.assertContains(response, 'Please enter a cell phone number.')        
 
     def create_appointment(self, way_of_communication):    
-        appointment_type = AppointmentType.objects.get(pk=1) #vaccination
+        notification_type = NotificationType.objects.get(pk=1) #vaccination
         self.client.get(reverse('notifications_create', \
-                kwargs={"appointment_type_name": appointment_type.name }))
+                kwargs={"notification_type_name": notification_type.name }))
         
         data = {'date': '2012-08-12',
                 'phone_number': '01733685224',
                 'way_of_communication': str(way_of_communication.id)}
         return self.client.post(reverse('notifications_create', \
-                kwargs = {"appointment_type_name": appointment_type.name }), data)
+                kwargs = {"notification_type_name": notification_type.name }), data)
         
     def create_and_save_appointment(self, way_of_communication, phone_number):
         self.create_appointment(way_of_communication)
@@ -135,7 +135,7 @@ class AppointmentViewTest(TestCase):
 
     def save_appointment_woc(self, way_of_communication):
         
-        number_of_appointments = HospitalAppointment.objects.count()
+        number_of_appointments = Notification.objects.count()
         number_of_events = ScheduledEvent.objects.count()
         
         phone_number = "01733685224"
@@ -144,10 +144,10 @@ class AppointmentViewTest(TestCase):
         
         self.failUnlessEqual(response.status_code, 200)
         
-        appoint = HospitalAppointment.objects.order_by("id").reverse()[:1][0]
+        appoint = Notification.objects.order_by("id").reverse()[:1][0]
         self.assertEquals(unicode(appoint.recipient.phone_number), phone_number)
-        # test that exactly one HospitalAppointment was created
-        self.assertEquals(HospitalAppointment.objects.count(),
+        # test that exactly one Notification was created
+        self.assertEquals(Notification.objects.count(),
                             number_of_appointments + 1)
         
         event = ScheduledEvent.objects.order_by("id").reverse()[:1][0]
@@ -182,9 +182,9 @@ class AppointmentViewTest(TestCase):
         woc_voice.save()
          
     def test_create_appointment_with_current_date(self):
-        appointment_type = AppointmentType.objects.get(pk=3) #labresults
+        notification_type = NotificationType.objects.get(pk=3) #labresults
         response = self.client.post(reverse('notifications_create', \
-            kwargs={"appointment_type_name": appointment_type.name }), 
+            kwargs={"notification_type_name": notification_type.name }), 
                 {'phone_number': '01733685224',
                  'way_of_communication': 1  })
         # validations test if date is correct. 

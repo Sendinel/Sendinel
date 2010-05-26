@@ -18,19 +18,19 @@
         <field type="BooleanField" name="enabled">True</field>
         <field type="BooleanField" name="can_send_immediately">False</field>
     </object>
-    <object pk="1" model="notifications.appointmenttype">
+    <object pk="1" model="notifications.notificationtype">
         <field type="CharField" name="name">vaccination</field>
         <field type="CharField" name="verbose_name">Remind of Vaccination</field>
         <field type="CharField" name="template">please remember the vaccination at the $hospital on $date</field>
         <field type="BooleanField" name="notify_immediately">False</field> 
     </object>
-    <object pk="2" model="notifications.appointmenttype">
+    <object pk="2" model="notifications.notificationtype">
         <field type="CharField" name="name">consultation</field>
         <field type="CharField" name="verbose_name">Remind of Follow-Up Consultation</field>
         <field type="CharField" name="template">please remember your consultation at the $hospital on $date</field>
         <field type="BooleanField" name="notify_immediately">False</field>
     </object>
-    <object pk="3" model="notifications.appointmenttype">
+    <object pk="3" model="notifications.notificationtype">
         <field type="CharField" name="name">labresult</field>
         <field type="CharField" name="verbose_name">Inform about Lab Results</field>
         <field type="CharField" name="template">your lab results have arrived at the $hospital</field>

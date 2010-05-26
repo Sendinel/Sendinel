@@ -26,8 +26,8 @@
 {% block content %}
 
     <div id="contentform">
-    <h3>{{ appointment_type.verbose_name }}</h3>
-    {% if not appointment_type.notify_immediately %}
+    <h3>{{ notification_type.verbose_name }}</h3>
+    {% if not notification_type.notify_immediately %}
         <p>{% trans "Please enter the appointment details." %}</p>
     {% else %}
         <p>{% trans "Please enter the notification details." %}</p>
@@ -52,7 +52,7 @@
                         jValKey="{valid:/[+0-9]/, message:'&quot;%c&quot; not valid', cFunc:'$(\'#submitButton\').click();'}"></input>  
             </div>
         </div>
-        {% if not appointment_type.notify_immediately %}
+        {% if not notification_type.notify_immediately %}
         <div class="field float-left">
             <div class="head">
                 Date:&nbsp;
