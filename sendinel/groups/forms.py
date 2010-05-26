@@ -1,11 +1,9 @@
-from django.forms import CharField, ChoiceField, DateTimeField, Textarea, \
+from django.forms import CharField, DateTimeField, Textarea, \
                             Form, ModelForm, ModelChoiceField
 from django.utils.translation import ugettext as _
 
 from sendinel.backend.authhelper import format_and_validate_phonenumber
-from sendinel.backend.models import Sendable, \
-                                    WayOfCommunication, \
-                                    get_enabled_wocs, \
+from sendinel.backend.models import get_enabled_wocs, \
                                     get_immediate_wocs
 from sendinel.infoservices.models import InfoMessage, InfoService
 
@@ -47,12 +45,20 @@ class RegisterPatientForMedicineForm(Form):
     way_of_communication = ModelChoiceField(
                         queryset = get_enabled_wocs(),
                         error_messages={'required': \
-                                _('Please choose a way of communication')})                              
+                                _('Please choose a way of communication')})     
     medicine = ModelChoiceField(
-                queryset=InfoService.objects.all().filter(type='medicine'),
-                error_messages={'required': \
-                                _('Please choose a medicine')})
+            queryset=InfoService.objects.all().filter(type='medicine'),
+            error_messages={'required': \
+                            _('Please choose a medicine')})
 
+class RegisterPatientForNewMedicineForm(Form):  
+    phone_number = CharField(validators = [format_and_validate_phonenumber],
+            error_messages={'required':_('Please enter a phone number')})
+    way_of_communication = ModelChoiceField(
+                        queryset = get_enabled_wocs(),
+                        error_messages={'required': \
+                                _('Please choose a way of communication')}) 
+                            
 class DateValidationForm(Form): 
     date = DateTimeField(error_messages={ \
                             'required': _('Please choose a date'), \
@@ -62,9 +68,9 @@ class MedicineMessageValidationForm(Form):
     medicine = ModelChoiceField(
                 queryset=InfoService.objects.all().filter(type='medicine'),
                 error_messages={'required': \
+                                _('Please choose a medicine'), \
+                                'invalid_choice':  \
                                 _('Please choose a medicine')})                            
     text = CharField(error_messages={ \
                         'required': _('Please enter a text to send'), \
                         'invalid': _('The text contains invalid characters')})
-
-

@@ -15,7 +15,7 @@ from sendinel.groups import views as groups_views
 from sendinel.utils import last
 
 
-class StaffInfoServiceTest(TestCase):
+class GroupTest(TestCase):
     
     client = Client()
     
@@ -28,7 +28,7 @@ class StaffInfoServiceTest(TestCase):
     
     def test_send_message_get(self):
         response = self.client.get(reverse("groups_send_message",
-                                   kwargs={"id":1}))
+                                   kwargs={"group_id":1}))
         self.assertEquals(response.status_code, 200)
                                     
     
@@ -38,7 +38,7 @@ class StaffInfoServiceTest(TestCase):
         infoservice = InfoService.objects.filter(pk = 1)[0]
     
         response = self.client.post(reverse("groups_send_message",
-            kwargs={"id":1}), {
+            kwargs={"group_id":1}), {
             "text" : "This is a testmessage",
             "date" : "2010-01-01 00:00:00"
         })
@@ -248,7 +248,7 @@ class WebInfoServiceTest(TestCase):
 
 
         
-    def test_save_registration_infoservice(self):
+    def test_register_save(self):
         subscription_count = Subscription.objects.all().count()
 
         self.client.post(reverse('groups_register',

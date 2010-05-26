@@ -18,5 +18,15 @@ class NotificationValidationForm(Form):
                                 _('Please choose a way of communication')})
     date = DateTimeField(error_messages={ \
                             'required': _('Please choose a date'), \
-                            'invalid': _('Please choose a date')})                                 
+                            'invalid': _('Please choose a date')})              
+
+class NotificationValidationFormBluetooth(Form):
+    
+    way_of_communication = ModelChoiceField(
+                        queryset = get_enabled_wocs(),
+                        error_messages={'required': \
+                                _('Please choose a way of communication')})
+    date = DateTimeField(error_messages={ \
+                            'required': _('Please choose a date'), \
+                            'invalid': _('Please choose a date')})      							
 
