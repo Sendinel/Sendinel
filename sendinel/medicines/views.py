@@ -7,15 +7,14 @@ from django.utils.translation import ugettext as _
 
 from sendinel.backend.models import Hospital
 from sendinel.backend.authhelper import redirect_to_authentication_or
+from sendinel.infoservices.forms import InfoserviceValidationForm 
 from sendinel.infoservices.models import InfoService
-from sendinel.groups.forms import MedicineMessageValidationForm, \
-                                  RegisterPatientForMedicineForm, \
-                                  RegisterPatientForNewMedicineForm, \
-                                  InfoserviceValidationForm 
 from sendinel.infoservices.utils import create_messages_for_infoservice, \
                                         set_session_variables_for_register, \
                                         subscription_save
 from sendinel.logger import logger, log_request
+from sendinel.medicines.forms import MedicineMessageValidationForm, \
+                                     RegisterPatientForMedicineForm
 from sendinel.settings import AUTH_NUMBER, MEDICINE_MESSAGE_TEMPLATE
 from sendinel.web.utils import fill_authentication_session_variable, \
                                get_ways_of_communication

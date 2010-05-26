@@ -4,8 +4,8 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
+from sendinel.infoservices.forms import InfoserviceValidationForm
 from sendinel.infoservices.models import InfoService, Subscription
-from sendinel.groups.forms import InfoserviceValidationForm
 from sendinel.logger import logger, log_request
 
 @log_request
