@@ -62,7 +62,7 @@ var Bluetooth = {
                 $("#auth_spinner").hide();
                 var next = $("#next").val();
                 statusText.addClass("status success rounded-corners centered");
-                statusText.text(gettext("Thank you! The appointment has been send to your mobile phone."));   
+                statusText.text(gettext("Thank you! The appointment reminder has been send to your mobile phone."));   
                 
                 nextButton.show();
                 
@@ -72,7 +72,7 @@ var Bluetooth = {
             error: function() {
                 var stat = $("#spinner");
                 
-                stat[0].innerHTML = gettext("Failed to send appointment");
+                stat[0].innerHTML = gettext("Failed to send appointment reminder");
                 stat.addClass("errorlist");
                 
                 window.setTimeout("Bluetooth.redirect_to_next()", 20000);

@@ -12,29 +12,25 @@
             <div class="menu-item-name groups-name float-left"><strong>Currently Missing Medicine</strong></div>
             <div>
             
-            {% if medicine_count > 0 %}
-                <a href="{% url medicines_register %}">
-                    <div class="menu-hover groups-link groups-link-register float-left rounded-corners">
-                        {% trans "Register Patient" %}
-                    </div>
-                </a>
+            <a href="{% url medicines_register %}">
+                <div class="menu-hover groups-link groups-link-register float-left rounded-corners">
+                    {% trans "Register Patient" %}
+                </div>
+            </a>            
+            
+            {% if not medicine_empty %}
                 <a href="{% url medicines_send_message %}" class="menu_secondlink">
                     <div class="menu-hover groups-link groups-link-send float-left rounded-corners">
                         {% trans "Send Message" %}
                     </div>
                 </a>
-                
             {% else %}
-            
-                <div class="groups-link groups-link-register float-left disabled">
-                    {% trans "Register Patient" %}
-                </div>
                 <div class="groups-link groups-link-send float-left disabled">
                     {% trans "Send Message" %}
-                </div>
-          
+                </div>          
             {% endif %}
-                </div>
+            
+            </div>
             <div style="clear:both"></div>    
         </div>
         <a href="{% url infoservices_index infoservice_type='medicine' %}">
@@ -44,11 +40,11 @@
         </a>
 
       <h3>{% trans "Notifications" %}</h3>
-        {% for appointment_type in appointment_types %}
+        {% for notification_type in notification_types %}
         <div class="menu-item menu-hover background-grey rounded-corners">
-             <a href="{% url notifications_create appointment_type_name=appointment_type.name %}">
+             <a href="{% url notifications_create notification_type_name=notification_type.name %}">
                 <div class="menu-item-name">
-                   {{ appointment_type.verbose_name }}
+                   {{ notification_type.verbose_name }}
                 </div>
             </a>
         </div>

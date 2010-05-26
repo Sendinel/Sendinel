@@ -9,14 +9,14 @@ from sendinel.infoservices.models import InfoMessage, \
                                    InfoService, \
                                    Subscription, \
                                    InfoService
-from sendinel.notifications.models import AppointmentType, \
-                                          HospitalAppointment
+from sendinel.notifications.models import NotificationType, \
+                                          Notification
 
 
-admin.site.register(AppointmentType)
+admin.site.register(NotificationType)
 admin.site.register(Patient)
 admin.site.register(Hospital)
-admin.site.register(HospitalAppointment)
+admin.site.register(Notification)
 admin.site.register(InfoMessage)
 admin.site.register(InfoService)
 admin.site.register(ScheduledEvent)

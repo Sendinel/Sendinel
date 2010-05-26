@@ -10,7 +10,7 @@
 {% block content %}
 
     <div id="contentform">
-        <h3>{% trans "Sending your appointment" %}</h3>
+        <h3>{% trans "Sending your notification" %}</h3>
         <p>{% trans "Please accept the file on your mobile" %}</p>
         
         <input type="hidden" id="next" value="{{ next }}">
@@ -19,7 +19,7 @@
         
         <div id="spinner" class="centered">
             <img src="{{ MEDIA_URL }}/ajax-loader.gif" alt="Spinner" id="auth_spinner"/>
-            <div id="status">{% trans "Sending your appointment" %}</div>
+            <div id="status">{% trans "Sending your notification" %}</div>
         </div>
         <br />
         <div id="nav_buttons" class="selectable_container">
