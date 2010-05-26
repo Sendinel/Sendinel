@@ -84,6 +84,10 @@ strong.big {
     background-position: 50% 0%;
 }
 
+.infotext {
+    padding-top:20px;
+}
+
 .centered {
     text-align: center;
 }

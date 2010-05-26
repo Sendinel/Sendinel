@@ -1,3 +1,5 @@
+var old_devices_list = [];
+
 var Bluetooth = {
 
     check_for_devices: function() {
@@ -11,15 +13,15 @@ var Bluetooth = {
                     var deviceList = $("#bluetooth_devices")[0];
                     
                     deviceList.innerHTML = "";
-                    
+                                        
                     $(json.devices).each(function(index, device) {                
                         var deviceHTML = 
-                        "<li>"+
-                            "<a href='" + next + "?device_mac=" + device.mac + "' class='selectable'>" + 
-                                device.name + 
-                            "</a>"+
-                        "</li>";
-                        
+                        "<a href='" + next + "?device_mac=" + device.mac + "'>" + 
+                            "<li class='menu-item menu-item-name menu-hover background-grey rounded-corners'>"+
+                                    device.name + 
+                            "</li>"+
+                        "</a>";
+                    
                         $(deviceList).append($(deviceHTML));                        
                     });
                 }
