@@ -80,8 +80,8 @@ class NotificationViewTest(TestCase):
                 kwargs={"notification_type_name": notification_type.name }), 
                     {'date': '2012-08-12',
                      'phone_number': '01733assr685224',
-                      'way_of_communication': '3' })
-
+                      'way_of_communication': '2' })
+                      
         self.assertContains(response, 'Please enter numbers only')
 
         response = self.client.post(reverse('notifications_create', \
@@ -161,6 +161,12 @@ class NotificationViewTest(TestCase):
                              reverse('notifications_send'))
         self.assertTrue(self.client.session.has_key('patient'))
         self.assertTrue(self.client.session.has_key('notification'))
+        
+        response = self.client.get( reverse('notifications_send'), 
+                { 'device_mac': '01733685224',
+                 'date': '2012-08-12',
+                 'way_of_communication': 1  })
+        self.assertEquals(response.status_code, 200)
          
     def test_save_notification_sms(self):
          self.save_notification_woc(get_woc('sms'))

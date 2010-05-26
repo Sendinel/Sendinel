@@ -9,10 +9,12 @@ from django.utils.translation import ugettext as _
 
 from sendinel.backend.models import Patient, \
                                     Hospital, \
-                                    get_woc
+                                    get_woc, \
+                                    get_woc_by_id
 from sendinel.backend.authhelper import redirect_to_authentication_or
 from sendinel.notifications.models import Notification, NotificationType
-from sendinel.notifications.forms import NotificationValidationForm
+from sendinel.notifications.forms import NotificationValidationForm, \
+										NotificationValidationFormBluetooth
 from sendinel.settings import DEFAULT_SEND_TIME
 from sendinel.logger import logger, log_request
 from sendinel.web.utils import get_ways_of_communication
@@ -38,12 +40,18 @@ def create_notification(request, notification_type_name = None):
                             ' ' + DEFAULT_SEND_TIME
         else:
             data['date'] = data.get('date', '') + ' ' + DEFAULT_SEND_TIME
+			
         form = NotificationValidationForm(data)
-        
+
+        woc = get_woc_by_id( request.POST['way_of_communication'] )
+        if not woc.can_send_immediately:
+		    form = NotificationValidationFormBluetooth(data)
+		
         if form.is_valid():
             notification = Notification()
             patient = Patient()
-            patient.phone_number = form.cleaned_data['phone_number']
+            if woc.can_send_immediately:
+                patient.phone_number = form.cleaned_data['phone_number']
             notification.date = form.cleaned_data['date']
             notification.notification_type = notification_type
             notification.hospital = Hospital.get_current_hospital()
