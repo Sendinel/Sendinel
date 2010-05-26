@@ -209,7 +209,7 @@ class VoicecallTest(unittest.TestCase):
 Channel: Local/2000
 WaitTime: 2
 RetryTime: 5
-MaxRetries: 8000
+MaxRetries: 10
 Context: outbound-sms
 Extension: s
 Set: SmsNumber=1234
@@ -228,9 +228,9 @@ Archive: true
         self.vc.asterisk_datacard = True 
         output_should = """
 Channel: Local/3000
-MaxRetries: 20
+MaxRetries: 1
 RetryTime: 20
-WaitTime: 30
+WaitTime: 40
 Context: call-file-beispiel
 Extension: s
 Priority: 1
