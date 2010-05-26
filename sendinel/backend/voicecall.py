@@ -90,9 +90,9 @@ class Voicecall:
         if(self.asterisk_datacard):
             output = """
 Channel: Local/3000
-MaxRetries: 20
+MaxRetries: 1
 RetryTime: 20
-WaitTime: 30
+WaitTime: 40
 Context: %s
 Extension: %s
 Priority: 1
@@ -105,9 +105,9 @@ Archive: true
         else:
             output = """
 Channel: SIP/%s@%s
-MaxRetries: 20
+MaxRetries: 1
 RetryTime: 20
-WaitTime: 30
+WaitTime: 40
 Context: %s
 Extension: %s
 Priority: 1
@@ -133,7 +133,7 @@ Archive: true
 Channel: Local/2000
 WaitTime: 2
 RetryTime: 5
-MaxRetries: 8000
+MaxRetries: 10
 Context: outbound-sms
 Extension: s
 Set: SmsNumber=%s
