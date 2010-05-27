@@ -21,19 +21,19 @@
     <object pk="1" model="notifications.notificationtype">
         <field type="CharField" name="name">vaccination</field>
         <field type="CharField" name="verbose_name">Remind of Vaccination</field>
-        <field type="CharField" name="template">please remember the vaccination at the $hospital on $date</field>
+        <field type="CharField" name="template">Hello, please remember the vaccination at the $hospital on $date</field>
         <field type="BooleanField" name="notify_immediately">False</field> 
     </object>
     <object pk="2" model="notifications.notificationtype">
         <field type="CharField" name="name">consultation</field>
         <field type="CharField" name="verbose_name">Remind of Follow-Up Consultation</field>
-        <field type="CharField" name="template">please remember your consultation at the $hospital on $date</field>
+        <field type="CharField" name="template">Hello, please remember your consultation at the $hospital on $date</field>
         <field type="BooleanField" name="notify_immediately">False</field>
     </object>
     <object pk="3" model="notifications.notificationtype">
         <field type="CharField" name="name">labresult</field>
         <field type="CharField" name="verbose_name">Inform about Lab Results</field>
-        <field type="CharField" name="template">your lab results have arrived at the $hospital</field>
+        <field type="CharField" name="template">Hello, your lab results have arrived at the $hospital</field>
         <field type="BooleanField" name="notify_immediately">True</field>
     </object>
    <object pk="1" model="infoservices.infoservice">
@@ -43,9 +43,5 @@
    <object pk="2" model="infoservices.infoservice">
         <field type="CharField" name="name">Information for Pregnant Women</field>
         <field type="CharField" name="type">information</field>
-    </object>
-    <object pk="2" model="infoservices.infoservice">
-        <field type="CharField" name="name">Aspirin</field>
-        <field type="CharField" name="type">medicine</field>
     </object>
 </django-objects>

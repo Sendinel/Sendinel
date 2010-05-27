@@ -160,8 +160,10 @@ AUTHENTICATION_ENABLED = False
 # enable Bluetooth as a Way of Communication
 BLUETOOTH_ENABLED = True
 
-# Salutation for SMS Template
-SMS_SALUTATION = 'Hello, '
+# Salutation for all SMS
+# TODO the count of characters has to be subtracted from "Characters Left:" 
+SMS_SALUTATION = ''
+
 # Salutation for phone calls
 CALL_SALUTATION = "This is an automated call from your clinic"
 
