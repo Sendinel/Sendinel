@@ -10,8 +10,8 @@ from sendinel.backend.models import Patient, \
                                     WayOfCommunication
 from sendinel.backend.authhelper import redirect_to_authentication_or
 from sendinel.infoservices.models import InfoService, Subscription
-from sendinel.groups.forms import InfoMessageValidationForm, \
-                                  NotificationValidationForm2
+from sendinel.infoservices.forms import InfoMessageValidationForm
+from sendinel.groups.forms import RegisterPatientForGroupValidationForm
 from sendinel.infoservices.utils import create_messages_for_infoservice, \
                                         set_session_variables_for_register, \
                                         subscription_save
@@ -68,7 +68,7 @@ def register(request, group_id):
     if request.method == "POST":
         set_session_variables_for_register(request)
         
-        form = NotificationValidationForm2(request.POST)
+        form = RegisterPatientForGroupValidationForm(request.POST)
         if form.is_valid():
             number = fill_authentication_session_variable(request) 
             auth_number = AUTH_NUMBER

@@ -7,8 +7,7 @@ from sendinel.backend.models import Hospital, \
                                     get_woc
 from sendinel.backend.tests.helper import disable_authentication
 from sendinel.notifications.models import Notification, NotificationType
-from sendinel.groups.forms import  NotificationValidationForm2, \
-                                DateValidationForm
+from sendinel.notifications.forms import NotificationValidationForm
 
 
 class NotificationViewTest(TestCase):
@@ -21,26 +20,20 @@ class NotificationViewTest(TestCase):
         
     def test_notification_form_validation(self):
         data = {"phone_number" : "0123456789",
-                "way_of_communication" : get_woc('sms').id}
-        form = NotificationValidationForm2(data)
+                "way_of_communication" : get_woc('sms').id,
+                "date" : "2010-08-12 12:00"}
+        form = NotificationValidationForm(data)
         self.assertTrue(form.is_valid())
         
-        date = {"date" : "2010-08-12 12:00"}
-        form_date = DateValidationForm(date)
-        self.assertTrue(form_date.is_valid())
-
-        
         data = { "phone_number" : "0123456rttddbh789",
-                 "way_of_communication" : 3 }
-        form = NotificationValidationForm2(data)
+                 "way_of_communication" : 4,
+                 "date" : "abc" }
+        form = NotificationValidationForm(data)
         self.assertFalse(form.is_valid())
         self.assertEquals(len(form['phone_number'].errors), 1)
         self.assertEquals(len(form['way_of_communication'].errors), 1)
-        
-        date = {"date" : "2010-08-45 12:00"}
-        form_date = DateValidationForm(date)
-        self.assertFalse(form_date.is_valid())         
-        self.assertEquals(len(form_date['date'].errors), 1)   
+        self.assertEquals(len(form['date'].errors), 1)
+
     
     def create_notification_form(self, notification_type_id):
         notification_type = NotificationType.objects.get(
@@ -80,8 +73,8 @@ class NotificationViewTest(TestCase):
                 kwargs={"notification_type_name": notification_type.name }), 
                     {'date': '2012-08-12',
                      'phone_number': '01733assr685224',
-                      'way_of_communication': '3' })
-
+                      'way_of_communication': '2' })
+                      
         self.assertContains(response, 'Please enter numbers only')
 
         response = self.client.post(reverse('notifications_create', \
@@ -161,6 +154,12 @@ class NotificationViewTest(TestCase):
                              reverse('notifications_send'))
         self.assertTrue(self.client.session.has_key('patient'))
         self.assertTrue(self.client.session.has_key('notification'))
+        
+        response = self.client.get( reverse('notifications_send'), 
+                { 'device_mac': '01733685224',
+                 'date': '2012-08-12',
+                 'way_of_communication': 1  })
+        self.assertEquals(response.status_code, 200)
          
     def test_save_notification_sms(self):
          self.save_notification_woc(get_woc('sms'))

@@ -7,15 +7,14 @@ from django.utils.translation import ugettext as _
 
 from sendinel.backend.models import Hospital
 from sendinel.backend.authhelper import redirect_to_authentication_or
+from sendinel.infoservices.forms import InfoServiceValidationForm 
 from sendinel.infoservices.models import InfoService
-from sendinel.groups.forms import MedicineMessageValidationForm, \
-                                  RegisterPatientForMedicineForm, \
-                                  RegisterPatientForNewMedicineForm, \
-                                  InfoserviceValidationForm 
 from sendinel.infoservices.utils import create_messages_for_infoservice, \
                                         set_session_variables_for_register, \
                                         subscription_save
 from sendinel.logger import logger, log_request
+from sendinel.medicines.forms import MedicineMessageValidationForm, \
+                                     RegisterPatientForMedicineForm
 from sendinel.settings import AUTH_NUMBER, MEDICINE_MESSAGE_TEMPLATE
 from sendinel.web.utils import fill_authentication_session_variable, \
                                get_ways_of_communication
@@ -82,13 +81,14 @@ def register(request):
                               context_instance = RequestContext(request))
 
 def create_medicine(request):
-    form = InfoserviceValidationForm(request.POST)
+    data = {'name': request.POST['name'],
+            'type': 'medicine'}
+    form = InfoServiceValidationForm(data)
     
     response = {}
     if form.is_valid():
-        infoservice = InfoService(name = request.POST["name"],
-                                          type = "medicine")
-        infoservice.save()
+        form.save()
+        infoservice = form.instance
         response['id'] = infoservice.id
         response['name'] = infoservice.name
     else:
@@ -118,7 +118,8 @@ def send_message(request):
             nexturl = reverse('web_index')
             title = _("Message created")
             message = _("All patients who were waiting for the medicine " +
-                        "\"%s\" will be informed") % medicine.name
+                        "\"%s\" will be informed. The waiting list will" +
+                        " also be removed.") % medicine.name
             new_button_label = _("Send another message")
             success = True
 
