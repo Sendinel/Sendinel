@@ -29,14 +29,14 @@ class AuthenticateViewTests(TestCase):
     def test_authenticate_phonenumber(self):
         
         notification_type = NotificationType.objects.get(pk=1)
-        
         self.client.get(reverse('notifications_create', \
                 kwargs={"notification_type_name": notification_type.name })) 
         data = {'date': '2012-08-12',
                 'phone_number': '01733685224',
                 'way_of_communication': 1}
         self.client.post(reverse('notifications_create', \
-                kwargs = {"notification_type_name": notification_type.name }), data)
+                kwargs = {"notification_type_name": notification_type.name }),\
+                          data)
      
         response = self.client.post(reverse("web_authenticate_phonenumber"))
 
@@ -51,17 +51,8 @@ class AuthenticateViewTests(TestCase):
         self.assertTrue(isinstance(session_data['start_time'], datetime))
 
         # TODO check delete_timed_out_authentication_calls gets called
-
-        # TODO implement Form validation
-        # response = self.client.post("/authenticate_phonenumber/",
-            # {
-                # 'number' : 'abcdfef'
-            # })                   
         
-        # self.failUnlessEqual(response.status_code, 200)
-        
-        # self.assertContains(response, 'name="name"')
-    
+        self.assertTemplateUsed(response,'web/authenticate_phonenumber_call.html')
     
     def test_check_call_received(self):        
         # settings up the environment

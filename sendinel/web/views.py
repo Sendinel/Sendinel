@@ -39,7 +39,9 @@ def choose_language(request):
                               context_instance = RequestContext(request))
 
 def jsi18n(request):
-#TODO write docstring
+    """
+        Returns the localisation code and strings for javascript
+    """
     js_info_web = {
         'packages': ('sendinel')
     }
