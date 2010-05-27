@@ -34,7 +34,7 @@
                         <td class="centered">{{ infoservice.member_count }}</td>
                         <td>
                             <input type="button" 
-                                   onclick="Sendinel.Utils.confirmForm($('#form_{{ infoservice.id }}')[0], 'Please confirm')" 
+                                   onclick="Sendinel.Utils.confirmForm($('#form_{{ infoservice.id }}')[0], '{% trans "Please confirm" %}')" 
                                    value='{{ infoservice_textblocks.remove_button }}' />
                         </td>
                         <td>
@@ -45,17 +45,6 @@
                                         disabled="disabled"
                                     {% endif %} />
                         </td>
-                        {% comment %}
-                        <td>
-                            <input  type="button" 
-                                    onclick="Sendinel.Utils.goto_url('{% url groups_send_message group_id=infoservice.id %}')"
-                                    value='{% trans "Send message" %}'
-                                    {% if infoservice.member_count == 0 %}
-                                        disabled="disabled"
-                                    {% endif %} />
-                        </td>
-                    </tr>
-                        {% endcomment %}
                 </form>
             {% endfor %}                
             </tbody>

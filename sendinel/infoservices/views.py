@@ -44,7 +44,7 @@ def create_infoservice(request, infoservice_type):
             backurl = reverse('infoservices_create', 
                               kwargs={'infoservice_type': infoservice_type})
             title = _("Creation successful")
-            message = _("The \"%(infoservice_name)s\" " + \
+            message = _("The \"%(infoservice_name)s\" "
                         "%(infoservice_type)s has been created.") \
                         % {'infoservice_name': infoservice.name,
                            'infoservice_type': infoservice_textblocks["name"]}
@@ -93,4 +93,4 @@ def delete_members_of_infoservice(request, id):
         subscription.delete()
         
     return HttpResponseRedirect(reverse("infoservices_members", 
-                                   kwargs={"id": id}))                                
+                                   kwargs={"id": id}))

@@ -3,11 +3,10 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-21 17:23+0200\n"
+"POT-Creation-Date: 2010-05-27 15:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,254 +16,567 @@ msgstr ""
 "#TRANSLATED#Report-Msgid-Bugs-To: \n"
 "#TRANSLATED#Report-Msgid-Bugs-To: \n"
 "#TRANSLATED#Report-Msgid-Bugs-To: \n"
+"#TRANSLATED#Report-Msgid-Bugs-To: \n"
+"#TRANSLATED#Report-Msgid-Bugs-To: \n"
 "#TRANSLATED#Project-Id-Version: PACKAGE VERSION\n"
 
-#: backend/models.py:99 templates/web/infoservice_register.html:38
-msgid "SMS"
+#: backend/authhelper.py:42
+msgid "Please enter numbers only."
 msgstr "#TRANSLATED#"
 
-#: backend/models.py:100
-msgid "Bluetooth"
+#: backend/authhelper.py:47
+msgid "Please enter a cell phone number."
 msgstr "#TRANSLATED#"
 
-#: backend/models.py:101 templates/web/infoservice_register.html:39
-msgid "Voice Call"
+#: groups/forms.py:11 medicines/forms.py:11 notifications/forms.py:12
+msgid "Please enter a phone number"
+msgstr "#TRANSLATED#"
+
+#: groups/forms.py:15 medicines/forms.py:15 notifications/forms.py:18
+#: notifications/forms.py:28
+msgid "Please choose a way of communication"
+msgstr "#TRANSLATED#"
+
+#: groups/views.py:39 medicines/views.py:119
+msgid "Message created"
+msgstr "#TRANSLATED#"
+
+#: groups/views.py:40
+#, python-format
+msgid "All members of the \"%s\" service will get your message."
+msgstr "#%s#TRANSLATED#"
+
+#: groups/views.py:42 medicines/views.py:123
+msgid "Send another message"
+msgstr "#TRANSLATED#"
+
+#: groups/views.py:101 medicines/views.py:34
+msgid "Registration successful"
+msgstr "#TRANSLATED#"
+
+#: groups/views.py:102
+#, python-format
+msgid "The patient will now receive all messages from the  \"%s\" service."
+msgstr "#%s#TRANSLATED#"
+
+#: groups/views.py:104 medicines/views.py:38
+msgid "Register another patient"
+msgstr "#TRANSLATED#"
+
+#: infoservices/forms.py:8 medicines/forms.py:31
+msgid "Please enter a text to send"
+msgstr "#TRANSLATED#"
+
+#: infoservices/forms.py:9 medicines/forms.py:32
+msgid "The text contains invalid characters"
+msgstr "#TRANSLATED#"
+
+#: infoservices/forms.py:17
+msgid "Please enter a name"
+msgstr "#TRANSLATED#"
+
+#: infoservices/forms.py:18
+msgid "The name contains invalid characters"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:23
+msgid "Information Group"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:24
+msgid "Waiting List for Medicine"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:28
+msgid "Information Groups"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:29
+msgid "information group"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:30
+msgid "Group members"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:31
+msgid "Remove group"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:32
+msgid "Remove patient from group"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:33
+msgid "Inform patients about:"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:34
+msgid "Information"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:37 templates/web/index.html:10
+msgid "Waiting Lists for Medicine"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:38
+msgid "waiting list for medicine"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:39
+msgid "List members"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:40
+msgid "Remove list"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:41
+msgid "Remove patient from list"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:43
+msgid "The patients are waiting for the following medicine:"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:44
+msgid "Medicine"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:55
+msgid "name"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:63
+msgid "Information service"
+msgstr "#TRANSLATED#"
+
+#: infoservices/views.py:46
+msgid "Creation successful"
+msgstr "#TRANSLATED#"
+
+#: infoservices/views.py:47
+#, python-format
+msgid "The \"%(infoservice_name)s\" %(infoservice_type)s has been created."
+msgstr "#%(infoservice_name)s#%(infoservice_type)s#TRANSLATED#"
+
+#: infoservices/views.py:51
+#, python-format
+msgid "Create another %(infoservice_type)s"
+msgstr "#%(infoservice_type)sTRANSLATED#"
+
+#: medicines/forms.py:19 medicines/forms.py:21 medicines/forms.py:27
+#: medicines/forms.py:29
+msgid "Please choose a medicine"
+msgstr "#TRANSLATED#"
+
+#: medicines/views.py:35
+#, python-format
+msgid ""
+"The patient will receive a message once the medicine  \"%s\" is available in "
+"the clinic again."
+msgstr "#%s#TRANSLATED#"
+
+#: medicines/views.py:120
+#, python-format
+msgid ""
+"All patients who were waiting for the medicine \"%s\" will be informed. The "
+"waiting list will also be removed."
+msgstr "#%sTRANSLATED#"
+
+#: notifications/forms.py:20 notifications/forms.py:21
+#: notifications/forms.py:30 notifications/forms.py:31
+msgid "Please choose a date"
+msgstr "#TRANSLATED#"
+
+#: notifications/views.py:109
+#, python-format
+msgid "The \"%s\" notification has been created."
+msgstr "#%sTRANSLATED#"
+
+#: notifications/views.py:111
+msgid "New notification"
+msgstr "#TRANSLATED#"
+
+#: notifications/views.py:114
+msgid "The patient will be informed immediately."
+msgstr "#TRANSLATED#"
+
+#: notifications/views.py:116
+msgid ""
+"Please tell the patient that he/she will be reminded one day before the "
+"appointemnt."
 msgstr "#TRANSLATED#"
 
 #: templates/404.html:5
 msgid "Sorry, this page does not exist"
 msgstr "#TRANSLATED#"
 
-#: templates/base.html:19
+#: templates/404.html:6 templates/500.html:8
+msgid "Back to Mainpage"
+msgstr "#TRANSLATED#"
+
+#: templates/500.html:4
+msgid ""
+"\n"
+"        <h1>Sorry, an error occured.</h1>\n"
+"        <h2>Please inform the clinic staff</h2>\n"
+"    "
+msgstr ""
+"\n"
+"#TRANSLATED#"
+
+#: templates/base.html:27
 msgid "This page needs JavaScript to work."
 msgstr "#TRANSLATED#"
 
-#: templates/base.html:32
-msgid "Sendinel is free for you."
-msgstr "#TRANSLATED#"
-
-#: templates/base.html:39
+#: templates/base.html:44
 msgid ""
-"If you want to return to the main menu, press the arrow keys  ←↑→↓ in front "
-"of you to go to the 'Back' button and press the 'Enter' key."
+"If you want to return to the main menu, click on the sendinel logo in the "
+"upper left corner."
 msgstr "#TRANSLATED#"
 
-#: templates/registration/login.html:6
-msgid "Your username and password didn't match. Please try again."
-msgstr "#TRANSLATED#"
-
-#: templates/staff/send_message.html:4
-#, fuzzy, python-format
-msgid "Send a message to %(infoservice)s"
-msgstr "#TRANSLATED#"
-
-#: templates/staff/send_message.html:13
-#: templates/staff/infoservice_members.html:25
-msgid "Back to Infoservices"
-msgstr "#TRANSLATED#"
-
-#: templates/staff/index.html:5
-msgid "Your are logged in as staff. Please choose what you want to do:"
-msgstr "#TRANSLATED#"
-
-#: templates/staff/index.html:8
-msgid "Manage all infoservices"
-msgstr "#TRANSLATED#"
-
-#: templates/staff/infoservice_create.html:4
-#, fuzzy
-msgid "Create a new information group"
-msgstr "#TRANSLATED#"
-
-#: templates/staff/infoservice_create.html:5
-#, fuzzy
-msgid "Please enter the name of the information group you want to create"
-msgstr "#TRANSLATED#"
-
-#: templates/staff/infoservice_create.html:9
-msgid "Save"
-msgstr "#TRANSLATED#"
-
-#: templates/staff/infoservice_create.html:12
-#, fuzzy
-msgid "Back to Information Groups"
-msgstr "#TRANSLATED#"
-
-#: templates/staff/infoservice_members.html:4
-msgid "Members of "
-msgstr "#TRANSLATED#"
-
-#: templates/staff/infoservice_members.html:8
-#: templates/web/infoservice_register.html:31
-msgid "Phone Number"
-msgstr "#TRANSLATED#"
-
-#: templates/staff/infoservice_members.html:9
-#: templates/web/infoservice_register.html:35
-msgid "Way of Communication"
-msgstr "#TRANSLATED#"
-
-#: templates/staff/infoservice_members.html:18
-msgid "Remove Patient from Group"
-msgstr "#TRANSLATED#"
-
-#: templates/staff/list_groups.html:4
-msgid "Information Groups"
-msgstr "#TRANSLATED#"
-
-#: templates/staff/list_groups.html:8
-msgid "information"
-msgstr "#TRANSLATED#"
-
-#: templates/staff/list_groups.html:9
-msgid "Members"
-msgstr "#TRANSLATED#"
-
-#: templates/staff/list_groups.html:17
-msgid "Remove group"
-msgstr "#TRANSLATED#"
-
-#: templates/staff/list_groups.html:18
-#, fuzzy
-msgid "Group members"
-msgstr "#TRANSLATED#"
-
-#: templates/staff/list_groups.html:24
-#, fuzzy
-msgid "Create information group"
-msgstr "#TRANSLATED#"
-
-#: templates/staff/list_groups.html:26
-#, fuzzy
-msgid "Back to Main Menu"
-msgstr "#TRANSLATED#"
-
-#: templates/web/notification_create.html:15
-msgid "Appointment"
-msgstr "#TRANSLATED#"
-
-#: templates/web/notification_create.html:16
-msgid "Please enter the notification details."
-msgstr "#TRANSLATED#"
-
-#: templates/web/notification_saved.html:16
-msgid "The notification has been created."
-msgstr "#TRANSLATED#"
-
-#: templates/web/notification_saved.html:17
+#: templates/groups/message_create.html:14
+#, python-format
 msgid ""
-"Please tell the patient that he/she will be reminded one day before the "
-"notification."
-msgstr "#TRANSLATED#"
+"Send a message to \n"
+"                %(group)s "
+msgstr "#%(group)s#TRANSLATED#"
 
-#: templates/web/authenticate_phonenumber.html:23
-#, fuzzy
-msgid "Patient phone number"
-msgstr "#TRANSLATED#"
+#: templates/groups/message_create.html:16
+#, python-format
+msgid ""
+"%(member_count)s patient(s) will receive this \n"
+"            message"
+msgstr "#%(member_count)s#TRANSLATED#"
 
-#: templates/web/authenticate_phonenumber.html:24
-#, fuzzy
-msgid "Please enter the patient's phone number:"
-msgstr "#TRANSLATED#"
-
-#: templates/web/authenticate_phonenumber.html:32
-msgid "Phone number"
-msgstr "#TRANSLATED#"
-
-#: templates/web/authenticate_phonenumber_call.html:11
-msgid "Authenticate Phonenumber"
-msgstr "#TRANSLATED#"
-
-#: templates/web/authenticate_phonenumber_call.html:13
-msgid "Please ring "
-msgstr "#TRANSLATED#"
-
-#: templates/web/authenticate_phonenumber_call.html:14
-#, fuzzy
-msgid "This will be <strong>free</strong>."
-msgstr "#TRANSLATED#"
-
+#: templates/groups/message_create.html:22 templates/groups/register.html:20
+#: templates/infoservices/create.html:19 templates/infoservices/index.html:15
+#: templates/infoservices/subscriptions.html:16
+#: templates/medicine/message_create.html:25
+#: templates/medicine/register.html:25 templates/notifications/create.html:40
 #: templates/web/control_buttons_back_only_widget.html:4
-#: templates/web/control_buttons_widget.html:4
 msgid "Back"
 msgstr "#TRANSLATED#"
 
-#: templates/web/control_buttons_next_only_widget.html:4
-#: templates/web/control_buttons_widget.html:8
+#: templates/groups/message_create.html:28 templates/groups/register.html:29
+#: templates/infoservices/create.html:34
+#: templates/medicine/message_create.html:34
+#: templates/medicine/register.html:44 templates/notifications/create.html:75
+#: templates/web/control_buttons_next_only_widget.html:8
 msgid "Next"
 msgstr "#TRANSLATED#"
 
-#: templates/web/index.html:6
-msgid "Notifications"
-msgstr "#TRANSLATED#"
-
-#: templates/web/index.html:9
-msgid "Remind of Vaccination"
-msgstr "#TRANSLATED#"
-
-#: templates/web/index.html:12
-msgid "Remind of Follow-Up Consultation"
-msgstr "#TRANSLATED#"
-
-#: templates/web/index.html:16
-msgid "Inform about Arrival of Medicine"
-msgstr "#TRANSLATED#"
-
-#: templates/web/index.html:19
-msgid "Groups"
-msgstr "#TRANSLATED#"
-
-#: templates/web/index.html:23
-msgid ": Register"
-msgstr "#TRANSLATED#"
-
-#: templates/web/index.html:24
-#, fuzzy
-msgid "Send Message"
-msgstr "#TRANSLATED#"
-
-#: templates/web/index.html:29
-msgid "Add or remove information group"
-msgstr "#TRANSLATED#"
-
-#: templates/web/infoservice_register.html:21
-#, fuzzy
+#: templates/groups/register.html:14
 msgid "Register patient for "
 msgstr "#TRANSLATED#"
 
-#: templates/web/infoservice_register.html:22
+#: templates/groups/register.html:15
 msgid ""
-"Please enter your phone number and the way you want to receive the messages"
+"Please enter the patient's phone number and the way the patient wants to "
+"receive the messages."
 msgstr "#TRANSLATED#"
 
-#: templates/web/list_devices.html:14
+#: templates/infoservices/create.html:6
+#, python-format
+msgid ""
+"\n"
+"                Create a new %(infoservice_type_name)s\n"
+"            "
+msgstr ""
+"\n"
+"#%(infoservice_type_name)s#TRANSLATED#"
+
+#: templates/infoservices/create.html:10
+#, python-format
+msgid ""
+"\n"
+"                Please enter the name of the %(infoservice_type_name)s you "
+"want to create\n"
+"            "
+msgstr ""
+"\n"
+"#%(infoservice_type_name)sTRANSLATED#"
+
+#: templates/infoservices/create.html:42
+msgid ""
+"After you have created a new information group, it will also appear in the "
+"main menu."
+msgstr "#TRANSLATED#"
+
+#: templates/infoservices/index.html:10
+msgid "Do you really want to remove this "
+msgstr "#TRANSLATED#"
+
+#: templates/infoservices/index.html:24
+msgid "Members"
+msgstr "#TRANSLATED#"
+
+#: templates/infoservices/index.html:37
+#: templates/infoservices/subscriptions.html:32
+msgid "Please confirm"
+msgstr "#TRANSLATED#"
+
+#: templates/infoservices/index.html:61
+msgid "There is no"
+msgstr "#TRANSLATED#"
+
+#: templates/infoservices/index.html:61
+msgid "here at the moment."
+msgstr "#TRANSLATED#"
+
+#: templates/infoservices/index.html:62
+msgid "Click on the button below to add one."
+msgstr "#TRANSLATED#"
+
+#: templates/infoservices/index.html:72
+msgid "Create"
+msgstr "#TRANSLATED#"
+
+#: templates/infoservices/subscriptions.html:7
+msgid "Members of "
+msgstr "#TRANSLATED#"
+
+#: templates/infoservices/subscriptions.html:9
+#, python-format
+msgid ""
+"\n"
+"                Do you really want to remove this patient from the %"
+"(infoservice_name)s?\n"
+"              "
+msgstr ""
+"\n"
+"#%(infoservice_name)s#TRANSLATED#"
+
+#: templates/infoservices/subscriptions.html:20
+msgid "Phone Number"
+msgstr "#TRANSLATED#"
+
+#: templates/infoservices/subscriptions.html:21
+msgid "Way of Communication"
+msgstr "#TRANSLATED#"
+
+#: templates/medicine/message_create.html:21
+msgid "Inform about the Arrival of Medicine "
+msgstr "#TRANSLATED#"
+
+#: templates/medicine/register.html:18
+msgid "Register patient for Waiting List for Medicine"
+msgstr "#TRANSLATED#"
+
+#: templates/medicine/register.html:19
+msgid ""
+"Please enter the patient's phone number and the way the patient wants to "
+"receive the notification."
+msgstr "#TRANSLATED#"
+
+#: templates/medicine/register.html:20
+msgid "Then choose the medicine the patient is waiting for."
+msgstr "#TRANSLATED#"
+
+#: templates/medicine/register.html:40
+msgid "Add a new medicine"
+msgstr "#TRANSLATED#"
+
+#: templates/medicine/register.html:49
+msgid "Please enter the name of the medicine you want to add"
+msgstr "#TRANSLATED#"
+
+#: templates/notifications/create.html:31
+#: templates/notifications/create.html:33
+msgid "Please enter the notification details."
+msgstr "#TRANSLATED#"
+
+#: templates/notifications/create.html:44
+#: templates/utils/phone_number_widget.html:3
+msgid "Phone number:"
+msgstr "#TRANSLATED#"
+
+#: templates/notifications/create.html:51
+#: templates/utils/phone_number_widget.html:10
+msgid "Please enter a valid phone number"
+msgstr "#TRANSLATED#"
+
+#: templates/notifications/create.html:58
+msgid "Date:"
+msgstr "#TRANSLATED#"
+
+#: templates/utils/enter_message_widget.html:3
+msgid "Message Text: "
+msgstr "#TRANSLATED#"
+
+#: templates/utils/enter_message_widget.html:11
+msgid "Characters left: "
+msgstr "#TRANSLATED#"
+
+#: templates/utils/medicine_widget.html:3
+msgid "Medicine: "
+msgstr "#TRANSLATED#"
+
+#: templates/utils/medicine_widget.html:10
+msgid "please choose"
+msgstr "#TRANSLATED#"
+
+#: templates/utils/phone_number_widget.html:11
+#, python-format
+msgid "&quot;%c&quot; Please only enter digits for the phone number"
+msgstr "#%cTRANSLATED#"
+
+#: templates/utils/way_of_communication_widget.html:3
+msgid "Way of communication: "
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber.html:24
+msgid "Patient phone number"
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber.html:25
+msgid "Please enter the patient's phone number:"
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber.html:33
+msgid "Phone number"
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber_call.html:13
+msgid "Authenticate Phonenumber"
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber_call.html:15
+msgid "Please ring "
+msgstr "#TRANSLATED#"
+
+#: templates/web/authenticate_phonenumber_call.html:16
+msgid "This will be <strong>free</strong>."
+msgstr "#TRANSLATED#"
+
+#: templates/web/control_buttons_widget.html:11
+msgid "New"
+msgstr "#TRANSLATED#"
+
+#: templates/web/control_buttons_widget.html:19
+msgid "Main Menu"
+msgstr "#TRANSLATED#"
+
+#: templates/web/index.html:12
+msgid "Currently Missing Medicine"
+msgstr "#TRANSLATED#"
+
+#: templates/web/index.html:17 templates/web/index.html.py:62
+msgid "Register Patient"
+msgstr "#TRANSLATED#"
+
+#: templates/web/index.html:24 templates/web/index.html.py:29
+#: templates/web/index.html:68 templates/web/index.html.py:73
+msgid "Send Message"
+msgstr "#TRANSLATED#"
+
+#: templates/web/index.html:38
+msgid "Manage Waiting Lists for Medicine"
+msgstr "#TRANSLATED#"
+
+#: templates/web/index.html:42
+msgid "Notifications"
+msgstr "#TRANSLATED#"
+
+#: templates/web/index.html:55
+msgid "Groups "
+msgstr "#TRANSLATED#"
+
+#: templates/web/index.html:82
+msgid "Manage Information Groups"
+msgstr "#TRANSLATED#"
+
+#: templates/web/list_devices.html:13
+msgid "Available Bluetooth Devices"
+msgstr "#TRANSLATED#"
+
+#: templates/web/list_devices.html:15
 msgid ""
 "Please turn on your Bluetooth now. Please assure that it is in the Bluetooth "
-"visibility mode."
+"visibility mode.<br />Please choose your phone when it appears:"
 msgstr "#TRANSLATED#"
 
-#: templates/web/list_devices.html:22
-msgid "Looking for further devices"
+#: templates/web/list_devices.html:23
+msgid "Looking for devices"
 msgstr "#TRANSLATED#"
 
-#: templates/web/list_groups.html:6
-msgid "Register a patient to receive regular information."
-msgstr "#TRANSLATED#"
-
-#: templates/web/not_implemented.html:6
-#, fuzzy
-msgid "Sorry, but this does not work yet"
-msgstr "#TRANSLATED#"
-
-#: templates/web/not_implemented.html:7
-msgid "We are working on that and hope to get it running until June 2010."
-msgstr "#TRANSLATED#"
-
-#: templates/web/send_bluetooth_notification.html:11
-#: templates/web/send_bluetooth_notification.html:20
+#: templates/web/send_bluetooth_notification.html:13
+#: templates/web/send_bluetooth_notification.html:22
 msgid "Sending your notification"
 msgstr "#TRANSLATED#"
 
-#: templates/web/send_bluetooth_notification.html:12
+#: templates/web/send_bluetooth_notification.html:14
 msgid "Please accept the file on your mobile"
 msgstr "#TRANSLATED#"
+
+#~ msgid "Send message"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "The \"%(infoservice_name)s\" "
+#~ msgstr "#%(infoservice_name)s#TRANSLATED#"
+
+#~ msgid "SMS"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Bluetooth"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Voice Call"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Sendinel is free for you."
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid ""
+#~ "If you want to return to the main menu, press the arrow keys  ←↑→↓ in "
+#~ "front of you to go to the 'Back' button and press the 'Enter' key."
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Your username and password didn't match. Please try again."
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Back to Infoservices"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Your are logged in as staff. Please choose what you want to do:"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Manage all infoservices"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Create a new information group"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Save"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Back to Information Groups"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Create information group"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Appointment"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Remind of Vaccination"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Remind of Follow-Up Consultation"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid ": Register"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Add or remove information group"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Register a patient to receive regular information."
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "Sorry, but this does not work yet"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "We are working on that and hope to get it running until June 2010."
+#~ msgstr "#TRANSLATED#"

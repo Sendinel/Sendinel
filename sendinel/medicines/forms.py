@@ -1,5 +1,5 @@
 from django.forms import CharField, Form, ModelChoiceField
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from sendinel.backend.authhelper import format_and_validate_phonenumber
 from sendinel.backend.models import get_enabled_wocs

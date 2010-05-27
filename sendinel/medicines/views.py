@@ -32,7 +32,7 @@ def register_save(request, medicine_id):
     backurl = reverse('medicines_register')        
     nexturl = reverse('web_index')
     title = _("Registration successful")
-    message = _("The patient will receive a messages once the medicine "
+    message = _("The patient will receive a message once the medicine "
                 " \"%s\" is available in the clinic again.") \
                 % subscription.infoservice.name
     new_button_label = _("Register another patient")
@@ -117,9 +117,9 @@ def send_message(request):
             backurl = reverse('medicines_send_message')
             nexturl = reverse('web_index')
             title = _("Message created")
-            message = _("All patients who were waiting for the medicine " +
-                        "\"%s\" will be informed. The waiting list will" +
-                        " also be removed.") % medicine.name
+            message = _("All patients who were waiting for the medicine "
+                        "\"%s\" will be informed. The waiting list"
+                        " will also be removed.") % medicine.name
             new_button_label = _("Send another message")
             success = True
 

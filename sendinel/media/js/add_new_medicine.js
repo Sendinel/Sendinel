@@ -34,6 +34,7 @@ $(document).ready(function(){
     buttons[gettext('Cancel')] = function() {
                                     $(this).dialog('close');
                                };
+
     $("#dialog-form").dialog({
         autoOpen: false,
         height: 300,
