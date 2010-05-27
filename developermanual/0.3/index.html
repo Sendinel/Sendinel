@@ -8,7 +8,7 @@
 <meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"> 
 <!-- html --> 
 <meta name="src" content="developer_manual.tex"> 
-<meta name="date" content="2010-05-27 10:32:00"> 
+<meta name="date" content="2010-05-27 16:24:00"> 
 <link rel="stylesheet" type="text/css" href="developer_manual.css"> 
 </head><body 
 >
@@ -94,17 +94,23 @@ href="#x1-250007.3" id="QQ2-1-28">Scheduling</a></span>
 href="#x1-260007.4" id="QQ2-1-29">Status evaluation and error handling</a></span>
 <br />  &#x00A0;<span class="subsectionToc" >7.5 <a 
 href="#x1-270007.5" id="QQ2-1-30">Authentication</a></span>
+<br />  <span class="sectionToc" >A <a 
+href="#x1-28000A" id="QQ2-1-31">Diagrams</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >A.1 <a 
+href="#x1-29000A.1" id="QQ2-1-32">Class-Diagram</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >A.2 <a 
+href="#x1-30000A.2" id="QQ2-1-33">ER-Diagram</a></span>
   </div>
                                                                                      
                                                                                      
-  <h3 class="sectionHead"><span class="titlemark">1  </span> <a 
+  <h3 class="sectionHead"><span class="titlemark">1.  </span> <a 
  id="x1-20001"></a>Introduction</h3>
 <!--l. 2--><p class="noindent" >Welcome to the Development of Sendinel. On the following pages you will find useful information
 that should enable you to further develop Sendinel. Please note, that this manual is for developers
 only. When you read this, you should be familiar with Sendinel. If you do not know Sendinel yet
 please check the User Manual, the Installation Manual and the other resources that are provided on
 the Sendinel website http://www.sendinel.org.
-  <h3 class="sectionHead"><span class="titlemark">2  </span> <a 
+  <h3 class="sectionHead"><span class="titlemark">2.  </span> <a 
  id="x1-30002"></a>Used Technology</h3>
 <!--l. 3--><p class="noindent" >In the following the technologies that are used in Sendinel are explained. Depending on which part
 of Sendinel you want to work on, you should be more or less familiar with the concerning
@@ -157,10 +163,10 @@ class="description">Java
 href="http://java.sun.com/" >http://java.sun.com/</a>
      </dd></dl>
 <!--l. 2--><p class="noindent" >
-  <h3 class="sectionHead"><span class="titlemark">3  </span> <a 
+  <h3 class="sectionHead"><span class="titlemark">3.  </span> <a 
  id="x1-40003"></a>How to Get Started</h3>
 <!--l. 3--><p class="noindent" >
-  <h4 class="subsectionHead"><span class="titlemark">3.1  </span> <a 
+  <h4 class="subsectionHead"><span class="titlemark">3.1.  </span> <a 
  id="x1-50003.1"></a>Forking Sendinel on github</h4>
 <!--l. 4--><p class="noindent" >The best option to obtain Sendinel if you want to further develop on it would be to fork from our
 GitHub page <a 
@@ -191,7 +197,7 @@ class="content">Click on the fork button to fork from Sendinel</span></div><!--t
                                                                                      
                                                                                      
 <!--l. 14--><p class="indent" >  </div><hr class="endfigure">
-  <h4 class="subsectionHead"><span class="titlemark">3.2  </span> <a 
+  <h4 class="subsectionHead"><span class="titlemark">3.2.  </span> <a 
  id="x1-60003.2"></a>Tests</h4>
 <!--l. 19--><p class="noindent" >You now have your own forked branch of Sendinel. We developed Sendinel in a test driven way, so
 it is good if you know where to find the tests and how to run them. In the section "Architecture" you
@@ -210,7 +216,7 @@ data sets. The fixtures described in<span
 class="pplri8t-x-x-109">/backend/tests/backend_test.xml </span>are available in the tests if they are
 included.
 <!--l. 24--><p class="noindent" >
-  <h4 class="subsectionHead"><span class="titlemark">3.3  </span> <a 
+  <h4 class="subsectionHead"><span class="titlemark">3.3.  </span> <a 
  id="x1-70003.3"></a> Final Adjustments</h4>
 <!--l. 25--><p class="noindent" ><span class="paragraphHead"><a 
  id="x1-80003.3"></a><span 
@@ -224,7 +230,7 @@ class="pplb8t-x-x-109">Starting the Development Server</span></span>
   If you want to run sendinel on the development server, you need to open the console and switch
 to Sendinel/sendinel. Then enter <span 
 class="pplri8t-x-x-109">python manage.py runserver</span>
-  <h3 class="sectionHead"><span class="titlemark">4  </span> <a 
+  <h3 class="sectionHead"><span class="titlemark">4.  </span> <a 
  id="x1-100004"></a>Overview over Sendinel</h3>
 <!--l. 3--><p class="noindent" >Sendinel is split into the following parts: <br 
 class="newline" />The <span 
@@ -246,7 +252,7 @@ class="pplri8t-x-x-109">/sendinel/backend/models.py</span>. There are two types 
                                                                                      
 Notifications and InfoServices.
 <!--l. 11--><p class="noindent" >
-  <h4 class="subsectionHead"><span class="titlemark">4.1  </span> <a 
+  <h4 class="subsectionHead"><span class="titlemark">4.1.  </span> <a 
  id="x1-110004.1"></a>Notifications</h4>
 <!--l. 12--><p class="noindent" >Notifications are messages to inform or remind patients of appointment. Every notification has a
 type. Our system initially has the notification types &#8221;vaccination&#8221;, &#8221;follow-up consultation&#8221; and &#8221;lab
@@ -263,7 +269,7 @@ following variables are available:
 <!--l. 21--><p class="indent" >  These variables are replaced by the real values when a new notification is created. New variable
 can be introduced in the Notification method &#8221;reminder_text()&#8221;.
 <!--l. 23--><p class="noindent" >
-  <h4 class="subsectionHead"><span class="titlemark">4.2  </span> <a 
+  <h4 class="subsectionHead"><span class="titlemark">4.2.  </span> <a 
  id="x1-120004.2"></a>InfoServices</h4>
 <!--l. 24--><p class="noindent" >Patients can be subscribed to InfoServices. Therefore an InfoMessage represents a group of patients
 for a specific topic. By default InfoServices are used for &#8221;arrival of medicine&#8221; notifications and group
@@ -271,7 +277,7 @@ messages. Sending a message to all patient of a InfoService is done with an Info
 to Notifications, an InfoMessage does not use templates but sends the text directly entered for that
 InfoMessage.
 <!--l. 27--><p class="noindent" >
-  <h4 class="subsectionHead"><span class="titlemark">4.3  </span> <a 
+  <h4 class="subsectionHead"><span class="titlemark">4.3.  </span> <a 
  id="x1-130004.3"></a>Use Case: Create and send a notification about the arrival of lab results</h4>
 <!--l. 28--><p class="noindent" >When the users fill out the form to inform a patient about the arrival of lab results and clicks on
 &#8221;next&#8221;, a new Patient object is created with the newly entered phone number. Also, a Notification
@@ -292,10 +298,10 @@ our case, the users could have only chosen between sms and phonecall. So let&#82
 SMSOutputData object is created. This object is then handed over to the Voicecall class
 (Sendinel/sendinel/backend/voicecall.py) which handles the sending of the SMS via the Asterisk
 server.
-  <h3 class="sectionHead"><span class="titlemark">5  </span> <a 
+  <h3 class="sectionHead"><span class="titlemark">5.  </span> <a 
  id="x1-140005"></a>Architecture</h3>
 <!--l. 2--><p class="noindent" >
-  <h4 class="subsectionHead"><span class="titlemark">5.1  </span> <a 
+  <h4 class="subsectionHead"><span class="titlemark">5.1.  </span> <a 
  id="x1-150005.1"></a>Diagrams</h4>
 <!--l. 4--><p class="noindent" ><hr class="figure"><div class="figure" 
 >
@@ -311,7 +317,8 @@ name="developer_manual2x.png" src="images/classdiagram.pdf"
 -->
 <br /> <div class="caption" 
 ><span class="id">Figure&#x00A0;2: </span><span  
-class="content">The Class Diagram</span></div><!--tex4ht:label?: x1-15001r2 -->
+class="content">The Class Diagram. Bigger version in appendix <a 
+href="#x1-29000A.1">A.1<!--tex4ht:ref: classdiagram --></a></span></div><!--tex4ht:label?: x1-15001r2 -->
                                                                                      
                                                                                      
 <!--l. 8--><p class="noindent" ></div><hr class="endfigure">
@@ -378,11 +385,12 @@ name="developer_manual3x.png" src="images/erdiagram.pdf"
 --></div>
 <br /> <div class="caption" 
 ><span class="id">Figure&#x00A0;3: </span><span  
-class="content">The Entity-Relationship Diagram</span></div><!--tex4ht:label?: x1-15002r3 -->
+class="content">The Entity-Relationship Diagram. Bigger version in appendix <a 
+href="#x1-30000A.2">A.2<!--tex4ht:ref: erdiagram --></a></span></div><!--tex4ht:label?: x1-15002r3 -->
                                                                                      
                                                                                      
 <!--l. 55--><p class="indent" >  </div><hr class="endfigure">
-  <h4 class="subsectionHead"><span class="titlemark">5.2  </span> <a 
+  <h4 class="subsectionHead"><span class="titlemark">5.2.  </span> <a 
  id="x1-160005.2"></a>Files and Folders</h4>
 <!--l. 4--><p class="noindent" >Following are the folders in the root directory: <br 
 class="newline" />If you have little time, the most important folder is sendinel. Its subfolders are explained in the
@@ -558,7 +566,7 @@ class="td11">            </td></tr></table></div>
   </div>
                                                                                      
                                                                                      
-  <h3 class="sectionHead"><span class="titlemark">6  </span> <a 
+  <h3 class="sectionHead"><span class="titlemark">6.  </span> <a 
  id="x1-170006"></a>Good To Know</h3>
 <!--l. 4--><p class="noindent" >To populate the database the fixtures from /backend/fixtures can be used. Go to the sendinel root
 directory and enter either <span 
@@ -567,7 +575,7 @@ Sendinel to work or <span
 class="pplri8t-x-x-109">python manage.py loaddata backend_test </span>to load a more extended set of test
 data.
 <!--l. 8--><p class="noindent" >
-  <h4 class="subsectionHead"><span class="titlemark">6.1  </span> <a 
+  <h4 class="subsectionHead"><span class="titlemark">6.1.  </span> <a 
  id="x1-180006.1"></a>How to translate Sendinel</h4>
 <!--l. 9--><p class="noindent" >Sendinel supports the translation to other languages with dedicated language files. The background
 is well explained in the Django documentation <br 
@@ -600,14 +608,14 @@ class="pplri8t-x-x-109">web/language_choose</span></li></ul>
 href="http://docs.djangoproject.com/en/dev/topics/i18n/internationalization/" >http://docs.djangoproject.com/en/dev/topics/i18n/internationalization/</a>
                                                                                      
                                                                                      
-  <h3 class="sectionHead"><span class="titlemark">7  </span> <a 
+  <h3 class="sectionHead"><span class="titlemark">7.  </span> <a 
  id="x1-190007"></a>The Asterisk telephony server</h3>
 <!--l. 3--><p class="noindent" >Asterisk is an open-source telephony server. It can be attached to the public telephone network to
 allow incoming and outbound calls. This connection can be established via a broad range of
 connections like Voice Over IP or ISDN. Initially Asterisk was designed for Linux, but it was ported
 to other operating systems as well.
 <!--l. 5--><p class="noindent" >
-  <h4 class="subsectionHead"><span class="titlemark">7.1  </span> <a 
+  <h4 class="subsectionHead"><span class="titlemark">7.1.  </span> <a 
  id="x1-200007.1"></a>How does Asterisk work?</h4>
 <!--l. 6--><p class="noindent" >Connections to other elements in the telephony network are called channels. A channel which allows
 to connect the Asterisk server to the mobile telephone network is <span 
@@ -619,7 +627,7 @@ an external call arrives. Those items are called extensions and actually are sma
 programs are able to react to user input, control the program flow, play sound files, run external
 applications etc.
 <!--l. 10--><p class="noindent" >
-  <h5 class="subsubsectionHead"><span class="titlemark">7.1.1  </span> <a 
+  <h5 class="subsubsectionHead"><span class="titlemark">7.1.1.  </span> <a 
  id="x1-210007.1.1"></a>A channel for 3G data cards</h5>
 <!--l. 11--><p class="noindent" >To connect the Asterisk to the telephony network the channel <span 
 class="pplri8t-x-x-109">chan_datacard </span>can be used. It was
@@ -628,7 +636,7 @@ class="pplri8t-x-x-109">Huawei </span>USB 3G data modems (at the moment mainly t
 <span 
 class="pplri8t-x-x-109">K3520/E169</span>).
 <!--l. 13--><p class="noindent" >
-  <h4 class="subsectionHead"><span class="titlemark">7.2  </span> <a 
+  <h4 class="subsectionHead"><span class="titlemark">7.2.  </span> <a 
  id="x1-220007.2"></a>Sending outbound messages</h4>
 <!--l. 14--><p class="noindent" >The Asterisk server offers a special mechanism for invoking calls from external applications. This
 mechanism is called <span 
@@ -654,7 +662,7 @@ class="pplri8t-x-x-109">conduct_sms()</span>.
                                                                                      
                                                                                      
 <!--l. 20--><p class="noindent" >
-  <h5 class="subsubsectionHead"><span class="titlemark">7.2.1  </span> <a 
+  <h5 class="subsubsectionHead"><span class="titlemark">7.2.1.  </span> <a 
  id="x1-230007.2.1"></a>Enqueueing automated voice calls</h5>
 <!--l. 22--><p class="noindent" >The following steps explain how a voice call is sent from the web application:
 <!--l. 24--><p class="indent" >
@@ -688,7 +696,7 @@ class="pplri8t-x-x-109">conduct_sms()</span>.
 <!--l. 41--><p class="indent" >  It is also possible to replace the execution of a dialplan extension by specifying a application to be
 run. The application is only executed if the callee answers the call.
 <!--l. 43--><p class="noindent" >
-  <h5 class="subsubsectionHead"><span class="titlemark">7.2.2  </span> <a 
+  <h5 class="subsubsectionHead"><span class="titlemark">7.2.2.  </span> <a 
  id="x1-240007.2.2"></a>Enqueueing SMS</h5>
                                                                                      
                                                                                      
@@ -709,7 +717,7 @@ for this call can be passed through the call spool file, using the <span
 class="pplri8t-x-x-109">Set </span>command. Those variables are
 globally available.
 <!--l. 51--><p class="noindent" >
-  <h4 class="subsectionHead"><span class="titlemark">7.3  </span> <a 
+  <h4 class="subsectionHead"><span class="titlemark">7.3.  </span> <a 
  id="x1-250007.3"></a>Scheduling</h4>
 <!--l. 53--><p class="noindent" >If only calls but no SMS are to be spooled, the scheduling can be completely done by the Asterisk
 server. All spool files can be put into the spool directory at the same time and will be processed by
@@ -724,7 +732,7 @@ Asterisk spool queue. This is accomplished by evaluating the status codes from t
 already were processed. Once a call is finished by Asterisk, the next one is scheduled by the Sendinel
 scheduler.
 <!--l. 57--><p class="noindent" >
-  <h4 class="subsectionHead"><span class="titlemark">7.4  </span> <a 
+  <h4 class="subsectionHead"><span class="titlemark">7.4.  </span> <a 
  id="x1-260007.4"></a>Status evaluation and error handling</h4>
 <!--l. 59--><p class="noindent" >As described earlier the status of a call can be read from the processed spool file. The Sendinel
 scheduler does this job and enters the evaluated data into the database for the corresponding
@@ -754,7 +762,7 @@ class="pplri8t-x-x-109">done</span>: The event was successfully processed by the
 class="pplri8t-x-x-109">Expired</span>, which is handled by the Sendinel scheduler.
 The event is re-scheduled as set in the configuration.
 <!--l. 71--><p class="noindent" >
-  <h4 class="subsectionHead"><span class="titlemark">7.5  </span> <a 
+  <h4 class="subsectionHead"><span class="titlemark">7.5.  </span> <a 
  id="x1-270007.5"></a>Authentication</h4>
 <!--l. 73--><p class="noindent" >The Sendinel authentication mechanism is based on recognising the <span 
 class="pplri8t-x-x-109">Caller ID </span>of incoming calls.
@@ -765,6 +773,46 @@ script is started, which passes the data of the caller to the python script <spa
 class="pplri8t-x-x-109">/sendinel/asterisk/call_log.py</span>.
 This script writes the data to Sendinel&#8217;s database from. When the data is read by the user interface
 the authentication is done.
+<!--l. 2--><p class="noindent" >
+  <h3 class="sectionHead"><span class="titlemark">A.  </span> <a 
+ id="x1-28000A"></a>Diagrams</h3>
+<!--l. 4--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">A.1.  </span> <a 
+ id="x1-29000A.1"></a>Class-Diagram</h4>
+<!--l. 7--><p class="noindent" ><hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+<div class="center" 
+>
+<!--l. 8--><p class="noindent" >
+<!--l. 9--><p class="noindent" ><img 
+src="developer_manual4x.png" alt="PIC" class="graphics"><!--tex4ht:graphics  
+name="developer_manual4x.png" src="images/classdiagram_vert.pdf"  
+--></div>
+                                                                                     
+                                                                                     
+<!--l. 11--><p class="noindent" ></div><hr class="endfigure">
+  <h4 class="subsectionHead"><span class="titlemark">A.2.  </span> <a 
+ id="x1-30000A.2"></a>ER-Diagram</h4>
+<!--l. 16--><p class="noindent" ><hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                     
+<div class="center" 
+>
+<!--l. 17--><p class="noindent" >
+<!--l. 18--><p class="noindent" ><img 
+src="developer_manual5x.png" alt="PIC" class="graphics"><!--tex4ht:graphics  
+name="developer_manual5x.png" src="images/erdiagram_vert.pdf"  
+--></div>
+                                                                                     
+                                                                                     
+<!--l. 20--><p class="noindent" ></div><hr class="endfigure">
    
 </body></html> 
 
