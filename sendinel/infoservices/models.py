@@ -51,12 +51,16 @@ class InfoService(models.Model):
                             default = None,
                             unique = True,
                             blank = False,
-                            null = False)
+                            null = False,
+                            verbose_name = ugettext_lazy("name"))
     type = models.CharField(max_length = 255, 
                             choices = TYPES,
                             default = None,
                             blank = False, 
                             null = False)
+    
+    class Meta:
+        verbose_name = ugettext_lazy("Information service")
                             
     def __unicode__(self):
         return self.name

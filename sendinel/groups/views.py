@@ -37,9 +37,8 @@ def send_message(request, group_id):
                               kwargs= {'group_id': group_id})
             nexturl = reverse('web_index')
             title = _("Message created")
-            message = _("All members of the \"%s\" service" + \
-                        " will get your message.") \
-                                % group.name
+            message = _("All members of the \"%s\" service"
+                        " will get your message.") % group.name
             new_button_label = _("Send another message")
             success = True
             

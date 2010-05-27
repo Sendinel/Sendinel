@@ -4,15 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
-msgstr "#TRANSLATED#"
+msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-27 14:23+0200\n"
+"POT-Creation-Date: 2010-05-27 15:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"#TRANSLATED#Report-Msgid-Bugs-To: \n"
+"#TRANSLATED#Report-Msgid-Bugs-To: \n"
 "#TRANSLATED#Report-Msgid-Bugs-To: \n"
 "#TRANSLATED#Report-Msgid-Bugs-To: \n"
 "#TRANSLATED#Report-Msgid-Bugs-To: \n"
@@ -41,23 +43,23 @@ msgstr "#TRANSLATED#"
 
 #: groups/views.py:40
 #, python-format
-msgid "All members of the \"%s\" service"
+msgid "All members of the \"%s\" service will get your message."
 msgstr "#%s#TRANSLATED#"
 
-#: groups/views.py:43 medicines/views.py:123
+#: groups/views.py:42 medicines/views.py:123
 msgid "Send another message"
 msgstr "#TRANSLATED#"
 
-#: groups/views.py:102 medicines/views.py:34
+#: groups/views.py:101 medicines/views.py:34
 msgid "Registration successful"
 msgstr "#TRANSLATED#"
 
-#: groups/views.py:103
+#: groups/views.py:102
 #, python-format
 msgid "The patient will now receive all messages from the  \"%s\" service."
 msgstr "#%s#TRANSLATED#"
 
-#: groups/views.py:105 medicines/views.py:38
+#: groups/views.py:104 medicines/views.py:38
 msgid "Register another patient"
 msgstr "#TRANSLATED#"
 
@@ -141,19 +143,27 @@ msgstr "#TRANSLATED#"
 msgid "Medicine"
 msgstr "#TRANSLATED#"
 
+#: infoservices/models.py:55
+msgid "name"
+msgstr "#TRANSLATED#"
+
+#: infoservices/models.py:63
+msgid "Information service"
+msgstr "#TRANSLATED#"
+
 #: infoservices/views.py:46
 msgid "Creation successful"
 msgstr "#TRANSLATED#"
 
 #: infoservices/views.py:47
 #, python-format
-msgid "The \"%(infoservice_name)s\" "
-msgstr "#%(infoservice_name)s#TRANSLATED#"
+msgid "The \"%(infoservice_name)s\" %(infoservice_type)s has been created."
+msgstr "#%(infoservice_name)s#%(infoservice_type)s#TRANSLATED#"
 
 #: infoservices/views.py:51
-#, fuzzy, python-format
+#, python-format
 msgid "Create another %(infoservice_type)s"
-msgstr "#TRANSLATED#"
+msgstr "#%(infoservice_type)sTRANSLATED#"
 
 #: medicines/forms.py:19 medicines/forms.py:21 medicines/forms.py:27
 #: medicines/forms.py:29
@@ -163,13 +173,16 @@ msgstr "#TRANSLATED#"
 #: medicines/views.py:35
 #, python-format
 msgid ""
-"The patient will receive a messages once the medicine  \"%s\" is available "
-"in the clinic again."
+"The patient will receive a message once the medicine  \"%s\" is available in "
+"the clinic again."
 msgstr "#%s#TRANSLATED#"
 
 #: medicines/views.py:120
-msgid "All patients who were waiting for the medicine "
-msgstr "#TRANSLATED#"
+#, python-format
+msgid ""
+"All patients who were waiting for the medicine \"%s\" will be informed. The "
+"waiting list will also be removed."
+msgstr "#%sTRANSLATED#"
 
 #: notifications/forms.py:20 notifications/forms.py:21
 #: notifications/forms.py:30 notifications/forms.py:31
@@ -177,9 +190,9 @@ msgid "Please choose a date"
 msgstr "#TRANSLATED#"
 
 #: notifications/views.py:109
-#, fuzzy, python-format
+#, python-format
 msgid "The \"%s\" notification has been created."
-msgstr "#TRANSLATED#"
+msgstr "#%sTRANSLATED#"
 
 #: notifications/views.py:111
 msgid "New notification"
@@ -199,11 +212,25 @@ msgstr "#TRANSLATED#"
 msgid "Sorry, this page does not exist"
 msgstr "#TRANSLATED#"
 
-#: templates/base.html:28
+#: templates/404.html:6 templates/500.html:8
+msgid "Back to Mainpage"
+msgstr "#TRANSLATED#"
+
+#: templates/500.html:4
+msgid ""
+"\n"
+"        <h1>Sorry, an error occured.</h1>\n"
+"        <h2>Please inform the clinic staff</h2>\n"
+"    "
+msgstr ""
+"\n"
+"#TRANSLATED#"
+
+#: templates/base.html:27
 msgid "This page needs JavaScript to work."
 msgstr "#TRANSLATED#"
 
-#: templates/base.html:45
+#: templates/base.html:44
 msgid ""
 "If you want to return to the main menu, click on the sendinel logo in the "
 "upper left corner."
@@ -256,16 +283,20 @@ msgid ""
 "\n"
 "                Create a new %(infoservice_type_name)s\n"
 "            "
-msgstr "\n#%(infoservice_type_name)s#TRANSLATED#"
+msgstr ""
+"\n"
+"#%(infoservice_type_name)s#TRANSLATED#"
 
 #: templates/infoservices/create.html:10
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "                Please enter the name of the %(infoservice_type_name)s you "
 "want to create\n"
 "            "
-msgstr "#TRANSLATED#"
+msgstr ""
+"\n"
+"#%(infoservice_type_name)sTRANSLATED#"
 
 #: templates/infoservices/create.html:42
 msgid ""
@@ -281,23 +312,24 @@ msgstr "#TRANSLATED#"
 msgid "Members"
 msgstr "#TRANSLATED#"
 
-#: templates/infoservices/index.html:52
-msgid "Send message"
+#: templates/infoservices/index.html:37
+#: templates/infoservices/subscriptions.html:32
+msgid "Please confirm"
 msgstr "#TRANSLATED#"
 
-#: templates/infoservices/index.html:72
+#: templates/infoservices/index.html:61
 msgid "There is no"
 msgstr "#TRANSLATED#"
 
-#: templates/infoservices/index.html:72
+#: templates/infoservices/index.html:61
 msgid "here at the moment."
 msgstr "#TRANSLATED#"
 
-#: templates/infoservices/index.html:73
+#: templates/infoservices/index.html:62
 msgid "Click on the button below to add one."
 msgstr "#TRANSLATED#"
 
-#: templates/infoservices/index.html:83
+#: templates/infoservices/index.html:72
 msgid "Create"
 msgstr "#TRANSLATED#"
 
@@ -312,7 +344,9 @@ msgid ""
 "                Do you really want to remove this patient from the %"
 "(infoservice_name)s?\n"
 "              "
-msgstr "\n#%(infoservice_name)s#TRANSLATED#"
+msgstr ""
+"\n"
+"#%(infoservice_name)s#TRANSLATED#"
 
 #: templates/infoservices/subscriptions.html:20
 msgid "Phone Number"
@@ -353,6 +387,20 @@ msgstr "#TRANSLATED#"
 msgid "Please enter the notification details."
 msgstr "#TRANSLATED#"
 
+#: templates/notifications/create.html:44
+#: templates/utils/phone_number_widget.html:3
+msgid "Phone number:"
+msgstr "#TRANSLATED#"
+
+#: templates/notifications/create.html:51
+#: templates/utils/phone_number_widget.html:10
+msgid "Please enter a valid phone number"
+msgstr "#TRANSLATED#"
+
+#: templates/notifications/create.html:58
+msgid "Date:"
+msgstr "#TRANSLATED#"
+
 #: templates/utils/enter_message_widget.html:3
 msgid "Message Text: "
 msgstr "#TRANSLATED#"
@@ -364,6 +412,15 @@ msgstr "#TRANSLATED#"
 #: templates/utils/medicine_widget.html:3
 msgid "Medicine: "
 msgstr "#TRANSLATED#"
+
+#: templates/utils/medicine_widget.html:10
+msgid "please choose"
+msgstr "#TRANSLATED#"
+
+#: templates/utils/phone_number_widget.html:11
+#, python-format
+msgid "&quot;%c&quot; Please only enter digits for the phone number"
+msgstr "#%cTRANSLATED#"
 
 #: templates/utils/way_of_communication_widget.html:3
 msgid "Way of communication: "
@@ -401,6 +458,10 @@ msgstr "#TRANSLATED#"
 msgid "Main Menu"
 msgstr "#TRANSLATED#"
 
+#: templates/web/index.html:12
+msgid "Currently Missing Medicine"
+msgstr "#TRANSLATED#"
+
 #: templates/web/index.html:17 templates/web/index.html.py:62
 msgid "Register Patient"
 msgstr "#TRANSLATED#"
@@ -426,6 +487,10 @@ msgstr "#TRANSLATED#"
 msgid "Manage Information Groups"
 msgstr "#TRANSLATED#"
 
+#: templates/web/list_devices.html:13
+msgid "Available Bluetooth Devices"
+msgstr "#TRANSLATED#"
+
 #: templates/web/list_devices.html:15
 msgid ""
 "Please turn on your Bluetooth now. Please assure that it is in the Bluetooth "
@@ -444,6 +509,12 @@ msgstr "#TRANSLATED#"
 #: templates/web/send_bluetooth_notification.html:14
 msgid "Please accept the file on your mobile"
 msgstr "#TRANSLATED#"
+
+#~ msgid "Send message"
+#~ msgstr "#TRANSLATED#"
+
+#~ msgid "The \"%(infoservice_name)s\" "
+#~ msgstr "#%(infoservice_name)s#TRANSLATED#"
 
 #~ msgid "SMS"
 #~ msgstr "#TRANSLATED#"
