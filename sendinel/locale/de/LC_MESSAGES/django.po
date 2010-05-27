@@ -5,216 +5,221 @@
 #
 msgid ""
 msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-27 15:26+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2010-05-27 15:31+0200\n"
+"PO-Revision-Date: 2010-05-27 15:45+0100\n"
+"Last-Translator: Michael Frister <michael@frister.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"#TRANSLATED#Report-Msgid-Bugs-To: \n"
-"#TRANSLATED#Report-Msgid-Bugs-To: \n"
-"#TRANSLATED#Report-Msgid-Bugs-To: \n"
-"#TRANSLATED#Report-Msgid-Bugs-To: \n"
-"#TRANSLATED#Report-Msgid-Bugs-To: \n"
-"#TRANSLATED#Project-Id-Version: PACKAGE VERSION\n"
 
 #: backend/authhelper.py:42
 msgid "Please enter numbers only."
-msgstr "#TRANSLATED#"
+msgstr "Bitte nur Nummern eingeben."
 
 #: backend/authhelper.py:47
 msgid "Please enter a cell phone number."
-msgstr "#TRANSLATED#"
+msgstr "Bitte eine Mobiltelefonnummer eingeben"
 
-#: groups/forms.py:11 medicines/forms.py:11 notifications/forms.py:12
+#: groups/forms.py:11
+#: medicines/forms.py:11
+#: notifications/forms.py:12
 msgid "Please enter a phone number"
-msgstr "#TRANSLATED#"
+msgstr "Bitte eine Mobiltelefonnummer eingeben"
 
-#: groups/forms.py:15 medicines/forms.py:15 notifications/forms.py:18
+#: groups/forms.py:15
+#: medicines/forms.py:15
+#: notifications/forms.py:18
 #: notifications/forms.py:28
 msgid "Please choose a way of communication"
-msgstr "#TRANSLATED#"
+msgstr "Bitte das Kommunikationsmittel auswählen"
 
-#: groups/views.py:39 medicines/views.py:119
+#: groups/views.py:39
+#: medicines/views.py:119
 msgid "Message created"
-msgstr "#TRANSLATED#"
+msgstr "Nachricht erstellt"
 
 #: groups/views.py:40
 #, python-format
 msgid "All members of the \"%s\" service will get your message."
-msgstr "#%s#TRANSLATED#"
+msgstr "Alle Mitglieder des Dienstes \"%s\" werden die Nachricht empfangen."
 
-#: groups/views.py:42 medicines/views.py:123
+#: groups/views.py:42
+#: medicines/views.py:123
 msgid "Send another message"
-msgstr "#TRANSLATED#"
+msgstr "Eine weitere Nachricht senden"
 
-#: groups/views.py:101 medicines/views.py:34
+#: groups/views.py:101
+#: medicines/views.py:34
 msgid "Registration successful"
-msgstr "#TRANSLATED#"
+msgstr "Registrierung erfolgreich"
 
 #: groups/views.py:102
 #, python-format
 msgid "The patient will now receive all messages from the  \"%s\" service."
-msgstr "#%s#TRANSLATED#"
+msgstr "Der Patient wird ab jetzt alle Nachrichten des \"%s\" Dienste empfangen."
 
-#: groups/views.py:104 medicines/views.py:38
+#: groups/views.py:104
+#: medicines/views.py:38
 msgid "Register another patient"
-msgstr "#TRANSLATED#"
+msgstr "Einen weiteren Patienten registrieren"
 
-#: infoservices/forms.py:8 medicines/forms.py:31
+#: infoservices/forms.py:8
+#: medicines/forms.py:31
 msgid "Please enter a text to send"
-msgstr "#TRANSLATED#"
+msgstr "Bitte einen Text eingeben der gesendet werden soll"
 
-#: infoservices/forms.py:9 medicines/forms.py:32
+#: infoservices/forms.py:9
+#: medicines/forms.py:32
 msgid "The text contains invalid characters"
-msgstr "#TRANSLATED#"
+msgstr "Der Text enthält ungültige Zeichen"
 
 #: infoservices/forms.py:17
 msgid "Please enter a name"
-msgstr "#TRANSLATED#"
+msgstr "Bitte einen Namen eingeben"
 
 #: infoservices/forms.py:18
 msgid "The name contains invalid characters"
-msgstr "#TRANSLATED#"
+msgstr "Der Name enthält ungültige Zeichen"
 
 #: infoservices/models.py:23
 msgid "Information Group"
-msgstr "#TRANSLATED#"
+msgstr "Gruppe"
 
 #: infoservices/models.py:24
 msgid "Waiting List for Medicine"
-msgstr "#TRANSLATED#"
+msgstr "Medizin-Warteliste"
 
 #: infoservices/models.py:28
 msgid "Information Groups"
-msgstr "#TRANSLATED#"
+msgstr "Gruppe"
 
 #: infoservices/models.py:29
 msgid "information group"
-msgstr "#TRANSLATED#"
+msgstr "Gruppe"
 
 #: infoservices/models.py:30
 msgid "Group members"
-msgstr "#TRANSLATED#"
+msgstr "Mitglieder der Gruppe"
 
 #: infoservices/models.py:31
 msgid "Remove group"
-msgstr "#TRANSLATED#"
+msgstr "Gruppe entfernen"
 
 #: infoservices/models.py:32
 msgid "Remove patient from group"
-msgstr "#TRANSLATED#"
+msgstr "Patient aus Gruppe entfernen"
 
 #: infoservices/models.py:33
 msgid "Inform patients about:"
-msgstr "#TRANSLATED#"
+msgstr "Patienten informieren über:"
 
 #: infoservices/models.py:34
 msgid "Information"
-msgstr "#TRANSLATED#"
+msgstr "Information"
 
-#: infoservices/models.py:37 templates/web/index.html:10
+#: infoservices/models.py:37
+#: templates/web/index.html:10
 msgid "Waiting Lists for Medicine"
-msgstr "#TRANSLATED#"
+msgstr "Medizin-Wartelisten"
 
 #: infoservices/models.py:38
 msgid "waiting list for medicine"
-msgstr "#TRANSLATED#"
+msgstr "Medizin-Warteliste"
 
 #: infoservices/models.py:39
 msgid "List members"
-msgstr "#TRANSLATED#"
+msgstr "Mitglieder auflisten"
 
 #: infoservices/models.py:40
 msgid "Remove list"
-msgstr "#TRANSLATED#"
+msgstr "Liste entfernen"
 
 #: infoservices/models.py:41
 msgid "Remove patient from list"
-msgstr "#TRANSLATED#"
+msgstr "Patient von Liste entfernen"
 
 #: infoservices/models.py:43
 msgid "The patients are waiting for the following medicine:"
-msgstr "#TRANSLATED#"
+msgstr "Patienten warten auf folgende Medikamente:"
 
 #: infoservices/models.py:44
 msgid "Medicine"
-msgstr "#TRANSLATED#"
+msgstr "Medikament"
 
 #: infoservices/models.py:55
 msgid "name"
-msgstr "#TRANSLATED#"
+msgstr "Name"
 
 #: infoservices/models.py:63
 msgid "Information service"
-msgstr "#TRANSLATED#"
+msgstr "Warteliste/Gruppe"
 
 #: infoservices/views.py:46
 msgid "Creation successful"
-msgstr "#TRANSLATED#"
+msgstr "Erfolgreich erstellt"
 
 #: infoservices/views.py:47
 #, python-format
 msgid "The \"%(infoservice_name)s\" %(infoservice_type)s has been created."
-msgstr "#%(infoservice_name)s#%(infoservice_type)s#TRANSLATED#"
+msgstr "Die \"%(infoservice_name)s\" %(infoservice_type)s Benachrichtigung wurde erstellt."
 
 #: infoservices/views.py:51
 #, python-format
 msgid "Create another %(infoservice_type)s"
-msgstr "#%(infoservice_type)sTRANSLATED#"
+msgstr "Erstelle einen weiteren %(infoservice_type)s"
 
-#: medicines/forms.py:19 medicines/forms.py:21 medicines/forms.py:27
+#: medicines/forms.py:19
+#: medicines/forms.py:21
+#: medicines/forms.py:27
 #: medicines/forms.py:29
 msgid "Please choose a medicine"
-msgstr "#TRANSLATED#"
+msgstr "Bitte ein Medikament auswählen"
 
 #: medicines/views.py:35
 #, python-format
-msgid ""
-"The patient will receive a message once the medicine  \"%s\" is available in "
-"the clinic again."
-msgstr "#%s#TRANSLATED#"
+msgid "The patient will receive a message once the medicine  \"%s\" is available in the clinic again."
+msgstr "Der Patient wird informiert wenn das Medikament \"%s\" in der Klinik verfügbar ist."
 
 #: medicines/views.py:120
 #, python-format
-msgid ""
-"All patients who were waiting for the medicine \"%s\" will be informed. The "
-"waiting list will also be removed."
-msgstr "#%sTRANSLATED#"
+msgid "All patients who were waiting for the medicine \"%s\" will be informed. The waiting list will also be removed."
+msgstr "Alle Patienten die auf das Medikament \"%s\" warten werden informiert.Die Warteliste wird entfernt."
 
-#: notifications/forms.py:20 notifications/forms.py:21
-#: notifications/forms.py:30 notifications/forms.py:31
+#: notifications/forms.py:20
+#: notifications/forms.py:21
+#: notifications/forms.py:30
+#: notifications/forms.py:31
 msgid "Please choose a date"
-msgstr "#TRANSLATED#"
+msgstr "Bitte ein Datum auswählen"
 
 #: notifications/views.py:109
 #, python-format
 msgid "The \"%s\" notification has been created."
-msgstr "#%sTRANSLATED#"
+msgstr "Die \"%s\" Benachrichtigung wurde erstellt."
 
 #: notifications/views.py:111
 msgid "New notification"
-msgstr "#TRANSLATED#"
+msgstr "Neue Benachrichtigung"
 
 #: notifications/views.py:114
 msgid "The patient will be informed immediately."
-msgstr "#TRANSLATED#"
+msgstr "Der Patient wird umgehend informiert."
 
 #: notifications/views.py:116
-msgid ""
-"Please tell the patient that he/she will be reminded one day before the "
-"appointemnt."
-msgstr "#TRANSLATED#"
+msgid "Please tell the patient that he/she will be reminded one day before the appointemnt."
+msgstr "Bitte teile dem Patienten mit, dass er einen Tag vor dem Termin errinert wird."
 
 #: templates/404.html:5
 msgid "Sorry, this page does not exist"
-msgstr "#TRANSLATED#"
+msgstr "Entschuldigung, diese Seite existiert nicht"
 
-#: templates/404.html:6 templates/500.html:8
+#: templates/404.html:6
+#: templates/500.html:8
 msgid "Back to Mainpage"
-msgstr "#TRANSLATED#"
+msgstr "Zurück zur Hauptseite"
 
 #: templates/500.html:4
 msgid ""
@@ -224,58 +229,63 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"#TRANSLATED#"
+"        <h1>Entschuldigung, unser System hat einen Fehler gemacht.</h1>\n"
+"        <h2>Bitte informiere das Personal</h2>\n"
+"    "
 
 #: templates/base.html:27
 msgid "This page needs JavaScript to work."
-msgstr "#TRANSLATED#"
+msgstr "Diese Seite benötigt JavaScript um korrekt angezeigt zu werden."
 
 #: templates/base.html:44
-msgid ""
-"If you want to return to the main menu, click on the sendinel logo in the "
-"upper left corner."
-msgstr "#TRANSLATED#"
+msgid "If you want to return to the main menu, click on the sendinel logo in the upper left corner."
+msgstr "Um in das Hauptmenü zurück zu gelangen, bitte auf das Sendinel Logo in der linken oberen Ecke klicken."
 
 #: templates/groups/message_create.html:14
 #, python-format
 msgid ""
 "Send a message to \n"
 "                %(group)s "
-msgstr "#%(group)s#TRANSLATED#"
+msgstr ""
+"Eine Nachricht an \n"
+" %(group)s senden"
 
 #: templates/groups/message_create.html:16
 #, python-format
 msgid ""
 "%(member_count)s patient(s) will receive this \n"
 "            message"
-msgstr "#%(member_count)s#TRANSLATED#"
+msgstr "%(member_count)s Patient(en) werden diese Nachricht empfangen"
 
-#: templates/groups/message_create.html:22 templates/groups/register.html:20
-#: templates/infoservices/create.html:19 templates/infoservices/index.html:15
+#: templates/groups/message_create.html:22
+#: templates/groups/register.html:20
+#: templates/infoservices/create.html:19
+#: templates/infoservices/index.html:15
 #: templates/infoservices/subscriptions.html:16
 #: templates/medicine/message_create.html:25
-#: templates/medicine/register.html:25 templates/notifications/create.html:40
+#: templates/medicine/register.html:25
+#: templates/notifications/create.html:40
 #: templates/web/control_buttons_back_only_widget.html:4
 msgid "Back"
-msgstr "#TRANSLATED#"
+msgstr "Zurück"
 
-#: templates/groups/message_create.html:28 templates/groups/register.html:29
+#: templates/groups/message_create.html:28
+#: templates/groups/register.html:29
 #: templates/infoservices/create.html:34
 #: templates/medicine/message_create.html:34
-#: templates/medicine/register.html:44 templates/notifications/create.html:75
+#: templates/medicine/register.html:44
+#: templates/notifications/create.html:75
 #: templates/web/control_buttons_next_only_widget.html:8
 msgid "Next"
-msgstr "#TRANSLATED#"
+msgstr "Weiter"
 
 #: templates/groups/register.html:14
 msgid "Register patient for "
-msgstr "#TRANSLATED#"
+msgstr "Patient anmelden für"
 
 #: templates/groups/register.html:15
-msgid ""
-"Please enter the patient's phone number and the way the patient wants to "
-"receive the messages."
-msgstr "#TRANSLATED#"
+msgid "Please enter the patient's phone number and the way the patient wants to receive the messages."
+msgstr "Bitte die Mobiltelefonnummer des Patienten eingeben und die Art der Benachrichtigung wählen."
 
 #: templates/infoservices/create.html:6
 #, python-format
@@ -285,298 +295,223 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"#%(infoservice_type_name)s#TRANSLATED#"
+"Neuen %(infoservice_type_name)s erstellen"
 
 #: templates/infoservices/create.html:10
 #, python-format
 msgid ""
 "\n"
-"                Please enter the name of the %(infoservice_type_name)s you "
-"want to create\n"
+"                Please enter the name of the %(infoservice_type_name)s you want to create\n"
 "            "
 msgstr ""
 "\n"
-"#%(infoservice_type_name)sTRANSLATED#"
+"Bitte den Namen der %(infoservice_type_name)s eintragen, der erstellt werden soll"
 
 #: templates/infoservices/create.html:42
-msgid ""
-"After you have created a new information group, it will also appear in the "
-"main menu."
-msgstr "#TRANSLATED#"
+msgid "After you have created a new information group, it will also appear in the main menu."
+msgstr "Nachdem eine neue Gruppe erstellt wurde, wird sie im Hauptmenü auftauchen."
 
 #: templates/infoservices/index.html:10
 msgid "Do you really want to remove this "
-msgstr "#TRANSLATED#"
+msgstr "Willst du das wirklich entfernen?"
 
 #: templates/infoservices/index.html:24
 msgid "Members"
-msgstr "#TRANSLATED#"
+msgstr "Mitglieder"
 
 #: templates/infoservices/index.html:37
 #: templates/infoservices/subscriptions.html:32
 msgid "Please confirm"
-msgstr "#TRANSLATED#"
+msgstr "Bitte bestätigen "
 
 #: templates/infoservices/index.html:61
 msgid "There is no"
-msgstr "#TRANSLATED#"
+msgstr "Es ist im Moment kein"
 
 #: templates/infoservices/index.html:61
 msgid "here at the moment."
-msgstr "#TRANSLATED#"
+msgstr "da"
 
 #: templates/infoservices/index.html:62
 msgid "Click on the button below to add one."
-msgstr "#TRANSLATED#"
+msgstr "Klicke auf den Button unten um eine weitere hinzuzufügen."
 
 #: templates/infoservices/index.html:72
 msgid "Create"
-msgstr "#TRANSLATED#"
+msgstr "Erstellen"
 
 #: templates/infoservices/subscriptions.html:7
 msgid "Members of "
-msgstr "#TRANSLATED#"
+msgstr "Mitglieder von"
 
 #: templates/infoservices/subscriptions.html:9
 #, python-format
 msgid ""
 "\n"
-"                Do you really want to remove this patient from the %"
-"(infoservice_name)s?\n"
+"                Do you really want to remove this patient from the %(infoservice_name)s?\n"
 "              "
 msgstr ""
 "\n"
-"#%(infoservice_name)s#TRANSLATED#"
+"Willst du wirklich diesen Patienten von %(infoservice_name)s entfernen?"
 
 #: templates/infoservices/subscriptions.html:20
 msgid "Phone Number"
-msgstr "#TRANSLATED#"
+msgstr "Mobiltelefonnummer"
 
 #: templates/infoservices/subscriptions.html:21
 msgid "Way of Communication"
-msgstr "#TRANSLATED#"
+msgstr "Art der Benachrichtigung"
 
 #: templates/medicine/message_create.html:21
 msgid "Inform about the Arrival of Medicine "
-msgstr "#TRANSLATED#"
+msgstr "Über die Verfügbarkeit eines Medikamentes benachrichtigen"
 
 #: templates/medicine/register.html:18
 msgid "Register patient for Waiting List for Medicine"
-msgstr "#TRANSLATED#"
+msgstr "Patient in eine Medikamente-Warteliste eintragen"
 
 #: templates/medicine/register.html:19
-msgid ""
-"Please enter the patient's phone number and the way the patient wants to "
-"receive the notification."
-msgstr "#TRANSLATED#"
+msgid "Please enter the patient's phone number and the way the patient wants to receive the notification."
+msgstr "Bitte die Mobiltelefonnummer des Patienten und die Art der Benachrichtigung auswählen"
 
 #: templates/medicine/register.html:20
 msgid "Then choose the medicine the patient is waiting for."
-msgstr "#TRANSLATED#"
+msgstr "Das Medikament auswählen, auf welches der Patient wartet"
 
 #: templates/medicine/register.html:40
 msgid "Add a new medicine"
-msgstr "#TRANSLATED#"
+msgstr "Neues Medikament hinzufügen"
 
 #: templates/medicine/register.html:49
 msgid "Please enter the name of the medicine you want to add"
-msgstr "#TRANSLATED#"
+msgstr "Bitte den Namen des neuen Medikamentes eintragen."
 
 #: templates/notifications/create.html:31
 #: templates/notifications/create.html:33
 msgid "Please enter the notification details."
-msgstr "#TRANSLATED#"
+msgstr "Bitte die Einzelheiten der Benachrichtigung eingeben"
 
 #: templates/notifications/create.html:44
 #: templates/utils/phone_number_widget.html:3
 msgid "Phone number:"
-msgstr "#TRANSLATED#"
+msgstr "Mobiltelefonnummer:"
 
 #: templates/notifications/create.html:51
 #: templates/utils/phone_number_widget.html:10
 msgid "Please enter a valid phone number"
-msgstr "#TRANSLATED#"
+msgstr "Bitte eine Mobiltelefonnummer eingeben"
 
 #: templates/notifications/create.html:58
 msgid "Date:"
-msgstr "#TRANSLATED#"
+msgstr "Datum:"
 
 #: templates/utils/enter_message_widget.html:3
 msgid "Message Text: "
-msgstr "#TRANSLATED#"
+msgstr "Inhalt der Nachrichten: "
 
 #: templates/utils/enter_message_widget.html:11
 msgid "Characters left: "
-msgstr "#TRANSLATED#"
+msgstr "Verbleibende Zeichen: "
 
 #: templates/utils/medicine_widget.html:3
 msgid "Medicine: "
-msgstr "#TRANSLATED#"
+msgstr "Medikament: "
 
 #: templates/utils/medicine_widget.html:10
 msgid "please choose"
-msgstr "#TRANSLATED#"
+msgstr "Bitte wählen"
 
 #: templates/utils/phone_number_widget.html:11
 #, python-format
 msgid "&quot;%c&quot; Please only enter digits for the phone number"
-msgstr "#%cTRANSLATED#"
+msgstr "&quot;%c&quot; Bitte eine Mobiltelefonnummer - nur Zahlen - eingeben"
 
 #: templates/utils/way_of_communication_widget.html:3
 msgid "Way of communication: "
-msgstr "#TRANSLATED#"
+msgstr "Art der Benachrichtigung: "
 
 #: templates/web/authenticate_phonenumber.html:24
 msgid "Patient phone number"
-msgstr "#TRANSLATED#"
+msgstr "Mobiltelefonnummer des Patienten"
 
 #: templates/web/authenticate_phonenumber.html:25
 msgid "Please enter the patient's phone number:"
-msgstr "#TRANSLATED#"
+msgstr "Bitte die Mobiltelefonnummer des Patienten eintragen"
 
 #: templates/web/authenticate_phonenumber.html:33
 msgid "Phone number"
-msgstr "#TRANSLATED#"
+msgstr "Mobiltelefonnummer"
 
 #: templates/web/authenticate_phonenumber_call.html:13
 msgid "Authenticate Phonenumber"
-msgstr "#TRANSLATED#"
+msgstr "Mobiltelefonnummer authentifizieren"
 
 #: templates/web/authenticate_phonenumber_call.html:15
 msgid "Please ring "
-msgstr "#TRANSLATED#"
+msgstr "Bitte diese Nummer anklingeln: "
 
 #: templates/web/authenticate_phonenumber_call.html:16
 msgid "This will be <strong>free</strong>."
-msgstr "#TRANSLATED#"
+msgstr "Dies ist <strong>kostenlos</strong>."
 
 #: templates/web/control_buttons_widget.html:11
 msgid "New"
-msgstr "#TRANSLATED#"
+msgstr "Neu"
 
 #: templates/web/control_buttons_widget.html:19
 msgid "Main Menu"
-msgstr "#TRANSLATED#"
+msgstr "Hauptmenü"
 
 #: templates/web/index.html:12
 msgid "Currently Missing Medicine"
-msgstr "#TRANSLATED#"
+msgstr "Fehlende Medizin"
 
-#: templates/web/index.html:17 templates/web/index.html.py:62
+#: templates/web/index.html:17
+#: templates/web/index.html.py:62
 msgid "Register Patient"
-msgstr "#TRANSLATED#"
+msgstr "Patient registrieren"
 
-#: templates/web/index.html:24 templates/web/index.html.py:29
-#: templates/web/index.html:68 templates/web/index.html.py:73
+#: templates/web/index.html:24
+#: templates/web/index.html.py:29
+#: templates/web/index.html:68
+#: templates/web/index.html.py:73
 msgid "Send Message"
-msgstr "#TRANSLATED#"
+msgstr "Nachricht senden"
 
 #: templates/web/index.html:38
 msgid "Manage Waiting Lists for Medicine"
-msgstr "#TRANSLATED#"
+msgstr "Medikamenten-Wartelisten verwalten"
 
 #: templates/web/index.html:42
 msgid "Notifications"
-msgstr "#TRANSLATED#"
+msgstr "Benachrichtigungen"
 
 #: templates/web/index.html:55
 msgid "Groups "
-msgstr "#TRANSLATED#"
+msgstr "Gruppen "
 
 #: templates/web/index.html:82
 msgid "Manage Information Groups"
-msgstr "#TRANSLATED#"
+msgstr "Gruppen verwalten"
 
 #: templates/web/list_devices.html:13
 msgid "Available Bluetooth Devices"
-msgstr "#TRANSLATED#"
+msgstr "Gefundene Bluetooth Geräte"
 
 #: templates/web/list_devices.html:15
-msgid ""
-"Please turn on your Bluetooth now. Please assure that it is in the Bluetooth "
-"visibility mode.<br />Please choose your phone when it appears:"
-msgstr "#TRANSLATED#"
+msgid "Please turn on your Bluetooth now. Please assure that it is in the Bluetooth visibility mode.<br />Please choose your phone when it appears:"
+msgstr "Bitte Bluetooth anschalten und sicherstellen, dass das Gerät Bluetooth sichtbar ist<br />Bitte wähle dein Handy wenn es auftaucht:"
 
 #: templates/web/list_devices.html:23
 msgid "Looking for devices"
-msgstr "#TRANSLATED#"
+msgstr "Nach Geräten suchen"
 
 #: templates/web/send_bluetooth_notification.html:13
 #: templates/web/send_bluetooth_notification.html:22
 msgid "Sending your notification"
-msgstr "#TRANSLATED#"
+msgstr "Übertrage die Benachrichtigung"
 
 #: templates/web/send_bluetooth_notification.html:14
 msgid "Please accept the file on your mobile"
-msgstr "#TRANSLATED#"
+msgstr "Bitte den Empfang der Datei am Gerät bestätigen"
 
-#~ msgid "Send message"
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "The \"%(infoservice_name)s\" "
-#~ msgstr "#%(infoservice_name)s#TRANSLATED#"
-
-#~ msgid "SMS"
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "Bluetooth"
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "Voice Call"
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "Sendinel is free for you."
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid ""
-#~ "If you want to return to the main menu, press the arrow keys  ←↑→↓ in "
-#~ "front of you to go to the 'Back' button and press the 'Enter' key."
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "Your username and password didn't match. Please try again."
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "Back to Infoservices"
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "Your are logged in as staff. Please choose what you want to do:"
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "Manage all infoservices"
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "Create a new information group"
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "Save"
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "Back to Information Groups"
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "Create information group"
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "Appointment"
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "Remind of Vaccination"
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "Remind of Follow-Up Consultation"
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid ": Register"
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "Add or remove information group"
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "Register a patient to receive regular information."
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "Sorry, but this does not work yet"
-#~ msgstr "#TRANSLATED#"
-
-#~ msgid "We are working on that and hope to get it running until June 2010."
-#~ msgstr "#TRANSLATED#"

@@ -1,6 +1,3 @@
-from copy import deepcopy
-
-
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
@@ -13,8 +10,8 @@ from sendinel.backend.models import Patient, \
                                     WayOfCommunication
 from sendinel.backend.authhelper import redirect_to_authentication_or
 from sendinel.infoservices.models import InfoService, Subscription
-from sendinel.groups.forms import InfoMessageValidationForm, \
-                                  NotificationValidationForm2
+from sendinel.infoservices.forms import InfoMessageValidationForm
+from sendinel.groups.forms import RegisterPatientForGroupValidationForm
 from sendinel.infoservices.utils import create_messages_for_infoservice, \
                                         set_session_variables_for_register, \
                                         subscription_save
@@ -24,20 +21,24 @@ from sendinel.web.utils import fill_authentication_session_variable, \
                                get_ways_of_communication
 
 @log_request
-def send_message(request, id):
-    group = get_object_or_404(InfoService, pk = id)
+def send_message(request, group_id):
+    '''
+        Display the form and send a message to all 
+        patients who subscribed to the information group. 
+    '''
+    group = get_object_or_404(InfoService, pk = group_id)
     member_count = str(group.members.count())
     if(request.method == "POST"):
         form = InfoMessageValidationForm(request.POST)
         if form.is_valid():
             create_messages_for_infoservice(group, form.cleaned_data['text'])
             
-            backurl = reverse('groups_send_message', kwargs= {'id': id})
+            backurl = reverse('groups_send_message',
+                              kwargs= {'group_id': group_id})
             nexturl = reverse('web_index')
             title = _("Message created")
-            message = _("All members of the \"%s\" service" + \
-                        " will get your message.") \
-                                % group.name
+            message = _("All members of the \"%s\" service"
+                        " will get your message.") % group.name
             new_button_label = _("Send another message")
             success = True
             
@@ -52,17 +53,21 @@ def send_message(request, id):
                                    
 @log_request
 def register(request, group_id):
+    '''
+    Register a patient to an information group, i.e.
+    a new subscription of the infoservice is created.
+    '''
     ajax_url= reverse('web_check_call_received')
     
     # ways_of_communication = get_ways_of_communication(immediate = True)
     ways_of_communication = WayOfCommunication.objects.filter(
-                                                    enabled = True,
-                                                    can_send_immediately = True)
+                                                enabled = True,
+                                                can_send_immediately = True)
     
     if request.method == "POST":
         set_session_variables_for_register(request)
         
-        form = NotificationValidationForm2(request.POST)
+        form = RegisterPatientForGroupValidationForm(request.POST)
         if form.is_valid():
             number = fill_authentication_session_variable(request) 
             auth_number = AUTH_NUMBER
@@ -82,7 +87,11 @@ def register(request, group_id):
                               context_instance = RequestContext(request))
                              
 @log_request
-def save_registration_infoservice(request, group_id):
+def register_save(request, group_id):
+    '''
+        Save the subscription of the patient to the information group.
+        Display the success message.
+    '''
     backurl = reverse('groups_register', 
                       kwargs = {'group_id': group_id})        
     nexturl = reverse('web_index')

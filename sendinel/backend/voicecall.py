@@ -21,7 +21,7 @@ except ImportError:
 import time
 import re
 
-# TODO Test this!
+# TODO Test this completey!
 
 class Voicecall:
     """
@@ -90,9 +90,9 @@ class Voicecall:
         if(self.asterisk_datacard):
             output = """
 Channel: Local/3000
-MaxRetries: 20
+MaxRetries: 1
 RetryTime: 20
-WaitTime: 30
+WaitTime: 40
 Context: %s
 Extension: %s
 Priority: 1
@@ -105,9 +105,9 @@ Archive: true
         else:
             output = """
 Channel: SIP/%s@%s
-MaxRetries: 20
+MaxRetries: 1
 RetryTime: 20
-WaitTime: 30
+WaitTime: 40
 Context: %s
 Extension: %s
 Priority: 1
@@ -133,7 +133,7 @@ Archive: true
 Channel: Local/2000
 WaitTime: 2
 RetryTime: 5
-MaxRetries: 8000
+MaxRetries: 10
 Context: outbound-sms
 Extension: s
 Set: SmsNumber=%s
@@ -197,6 +197,19 @@ Archive: true
         return re.sub('[^\x00-\x8f]', "_", text) 
 
     def conduct_sms(self, number, text, context):
+        """
+            conduct the transferral of an SMS by putting a spoolfile into the
+            right directory
+            @param  number:     Phone number to be called
+            @type   number:     String
+            
+            @param  text:  text to be played when the call is conducted
+            @type   text:  String
+            
+            @param  context:    Asterisk call context to be used for the outgoing call
+            @type   context:    String
+        """
+        
         text = self.replace_special_characters(text)
         content = self.create_sms_spool_content(text, number)
         self.create_spool_file("tmp", content)

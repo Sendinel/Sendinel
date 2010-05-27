@@ -4,8 +4,8 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
+from sendinel.infoservices.forms import InfoServiceValidationForm
 from sendinel.infoservices.models import InfoService, Subscription
-from sendinel.groups.forms import InfoserviceValidationForm
 from sendinel.logger import logger, log_request
 
 @log_request
@@ -21,17 +21,21 @@ def index(request, infoservice_type):
                                 
 @log_request
 def create_infoservice(request, infoservice_type):
+    '''
+        Display the form and save the new infoservice.
+        Display a successmessage.
+    '''
 
     infoservice_textblocks = InfoService.TYPE_TEXTS[infoservice_type]
 
     if request.method == "POST":
-        form = InfoserviceValidationForm(request.POST)
+        data = {'name': request.POST['name'],
+                'type': infoservice_type}
+        form = InfoServiceValidationForm(data)
     
         if form.is_valid():
-    
-            infoservice = InfoService(name = request.POST["name"],
-                                      type = infoservice_type)
-            infoservice.save()
+            form.save()
+            infoservice = form.instance
             
             logger.info("Created InfoService: %s", str(infoservice))
             
@@ -40,7 +44,7 @@ def create_infoservice(request, infoservice_type):
             backurl = reverse('infoservices_create', 
                               kwargs={'infoservice_type': infoservice_type})
             title = _("Creation successful")
-            message = _("The \"%(infoservice_name)s\" " + \
+            message = _("The \"%(infoservice_name)s\" "
                         "%(infoservice_type)s has been created.") \
                         % {'infoservice_name': infoservice.name,
                            'infoservice_type': infoservice_textblocks["name"]}
@@ -50,8 +54,7 @@ def create_infoservice(request, infoservice_type):
             
             return render_to_response('web/status_message.html', 
                           locals(),
-                          context_instance = RequestContext(request))    
-        
+                          context_instance = RequestContext(request))
     return render_to_response("infoservices/create.html",
                                 locals(),
                                 context_instance = RequestContext(request))
@@ -90,4 +93,4 @@ def delete_members_of_infoservice(request, id):
         subscription.delete()
         
     return HttpResponseRedirect(reverse("infoservices_members", 
-                                   kwargs={"id": id}))                                
+                                   kwargs={"id": id}))

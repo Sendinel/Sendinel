@@ -5,54 +5,53 @@
 #
 msgid ""
 msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-27 15:15+0200\n"
+"POT-Creation-Date: 2010-05-27 15:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"#TRANSLATED#Report-Msgid-Bugs-To: \n"
-"#TRANSLATED#Report-Msgid-Bugs-To: \n"
-"#TRANSLATED#Project-Id-Version: PACKAGE VERSION\n"
 
 #: media/js/add_new_medicine.js:33
 msgid "Add Medicine"
-msgstr "#TRANSLATED#"
+msgstr "Medizin hinzufügen"
 
 #: media/js/add_new_medicine.js:34
 msgid "Cancel"
-msgstr "#TRANSLATEDCancel#"
+msgstr "Abbrechen"
 
 #: media/js/auth.js:20
 msgid "Waiting for your call"
-msgstr "#TRANSLATED#"
+msgstr "Bitte jetzt anrufen"
 
 #: media/js/auth.js:31
 msgid ""
 "Sorry, the authentication of your telephone number failed. Please try again."
-msgstr "#TRANSLATED#"
+msgstr ""
+"Tut uns leid, die Authentifizierung deiner Nummer ist leider fehlgeschlagen. "
+"Bitte versuche es erneut."
 
 #: media/js/bluetooth.js:33
 msgid "The Bluetooth device doesn't work correctly. Please inform the clerk."
-msgstr "#TRANSLATED#"
+msgstr ""
+"Das verwendete Bluetooth Gerät scheint fehlerhaft zu sein. Bitte informiere "
+"das Personal."
 
 #: media/js/bluetooth.js:65
 msgid "Thank you! The appointment reminder has been send to your mobile phone."
-msgstr "#TRANSLATED#"
+msgstr "Danke! Die Erinnerung wurde an dein Handy geschickt."
 
 #: media/js/bluetooth.js:75
 msgid "Failed to send appointment reminder"
-msgstr "#TRANSLATED#"
+msgstr "Beim Senden der Erinnerung ist ein Fehler aufgetreten."
 
 #: media/js/validate_sms_input.js:2
 msgid "This message seems to be too short."
-msgstr "#TRANSLATED#"
+msgstr "Die Nachricht scheint zu kurz zu sein."
 
 #: media/js/validate_sms_input.js:3
 msgid "Invalid Character - No Special Characters Allowed"
-msgstr "#TRANSLATED#"
-
-#~ msgid "Thank you! Your telephone number has been authenticated."
-#~ msgstr "#TRANSLATED#"
+msgstr "Ungültiges Zeichen - keine Sonderzeichen erlaubt."

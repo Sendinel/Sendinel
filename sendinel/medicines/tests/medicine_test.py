@@ -62,7 +62,20 @@ class MedicineTest(TestCase):
         self.assertContains(response, 'name="phone_number"')
         self.assertContains(response, 'name="way_of_communication"')
         self.assertContains(response, 'name="medicine"')
-        return response    
+        return response
+        
+    def test_create_medicine(self):
+        response = self.client.post(reverse('medicines_create'),
+                                        {'name': 'Testmedicin'})
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertContains(response, "id")
+        self.assertContains(response, "name")
+        
+        # test if error occurs
+        response = self.client.post(reverse('medicines_create'),
+                                        {'name': ''})
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertContains(response, '"name": ["Please enter a name"]')
         
     def test_medicine_in_register_form(self):
         response = self.client.get(reverse('medicines_register'))
@@ -71,8 +84,11 @@ class MedicineTest(TestCase):
             self.assertContains(response, unicode(medicine))
         
     def test_send_message_form(self):
+        a_medicine = InfoService(name='Malarone', type='medicine')
+        a_medicine.save()
         response = self.client.get(reverse('medicines_send_message'))
         self.failUnlessEqual(response.status_code, 200)
+        self.assertNotContains(response, 'Malarone')
         self.assertContains(response, 'name="medicine"')
         self.assertContains(response, 'textarea')
     

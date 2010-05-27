@@ -160,13 +160,15 @@ AUTHENTICATION_ENABLED = False
 # enable Bluetooth as a Way of Communication
 BLUETOOTH_ENABLED = True
 
-# Salutation for SMS Template
-SMS_SALUTATION = 'Hello, '
+# Salutation for all SMS
+# TODO the count of characters has to be subtracted from "Characters Left:" 
+SMS_SALUTATION = ''
+
 # Salutation for phone calls
 CALL_SALUTATION = "This is an automated call from your clinic"
 
 # Template for Medicine Notification Messages
-MEDICINE_MESSAGE_TEMPLATE = "the medicine $medicine is now available " + \
+MEDICINE_MESSAGE_TEMPLATE = "Your medicine is now available " + \
                             "at the $hospital. Please come and pick it up."
 
 # used for marking the vcal uid

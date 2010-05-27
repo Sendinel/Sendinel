@@ -103,6 +103,10 @@ def check_spool_files():
             pass
 
 def run(run_only_one_time = False):
+    """
+        check every second, if an SMS or a Voicecall needs to be sent
+        and send it if due
+    """
     while True:
         check_spool_files()         
         due_events = get_all_due_events()

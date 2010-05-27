@@ -48,7 +48,9 @@ ask_for() {
 }
 
 
-
+echo "=============================="
+echo "Sendinel configuration"
+echo "=============================="
 
 
 ask_for_and_write "AUTHENTICATION_ENABLED" boolean "Do you want the patient to authenticate against the system via ringing a mobile phone number (True/False)? "

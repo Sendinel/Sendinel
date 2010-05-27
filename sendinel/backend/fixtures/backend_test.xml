@@ -18,19 +18,19 @@
         <field type="BooleanField" name="enabled">True</field>
         <field type="BooleanField" name="can_send_immediately">False</field>
     </object>
-    <object pk="1" model="notifications.appointmenttype">
+    <object pk="1" model="notifications.notificationtype">
         <field type="CharField" name="name">vaccination</field>
         <field type="CharField" name="verbose_name">Vaccination</field>
         <field type="CharField" name="template">please remember the vaccination at the $hospital on $date</field>
         <field type="BooleanField" name="notify_immediately">False</field> 
     </object>
-    <object pk="2" model="notifications.appointmenttype">
+    <object pk="2" model="notifications.notificationtype">
         <field type="CharField" name="name">consultation</field>
         <field type="CharField" name="verbose_name">Follow-Up Consultation</field>
         <field type="CharField" name="template">please remember your consultation at the $hospital on $date</field>
         <field type="BooleanField" name="notify_immediately">False</field>
     </object>
-    <object pk="3" model="notifications.appointmenttype">
+    <object pk="3" model="notifications.notificationtype">
         <field type="CharField" name="name">labresult</field>
         <field type="CharField" name="verbose_name">Lab Result</field>
         <field type="CharField" name="template">your lab results have arrived at the $hospital</field>
@@ -84,23 +84,23 @@
         <field type="CharField" name="name">Medicine-Test</field>
         <field type="CharField" name="type">medicine</field>
     </object>
-    <object pk="1" model="notifications.hospitalappointment">
+    <object pk="1" model="notifications.notification">
         <field to="backend.wayofcommunication" name="way_of_communication" rel="ManyToOneRel">1</field>
         <field type="DateTimeField" name="date">2010-02-08 18:43:07</field>       
-        <field to="notifications.appointmenttype" name="appointment_type" rel="ManyToOneRel">1</field>
+        <field to="notifications.notificationtype" name="notification_type" rel="ManyToOneRel">1</field>
         <field to="backend.hospital" name="hospital" rel="ManyToOneRel">1</field>
         <field to="backend.patient" name="recipient" rel="ManyToOneRel">1</field>
     </object>
 
     <object pk="1" model="backend.scheduledevent">
-        <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>notifications</natural><natural>hospitalappointment</natural></field>
+        <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>notifications</natural><natural>notification</natural></field>
         <field type="PositiveIntegerField" name="sendable_id">1</field>
         <field type="DateTimeField" name="send_time">2010-02-08 18:43:07</field>
         <field type="CharField" name="state">new</field>
     </object>
 
     <object pk="2" model="backend.scheduledevent">
-        <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>notifications</natural><natural>hospitalappointment</natural></field>
+        <field to="contenttypes.contenttype" name="sendable_type" rel="ManyToOneRel"><natural>notifications</natural><natural>notification</natural></field>
         <field type="PositiveIntegerField" name="sendable_id">1</field>
         <field type="DateTimeField" name="send_time">2010-02-08 15:43:07</field>
         <field type="CharField" name="state">new</field>

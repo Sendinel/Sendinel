@@ -26,36 +26,36 @@
 {% block content %}
 
     <div id="contentform">
-    <h3>{{ appointment_type.verbose_name }}</h3>
-    {% if not appointment_type.notify_immediately %}
-        <p>{% trans "Please enter the appointment details." %}</p>
+    <h3>{{ notification_type.verbose_name }}</h3>
+    {% if not notification_type.notify_immediately %}
+        <p>{% trans "Please enter the notification details." %}</p>
     {% else %}
         <p>{% trans "Please enter the notification details." %}</p>
     {% endif %}
     
     
-    <form name="appointment_create" id="content_form" action="./" method="post" autocomplete="off" >
+    <form name="notification_create" id="content_form" action="./" method="post" autocomplete="off" >
     
         <div class="button button-left background-grey link menu-hover rounded-corners float-left" onClick="javascript:location.href='{{ backurl }}'">
             {% trans "Back" %}
         </div>
         <div class="field float-left">
             <div class="head">
-                Phone number:
+                {% trans "Phone number:" %}
                     {% if form.phone_number.errors %}
                         {{ form.phone_number.errors }}
                     {% endif %}
             </div>
             <div class="input">
                 <input id="id_phone_input" type="text" name="phone_number" class="selectable" 
-                        jVal="{valid:function (val) { if (val.length < 6) return false; else return true; }, message:'Please enter a valid phone number'}"
+                        jVal="{valid:function (val) { if (val.length < 6) return false; else return true; }, message:'{% trans "Please enter a valid phone number" %}'}"
                         jValKey="{valid:/[+0-9]/, message:'&quot;%c&quot; not valid', cFunc:'$(\'#submitButton\').click();'}"></input>  
             </div>
         </div>
-        {% if not appointment_type.notify_immediately %}
+        {% if not notification_type.notify_immediately %}
         <div class="field float-left">
             <div class="head">
-                Date:&nbsp;
+                {% trans "Date:" %}
                 {% if form.date.errors %}
                             {{ form.date.errors }}
                 {% endif %}
@@ -72,7 +72,7 @@
             {% include "utils/way_of_communication_widget.html" %}
         </div>
             
-        <div class="button button-right float-left background-grey menu-hover link rounded-corners" onClick="appointment_create.submit();">{% trans "Next" %}</div>
+        <div class="button button-right float-left background-grey menu-hover link rounded-corners" onClick="notification_create.submit();">{% trans "Next" %}</div>
         <div style="clear:both;"></div>        
 
     </form>
