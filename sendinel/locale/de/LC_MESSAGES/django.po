@@ -3,447 +3,515 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-27 11:57+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2010-05-27 15:31+0200\n"
+"PO-Revision-Date: 2010-05-27 15:45+0100\n"
+"Last-Translator: Michael Frister <michael@frister.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\backend\authhelper.py:42
+#: backend/authhelper.py:42
 msgid "Please enter numbers only."
 msgstr "Bitte nur Nummern eingeben."
 
-#: .\backend\authhelper.py:47
+#: backend/authhelper.py:47
 msgid "Please enter a cell phone number."
 msgstr "Bitte eine Mobiltelefonnummer eingeben"
 
-#: .\groups\forms.py:11 .\medicines\forms.py:11 .\notifications\forms.py:12
+#: groups/forms.py:11
+#: medicines/forms.py:11
+#: notifications/forms.py:12
 msgid "Please enter a phone number"
 msgstr "Bitte eine Mobiltelefonnummer eingeben"
 
-#: .\groups\forms.py:15 .\medicines\forms.py:15 .\notifications\forms.py:18
-#: .\notifications\forms.py:28
+#: groups/forms.py:15
+#: medicines/forms.py:15
+#: notifications/forms.py:18
+#: notifications/forms.py:28
 msgid "Please choose a way of communication"
 msgstr "Bitte das Kommunikationsmittel auswählen"
 
-#: .\groups\views.py:39 .\medicines\views.py:118
+#: groups/views.py:39
+#: medicines/views.py:119
 msgid "Message created"
 msgstr "Nachricht erstellt"
 
-#: .\groups\views.py:40
+#: groups/views.py:40
 #, python-format
-msgid "All members of the \"%s\" service"
-msgstr "Alle Mitglieder des \"%s\" Dienstes"
+msgid "All members of the \"%s\" service will get your message."
+msgstr "Alle Mitglieder des Dienstes \"%s\" werden die Nachricht empfangen."
 
-#: .\groups\views.py:43 .\medicines\views.py:121
+#: groups/views.py:42
+#: medicines/views.py:123
 msgid "Send another message"
 msgstr "Eine weitere Nachricht senden"
 
-#: .\groups\views.py:102 .\medicines\views.py:34
+#: groups/views.py:101
+#: medicines/views.py:34
 msgid "Registration successful"
 msgstr "Registrierung erfolgreich"
 
-#: .\groups\views.py:103
+#: groups/views.py:102
 #, python-format
 msgid "The patient will now receive all messages from the  \"%s\" service."
 msgstr "Der Patient wird ab jetzt alle Nachrichten des \"%s\" Dienste empfangen."
 
-#: .\groups\views.py:105 .\medicines\views.py:38
+#: groups/views.py:104
+#: medicines/views.py:38
 msgid "Register another patient"
 msgstr "Einen weiteren Patienten registrieren"
 
-#: .\infoservices\forms.py:7 .\medicines\forms.py:31
+#: infoservices/forms.py:8
+#: medicines/forms.py:31
 msgid "Please enter a text to send"
 msgstr "Bitte einen Text eingeben der gesendet werden soll"
 
-#: .\infoservices\forms.py:8 .\medicines\forms.py:32
+#: infoservices/forms.py:9
+#: medicines/forms.py:32
 msgid "The text contains invalid characters"
 msgstr "Der Text enthält ungültige Zeichen"
 
-#: .\infoservices\forms.py:12
+#: infoservices/forms.py:17
 msgid "Please enter a name"
 msgstr "Bitte einen Namen eingeben"
 
-#: .\infoservices\forms.py:13
+#: infoservices/forms.py:18
 msgid "The name contains invalid characters"
 msgstr "Der Name enthält ungültige Zeichen"
 
-#: .\infoservices\models.py:23
+#: infoservices/models.py:23
 msgid "Information Group"
 msgstr "Gruppe"
 
-#: .\infoservices\models.py:24
+#: infoservices/models.py:24
 msgid "Waiting List for Medicine"
 msgstr "Medizin-Warteliste"
 
-#: .\infoservices\models.py:28
+#: infoservices/models.py:28
 msgid "Information Groups"
 msgstr "Gruppe"
 
-#: .\infoservices\models.py:29
+#: infoservices/models.py:29
 msgid "information group"
 msgstr "Gruppe"
 
-#: .\infoservices\models.py:30
+#: infoservices/models.py:30
 msgid "Group members"
 msgstr "Mitglieder der Gruppe"
 
-#: .\infoservices\models.py:31
+#: infoservices/models.py:31
 msgid "Remove group"
 msgstr "Gruppe entfernen"
 
-#: .\infoservices\models.py:32
+#: infoservices/models.py:32
 msgid "Remove patient from group"
-msgstr "Patienten aus Gruppe entfernen"
+msgstr "Patient aus Gruppe entfernen"
 
-#: .\infoservices\models.py:33
+#: infoservices/models.py:33
 msgid "Inform patients about:"
 msgstr "Patienten informieren über:"
 
-#: .\infoservices\models.py:34
+#: infoservices/models.py:34
 msgid "Information"
 msgstr "Information"
 
-#: .\infoservices\models.py:37 .\templates\web\index.html.py:10
+#: infoservices/models.py:37
+#: templates/web/index.html:10
 msgid "Waiting Lists for Medicine"
 msgstr "Medizin-Wartelisten"
 
-#: .\infoservices\models.py:38
+#: infoservices/models.py:38
 msgid "waiting list for medicine"
 msgstr "Medizin-Warteliste"
 
-#: .\infoservices\models.py:39
+#: infoservices/models.py:39
 msgid "List members"
 msgstr "Mitglieder auflisten"
 
-#: .\infoservices\models.py:40
+#: infoservices/models.py:40
 msgid "Remove list"
 msgstr "Liste entfernen"
 
-#: .\infoservices\models.py:41
+#: infoservices/models.py:41
 msgid "Remove patient from list"
 msgstr "Patient von Liste entfernen"
 
-#: .\infoservices\models.py:43
+#: infoservices/models.py:43
 msgid "The patients are waiting for the following medicine:"
 msgstr "Patienten warten auf folgende Medikamente:"
 
-#: .\infoservices\models.py:44
+#: infoservices/models.py:44
 msgid "Medicine"
 msgstr "Medikament"
 
-#: .\infoservices\views.py:46
+#: infoservices/models.py:55
+msgid "name"
+msgstr "Name"
+
+#: infoservices/models.py:63
+msgid "Information service"
+msgstr "Warteliste/Gruppe"
+
+#: infoservices/views.py:46
 msgid "Creation successful"
 msgstr "Erfolgreich erstellt"
 
-#: .\infoservices\views.py:47
+#: infoservices/views.py:47
 #, python-format
-msgid "The \"%(infoservice_name)s\" "
-msgstr "Der \"%(infoservice_name)s\" "
+msgid "The \"%(infoservice_name)s\" %(infoservice_type)s has been created."
+msgstr "Die \"%(infoservice_name)s\" %(infoservice_type)s Benachrichtigung wurde erstellt."
 
-#: .\infoservices\views.py:51
+#: infoservices/views.py:51
 #, python-format
 msgid "Create another %(infoservice_type)s"
 msgstr "Erstelle einen weiteren %(infoservice_type)s"
 
-#: .\medicines\forms.py:19 .\medicines\forms.py:21 .\medicines\forms.py:27
-#: .\medicines\forms.py:29
+#: medicines/forms.py:19
+#: medicines/forms.py:21
+#: medicines/forms.py:27
+#: medicines/forms.py:29
 msgid "Please choose a medicine"
 msgstr "Bitte ein Medikament auswählen"
 
-#: .\medicines\views.py:35
+#: medicines/views.py:35
 #, python-format
-msgid ""
-"The patient will receive a messages once the medicine  \"%s\" is available "
-"in the clinic again."
+msgid "The patient will receive a message once the medicine  \"%s\" is available in the clinic again."
 msgstr "Der Patient wird informiert wenn das Medikament \"%s\" in der Klinik verfügbar ist."
 
-#: .\medicines\views.py:119
-msgid "All patients who were waiting for the medicine "
-msgstr "Alle Patienten die auf das Medikament warten"
+#: medicines/views.py:120
+#, python-format
+msgid "All patients who were waiting for the medicine \"%s\" will be informed. The waiting list will also be removed."
+msgstr "Alle Patienten die auf das Medikament \"%s\" warten werden informiert.Die Warteliste wird entfernt."
 
-#: .\notifications\forms.py:20 .\notifications\forms.py:21
-#: .\notifications\forms.py:30 .\notifications\forms.py:31
+#: notifications/forms.py:20
+#: notifications/forms.py:21
+#: notifications/forms.py:30
+#: notifications/forms.py:31
 msgid "Please choose a date"
 msgstr "Bitte ein Datum auswählen"
 
-#: .\notifications\views.py:109
+#: notifications/views.py:109
 #, python-format
 msgid "The \"%s\" notification has been created."
 msgstr "Die \"%s\" Benachrichtigung wurde erstellt."
 
-#: .\notifications\views.py:111
+#: notifications/views.py:111
 msgid "New notification"
 msgstr "Neue Benachrichtigung"
 
-#: .\notifications\views.py:114
+#: notifications/views.py:114
 msgid "The patient will be informed immediately."
 msgstr "Der Patient wird umgehend informiert."
 
-#: .\notifications\views.py:116
-msgid ""
-"Please tell the patient that he/she will be reminded one day before the "
-"notification."
+#: notifications/views.py:116
+msgid "Please tell the patient that he/she will be reminded one day before the appointemnt."
 msgstr "Bitte teile dem Patienten mit, dass er einen Tag vor dem Termin errinert wird."
 
-#: .\templates\404.html.py:5
+#: templates/404.html:5
 msgid "Sorry, this page does not exist"
 msgstr "Entschuldigung, diese Seite existiert nicht"
 
-#: .\templates\base.html.py:28
+#: templates/404.html:6
+#: templates/500.html:8
+msgid "Back to Mainpage"
+msgstr "Zurück zur Hauptseite"
+
+#: templates/500.html:4
+msgid ""
+"\n"
+"        <h1>Sorry, an error occured.</h1>\n"
+"        <h2>Please inform the clinic staff</h2>\n"
+"    "
+msgstr ""
+"\n"
+"        <h1>Entschuldigung, unser System hat einen Fehler gemacht.</h1>\n"
+"        <h2>Bitte informiere das Personal</h2>\n"
+"    "
+
+#: templates/base.html:27
 msgid "This page needs JavaScript to work."
 msgstr "Diese Seite benötigt JavaScript um korrekt angezeigt zu werden."
 
-#: .\templates\base.html.py:45
-msgid ""
-"If you want to return to the main menu, click on the sendinel logo in the "
-"upper left corner."
+#: templates/base.html:44
+msgid "If you want to return to the main menu, click on the sendinel logo in the upper left corner."
 msgstr "Um in das Hauptmenü zurück zu gelangen, bitte auf das Sendinel Logo in der linken oberen Ecke klicken."
 
-#: .\templates\groups\message_create.html.py:14
+#: templates/groups/message_create.html:14
 #, python-format
 msgid ""
 "Send a message to \n"
 "                %(group)s "
-msgstr "Eine Nachricht an \n %(group)s senden"
+msgstr ""
+"Eine Nachricht an \n"
+" %(group)s senden"
 
-#: .\templates\groups\message_create.html.py:16
+#: templates/groups/message_create.html:16
 #, python-format
 msgid ""
 "%(member_count)s patient(s) will receive this \n"
 "            message"
 msgstr "%(member_count)s Patient(en) werden diese Nachricht empfangen"
 
-#: .\templates\groups\message_create.html.py:22
-#: .\templates\groups\register.html.py:20
-#: .\templates\infoservices\create.html.py:19
-#: .\templates\infoservices\index.html.py:15
-#: .\templates\infoservices\subscriptions.html.py:16
-#: .\templates\medicine\message_create.html.py:25
-#: .\templates\medicine\register.html.py:25
-#: .\templates\notifications\create.html.py:40
-#: .\templates\web\control_buttons_back_only_widget.html.py:4
+#: templates/groups/message_create.html:22
+#: templates/groups/register.html:20
+#: templates/infoservices/create.html:19
+#: templates/infoservices/index.html:15
+#: templates/infoservices/subscriptions.html:16
+#: templates/medicine/message_create.html:25
+#: templates/medicine/register.html:25
+#: templates/notifications/create.html:40
+#: templates/web/control_buttons_back_only_widget.html:4
 msgid "Back"
 msgstr "Zurück"
 
-#: .\templates\groups\message_create.html.py:28
-#: .\templates\groups\register.html.py:29
-#: .\templates\infoservices\create.html.py:34
-#: .\templates\medicine\message_create.html.py:34
-#: .\templates\medicine\register.html.py:44
-#: .\templates\notifications\create.html.py:75
-#: .\templates\web\control_buttons_next_only_widget.html.py:8
+#: templates/groups/message_create.html:28
+#: templates/groups/register.html:29
+#: templates/infoservices/create.html:34
+#: templates/medicine/message_create.html:34
+#: templates/medicine/register.html:44
+#: templates/notifications/create.html:75
+#: templates/web/control_buttons_next_only_widget.html:8
 msgid "Next"
 msgstr "Weiter"
 
-#: .\templates\groups\register.html.py:14
+#: templates/groups/register.html:14
 msgid "Register patient for "
 msgstr "Patient anmelden für"
 
-#: .\templates\groups\register.html.py:15
-msgid ""
-"Please enter the patient's phone number and the way the patient wants to "
-"receive the messages."
+#: templates/groups/register.html:15
+msgid "Please enter the patient's phone number and the way the patient wants to receive the messages."
 msgstr "Bitte die Mobiltelefonnummer des Patienten eingeben und die Art der Benachrichtigung wählen."
 
-#: .\templates\infoservices\create.html.py:6
+#: templates/infoservices/create.html:6
 #, python-format
 msgid ""
 "\n"
 "                Create a new %(infoservice_type_name)s\n"
 "            "
-msgstr "\nNeuen %(infoservice_type_name)s erstellen"
+msgstr ""
+"\n"
+"Neuen %(infoservice_type_name)s erstellen"
 
-#: .\templates\infoservices\create.html.py:10
+#: templates/infoservices/create.html:10
 #, python-format
 msgid ""
 "\n"
-"                Please enter the name of the %(infoservice_type_name)s you "
-"want to create\n"
+"                Please enter the name of the %(infoservice_type_name)s you want to create\n"
 "            "
-msgstr "\nBitte den Namen der %(infoservice_type_name)s eintragen, der erstellt werden soll"
+msgstr ""
+"\n"
+"Bitte den Namen der %(infoservice_type_name)s eintragen, der erstellt werden soll"
 
-#: .\templates\infoservices\create.html.py:42
-msgid ""
-"After you have created a new information group, it will also appear in the "
-"main menu."
+#: templates/infoservices/create.html:42
+msgid "After you have created a new information group, it will also appear in the main menu."
 msgstr "Nachdem eine neue Gruppe erstellt wurde, wird sie im Hauptmenü auftauchen."
 
-#: .\templates\infoservices\index.html.py:10
+#: templates/infoservices/index.html:10
 msgid "Do you really want to remove this "
 msgstr "Willst du das wirklich entfernen?"
 
-#: .\templates\infoservices\index.html.py:24
+#: templates/infoservices/index.html:24
 msgid "Members"
 msgstr "Mitglieder"
 
-#: .\templates\infoservices\index.html.py:52
-msgid "Send message"
-msgstr "Nachricht senden"
+#: templates/infoservices/index.html:37
+#: templates/infoservices/subscriptions.html:32
+msgid "Please confirm"
+msgstr "Bitte bestätigen "
 
-#: .\templates\infoservices\index.html.py:72
+#: templates/infoservices/index.html:61
 msgid "There is no"
-msgstr "Es ist kein"
+msgstr "Es ist im Moment kein"
 
-#: .\templates\infoservices\index.html.py:72
+#: templates/infoservices/index.html:61
 msgid "here at the moment."
-msgstr "da im Moment"
+msgstr "da"
 
-#: .\templates\infoservices\index.html.py:73
+#: templates/infoservices/index.html:62
 msgid "Click on the button below to add one."
-msgstr "Benutz den Button unten um eine weitere hinzuzufügen."
+msgstr "Klicke auf den Button unten um eine weitere hinzuzufügen."
 
-#: .\templates\infoservices\index.html.py:83
+#: templates/infoservices/index.html:72
 msgid "Create"
 msgstr "Erstellen"
 
-#: .\templates\infoservices\subscriptions.html.py:7
+#: templates/infoservices/subscriptions.html:7
 msgid "Members of "
 msgstr "Mitglieder von"
 
-#: .\templates\infoservices\subscriptions.html.py:9
+#: templates/infoservices/subscriptions.html:9
 #, python-format
 msgid ""
 "\n"
-"                Do you really want to remove this patient from the %"
-"(infoservice_name)s?\n"
+"                Do you really want to remove this patient from the %(infoservice_name)s?\n"
 "              "
-msgstr "\nWillst du wirklich diesen Patienten von %(infoservice_name)s entfernen?"
+msgstr ""
+"\n"
+"Willst du wirklich diesen Patienten von %(infoservice_name)s entfernen?"
 
-#: .\templates\infoservices\subscriptions.html.py:20
+#: templates/infoservices/subscriptions.html:20
 msgid "Phone Number"
 msgstr "Mobiltelefonnummer"
 
-#: .\templates\infoservices\subscriptions.html.py:21
+#: templates/infoservices/subscriptions.html:21
 msgid "Way of Communication"
 msgstr "Art der Benachrichtigung"
 
-#: .\templates\medicine\message_create.html.py:21
+#: templates/medicine/message_create.html:21
 msgid "Inform about the Arrival of Medicine "
 msgstr "Über die Verfügbarkeit eines Medikamentes benachrichtigen"
 
-#: .\templates\medicine\register.html.py:18
+#: templates/medicine/register.html:18
 msgid "Register patient for Waiting List for Medicine"
 msgstr "Patient in eine Medikamente-Warteliste eintragen"
 
-#: .\templates\medicine\register.html.py:19
-msgid ""
-"Please enter the patient's phone number and the way the patient wants to "
-"receive the notification."
+#: templates/medicine/register.html:19
+msgid "Please enter the patient's phone number and the way the patient wants to receive the notification."
 msgstr "Bitte die Mobiltelefonnummer des Patienten und die Art der Benachrichtigung auswählen"
 
-#: .\templates\medicine\register.html.py:20
+#: templates/medicine/register.html:20
 msgid "Then choose the medicine the patient is waiting for."
 msgstr "Das Medikament auswählen, auf welches der Patient wartet"
 
-#: .\templates\medicine\register.html.py:40
+#: templates/medicine/register.html:40
 msgid "Add a new medicine"
 msgstr "Neues Medikament hinzufügen"
 
-#: .\templates\medicine\register.html.py:49
+#: templates/medicine/register.html:49
 msgid "Please enter the name of the medicine you want to add"
 msgstr "Bitte den Namen des neuen Medikamentes eintragen."
 
-#: .\templates\notifications\create.html.py:31
-#: .\templates\notifications\create.html.py:33
+#: templates/notifications/create.html:31
+#: templates/notifications/create.html:33
 msgid "Please enter the notification details."
 msgstr "Bitte die Einzelheiten der Benachrichtigung eingeben"
 
-#: .\templates\utils\enter_message_widget.html.py:3
+#: templates/notifications/create.html:44
+#: templates/utils/phone_number_widget.html:3
+msgid "Phone number:"
+msgstr "Mobiltelefonnummer:"
+
+#: templates/notifications/create.html:51
+#: templates/utils/phone_number_widget.html:10
+msgid "Please enter a valid phone number"
+msgstr "Bitte eine Mobiltelefonnummer eingeben"
+
+#: templates/notifications/create.html:58
+msgid "Date:"
+msgstr "Datum:"
+
+#: templates/utils/enter_message_widget.html:3
 msgid "Message Text: "
 msgstr "Inhalt der Nachrichten: "
 
-#: .\templates\utils\enter_message_widget.html.py:11
+#: templates/utils/enter_message_widget.html:11
 msgid "Characters left: "
 msgstr "Verbleibende Zeichen: "
 
-#: .\templates\utils\medicine_widget.html.py:3
+#: templates/utils/medicine_widget.html:3
 msgid "Medicine: "
 msgstr "Medikament: "
 
-#: .\templates\utils\way_of_communication_widget.html.py:3
+#: templates/utils/medicine_widget.html:10
+msgid "please choose"
+msgstr "Bitte wählen"
+
+#: templates/utils/phone_number_widget.html:11
+#, python-format
+msgid "&quot;%c&quot; Please only enter digits for the phone number"
+msgstr "&quot;%c&quot; Bitte eine Mobiltelefonnummer - nur Zahlen - eingeben"
+
+#: templates/utils/way_of_communication_widget.html:3
 msgid "Way of communication: "
 msgstr "Art der Benachrichtigung: "
 
-#: .\templates\web\authenticate_phonenumber.html.py:24
+#: templates/web/authenticate_phonenumber.html:24
 msgid "Patient phone number"
 msgstr "Mobiltelefonnummer des Patienten"
 
-#: .\templates\web\authenticate_phonenumber.html.py:25
+#: templates/web/authenticate_phonenumber.html:25
 msgid "Please enter the patient's phone number:"
 msgstr "Bitte die Mobiltelefonnummer des Patienten eintragen"
 
-#: .\templates\web\authenticate_phonenumber.html.py:33
+#: templates/web/authenticate_phonenumber.html:33
 msgid "Phone number"
 msgstr "Mobiltelefonnummer"
 
-#: .\templates\web\authenticate_phonenumber_call.html.py:13
+#: templates/web/authenticate_phonenumber_call.html:13
 msgid "Authenticate Phonenumber"
 msgstr "Mobiltelefonnummer authentifizieren"
 
-#: .\templates\web\authenticate_phonenumber_call.html.py:15
+#: templates/web/authenticate_phonenumber_call.html:15
 msgid "Please ring "
 msgstr "Bitte diese Nummer anklingeln: "
 
-#: .\templates\web\authenticate_phonenumber_call.html.py:16
+#: templates/web/authenticate_phonenumber_call.html:16
 msgid "This will be <strong>free</strong>."
 msgstr "Dies ist <strong>kostenlos</strong>."
 
-#: .\templates\web\control_buttons_widget.html.py:11
+#: templates/web/control_buttons_widget.html:11
 msgid "New"
 msgstr "Neu"
 
-#: .\templates\web\control_buttons_widget.html.py:19
+#: templates/web/control_buttons_widget.html:19
 msgid "Main Menu"
 msgstr "Hauptmenü"
 
-#: .\templates\web\index.html.py:17 .\templates\web\index.html.py:62
+#: templates/web/index.html:12
+msgid "Currently Missing Medicine"
+msgstr "Fehlende Medizin"
+
+#: templates/web/index.html:17
+#: templates/web/index.html.py:62
 msgid "Register Patient"
 msgstr "Patient registrieren"
 
-#: .\templates\web\index.html.py:24 .\templates\web\index.html.py:29
-#: .\templates\web\index.html.py:68 .\templates\web\index.html.py:73
+#: templates/web/index.html:24
+#: templates/web/index.html.py:29
+#: templates/web/index.html:68
+#: templates/web/index.html.py:73
 msgid "Send Message"
 msgstr "Nachricht senden"
 
-#: .\templates\web\index.html.py:38
+#: templates/web/index.html:38
 msgid "Manage Waiting Lists for Medicine"
 msgstr "Medikamenten-Wartelisten verwalten"
 
-#: .\templates\web\index.html.py:42
+#: templates/web/index.html:42
 msgid "Notifications"
 msgstr "Benachrichtigungen"
 
-#: .\templates\web\index.html.py:55
+#: templates/web/index.html:55
 msgid "Groups "
 msgstr "Gruppen "
 
-#: .\templates\web\index.html.py:82
+#: templates/web/index.html:82
 msgid "Manage Information Groups"
 msgstr "Gruppen verwalten"
 
-#: .\templates\web\list_devices.html.py:15
-msgid ""
-"Please turn on your Bluetooth now. Please assure that it is in the Bluetooth "
-"visibility mode."
-msgstr "Bitte Bluetooth anschalten und sicherstellen, dass das Gerät Bluetooth sichtbar ist"
+#: templates/web/list_devices.html:13
+msgid "Available Bluetooth Devices"
+msgstr "Gefundene Bluetooth Geräte"
 
-#: .\templates\web\list_devices.html.py:23
+#: templates/web/list_devices.html:15
+msgid "Please turn on your Bluetooth now. Please assure that it is in the Bluetooth visibility mode.<br />Please choose your phone when it appears:"
+msgstr "Bitte Bluetooth anschalten und sicherstellen, dass das Gerät Bluetooth sichtbar ist<br />Bitte wähle dein Handy wenn es auftaucht:"
+
+#: templates/web/list_devices.html:23
 msgid "Looking for devices"
 msgstr "Nach Geräten suchen"
 
-#: .\templates\web\send_bluetooth_notification.html.py:13
-#: .\templates\web\send_bluetooth_notification.html.py:22
+#: templates/web/send_bluetooth_notification.html:13
+#: templates/web/send_bluetooth_notification.html:22
 msgid "Sending your notification"
 msgstr "Übertrage die Benachrichtigung"
 
-#: .\templates\web\send_bluetooth_notification.html.py:14
+#: templates/web/send_bluetooth_notification.html:14
 msgid "Please accept the file on your mobile"
 msgstr "Bitte den Empfang der Datei am Gerät bestätigen"
+
