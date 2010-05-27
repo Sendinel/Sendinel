@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sendinel.urls</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="sendinel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="sendinel-module.html">Package&nbsp;sendinel</a> ::
+        Module&nbsp;urls
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="sendinel.urls-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="sendinel.urls-module.html">Module sendinel.urls</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">conf</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Module sendinel.groups.urls=sendinel.groups.urls-module.html,Module sendinel.infoservices.urls=sendinel.infoservices.urls-module.html,Module sendinel.medicines.urls=sendinel.medicines.urls-module.html,Variable sendinel.notifications.tests.notifications_test.NotificationViewTest.urls=sendinel.notifications.tests.notifications_test.NotificationViewTest-class.html#urls,Module sendinel.notifications.urls=sendinel.notifications.urls-module.html,Module sendinel.urls=sendinel.urls-module.html,Variable sendinel.web.tests.auth_test.AuthenticateViewTests.urls=sendinel.web.tests.auth_test.AuthenticateViewTests-class.html#urls,Variable sendinel.web.tests.i18n_test.InternationalizationTest.urls=sendinel.web.tests.i18n_test.InternationalizationTest-class.html#urls,Variable sendinel.web.tests.utils_test.UtilsTemplateTests.urls=sendinel.web.tests.utils_test.UtilsTemplateTests-class.html#urls,Module sendinel.web.urls=sendinel.web.urls-module.html"><a title="sendinel.groups.urls
+sendinel.infoservices.urls
+sendinel.medicines.urls
+sendinel.notifications.tests.notifications_test.NotificationViewTest.urls
+sendinel.notifications.urls
+sendinel.urls
+sendinel.web.tests.auth_test.AuthenticateViewTests.urls
+sendinel.web.tests.i18n_test.InternationalizationTest.urls
+sendinel.web.tests.utils_test.UtilsTemplateTests.urls
+sendinel.web.urls" class="py-name" href="#" onclick="return doclink('link-0', 'urls', 'link-0');">urls</a></tt><tt class="py-op">.</tt><tt class="py-name">defaults</tt> <tt class="py-keyword">import</tt> <tt class="py-name">handler404</tt><tt class="py-op">,</tt> <tt class="py-name">handler500</tt><tt class="py-op">,</tt> <tt class="py-name">include</tt><tt class="py-op">,</tt> \ </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line">                                        <tt class="py-name">patterns</tt><tt class="py-op">,</tt> <tt class="py-name">url</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">conf</tt> <tt class="py-keyword">import</tt> <tt id="link-1" class="py-name" targets="Module sendinel.settings=sendinel.settings-module.html"><a title="sendinel.settings" class="py-name" href="#" onclick="return doclink('link-1', 'settings', 'link-1');">settings</a></tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module sendinel.groups.views=sendinel.groups.views-module.html,Module sendinel.medicines.views=sendinel.medicines.views-module.html,Module sendinel.notifications.views=sendinel.notifications.views-module.html,Module sendinel.web.views=sendinel.web.views-module.html"><a title="sendinel.groups.views
+sendinel.medicines.views
+sendinel.notifications.views
+sendinel.web.views" class="py-name" href="#" onclick="return doclink('link-2', 'views', 'link-2');">views</a></tt><tt class="py-op">.</tt><tt class="py-name">generic</tt><tt class="py-op">.</tt><tt class="py-name">simple</tt> <tt class="py-keyword">import</tt> <tt class="py-name">redirect_to</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"># Uncomment the next two lines to enable the admin:</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">contrib</tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Module sendinel.backend.admin=sendinel.backend.admin-module.html"><a title="sendinel.backend.admin" class="py-name" href="#" onclick="return doclink('link-3', 'admin', 'link-3');">admin</a></tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt id="link-4" class="py-name"><a title="sendinel.backend.admin" class="py-name" href="#" onclick="return doclink('link-4', 'admin', 'link-3');">admin</a></tt><tt class="py-op">.</tt><tt class="py-name">autodiscover</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt id="link-5" class="py-name" targets="Variable sendinel.urls.js_info_web=sendinel.urls-module.html#js_info_web"><a title="sendinel.urls.js_info_web" class="py-name" href="#" onclick="return doclink('link-5', 'js_info_web', 'link-5');">js_info_web</a></tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line">    <tt class="py-string">'packages'</tt><tt class="py-op">:</tt> <tt class="py-op">(</tt><tt class="py-string">'sendinel'</tt><tt class="py-op">)</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-op">}</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt id="link-6" class="py-name" targets="Variable sendinel.groups.urls.urlpatterns=sendinel.groups.urls-module.html#urlpatterns,Variable sendinel.infoservices.urls.urlpatterns=sendinel.infoservices.urls-module.html#urlpatterns,Variable sendinel.medicines.urls.urlpatterns=sendinel.medicines.urls-module.html#urlpatterns,Variable sendinel.notifications.urls.urlpatterns=sendinel.notifications.urls-module.html#urlpatterns,Variable sendinel.urls.urlpatterns=sendinel.urls-module.html#urlpatterns,Variable sendinel.web.urls.urlpatterns=sendinel.web.urls-module.html#urlpatterns"><a title="sendinel.groups.urls.urlpatterns
+sendinel.infoservices.urls.urlpatterns
+sendinel.medicines.urls.urlpatterns
+sendinel.notifications.urls.urlpatterns
+sendinel.urls.urlpatterns
+sendinel.web.urls.urlpatterns" class="py-name" href="#" onclick="return doclink('link-6', 'urlpatterns', 'link-6');">urlpatterns</a></tt> <tt class="py-op">=</tt> <tt class="py-name">patterns</tt><tt class="py-op">(</tt><tt class="py-string">''</tt><tt class="py-op">,</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line">    <tt class="py-name">url</tt><tt class="py-op">(</tt><tt class="py-string">r'^$'</tt><tt class="py-op">,</tt> <tt class="py-name">redirect_to</tt><tt class="py-op">,</tt> <tt class="py-op">{</tt><tt class="py-string">'url'</tt><tt class="py-op">:</tt> <tt class="py-string">'web/'</tt><tt class="py-op">}</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">r'^groups/'</tt><tt class="py-op">,</tt> <tt class="py-name">include</tt><tt class="py-op">(</tt><tt class="py-string">'sendinel.groups.urls'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">r'^infoservices/'</tt><tt class="py-op">,</tt> <tt class="py-name">include</tt><tt class="py-op">(</tt><tt class="py-string">'sendinel.infoservices.urls'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">r'^medicine/'</tt><tt class="py-op">,</tt> <tt class="py-name">include</tt><tt class="py-op">(</tt><tt class="py-string">'sendinel.medicines.urls'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">r'^web/'</tt><tt class="py-op">,</tt> <tt class="py-name">include</tt><tt class="py-op">(</tt><tt class="py-string">'sendinel.web.urls'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">r'^notifications/'</tt><tt class="py-op">,</tt> <tt class="py-name">include</tt><tt class="py-op">(</tt><tt class="py-string">'sendinel.notifications.urls'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">r'^i18n/'</tt><tt class="py-op">,</tt> <tt class="py-name">include</tt><tt class="py-op">(</tt><tt class="py-string">'django.conf.urls.i18n'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">    <tt class="py-name">url</tt><tt class="py-op">(</tt><tt class="py-string">r'^jsi18n/'</tt><tt class="py-op">,</tt> <tt class="py-string">'django.views.i18n.javascript_catalog'</tt><tt class="py-op">,</tt> <tt id="link-7" class="py-name"><a title="sendinel.urls.js_info_web" class="py-name" href="#" onclick="return doclink('link-7', 'js_info_web', 'link-5');">js_info_web</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">        <tt id="link-8" class="py-name" targets="Variable sendinel.backend.models.Hospital.name=sendinel.backend.models.Hospital-class.html#name,Variable sendinel.backend.models.User.name=sendinel.backend.models.User-class.html#name,Variable sendinel.backend.models.WayOfCommunication.name=sendinel.backend.models.WayOfCommunication-class.html#name,Variable sendinel.infoservices.forms.InfoServiceValidationForm.name=sendinel.infoservices.forms.InfoServiceValidationForm-class.html#name,Variable sendinel.infoservices.models.InfoService.name=sendinel.infoservices.models.InfoService-class.html#name,Variable sendinel.notifications.models.NotificationType.name=sendinel.notifications.models.NotificationType-class.html#name"><a title="sendinel.backend.models.Hospital.name
+sendinel.backend.models.User.name
+sendinel.backend.models.WayOfCommunication.name
+sendinel.infoservices.forms.InfoServiceValidationForm.name
+sendinel.infoservices.models.InfoService.name
+sendinel.notifications.models.NotificationType.name" class="py-name" href="#" onclick="return doclink('link-8', 'name', 'link-8');">name</a></tt> <tt class="py-op">=</tt> <tt class="py-string">"jsi18n"</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">    <tt class="py-comment"># (r'^admin/jsi18n/$', 'django.views.i18n.javascript_catalog'),</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">    <tt class="py-comment"># Uncomment the admin/doc line below and add 'django.contrib.admindocs' </tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">    <tt class="py-comment"># to INSTALLED_APPS to enable admin documentation:</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">r'^admin/doc/'</tt><tt class="py-op">,</tt> <tt class="py-name">include</tt><tt class="py-op">(</tt><tt class="py-string">'django.contrib.admindocs.urls'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">    <tt class="py-comment"># Uncomment the next line to enable the admin:</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">r'^admin/'</tt><tt class="py-op">,</tt> <tt class="py-name">include</tt><tt class="py-op">(</tt><tt id="link-9" class="py-name"><a title="sendinel.backend.admin" class="py-name" href="#" onclick="return doclink('link-9', 'admin', 'link-3');">admin</a></tt><tt class="py-op">.</tt><tt class="py-name">site</tt><tt class="py-op">.</tt><tt id="link-10" class="py-name"><a title="sendinel.groups.urls
+sendinel.infoservices.urls
+sendinel.medicines.urls
+sendinel.notifications.tests.notifications_test.NotificationViewTest.urls
+sendinel.notifications.urls
+sendinel.urls
+sendinel.web.tests.auth_test.AuthenticateViewTests.urls
+sendinel.web.tests.i18n_test.InternationalizationTest.urls
+sendinel.web.tests.utils_test.UtilsTemplateTests.urls
+sendinel.web.urls" class="py-name" href="#" onclick="return doclink('link-10', 'urls', 'link-0');">urls</a></tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">,</tt>  </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">    <tt class="py-op">(</tt><tt class="py-string">r'^accounts/login/$'</tt><tt class="py-op">,</tt> <tt class="py-string">'django.contrib.auth.views.login'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"><tt class="py-op">)</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"><tt class="py-keyword">if</tt> <tt id="link-11" class="py-name"><a title="sendinel.settings" class="py-name" href="#" onclick="return doclink('link-11', 'settings', 'link-1');">settings</a></tt><tt class="py-op">.</tt><tt id="link-12" class="py-name" targets="Variable sendinel.settings.DEBUG=sendinel.settings-module.html#DEBUG"><a title="sendinel.settings.DEBUG" class="py-name" href="#" onclick="return doclink('link-12', 'DEBUG', 'link-12');">DEBUG</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">    <tt id="link-13" class="py-name"><a title="sendinel.groups.urls.urlpatterns
+sendinel.infoservices.urls.urlpatterns
+sendinel.medicines.urls.urlpatterns
+sendinel.notifications.urls.urlpatterns
+sendinel.urls.urlpatterns
+sendinel.web.urls.urlpatterns" class="py-name" href="#" onclick="return doclink('link-13', 'urlpatterns', 'link-6');">urlpatterns</a></tt> <tt class="py-op">+=</tt> <tt class="py-name">patterns</tt><tt class="py-op">(</tt><tt class="py-string">''</tt><tt class="py-op">,</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">        <tt class="py-op">(</tt><tt class="py-string">r'^mediaweb/(?P&lt;path&gt;.*)$'</tt><tt class="py-op">,</tt> <tt class="py-string">'django.views.static.serve'</tt><tt class="py-op">,</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">            <tt class="py-op">{</tt><tt class="py-string">'document_root'</tt><tt class="py-op">:</tt> <tt id="link-14" class="py-name"><a title="sendinel.settings" class="py-name" href="#" onclick="return doclink('link-14', 'settings', 'link-1');">settings</a></tt><tt class="py-op">.</tt><tt id="link-15" class="py-name" targets="Variable sendinel.settings.MEDIA_ROOT=sendinel.settings-module.html#MEDIA_ROOT"><a title="sendinel.settings.MEDIA_ROOT" class="py-name" href="#" onclick="return doclink('link-15', 'MEDIA_ROOT', 'link-15');">MEDIA_ROOT</a></tt><tt class="py-op">}</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">        <tt class="py-op">(</tt><tt class="py-string">r'^admin_media/(?P&lt;path&gt;.*)$'</tt><tt class="py-op">,</tt> <tt class="py-string">'django.views.static.serve'</tt><tt class="py-op">,</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">            <tt class="py-op">{</tt><tt class="py-string">'document_root'</tt><tt class="py-op">:</tt> <tt id="link-16" class="py-name"><a title="sendinel.settings" class="py-name" href="#" onclick="return doclink('link-16', 'settings', 'link-1');">settings</a></tt><tt class="py-op">.</tt><tt id="link-17" class="py-name"><a title="sendinel.settings.MEDIA_ROOT" class="py-name" href="#" onclick="return doclink('link-17', 'MEDIA_ROOT', 'link-15');">MEDIA_ROOT</a></tt><tt class="py-op">}</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">    <tt class="py-op">)</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="sendinel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu May 27 11:30:46 2010
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

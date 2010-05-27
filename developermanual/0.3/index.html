@@ -1,0 +1,773 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  
+  "http://www.w3.org/TR/html4/loose.dtd">  
+<html > 
+<head><title>Developer Manual for Sendinel
+</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"> 
+<!-- html --> 
+<meta name="src" content="developer_manual.tex"> 
+<meta name="date" content="2010-05-27 10:32:00"> 
+<link rel="stylesheet" type="text/css" href="developer_manual.css"> 
+</head><body 
+>
+  <div class="maketitle">
+                                                                                     
+                                                                                     
+<div class="minipage">                 <img 
+src="developer_manual0x.png" alt="PIC" class="graphics" width="228.22922pt" height="85.35826pt" ><!--tex4ht:graphics  
+name="developer_manual0x.png" src="utils/Sendinel_logo.pdf"  
+--> <img 
+src="developer_manual1x.png" alt="PIC" class="graphics"><!--tex4ht:graphics  
+name="developer_manual1x.png" src="utils/hpi_logo_text.pdf"  
+--></div>
+
+<h2 class="titleHead">Developer Manual for Sendinel<br />
+</h2>
+<span 
+class="phvb8t-x-x-114">Sending SMS and Phone Calls to Patients</span><br />
+<span 
+class="phvb8t-x-x-114">http://www.sendinel.org</span>
+ <div class="author" ></div><br />
+<div class="date" ><span 
+class="pplr8t-x-x-144">Potsdam, May 2010</span></div>
+                                                                                     
+                                                                                     
+  </div>
+                                                                                     
+                                                                                     
+<div class="center" 
+>
+<!--l. 88--><p class="noindent" >
+<!--l. 89--><p class="noindent" >[This page intentionally left blank]</div>
+                                                                                     
+                                                                                     
+  <h3 class="likesectionHead"><a 
+ id="x1-1000"></a>Contents</h3>
+  <div class="tableofcontents">
+  <span class="sectionToc" >1 <a 
+href="#x1-20001" id="QQ2-1-2">Introduction</a></span>
+<br />  <span class="sectionToc" >2 <a 
+href="#x1-30002" id="QQ2-1-3">Used Technology</a></span>
+<br />  <span class="sectionToc" >3 <a 
+href="#x1-40003" id="QQ2-1-4">How to Get Started</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >3.1 <a 
+href="#x1-50003.1" id="QQ2-1-5">Forking Sendinel on github</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >3.2 <a 
+href="#x1-60003.2" id="QQ2-1-7">Tests</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >3.3 <a 
+href="#x1-70003.3" id="QQ2-1-8"> Final Adjustments</a></span>
+<br />  <span class="sectionToc" >4 <a 
+href="#x1-100004" id="QQ2-1-11">Overview over Sendinel</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >4.1 <a 
+href="#x1-110004.1" id="QQ2-1-12">Notifications</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >4.2 <a 
+href="#x1-120004.2" id="QQ2-1-13">InfoServices</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >4.3 <a 
+href="#x1-130004.3" id="QQ2-1-14">Use Case: Create and send a notification about the arrival of lab results</a></span>
+<br />  <span class="sectionToc" >5 <a 
+href="#x1-140005" id="QQ2-1-15">Architecture</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >5.1 <a 
+href="#x1-150005.1" id="QQ2-1-16">Diagrams</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >5.2 <a 
+href="#x1-160005.2" id="QQ2-1-19">Files and Folders</a></span>
+<br />  <span class="sectionToc" >6 <a 
+href="#x1-170006" id="QQ2-1-20">Good To Know</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >6.1 <a 
+href="#x1-180006.1" id="QQ2-1-21">How to translate Sendinel</a></span>
+<br />  <span class="sectionToc" >7 <a 
+href="#x1-190007" id="QQ2-1-22">The Asterisk telephony server</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >7.1 <a 
+href="#x1-200007.1" id="QQ2-1-23">How does Asterisk work?</a></span>
+<br />  &#x00A0;&#x00A0;<span class="subsubsectionToc" >7.1.1 <a 
+href="#x1-210007.1.1" id="QQ2-1-24">A channel for 3G data cards</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >7.2 <a 
+href="#x1-220007.2" id="QQ2-1-25">Sending outbound messages</a></span>
+<br />  &#x00A0;&#x00A0;<span class="subsubsectionToc" >7.2.1 <a 
+href="#x1-230007.2.1" id="QQ2-1-26">Enqueueing automated voice calls</a></span>
+<br />  &#x00A0;&#x00A0;<span class="subsubsectionToc" >7.2.2 <a 
+href="#x1-240007.2.2" id="QQ2-1-27">Enqueueing SMS</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >7.3 <a 
+href="#x1-250007.3" id="QQ2-1-28">Scheduling</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >7.4 <a 
+href="#x1-260007.4" id="QQ2-1-29">Status evaluation and error handling</a></span>
+<br />  &#x00A0;<span class="subsectionToc" >7.5 <a 
+href="#x1-270007.5" id="QQ2-1-30">Authentication</a></span>
+  </div>
+                                                                                     
+                                                                                     
+  <h3 class="sectionHead"><span class="titlemark">1  </span> <a 
+ id="x1-20001"></a>Introduction</h3>
+<!--l. 2--><p class="noindent" >Welcome to the Development of Sendinel. On the following pages you will find useful information
+that should enable you to further develop Sendinel. Please note, that this manual is for developers
+only. When you read this, you should be familiar with Sendinel. If you do not know Sendinel yet
+please check the User Manual, the Installation Manual and the other resources that are provided on
+the Sendinel website http://www.sendinel.org.
+  <h3 class="sectionHead"><span class="titlemark">2  </span> <a 
+ id="x1-30002"></a>Used Technology</h3>
+<!--l. 3--><p class="noindent" >In the following the technologies that are used in Sendinel are explained. Depending on which part
+of Sendinel you want to work on, you should be more or less familiar with the concerning
+technology. All used technologies are published under an Open Source License and can be
+downloaded for free from the internet.
+<!--l. 5--><p class="indent" >
+     <dl class="description"><dt class="description">
+ </dt><dd 
+class="description">HTML/CSS
+     <!--l. 9--><p class="noindent" >Since  the  front-end  of  Sendinel  is  a  web  application,  HTML  is  used  to  define  the
+     structure of the webpages and CSS is used to define the style of the webpages. If you
+     want to do anything that the user is supposed to see you should be well-familiar with
+     both.
+     </dd><dt class="description">
+ </dt><dd 
+class="description">JavaScript
+     <!--l. 13--><p class="noindent" >JavaScript is used for logic in the user interface. Nearly everywhere where you can see
+     forms, JavaScript is active. The JavaScript library jQuery is used to aid the development
+     in JavaScript.
+     <!--l. 15--><p class="noindent" >http://jquery.com/
+     </dd><dt class="description">
+ </dt><dd 
+class="description">Django/Python
+     <!--l. 19--><p class="noindent" >Django is the web framework which holds most of the business logic of Sendinel. It also
+     handles the database connection. The database used as default is SQLite, which needs
+     no extra server but saves a whole SQL database in a file. Django uses Python as it&#8217;s
+     programming language. Major parts of Sendinel are implemented using Django so you
+     should be familiar with it.
+     <!--l. 21--><p class="noindent" ><a 
+href="http://www.djangoproject.com/" >http://www.djangoproject.com/</a><br 
+class="newline" /><a 
+href="http://www.python.org/" >http://www.python.org/</a><br 
+class="newline" /><a 
+href="http://www.sqlite.org/" >http://www.sqlite.org/</a>
+     </dd><dt class="description">
+ </dt><dd 
+class="description">Asterisk
+     <!--l. 27--><p class="noindent" >The  Asterisk  telephony  server  handles  SMS  and  VoiceCalls.  The  "chan_datacard"
+     module connects the Asterisk server to the 3G USB stick.
+     <!--l. 29--><p class="noindent" ><a 
+href="http://www.asterisk.org/" >http://www.asterisk.org/</a>
+                                                                                     
+                                                                                     
+     </dd><dt class="description">
+ </dt><dd 
+class="description">Java
+     <!--l. 33--><p class="noindent" >The Bluetooth client application sends information via Bluetooth from the server via a
+     terminal computer to a patient. It is written in Java.
+     <!--l. 35--><p class="noindent" ><a 
+href="http://java.sun.com/" >http://java.sun.com/</a>
+     </dd></dl>
+<!--l. 2--><p class="noindent" >
+  <h3 class="sectionHead"><span class="titlemark">3  </span> <a 
+ id="x1-40003"></a>How to Get Started</h3>
+<!--l. 3--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">3.1  </span> <a 
+ id="x1-50003.1"></a>Forking Sendinel on github</h4>
+<!--l. 4--><p class="noindent" >The best option to obtain Sendinel if you want to further develop on it would be to fork from our
+GitHub page <a 
+href="http://GitHub.com/sendinel/sendinel" >http://GitHub.com/sendinel/sendinel</a>. <br 
+class="newline" />First you have to have a GitHub account. If you don&#8217;t have one yet, you need to click on "Login" in
+the upper right corner, then on "(Pricing and Signup)". Then you can choose which GitHub account
+you want to have. If you don&#8217;t mind that all your repositories are public, having a GitHub account is
+for free. <br 
+class="newline" />If you are logged in, you can then fork Sendinel. How to do that, you can read under
+http://help.GitHub.com/forking/. <br 
+class="newline" />
+<!--l. 8--><p class="indent" >  The fork button is there:
+<!--l. 10--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+<a 
+ id="x1-5001r1"></a>
+                                                                                     
+                                                                                     
+
+<!--l. 12--><p class="noindent" ><img 
+src="images/forkSendinel.jpg" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;1: </span><span  
+class="content">Click on the fork button to fork from Sendinel</span></div><!--tex4ht:label?: x1-5001r1 -->
+                                                                                     
+                                                                                     
+<!--l. 14--><p class="indent" >  </div><hr class="endfigure">
+  <h4 class="subsectionHead"><span class="titlemark">3.2  </span> <a 
+ id="x1-60003.2"></a>Tests</h4>
+<!--l. 19--><p class="noindent" >You now have your own forked branch of Sendinel. We developed Sendinel in a test driven way, so
+it is good if you know where to find the tests and how to run them. In the section "Architecture" you
+find an overview of our app and directory structure. Each app is having a /test directory, where the
+python tests for that app live in. Examples are backend/tests, groups/tests and web/tests.
+<br 
+class="newline" />If you want to run the tests, you need to have a console opened and you need to be in the
+Sendinel/sendinel directory. Then enter the command <span 
+class="pplri8t-x-x-109">python manage.py test </span>to run all tests. If you
+only want to run the tests of one of the apps, just add the corresponding appname to it, for example
+<span 
+class="pplri8t-x-x-109">python manage.py test web</span>. <br 
+class="newline" />The tests mostly use <span 
+class="pplri8t-x-x-109">/backend/tests/backend_test.xml </span>as underlying fixtures. Fixtures contain initial
+data sets. The fixtures described in<span 
+class="pplri8t-x-x-109">/backend/tests/backend_test.xml </span>are available in the tests if they are
+included.
+<!--l. 24--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">3.3  </span> <a 
+ id="x1-70003.3"></a> Final Adjustments</h4>
+<!--l. 25--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-80003.3"></a><span 
+class="pplb8t-x-x-109">DEBUG = TRUE</span></span>
+  In order to see proper error messages when you run sendinel on a local server, you need to set the
+DEBUG variable to True. To do that, please open the /sendinel/settings.py file. You will find the
+DEBUG variable at the beginning of the document.
+<!--l. 27--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-90003.3"></a><span 
+class="pplb8t-x-x-109">Starting the Development Server</span></span>
+  If you want to run sendinel on the development server, you need to open the console and switch
+to Sendinel/sendinel. Then enter <span 
+class="pplri8t-x-x-109">python manage.py runserver</span>
+  <h3 class="sectionHead"><span class="titlemark">4  </span> <a 
+ id="x1-100004"></a>Overview over Sendinel</h3>
+<!--l. 3--><p class="noindent" >Sendinel is split into the following parts: <br 
+class="newline" />The <span 
+class="pplri8t-x-x-109">user interface </span>which is implemented as a web application<br 
+class="newline" />The <span 
+class="pplri8t-x-x-109">data handling </span>which is done by Django in a database<br 
+class="newline" />The <span 
+class="pplri8t-x-x-109">output part </span>where data is fetched and sent via Asterisk<br 
+class="newline" /><br 
+class="newline" />The general flow of data is, that the user enters data via the user interface on a client computer, this
+data is processed and saved on the server and eventually sent via SMS, Voice Call (via Asterisk) or
+Bluetooth (via the client computer again). Information sent via Asterisk must be processed by the
+scheduler (to be found in /sendinel/backend/scheduler.py), which polls the database for new
+messages. These messages are represented as a <span 
+class="pplri8t-x-x-109">&#8221;Sendable&#8221; </span>datatype, which is an abstract class in
+<span 
+class="pplri8t-x-x-109">/sendinel/backend/models.py</span>. There are two types of messages (represented as subclasses of Sendable):
+                                                                                     
+                                                                                     
+Notifications and InfoServices.
+<!--l. 11--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">4.1  </span> <a 
+ id="x1-110004.1"></a>Notifications</h4>
+<!--l. 12--><p class="noindent" >Notifications are messages to inform or remind patients of appointment. Every notification has a
+type. Our system initially has the notification types &#8221;vaccination&#8221;, &#8221;follow-up consultation&#8221; and &#8221;lab
+results&#8221;. The text sent to the patient is saved as a template in the NotificationType. For example the
+template for the vaccination is &#8221;please remember the vaccination at the $hospital on $date&#8221;.
+$hospital and $date are variables that get their content from the data saved in the Notification. The
+following variables are available:
+     <ul class="itemize1">
+     <li class="itemize">$hospital
+     </li>
+     <li class="itemize">$date
+     </li>
+     <li class="itemize">$time</li></ul>
+<!--l. 21--><p class="indent" >  These variables are replaced by the real values when a new notification is created. New variable
+can be introduced in the Notification method &#8221;reminder_text()&#8221;.
+<!--l. 23--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">4.2  </span> <a 
+ id="x1-120004.2"></a>InfoServices</h4>
+<!--l. 24--><p class="noindent" >Patients can be subscribed to InfoServices. Therefore an InfoMessage represents a group of patients
+for a specific topic. By default InfoServices are used for &#8221;arrival of medicine&#8221; notifications and group
+messages. Sending a message to all patient of a InfoService is done with an InfoMessage. In contrast
+to Notifications, an InfoMessage does not use templates but sends the text directly entered for that
+InfoMessage.
+<!--l. 27--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">4.3  </span> <a 
+ id="x1-130004.3"></a>Use Case: Create and send a notification about the arrival of lab results</h4>
+<!--l. 28--><p class="noindent" >When the users fill out the form to inform a patient about the arrival of lab results and clicks on
+&#8221;next&#8221;, a new Patient object is created with the newly entered phone number. Also, a Notification
+object is created. Because lab results are sent immediately, the date and time are set to today, 12:00
+o&#8217;clock. Since notifications are always sent one day before the appointment, this message will be sent
+immediately. <br 
+class="newline" />After optional authentication, the information is saved in the database and a ScheduledEvent is
+created. The ScheduledEvent object is the unit that contains all information in order to send the
+                                                                                     
+                                                                                     
+notification. <br 
+class="newline" />The file /sendinel/backend/scheduler.py has the method &#8221;run()&#8221; which searches every second for
+any ScheduledEvents that need to be sent. So when the ScheduledEvent object is saved
+in the database, it is immediately found by the scheduler method. The scheduler then
+calls get_data_for_sending() on the ScheduledEvent object and receives an OutputData
+object. There are various OutputData subclasses, one for each way_of_communication. In
+our case, the users could have only chosen between sms and phonecall. So let&#8217;s say an
+SMSOutputData object is created. This object is then handed over to the Voicecall class
+(Sendinel/sendinel/backend/voicecall.py) which handles the sending of the SMS via the Asterisk
+server.
+  <h3 class="sectionHead"><span class="titlemark">5  </span> <a 
+ id="x1-140005"></a>Architecture</h3>
+<!--l. 2--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">5.1  </span> <a 
+ id="x1-150005.1"></a>Diagrams</h4>
+<!--l. 4--><p class="noindent" ><hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+<a 
+ id="x1-15001r2"></a>
+                                                                                     
+                                                                                     
+<!--l. 5--><p class="noindent" ><img 
+src="developer_manual2x.png" alt="PIC" class="graphics"><!--tex4ht:graphics  
+name="developer_manual2x.png" src="images/classdiagram.pdf"  
+-->
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;2: </span><span  
+class="content">The Class Diagram</span></div><!--tex4ht:label?: x1-15001r2 -->
+                                                                                     
+                                                                                     
+<!--l. 8--><p class="noindent" ></div><hr class="endfigure">
+<!--l. 10--><p class="indent" >  The backend of Sendinel consists of three big modules:
+     <dl class="description"><dt class="description">
+ </dt><dd 
+class="description">Core
+     <!--l. 16--><p class="noindent" >This module is in the "backend" app. It is where things come together and get dispatched
+     again.
+          <ul class="itemize1">
+          <li class="itemize">An  <span 
+class="pplri8t-x-x-109">AuthenticationCall  </span>is  saved  in  the  database  by  the  Asterisk  server  when
+          somebody ring to authenticate themselves.
+          </li>
+          <li class="itemize"><span 
+class="pplri8t-x-x-109">Patient </span>holds the patient-related data.
+          </li>
+          <li class="itemize">A <span 
+class="pplri8t-x-x-109">Sendable </span>is something that can be sent. It knows how something should be sent
+          to whom.
+          </li>
+          <li class="itemize">A <span 
+class="pplri8t-x-x-109">ScheduledEvent </span>knows when to send what. It is connected to either an <span 
+class="pplri8t-x-x-109">InfoMessage</span>
+          or a <span 
+class="pplri8t-x-x-109">Notification</span></li></ul>
+     </dd><dt class="description">
+ </dt><dd 
+class="description">InfoServices
+     <!--l. 28--><p class="noindent" >This  module  is  in  the  "infoservices"  app.  This  is  where  groups  and  InfoServices  are
+     managed.
+          <ul class="itemize1">
+          <li class="itemize">An <span 
+class="pplri8t-x-x-109">InfoService </span>represents a topic for which patients can be subscribed to.
+          </li>
+          <li class="itemize">A Patient can be subscribed to an InfoService through a <span 
+class="pplri8t-x-x-109">Subscription</span>
+          </li>
+          <li class="itemize">An <span 
+class="pplri8t-x-x-109">InfoMessage </span>represents a message to all members of an InfoService</li></ul>
+     </dd><dt class="description">
+ </dt><dd 
+class="description">Notifications
+     <!--l. 40--><p class="noindent" >This module is in the "notifications" app.
+          <ul class="itemize1">
+          <li class="itemize">A <span 
+class="pplri8t-x-x-109">NotificationType </span>holds the information like template and name of Notifications
+          </li>
+          <li class="itemize">A <span 
+class="pplri8t-x-x-109">Notification </span>has a NotificationType. The notification knows when it should be
+          send and via Sendable also knows to whom.</li></ul>
+     </dd></dl>
+<!--l. 51--><p class="indent" >  <hr class="figure"><div class="figure" 
+>
+                                                                                     
+                                                                                     
+<a 
+ id="x1-15002r3"></a>
+                                                                                     
+                                                                                     
+<div class="fbox"><img 
+src="developer_manual3x.png" alt="PIC" class="graphics"><!--tex4ht:graphics  
+name="developer_manual3x.png" src="images/erdiagram.pdf"  
+--></div>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;3: </span><span  
+class="content">The Entity-Relationship Diagram</span></div><!--tex4ht:label?: x1-15002r3 -->
+                                                                                     
+                                                                                     
+<!--l. 55--><p class="indent" >  </div><hr class="endfigure">
+  <h4 class="subsectionHead"><span class="titlemark">5.2  </span> <a 
+ id="x1-160005.2"></a>Files and Folders</h4>
+<!--l. 4--><p class="noindent" >Following are the folders in the root directory: <br 
+class="newline" />If you have little time, the most important folder is sendinel. Its subfolders are explained in the
+second table. <div class="table">
+                                                                                     
+                                                                                     
+<!--l. 6--><p class="indent" >  <hr class="float"><div class="float" 
+>
+                                                                                     
+                                                                                     
+<div class="tabular"> <table id="TBL-2" class="tabular" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-2-1g"><col 
+id="TBL-2-1"><col 
+id="TBL-2-2"></colgroup><tr 
+class="hline"><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-1-1"  
+class="td11"> Folder                     </td><td  style="white-space:wrap; text-align:left;" id="TBL-2-1-2"  
+class="td11"> <!--l. 15--><p class="noindent" >Description                                                                                                          </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td></tr><tr 
+class="vspace" style="font-size:2.56773pt"><td 
+>&nbsp;</td><td 
+>&nbsp;</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-2-1"  
+class="td11"> /BluetoothServer  </td><td  style="white-space:wrap; text-align:left;" id="TBL-2-2-2"  
+class="td11"> <!--l. 20--><p class="noindent" >This   Java   code   is   the   BluetoothServer   running   on   the   terminal
+  computer.  A  compiled  version  is  in  /dist  which  you  can  start  with
+  java -jar BluetoothServer. You can also use the Installer on Windows
+  computers.                                                                                                           </td>
+</tr><tr 
+class="vspace" style="font-size:5.13548pt"><td 
+>&nbsp;</td><td 
+>&nbsp;</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-3-1"  
+class="td11"> /configs                  </td><td  style="white-space:wrap; text-align:left;" id="TBL-2-3-2"  
+class="td11"> <!--l. 21--><p class="noindent" >This  is  where  sample  config  files  can  be  found.  Sendinel  relies  a
+  lot  on  other  components  at  it  is  essential  that  these  components
+  are   configured   right,   which   is   why   we   provide   these   sample
+  configurations.                                                                                                    </td>
+</tr><tr 
+class="vspace" style="font-size:5.13548pt"><td 
+>&nbsp;</td><td 
+>&nbsp;</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-4-1"  
+class="td11"> /hudson                 </td><td  style="white-space:wrap; text-align:left;" id="TBL-2-4-2"  
+class="td11"> <!--l. 22--><p class="noindent" >During  development  we  use  Hudson  as  our  Continuous  Integration
+  system. In this folder our configuration for is saved. If you want to use
+  Hudson as well, these config files might give you a good starting point
+  how to configure it. http://hudson-ci.org/                                                   </td>
+</tr><tr 
+class="vspace" style="font-size:5.13548pt"><td 
+>&nbsp;</td><td 
+>&nbsp;</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-5-1"  
+class="td11"> /sendinel                </td><td  style="white-space:wrap; text-align:left;" id="TBL-2-5-2"  
+class="td11"> <!--l. 23--><p class="noindent" >This is where the actual application is.                                                           </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td></tr><tr 
+class="vspace" style="font-size:5.13548pt"><td 
+>&nbsp;</td><td 
+>&nbsp;</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-6-1"  
+class="td11">               </td></tr></table></div>
+                                                                                     
+                                                                                     
+  </div><hr class="endfloat" />
+  </div>
+<!--l. 32--><p class="indent" >  Lets dig deeper into /sendinel:
+  <div class="table">
+                                                                                     
+                                                                                     
+<!--l. 34--><p class="indent" >  <hr class="float"><div class="float" 
+>
+                                                                                     
+                                                                                     
+<div class="tabular"> <table id="TBL-3" class="tabular" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-3-1g"><col 
+id="TBL-3-1"><col 
+id="TBL-3-2"></colgroup><tr 
+class="hline"><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-3-1-1"  
+class="td11"> Folder              </td><td  style="white-space:wrap; text-align:left;" id="TBL-3-1-2"  
+class="td11"> <!--l. 43--><p class="noindent" >Description                                                                                                                     </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td></tr><tr 
+class="vspace" style="font-size:2.56773pt"><td 
+>&nbsp;</td><td 
+>&nbsp;</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-3-2-1"  
+class="td11"> /asterisk          </td><td  style="white-space:wrap; text-align:left;" id="TBL-3-2-2"  
+class="td11"> <!--l. 48--><p class="noindent" >In
+  log_call.py is the method that is used to write incoming AuthenticationCalls
+  from Asterisk to the Database.                                                                                    </td>
+</tr><tr 
+class="vspace" style="font-size:5.13548pt"><td 
+>&nbsp;</td><td 
+>&nbsp;</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-3-3-1"  
+class="td11"> /backend         </td><td  style="white-space:wrap; text-align:left;" id="TBL-3-3-2"  
+class="td11"> <!--l. 49--><p class="noindent" >This app has been described in the architecture overview as "core".                    </td>
+</tr><tr 
+class="vspace" style="font-size:5.13548pt"><td 
+>&nbsp;</td><td 
+>&nbsp;</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-3-4-1"  
+class="td11"> /groups            </td><td  style="white-space:wrap; text-align:left;" id="TBL-3-4-2"  
+class="td11"> <!--l. 50--><p class="noindent" >Groups are regular infoservices about a certain topic.                                            </td>
+</tr><tr 
+class="vspace" style="font-size:5.13548pt"><td 
+>&nbsp;</td><td 
+>&nbsp;</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-3-5-1"  
+class="td11"> /infoservices   </td><td  style="white-space:wrap; text-align:left;" id="TBL-3-5-2"  
+class="td11"> <!--l. 51--><p class="noindent" >Infoservices define a group of people who should be informed about the same
+  topic.                                                                                                                               </td>
+</tr><tr 
+class="vspace" style="font-size:5.13548pt"><td 
+>&nbsp;</td><td 
+>&nbsp;</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-3-6-1"  
+class="td11"> /locale              </td><td  style="white-space:wrap; text-align:left;" id="TBL-3-6-2"  
+class="td11"> <!--l. 52--><p class="noindent" >The localisation files are here.                                                                                     </td>
+</tr><tr 
+class="vspace" style="font-size:5.13548pt"><td 
+>&nbsp;</td><td 
+>&nbsp;</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-3-7-1"  
+class="td11"> /media             </td><td  style="white-space:wrap; text-align:left;" id="TBL-3-7-2"  
+class="td11"> <!--l. 53--><p class="noindent" >This directory holds all files directly served by the webserver. This includes
+  all JavaScript, CSS and image files.                                                                            </td>
+</tr><tr 
+class="vspace" style="font-size:5.13548pt"><td 
+>&nbsp;</td><td 
+>&nbsp;</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-3-8-1"  
+class="td11"> /medicines      </td><td  style="white-space:wrap; text-align:left;" id="TBL-3-8-2"  
+class="td11"> <!--l. 54--><p class="noindent" >Medicines are infoservices where the patients are informed once about the
+  arrival of the medicine they were waiting for.                                                         </td>
+</tr><tr 
+class="vspace" style="font-size:5.13548pt"><td 
+>&nbsp;</td><td 
+>&nbsp;</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-3-9-1"  
+class="td11"> /notifications  </td><td  style="white-space:wrap; text-align:left;" id="TBL-3-9-2"  
+class="td11"> <!--l. 55--><p class="noindent" >Notifications have already been described in the overview and architecture.    </td>
+</tr><tr 
+class="vspace" style="font-size:5.13548pt"><td 
+>&nbsp;</td><td 
+>&nbsp;</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-3-10-1"  
+class="td11"> /templates       </td><td  style="white-space:wrap; text-align:left;" id="TBL-3-10-2"  
+class="td11"> <!--l. 56--><p class="noindent" >The Django HTML Templates are saved here. Every app is having it&#8217;s own
+  template sub-directory.                                                                                                </td>
+</tr><tr 
+class="vspace" style="font-size:5.13548pt"><td 
+>&nbsp;</td><td 
+>&nbsp;</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-3-11-1"  
+class="td11"> /web                 </td><td  style="white-space:wrap; text-align:left;" id="TBL-3-11-2"  
+class="td11"> <!--l. 57--><p class="noindent" >This app holds everything front-end related, that does not fit in other apps.     </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td></tr><tr 
+class="vspace" style="font-size:5.13548pt"><td 
+>&nbsp;</td><td 
+>&nbsp;</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-12-"><td  style="white-space:nowrap; text-align:left;" id="TBL-3-12-1"  
+class="td11">            </td></tr></table></div>
+                                                                                     
+                                                                                     
+  </div><hr class="endfloat" />
+  </div>
+                                                                                     
+                                                                                     
+  <h3 class="sectionHead"><span class="titlemark">6  </span> <a 
+ id="x1-170006"></a>Good To Know</h3>
+<!--l. 4--><p class="noindent" >To populate the database the fixtures from /backend/fixtures can be used. Go to the sendinel root
+directory and enter either <span 
+class="pplri8t-x-x-109">python managy.py loaddata backend </span>to load a minimal set of data for
+Sendinel to work or <span 
+class="pplri8t-x-x-109">python manage.py loaddata backend_test </span>to load a more extended set of test
+data.
+<!--l. 8--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">6.1  </span> <a 
+ id="x1-180006.1"></a>How to translate Sendinel</h4>
+<!--l. 9--><p class="noindent" >Sendinel supports the translation to other languages with dedicated language files. The background
+is well explained in the Django documentation <br 
+class="newline" /><a 
+href="http://docs.djangoproject.com/en/dev/topics/i18n/localization/" >http://docs.djangoproject.com/en/dev/topics/i18n/localization/</a>
+     <ul class="itemize1">
+     <li class="itemize">Go to the /sendinel directory
+     </li>
+     <li class="itemize">Enter <span 
+class="pplri8t-x-x-109">python manage.py makemessages -l de </span>where "de" is your specific language code. This
+     creates a translation file for all html templates.
+     </li>
+     <li class="itemize">Enter <span 
+class="pplri8t-x-x-109">python manage.py makemessages -d djangojs -l de </span>where "de" is your language code
+     again. This create a translation file for all javascript files.
+     </li>
+     <li class="itemize">Now go to <span 
+class="pplri8t-x-x-109">/sendinel/locale/{your_language_code} </span>and edit/translate the files <span 
+class="pplri8t-x-x-109">django.po </span>and
+     <span 
+class="pplri8t-x-x-109">djangojs.po</span>.
+     </li>
+     <li class="itemize">When you are finished go back to /sendinel and enter <span 
+class="pplri8t-x-x-109">python manage.py compilemessages</span>
+     </li>
+     <li class="itemize">Now you can now switch the language in your browser by going to <span 
+class="pplri8t-x-x-109">web/language_choose</span></li></ul>
+<!--l. 20--><p class="indent" >  New code should be translated as well. This is well described in the Django documentation:
+<a 
+href="http://docs.djangoproject.com/en/dev/topics/i18n/internationalization/" >http://docs.djangoproject.com/en/dev/topics/i18n/internationalization/</a>
+                                                                                     
+                                                                                     
+  <h3 class="sectionHead"><span class="titlemark">7  </span> <a 
+ id="x1-190007"></a>The Asterisk telephony server</h3>
+<!--l. 3--><p class="noindent" >Asterisk is an open-source telephony server. It can be attached to the public telephone network to
+allow incoming and outbound calls. This connection can be established via a broad range of
+connections like Voice Over IP or ISDN. Initially Asterisk was designed for Linux, but it was ported
+to other operating systems as well.
+<!--l. 5--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">7.1  </span> <a 
+ id="x1-200007.1"></a>How does Asterisk work?</h4>
+<!--l. 6--><p class="noindent" >Connections to other elements in the telephony network are called channels. A channel which allows
+to connect the Asterisk server to the mobile telephone network is <span 
+class="pplri8t-x-x-109">chan_datacard </span>(described
+later).
+<!--l. 8--><p class="indent" >  One of Asterisk&#8217;s central elements is the dialplan configuration. It contains information about
+what is supposed to happen if a specific number is dialed from one of the connected telephones or if
+an external call arrives. Those items are called extensions and actually are small programs. Those
+programs are able to react to user input, control the program flow, play sound files, run external
+applications etc.
+<!--l. 10--><p class="noindent" >
+  <h5 class="subsubsectionHead"><span class="titlemark">7.1.1  </span> <a 
+ id="x1-210007.1.1"></a>A channel for 3G data cards</h5>
+<!--l. 11--><p class="noindent" >To connect the Asterisk to the telephony network the channel <span 
+class="pplri8t-x-x-109">chan_datacard </span>can be used. It was
+designed to work with <span 
+class="pplri8t-x-x-109">Huawei </span>USB 3G data modems (at the moment mainly the model
+<span 
+class="pplri8t-x-x-109">K3520/E169</span>).
+<!--l. 13--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">7.2  </span> <a 
+ id="x1-220007.2"></a>Sending outbound messages</h4>
+<!--l. 14--><p class="noindent" >The Asterisk server offers a special mechanism for invoking calls from external applications. This
+mechanism is called <span 
+class="pplri8t-x-x-109">spooling</span>. To spool a call, a text file with a certain syntax has to be put into the
+Asterisk spool directory, which is in most cases located in <span 
+class="pplri8t-x-x-109">/var/spool/asterisk/outgoing</span>
+<!--l. 16--><p class="indent" >  One important fact to consider is that the spool file first has to be created and saved in a temporary
+location. Asterisk requires the file to &#8221;appear&#8221; in the spool directory in one file system operation, so
+a move command has to be used. If the <span 
+class="pplri8t-x-x-109">Archive </span>flag is set in the spool file, it will be copied to a
+special folder after the call has been conducted successfully or eventually failed. The file at
+this new location will contain a <span 
+class="pplri8t-x-x-109">Status </span>entry which contains information about how the
+call was handled. This file also contains information about each retry for conducting the
+call.
+<!--l. 18--><p class="indent" >  Creating the described spool files from a Django based web application is not very complicated
+because it only requires basic access to the computer&#8217;s file system. The code for sending
+can be found in <span 
+class="pplri8t-x-x-109">/sendinel/backend/voicecall.py</span>. The starting points are <span 
+class="pplri8t-x-x-109">conduct_call() </span>and
+<span 
+class="pplri8t-x-x-109">conduct_sms()</span>.
+                                                                                     
+                                                                                     
+<!--l. 20--><p class="noindent" >
+  <h5 class="subsubsectionHead"><span class="titlemark">7.2.1  </span> <a 
+ id="x1-230007.2.1"></a>Enqueueing automated voice calls</h5>
+<!--l. 22--><p class="noindent" >The following steps explain how a voice call is sent from the web application:
+<!--l. 24--><p class="indent" >
+     <ol  class="enumerate1" >
+     <li 
+  class="enumerate" id="x1-23002x1">the systems gets a request to conduct a call to a certain number with a given text
+     </li>
+     <li 
+  class="enumerate" id="x1-23004x2">the text is passed to a text-to-speech engine and a voice file is generated
+     </li>
+     <li 
+  class="enumerate" id="x1-23006x3">the  spool  file  is  created  at  a  temporary  location:  the  path  to  the  voicefile  and  the
+     destination phone number are entered into an already existing template
+     </li>
+     <li 
+  class="enumerate" id="x1-23008x4">the user running the Asterisk server is granted full file systems permissions to the spool
+     file
+     </li>
+     <li 
+  class="enumerate" id="x1-23010x5">the spool file is moved from its temporary location to the Asterisk spool directory</li></ol>
+<!--l. 32--><p class="indent" >  After that the Asterisk server processes the file automatically:
+     <ul class="itemize1">
+     <li class="itemize">the specified number is called by the Asterisk telephony server
+     </li>
+     <li class="itemize">after the called person picks up, the dialplan extension is executed
+     </li>
+     <li class="itemize">the  commands  of  the  extension  are  executed  step-by-step  (e.g  playing  a  salutation,
+     playing the main text etc.)
+     </li>
+     <li class="itemize">if the called person did not pick up, the call is re-scheduled</li></ul>
+<!--l. 41--><p class="indent" >  It is also possible to replace the execution of a dialplan extension by specifying a application to be
+run. The application is only executed if the callee answers the call.
+<!--l. 43--><p class="noindent" >
+  <h5 class="subsubsectionHead"><span class="titlemark">7.2.2  </span> <a 
+ id="x1-240007.2.2"></a>Enqueueing SMS</h5>
+                                                                                     
+                                                                                     
+<!--l. 45--><p class="noindent" >The spooling mechanism of the Asterisk server was initially only created for conducting calls.
+Because calls are conducted synchronous, that means that e.g. content is played exactly the moment,
+the called person picks up the call. Short messages are sent asynchronously without the need for the
+callee to pick up.
+<!--l. 47--><p class="indent" >  To send a short message from the Asterisk server only the internal application <span 
+class="pplri8t-x-x-109">DatacardSendSMS()</span>
+has to be called. The problem at this point is that it is not possible to queue running an application
+through a spool file without somebody answering the call. This means that a separate extension has
+to be created, which serves as a dummy callee. It answers the call; waits for some time and hangs up
+again.
+<!--l. 49--><p class="indent" >  This means that for sending short messages a call to this dummy number is spooled. As soon, as
+the callee answers the call (in this case immediately, because it is our dummy callee), the dialplan
+extension is executed and from within it, the command for sending SMS is launched. The parameters
+for this call can be passed through the call spool file, using the <span 
+class="pplri8t-x-x-109">Set </span>command. Those variables are
+globally available.
+<!--l. 51--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">7.3  </span> <a 
+ id="x1-250007.3"></a>Scheduling</h4>
+<!--l. 53--><p class="noindent" >If only calls but no SMS are to be spooled, the scheduling can be completely done by the Asterisk
+server. All spool files can be put into the spool directory at the same time and will be processed by
+Asterisk one after another. Sending SMS with <span 
+class="pplri8t-x-x-109">chan_datacard </span>is more problematic because as
+described above an indirect kind of sending is used.
+<!--l. 55--><p class="indent" >  Therefore the <span 
+class="pplri8t-x-x-109">scheduling </span>is done by a separate component of the Sendinel system: the <span 
+class="pplri8t-x-x-109">scheduler</span>. It
+checks regularly if message elements are due and ensures that only one item is active at a time in the
+Asterisk spool queue. This is accomplished by evaluating the status codes from the spool files that
+already were processed. Once a call is finished by Asterisk, the next one is scheduled by the Sendinel
+scheduler.
+<!--l. 57--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">7.4  </span> <a 
+ id="x1-260007.4"></a>Status evaluation and error handling</h4>
+<!--l. 59--><p class="noindent" >As described earlier the status of a call can be read from the processed spool file. The Sendinel
+scheduler does this job and enters the evaluated data into the database for the corresponding
+<span 
+class="pplri8t-x-x-109">Scheduled Event</span>. The status in the database may be one of the following:
+     <ul class="itemize1">
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">new</span>: The event has been created by the Sendinel scheduler, but was not processed yet
+     </li>
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">pending</span>: The Sendinel scheduler is currently processing the event, this means needed
+     sound files are rendered and the Asterisk spool file is generated
+     </li>
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">queued</span>: The spool file was passed to the Asterisk spool directory
+                                                                                     
+                                                                                     
+     </li>
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">failed</span>: Sending the message/conducting the call failed; this may happen due to the fact
+     that all retries failed or the Asterisk server set the status to <span 
+class="pplri8t-x-x-109">failed</span>
+     </li>
+     <li class="itemize"><span 
+class="pplri8t-x-x-109">done</span>: The event was successfully processed by the Asterisk server</li></ul>
+<!--l. 69--><p class="indent" >  The Asterisk server can also return the status <span 
+class="pplri8t-x-x-109">Expired</span>, which is handled by the Sendinel scheduler.
+The event is re-scheduled as set in the configuration.
+<!--l. 71--><p class="noindent" >
+  <h4 class="subsectionHead"><span class="titlemark">7.5  </span> <a 
+ id="x1-270007.5"></a>Authentication</h4>
+<!--l. 73--><p class="noindent" >The Sendinel authentication mechanism is based on recognising the <span 
+class="pplri8t-x-x-109">Caller ID </span>of incoming calls.
+When a call arrives in the <span 
+class="pplri8t-x-x-109">extension for incoming calls</span>, a special <span 
+class="pplri8t-x-x-109">AGI </span>(Asterisk Gateway Interface)
+script is started, which passes the data of the caller to the python script <span 
+class="pplri8t-x-x-109">/sendinel/asterisk/call_log.py</span>.
+This script writes the data to Sendinel&#8217;s database from. When the data is read by the user interface
+the authentication is done.
+   
+</body></html> 
+
+                                                                                     
+
+

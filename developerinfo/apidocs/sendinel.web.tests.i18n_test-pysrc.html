@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sendinel.web.tests.i18n_test</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="sendinel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="sendinel-module.html">Package&nbsp;sendinel</a> ::
+        <a href="sendinel.web-module.html">Package&nbsp;web</a> ::
+        <a href="sendinel.web.tests-module.html">Package&nbsp;tests</a> ::
+        Module&nbsp;i18n_test
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="sendinel.web.tests.i18n_test-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="sendinel.web.tests.i18n_test-module.html">Module sendinel.web.tests.i18n_test</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">core</tt><tt class="py-op">.</tt><tt class="py-name">urlresolvers</tt> <tt class="py-keyword">import</tt> <tt class="py-name">reverse</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">test</tt> <tt class="py-keyword">import</tt> <tt class="py-name">TestCase</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"> </tt>
+<a name="InternationalizationTest"></a><div id="InternationalizationTest-def"><a name="L5"></a><tt class="py-lineno"> 5</tt> <a class="py-toggle" href="#" id="InternationalizationTest-toggle" onclick="return toggle('InternationalizationTest');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="sendinel.web.tests.i18n_test.InternationalizationTest-class.html">InternationalizationTest</a><tt class="py-op">(</tt><tt class="py-base-class">TestCase</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="InternationalizationTest-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="InternationalizationTest-expanded"><a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line">    <tt id="link-0" class="py-name" targets="Variable sendinel.backend.tests.models_test.HospitalTest.fixtures=sendinel.backend.tests.models_test.HospitalTest-class.html#fixtures,Variable sendinel.backend.tests.scheduler_test.SchedulerTest.fixtures=sendinel.backend.tests.scheduler_test.SchedulerTest-class.html#fixtures,Variable sendinel.backend.tests.vcal_test.VcalTest.fixtures=sendinel.backend.tests.vcal_test.VcalTest-class.html#fixtures,Variable sendinel.backend.tests.way_of_communication_test.WayOfCommunicationTest.fixtures=sendinel.backend.tests.way_of_communication_test.WayOfCommunicationTest-class.html#fixtures,Variable sendinel.groups.tests.group_test.GroupTest.fixtures=sendinel.groups.tests.group_test.GroupTest-class.html#fixtures,Variable sendinel.groups.tests.group_test.WebInfoServiceTest.fixtures=sendinel.groups.tests.group_test.WebInfoServiceTest-class.html#fixtures,Variable sendinel.infoservices.tests.models_test.InfoMessageTest.fixtures=sendinel.infoservices.tests.models_test.InfoMessageTest-class.html#fixtures,Variable sendinel.infoservices.tests.models_test.SubscriptionTest.fixtures=sendinel.infoservices.tests.models_test.SubscriptionTest-class.html#fixtures,Variable sendinel.medicines.tests.medicine_test.MedicineTest.fixtures=sendinel.medicines.tests.medicine_test.MedicineTest-class.html#fixtures,Variable sendinel.notifications.tests.models_test.NotificationTest.fixtures=sendinel.notifications.tests.models_test.NotificationTest-class.html#fixtures,Variable sendinel.notifications.tests.notifications_test.NotificationViewTest.fixtures=sendinel.notifications.tests.notifications_test.NotificationViewTest-class.html#fixtures,Variable sendinel.web.tests.auth_test.AuthenticateViewTests.fixtures=sendinel.web.tests.auth_test.AuthenticateViewTests-class.html#fixtures,Variable sendinel.web.tests.bluetooth_test.BluetoothViewTest.fixtures=sendinel.web.tests.bluetooth_test.BluetoothViewTest-class.html#fixtures,Variable sendinel.web.tests.i18n_test.InternationalizationTest.fixtures=sendinel.web.tests.i18n_test.InternationalizationTest-class.html#fixtures,Variable sendinel.web.tests.utils_test.UtilsTemplateTests.fixtures=sendinel.web.tests.utils_test.UtilsTemplateTests-class.html#fixtures"><a title="sendinel.backend.tests.models_test.HospitalTest.fixtures
+sendinel.backend.tests.scheduler_test.SchedulerTest.fixtures
+sendinel.backend.tests.vcal_test.VcalTest.fixtures
+sendinel.backend.tests.way_of_communication_test.WayOfCommunicationTest.fixtures
+sendinel.groups.tests.group_test.GroupTest.fixtures
+sendinel.groups.tests.group_test.WebInfoServiceTest.fixtures
+sendinel.infoservices.tests.models_test.InfoMessageTest.fixtures
+sendinel.infoservices.tests.models_test.SubscriptionTest.fixtures
+sendinel.medicines.tests.medicine_test.MedicineTest.fixtures
+sendinel.notifications.tests.models_test.NotificationTest.fixtures
+sendinel.notifications.tests.notifications_test.NotificationViewTest.fixtures
+sendinel.web.tests.auth_test.AuthenticateViewTests.fixtures
+sendinel.web.tests.bluetooth_test.BluetoothViewTest.fixtures
+sendinel.web.tests.i18n_test.InternationalizationTest.fixtures
+sendinel.web.tests.utils_test.UtilsTemplateTests.fixtures" class="py-name" href="#" onclick="return doclink('link-0', 'fixtures', 'link-0');">fixtures</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">'backend_test'</tt><tt class="py-op">]</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line">    <tt id="link-1" class="py-name" targets="Module sendinel.groups.urls=sendinel.groups.urls-module.html,Module sendinel.infoservices.urls=sendinel.infoservices.urls-module.html,Module sendinel.medicines.urls=sendinel.medicines.urls-module.html,Variable sendinel.notifications.tests.notifications_test.NotificationViewTest.urls=sendinel.notifications.tests.notifications_test.NotificationViewTest-class.html#urls,Module sendinel.notifications.urls=sendinel.notifications.urls-module.html,Module sendinel.urls=sendinel.urls-module.html,Variable sendinel.web.tests.auth_test.AuthenticateViewTests.urls=sendinel.web.tests.auth_test.AuthenticateViewTests-class.html#urls,Variable sendinel.web.tests.i18n_test.InternationalizationTest.urls=sendinel.web.tests.i18n_test.InternationalizationTest-class.html#urls,Variable sendinel.web.tests.utils_test.UtilsTemplateTests.urls=sendinel.web.tests.utils_test.UtilsTemplateTests-class.html#urls,Module sendinel.web.urls=sendinel.web.urls-module.html"><a title="sendinel.groups.urls
+sendinel.infoservices.urls
+sendinel.medicines.urls
+sendinel.notifications.tests.notifications_test.NotificationViewTest.urls
+sendinel.notifications.urls
+sendinel.urls
+sendinel.web.tests.auth_test.AuthenticateViewTests.urls
+sendinel.web.tests.i18n_test.InternationalizationTest.urls
+sendinel.web.tests.utils_test.UtilsTemplateTests.urls
+sendinel.web.urls" class="py-name" href="#" onclick="return doclink('link-1', 'urls', 'link-1');">urls</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'sendinel.urls'</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line">     </tt>
+<a name="InternationalizationTest.setUp"></a><div id="InternationalizationTest.setUp-def"><a name="L9"></a><tt class="py-lineno"> 9</tt> <a class="py-toggle" href="#" id="InternationalizationTest.setUp-toggle" onclick="return toggle('InternationalizationTest.setUp');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.web.tests.i18n_test.InternationalizationTest-class.html#setUp">setUp</a> <tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="InternationalizationTest.setUp-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="InternationalizationTest.setUp-expanded"><a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line">        <tt class="py-comment"># we're using Traditional Chinese as Test language</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment"></tt>        <tt id="link-2" class="py-name" targets="Variable sendinel.backend.output.OutputData.data=sendinel.backend.output.OutputData-class.html#data"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-2', 'data', 'link-2');">data</a></tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-string">'language'</tt><tt class="py-op">:</tt> <tt class="py-string">'zh-tw'</tt><tt class="py-op">}</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line">        <tt class="py-name">url</tt> <tt class="py-op">=</tt> <tt class="py-name">reverse</tt><tt class="py-op">(</tt><tt class="py-string">"django.views.i18n.set_language"</tt><tt class="py-op">)</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Variable sendinel.groups.tests.group_test.GroupTest.client=sendinel.groups.tests.group_test.GroupTest-class.html#client,Variable sendinel.web.tests.bluetooth_test.BluetoothViewTest.client=sendinel.web.tests.bluetooth_test.BluetoothViewTest-class.html#client"><a title="sendinel.groups.tests.group_test.GroupTest.client
+sendinel.web.tests.bluetooth_test.BluetoothViewTest.client" class="py-name" href="#" onclick="return doclink('link-3', 'client', 'link-3');">client</a></tt><tt class="py-op">.</tt><tt class="py-name">post</tt><tt class="py-op">(</tt><tt class="py-name">url</tt><tt class="py-op">,</tt> <tt id="link-4" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-4', 'data', 'link-2');">data</a></tt><tt class="py-op">)</tt> </tt>
+</div><a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line">     </tt>
+<a name="InternationalizationTest.test_jsi18n"></a><div id="InternationalizationTest.test_jsi18n-def"><a name="L15"></a><tt class="py-lineno">15</tt> <a class="py-toggle" href="#" id="InternationalizationTest.test_jsi18n-toggle" onclick="return toggle('InternationalizationTest.test_jsi18n');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.web.tests.i18n_test.InternationalizationTest-class.html#test_jsi18n">test_jsi18n</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="InternationalizationTest.test_jsi18n-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="InternationalizationTest.test_jsi18n-expanded"><a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line">        <tt class="py-name">response</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-5" class="py-name"><a title="sendinel.groups.tests.group_test.GroupTest.client
+sendinel.web.tests.bluetooth_test.BluetoothViewTest.client" class="py-name" href="#" onclick="return doclink('link-5', 'client', 'link-3');">client</a></tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">"/jsi18n/"</tt><tt class="py-op">)</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">failUnlessEqual</tt><tt class="py-op">(</tt><tt class="py-name">response</tt><tt class="py-op">.</tt><tt class="py-name">status_code</tt><tt class="py-op">,</tt> <tt class="py-number">200</tt><tt class="py-op">)</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">        <tt class="py-comment"># assert at least one translation is in the catalog</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-comment"></tt>        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertContains</tt><tt class="py-op">(</tt><tt class="py-name">response</tt><tt class="py-op">,</tt> <tt class="py-string">"catalog['"</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">         </tt>
+<a name="InternationalizationTest.test_i18n"></a><div id="InternationalizationTest.test_i18n-def"><a name="L21"></a><tt class="py-lineno">21</tt> <a class="py-toggle" href="#" id="InternationalizationTest.test_i18n-toggle" onclick="return toggle('InternationalizationTest.test_i18n');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.web.tests.i18n_test.InternationalizationTest-class.html#test_i18n">test_i18n</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="InternationalizationTest.test_i18n-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="InternationalizationTest.test_i18n-expanded"><a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">        <tt class="py-name">response</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-6" class="py-name"><a title="sendinel.groups.tests.group_test.GroupTest.client
+sendinel.web.tests.bluetooth_test.BluetoothViewTest.client" class="py-name" href="#" onclick="return doclink('link-6', 'client', 'link-3');">client</a></tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">"/web/"</tt><tt class="py-op">)</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertContains</tt><tt class="py-op">(</tt><tt class="py-name">response</tt><tt class="py-op">,</tt> <tt class="py-string">"#TRANSLATED#"</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="sendinel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu May 27 11:30:46 2010
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

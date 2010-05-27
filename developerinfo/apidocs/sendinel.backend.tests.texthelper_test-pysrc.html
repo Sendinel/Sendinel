@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sendinel.backend.tests.texthelper_test</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="sendinel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="sendinel-module.html">Package&nbsp;sendinel</a> ::
+        <a href="sendinel.backend-module.html">Package&nbsp;backend</a> ::
+        <a href="sendinel.backend.tests-module.html">Package&nbsp;tests</a> ::
+        Module&nbsp;texthelper_test
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="sendinel.backend.tests.texthelper_test-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="sendinel.backend.tests.texthelper_test-module.html">Module sendinel.backend.tests.texthelper_test</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package sendinel=sendinel-module.html"><a title="sendinel" class="py-name" href="#" onclick="return doclink('link-0', 'sendinel', 'link-0');">sendinel</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package sendinel.backend=sendinel.backend-module.html"><a title="sendinel.backend" class="py-name" href="#" onclick="return doclink('link-1', 'backend', 'link-1');">backend</a></tt> <tt class="py-keyword">import</tt> <tt id="link-2" class="py-name" targets="Module sendinel.backend.texthelper=sendinel.backend.texthelper-module.html"><a title="sendinel.backend.texthelper" class="py-name" href="#" onclick="return doclink('link-2', 'texthelper', 'link-2');">texthelper</a></tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">unittest</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">string</tt> <tt class="py-keyword">import</tt> <tt class="py-name">Template</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"> </tt>
+<a name="TesthelperTest"></a><div id="TesthelperTest-def"><a name="L6"></a><tt class="py-lineno"> 6</tt> <a class="py-toggle" href="#" id="TesthelperTest-toggle" onclick="return toggle('TesthelperTest');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="sendinel.backend.tests.texthelper_test.TesthelperTest-class.html">TesthelperTest</a><tt class="py-op">(</tt><tt class="py-base-class">unittest</tt><tt class="py-op">.</tt><tt class="py-base-class">TestCase</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TesthelperTest-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="TesthelperTest-expanded"><a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"> </tt>
+<a name="TesthelperTest.setUp"></a><div id="TesthelperTest.setUp-def"><a name="L8"></a><tt class="py-lineno"> 8</tt> <a class="py-toggle" href="#" id="TesthelperTest.setUp-toggle" onclick="return toggle('TesthelperTest.setUp');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.backend.tests.texthelper_test.TesthelperTest-class.html#setUp">setUp</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TesthelperTest.setUp-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="TesthelperTest.setUp-expanded"><a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">salutation</tt> <tt class="py-op">=</tt> <tt id="link-3" class="py-name"><a title="sendinel.backend.texthelper" class="py-name" href="#" onclick="return doclink('link-3', 'texthelper', 'link-2');">texthelper</a></tt><tt class="py-op">.</tt><tt id="link-4" class="py-name" targets="Variable sendinel.settings.SMS_SALUTATION=sendinel.settings-module.html#SMS_SALUTATION"><a title="sendinel.settings.SMS_SALUTATION" class="py-name" href="#" onclick="return doclink('link-4', 'SMS_SALUTATION', 'link-4');">SMS_SALUTATION</a></tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line">        <tt id="link-5" class="py-name"><a title="sendinel.backend.texthelper" class="py-name" href="#" onclick="return doclink('link-5', 'texthelper', 'link-2');">texthelper</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name"><a title="sendinel.settings.SMS_SALUTATION" class="py-name" href="#" onclick="return doclink('link-6', 'SMS_SALUTATION', 'link-4');">SMS_SALUTATION</a></tt> <tt class="py-op">=</tt> <tt class="py-string">"Hello "</tt> </tt>
+</div><a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line">         </tt>
+<a name="TesthelperTest.tearDown"></a><div id="TesthelperTest.tearDown-def"><a name="L12"></a><tt class="py-lineno">12</tt> <a class="py-toggle" href="#" id="TesthelperTest.tearDown-toggle" onclick="return toggle('TesthelperTest.tearDown');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.backend.tests.texthelper_test.TesthelperTest-class.html#tearDown">tearDown</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TesthelperTest.tearDown-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="TesthelperTest.tearDown-expanded"><a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line">        <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-7" class="py-name" targets="Class sendinel.backend.tests.texthelper_test.TesthelperTest=sendinel.backend.tests.texthelper_test.TesthelperTest-class.html"><a title="sendinel.backend.tests.texthelper_test.TesthelperTest" class="py-name" href="#" onclick="return doclink('link-7', 'TesthelperTest', 'link-7');">TesthelperTest</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-8" class="py-name" targets="Method sendinel.backend.tests.texthelper_test.TesthelperTest.tearDown()=sendinel.backend.tests.texthelper_test.TesthelperTest-class.html#tearDown"><a title="sendinel.backend.tests.texthelper_test.TesthelperTest.tearDown" class="py-name" href="#" onclick="return doclink('link-8', 'tearDown', 'link-8');">tearDown</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line">         </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line">        <tt id="link-9" class="py-name"><a title="sendinel.backend.texthelper" class="py-name" href="#" onclick="return doclink('link-9', 'texthelper', 'link-2');">texthelper</a></tt><tt class="py-op">.</tt><tt id="link-10" class="py-name"><a title="sendinel.settings.SMS_SALUTATION" class="py-name" href="#" onclick="return doclink('link-10', 'SMS_SALUTATION', 'link-4');">SMS_SALUTATION</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">salutation</tt> </tt>
+</div><a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"> </tt>
+<a name="TesthelperTest.test_date_to_text"></a><div id="TesthelperTest.test_date_to_text-def"><a name="L17"></a><tt class="py-lineno">17</tt> <a class="py-toggle" href="#" id="TesthelperTest.test_date_to_text-toggle" onclick="return toggle('TesthelperTest.test_date_to_text');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.backend.tests.texthelper_test.TesthelperTest-class.html#test_date_to_text">test_date_to_text</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt>  </tt>
+</div><a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">        <tt id="link-11" class="py-name" targets="Variable sendinel.notifications.forms.NotificationValidationForm.date=sendinel.notifications.forms.NotificationValidationForm-class.html#date,Variable sendinel.notifications.forms.NotificationValidationFormBluetooth.date=sendinel.notifications.forms.NotificationValidationFormBluetooth-class.html#date,Variable sendinel.notifications.models.Notification.date=sendinel.notifications.models.Notification-class.html#date"><a title="sendinel.notifications.forms.NotificationValidationForm.date
+sendinel.notifications.forms.NotificationValidationFormBluetooth.date
+sendinel.notifications.models.Notification.date" class="py-name" href="#" onclick="return doclink('link-11', 'date', 'link-11');">date</a></tt> <tt class="py-op">=</tt> <tt id="link-12" class="py-name"><a title="sendinel.backend.texthelper" class="py-name" href="#" onclick="return doclink('link-12', 'texthelper', 'link-2');">texthelper</a></tt><tt class="py-op">.</tt><tt id="link-13" class="py-name" targets="Function sendinel.backend.texthelper.date_to_text()=sendinel.backend.texthelper-module.html#date_to_text"><a title="sendinel.backend.texthelper.date_to_text" class="py-name" href="#" onclick="return doclink('link-13', 'date_to_text', 'link-13');">date_to_text</a></tt><tt class="py-op">(</tt><tt class="py-number">3</tt><tt class="py-op">,</tt> <tt class="py-number">18</tt><tt class="py-op">,</tt> <tt class="py-number">3</tt><tt class="py-op">,</tt> <tt class="py-number">11</tt><tt class="py-op">,</tt> <tt class="py-number">40</tt><tt class="py-op">)</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line">         </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertEquals</tt><tt class="py-op">(</tt><tt id="link-14" class="py-name"><a title="sendinel.notifications.forms.NotificationValidationForm.date
+sendinel.notifications.forms.NotificationValidationFormBluetooth.date
+sendinel.notifications.models.Notification.date" class="py-name" href="#" onclick="return doclink('link-14', 'date', 'link-11');">date</a></tt><tt class="py-op">[</tt><tt class="py-string">"date"</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-string">'Wednesday, eighteenth of March'</tt><tt class="py-op">)</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertEquals</tt><tt class="py-op">(</tt><tt id="link-15" class="py-name"><a title="sendinel.notifications.forms.NotificationValidationForm.date
+sendinel.notifications.forms.NotificationValidationFormBluetooth.date
+sendinel.notifications.models.Notification.date" class="py-name" href="#" onclick="return doclink('link-15', 'date', 'link-11');">date</a></tt><tt class="py-op">[</tt><tt class="py-string">"time"</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-string">"eleven forty"</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">         </tt>
+<a name="TesthelperTest.test_generate_text_notification"></a><div id="TesthelperTest.test_generate_text_notification-def"><a name="L23"></a><tt class="py-lineno">23</tt> <a class="py-toggle" href="#" id="TesthelperTest.test_generate_text_notification-toggle" onclick="return toggle('TesthelperTest.test_generate_text_notification');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.backend.tests.texthelper_test.TesthelperTest-class.html#test_generate_text_notification">test_generate_text_notification</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TesthelperTest.test_generate_text_notification-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="TesthelperTest.test_generate_text_notification-expanded"><a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">        <tt id="link-16" class="py-name" targets="Variable sendinel.infoservices.forms.InfoMessageValidationForm.text=sendinel.infoservices.forms.InfoMessageValidationForm-class.html#text,Variable sendinel.infoservices.models.InfoMessage.text=sendinel.infoservices.models.InfoMessage-class.html#text,Variable sendinel.medicines.forms.MedicineMessageValidationForm.text=sendinel.medicines.forms.MedicineMessageValidationForm-class.html#text"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-16', 'text', 'link-16');">text</a></tt> <tt class="py-op">=</tt> <tt id="link-17" class="py-name"><a title="sendinel.backend.texthelper" class="py-name" href="#" onclick="return doclink('link-17', 'texthelper', 'link-2');">texthelper</a></tt><tt class="py-op">.</tt><tt id="link-18" class="py-name" targets="Function sendinel.backend.texthelper.generate_text()=sendinel.backend.texthelper-module.html#generate_text"><a title="sendinel.backend.texthelper.generate_text" class="py-name" href="#" onclick="return doclink('link-18', 'generate_text', 'link-18');">generate_text</a></tt><tt class="py-op">(</tt><tt class="py-op">{</tt><tt class="py-string">'date'</tt><tt class="py-op">:</tt> <tt class="py-string">"13.2.98"</tt><tt class="py-op">,</tt> <tt class="py-string">'time'</tt><tt class="py-op">:</tt> <tt class="py-string">"3:39"</tt><tt class="py-op">,</tt> \ </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">                            <tt class="py-string">'doctor'</tt><tt class="py-op">:</tt> <tt class="py-string">"ms daily-binnessy-dayteewart"</tt><tt class="py-op">,</tt> \ </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">                            <tt class="py-string">'hospital'</tt><tt class="py-op">:</tt> <tt class="py-string">"hodpiel hospital at the "</tt> <tt class="py-op">+</tt>\ </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">                            <tt class="py-string">"lake with the frog and the tree"</tt><tt class="py-op">,</tt>\ </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">                            <tt class="py-string">'name'</tt><tt class="py-op">:</tt> <tt class="py-string">"mr jameson-bitterall-wertifial"</tt><tt class="py-op">}</tt><tt class="py-op">,</tt>\ </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">                             <tt class="py-name">Template</tt><tt class="py-op">(</tt><tt class="py-string">"$name, please remember your"</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">                                <tt class="py-string">" notification at the $hospital at $date,"</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">                                <tt class="py-string">" $time with doctor $doctor"</tt><tt class="py-op">)</tt><tt class="py-op">)</tt>   </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">        <tt class="py-name">should_text</tt> <tt class="py-op">=</tt> <tt id="link-19" class="py-name"><a title="sendinel.backend.texthelper" class="py-name" href="#" onclick="return doclink('link-19', 'texthelper', 'link-2');">texthelper</a></tt><tt class="py-op">.</tt><tt id="link-20" class="py-name"><a title="sendinel.settings.SMS_SALUTATION" class="py-name" href="#" onclick="return doclink('link-20', 'SMS_SALUTATION', 'link-4');">SMS_SALUTATION</a></tt> <tt class="py-op">+</tt> <tt class="py-string">"mr jameson-bitterall-"</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">                        <tt class="py-string">"wertif, please remember your notification at the "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">                        <tt class="py-string">"hodpiel hospital at the lak at 13.2.98, 3:39 with "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">                        <tt class="py-string">"doctor ms daily-binnessy-dayteewar"</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertTrue</tt><tt class="py-op">(</tt><tt class="py-name">len</tt><tt class="py-op">(</tt><tt id="link-21" class="py-name"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-21', 'text', 'link-16');">text</a></tt><tt class="py-op">)</tt> <tt class="py-op">&lt;=</tt> <tt class="py-number">160</tt><tt class="py-op">)</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertEquals</tt> <tt class="py-op">(</tt><tt id="link-22" class="py-name"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-22', 'text', 'link-16');">text</a></tt><tt class="py-op">,</tt> <tt class="py-name">should_text</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"> </tt>
+<a name="TesthelperTest.test_generate_text_message"></a><div id="TesthelperTest.test_generate_text_message-def"><a name="L39"></a><tt class="py-lineno">39</tt> <a class="py-toggle" href="#" id="TesthelperTest.test_generate_text_message-toggle" onclick="return toggle('TesthelperTest.test_generate_text_message');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.backend.tests.texthelper_test.TesthelperTest-class.html#test_generate_text_message">test_generate_text_message</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TesthelperTest.test_generate_text_message-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="TesthelperTest.test_generate_text_message-expanded"><a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">        <tt id="link-23" class="py-name"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-23', 'text', 'link-16');">text</a></tt> <tt class="py-op">=</tt> <tt id="link-24" class="py-name"><a title="sendinel.backend.texthelper" class="py-name" href="#" onclick="return doclink('link-24', 'texthelper', 'link-2');">texthelper</a></tt><tt class="py-op">.</tt><tt id="link-25" class="py-name"><a title="sendinel.backend.texthelper.generate_text" class="py-name" href="#" onclick="return doclink('link-25', 'generate_text', 'link-18');">generate_text</a></tt><tt class="py-op">(</tt><tt class="py-op">{</tt><tt class="py-string">'free_text'</tt><tt class="py-op">:</tt><tt class="py-string">"Mrs. Joirie, your "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">                        <tt class="py-string">"medicine is there. "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">                        <tt class="py-string">"Please remember to pay 2 $."</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> <tt class="py-name">Template</tt><tt class="py-op">(</tt><tt class="py-string">"$free_text"</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">        <tt class="py-name">should_text</tt> <tt class="py-op">=</tt> <tt id="link-26" class="py-name"><a title="sendinel.backend.texthelper" class="py-name" href="#" onclick="return doclink('link-26', 'texthelper', 'link-2');">texthelper</a></tt><tt class="py-op">.</tt><tt id="link-27" class="py-name"><a title="sendinel.settings.SMS_SALUTATION" class="py-name" href="#" onclick="return doclink('link-27', 'SMS_SALUTATION', 'link-4');">SMS_SALUTATION</a></tt> <tt class="py-op">+</tt> <tt class="py-string">"Mrs. Joirie, your "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">                        <tt class="py-string">"medicine is there. Please remember to pay 2 $."</tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertEquals</tt> <tt class="py-op">(</tt><tt id="link-28" class="py-name"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-28', 'text', 'link-16');">text</a></tt><tt class="py-op">,</tt> <tt class="py-name">should_text</tt><tt class="py-op">)</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertTrue</tt><tt class="py-op">(</tt><tt class="py-name">len</tt><tt class="py-op">(</tt><tt id="link-29" class="py-name"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-29', 'text', 'link-16');">text</a></tt><tt class="py-op">)</tt> <tt class="py-op">&lt;=</tt> <tt class="py-number">160</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">         </tt>
+<a name="TesthelperTest.test_generate_notification_text_cut_off"></a><div id="TesthelperTest.test_generate_notification_text_cut_off-def"><a name="L48"></a><tt class="py-lineno">48</tt> <a class="py-toggle" href="#" id="TesthelperTest.test_generate_notification_text_cut_off-toggle" onclick="return toggle('TesthelperTest.test_generate_notification_text_cut_off');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.backend.tests.texthelper_test.TesthelperTest-class.html#test_generate_notification_text_cut_off">test_generate_notification_text_cut_off</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TesthelperTest.test_generate_notification_text_cut_off-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="TesthelperTest.test_generate_notification_text_cut_off-expanded"><a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">        <tt id="link-30" class="py-name"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-30', 'text', 'link-16');">text</a></tt> <tt class="py-op">=</tt>  <tt id="link-31" class="py-name"><a title="sendinel.backend.texthelper" class="py-name" href="#" onclick="return doclink('link-31', 'texthelper', 'link-2');">texthelper</a></tt><tt class="py-op">.</tt><tt id="link-32" class="py-name"><a title="sendinel.backend.texthelper.generate_text" class="py-name" href="#" onclick="return doclink('link-32', 'generate_text', 'link-18');">generate_text</a></tt><tt class="py-op">(</tt><tt class="py-op">{</tt><tt class="py-string">'text'</tt><tt class="py-op">:</tt> <tt class="py-string">"Hello my name is james I"</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">                            <tt class="py-string">" am 22 years old and i really want to go to "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line">                            <tt class="py-string">"bali and make holidays since my last holidays"</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line">                            <tt class="py-string">" are ages ago and i think a "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line">                            <tt class="py-string">"little bit less stress would be fun to have"</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> \ </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line">                            <tt class="py-name">Template</tt> <tt class="py-op">(</tt><tt class="py-string">'What an interesting text :$text'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line">        <tt class="py-name">should_text</tt> <tt class="py-op">=</tt> <tt id="link-33" class="py-name"><a title="sendinel.backend.texthelper" class="py-name" href="#" onclick="return doclink('link-33', 'texthelper', 'link-2');">texthelper</a></tt><tt class="py-op">.</tt><tt id="link-34" class="py-name"><a title="sendinel.settings.SMS_SALUTATION" class="py-name" href="#" onclick="return doclink('link-34', 'SMS_SALUTATION', 'link-4');">SMS_SALUTATION</a></tt> <tt class="py-op">+</tt> <tt class="py-string">"What an interesting text"</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line">                        <tt class="py-string">" :Hello my name is james I am 22 years old and i "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line">                        <tt class="py-string">"really want to go to bali and make "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line">                        <tt class="py-string">"holidays since my last holidays are ages ago a"</tt> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertTrue</tt><tt class="py-op">(</tt><tt class="py-name">len</tt><tt class="py-op">(</tt><tt id="link-35" class="py-name"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-35', 'text', 'link-16');">text</a></tt><tt class="py-op">)</tt> <tt class="py-op">&lt;=</tt> <tt class="py-number">160</tt><tt class="py-op">)</tt> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertEquals</tt><tt class="py-op">(</tt><tt class="py-name">should_text</tt><tt class="py-op">,</tt> <tt id="link-36" class="py-name"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-36', 'text', 'link-16');">text</a></tt><tt class="py-op">)</tt> </tt>
+</div><a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line"> </tt>
+<a name="TesthelperTest.test_generate_notification_text_no_cut"></a><div id="TesthelperTest.test_generate_notification_text_no_cut-def"><a name="L62"></a><tt class="py-lineno">62</tt> <a class="py-toggle" href="#" id="TesthelperTest.test_generate_notification_text_no_cut-toggle" onclick="return toggle('TesthelperTest.test_generate_notification_text_no_cut');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.backend.tests.texthelper_test.TesthelperTest-class.html#test_generate_notification_text_no_cut">test_generate_notification_text_no_cut</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TesthelperTest.test_generate_notification_text_no_cut-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="TesthelperTest.test_generate_notification_text_no_cut-expanded"><a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line">        <tt id="link-37" class="py-name"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-37', 'text', 'link-16');">text</a></tt> <tt class="py-op">=</tt>  <tt id="link-38" class="py-name"><a title="sendinel.backend.texthelper" class="py-name" href="#" onclick="return doclink('link-38', 'texthelper', 'link-2');">texthelper</a></tt><tt class="py-op">.</tt><tt id="link-39" class="py-name"><a title="sendinel.backend.texthelper.generate_text" class="py-name" href="#" onclick="return doclink('link-39', 'generate_text', 'link-18');">generate_text</a></tt><tt class="py-op">(</tt><tt class="py-op">{</tt><tt class="py-string">'text'</tt><tt class="py-op">:</tt> <tt class="py-string">"Hello my name is james I"</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line">                            <tt class="py-string">" am 22 years old and i really want to go to "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line">                            <tt class="py-string">"bali and make holidays since my last holidays"</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line">                            <tt class="py-string">" are ages ago and i think a "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line">                            <tt class="py-string">"little bit less stress would be fun to have"</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> \ </tt>
+<a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line">                            <tt class="py-name">Template</tt> <tt class="py-op">(</tt><tt class="py-string">'What an interesting text :$text'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">False</tt><tt class="py-op">)</tt> </tt>
+<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line">        <tt class="py-name">should_text</tt> <tt class="py-op">=</tt> <tt class="py-string">"What an interesting text :Hello my name is james I "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line">                            <tt class="py-string">"am 22 years old and i really want to go to "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line">                            <tt class="py-string">"bali and make holidays since my last holidays "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line">                            <tt class="py-string">"are ages ago and i think a "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line">                            <tt class="py-string">"little bit less stress would be fun to have"</tt> </tt>
+<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertTrue</tt><tt class="py-op">(</tt><tt class="py-name">len</tt><tt class="py-op">(</tt><tt id="link-40" class="py-name"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-40', 'text', 'link-16');">text</a></tt><tt class="py-op">)</tt> <tt class="py-op">&gt;=</tt> <tt class="py-number">160</tt><tt class="py-op">)</tt> </tt>
+<a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertEquals</tt><tt class="py-op">(</tt><tt class="py-name">should_text</tt><tt class="py-op">,</tt> <tt id="link-41" class="py-name"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-41', 'text', 'link-16');">text</a></tt><tt class="py-op">)</tt> </tt>
+</div><a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line">         </tt>
+<a name="TesthelperTest.test_generate_notification_text_cut_off_special_fields"></a><div id="TesthelperTest.test_generate_notification_text_cut_off_special_fields-def"><a name="L77"></a><tt class="py-lineno">77</tt> <a class="py-toggle" href="#" id="TesthelperTest.test_generate_notification_text_cut_off_special_fields-toggle" onclick="return toggle('TesthelperTest.test_generate_notification_text_cut_off_special_fields');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.backend.tests.texthelper_test.TesthelperTest-class.html#test_generate_notification_text_cut_off_special_fields">test_generate_notification_text_cut_off_special_fields</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TesthelperTest.test_generate_notification_text_cut_off_special_fields-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="TesthelperTest.test_generate_notification_text_cut_off_special_fields-expanded"><a name="L78"></a><tt class="py-lineno">78</tt>  <tt class="py-line">        <tt class="py-name">specific_content</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-string">'date'</tt><tt class="py-op">:</tt><tt class="py-string">"13.2.98, 3:39"</tt> <tt class="py-op">,</tt> \ </tt>
+<a name="L79"></a><tt class="py-lineno">79</tt>  <tt class="py-line">                            <tt class="py-string">'doctor'</tt><tt class="py-op">:</tt><tt class="py-string">"abcdefghijklmnopqrstuvwxyzabcd"</tt><tt class="py-op">,</tt> \ </tt>
+<a name="L80"></a><tt class="py-lineno">80</tt>  <tt class="py-line">                            <tt class="py-string">'hospital'</tt><tt class="py-op">:</tt><tt class="py-string">"hodpielitzkicitziktidiiiiii hospital"</tt><tt class="py-op">,</tt> \ </tt>
+<a name="L81"></a><tt class="py-lineno">81</tt>  <tt class="py-line">                            <tt class="py-string">'name'</tt><tt class="py-op">:</tt><tt class="py-string">"mr joijjliputututututututututu"</tt><tt class="py-op">}</tt> </tt>
+<a name="L82"></a><tt class="py-lineno">82</tt>  <tt class="py-line">        <tt class="py-name">text_template</tt> <tt class="py-op">=</tt> <tt class="py-name">Template</tt><tt class="py-op">(</tt><tt class="py-string">"Dear $name, please remember your "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L83"></a><tt class="py-lineno">83</tt>  <tt class="py-line">            <tt class="py-string">"notification at the $hospital at $date with doctor $doctor"</tt><tt class="py-op">)</tt>    </tt>
+<a name="L84"></a><tt class="py-lineno">84</tt>  <tt class="py-line">        <tt id="link-42" class="py-name"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-42', 'text', 'link-16');">text</a></tt> <tt class="py-op">=</tt> <tt id="link-43" class="py-name"><a title="sendinel.backend.texthelper" class="py-name" href="#" onclick="return doclink('link-43', 'texthelper', 'link-2');">texthelper</a></tt><tt class="py-op">.</tt><tt id="link-44" class="py-name"><a title="sendinel.backend.texthelper.generate_text" class="py-name" href="#" onclick="return doclink('link-44', 'generate_text', 'link-18');">generate_text</a></tt><tt class="py-op">(</tt><tt class="py-name">specific_content</tt><tt class="py-op">,</tt> <tt class="py-name">text_template</tt><tt class="py-op">)</tt> </tt>
+<a name="L85"></a><tt class="py-lineno">85</tt>  <tt class="py-line">        <tt class="py-name">should_text</tt> <tt class="py-op">=</tt> <tt id="link-45" class="py-name"><a title="sendinel.backend.texthelper" class="py-name" href="#" onclick="return doclink('link-45', 'texthelper', 'link-2');">texthelper</a></tt><tt class="py-op">.</tt><tt id="link-46" class="py-name"><a title="sendinel.settings.SMS_SALUTATION" class="py-name" href="#" onclick="return doclink('link-46', 'SMS_SALUTATION', 'link-4');">SMS_SALUTATION</a></tt> <tt class="py-op">+</tt> <tt class="py-string">"Dear mr "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L86"></a><tt class="py-lineno">86</tt>  <tt class="py-line">                        <tt class="py-string">"joijjlipututututututut, please remember your "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L87"></a><tt class="py-lineno">87</tt>  <tt class="py-line">                        <tt class="py-string">"notification at the hodpielitzkicitziktidiiii at "</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L88"></a><tt class="py-lineno">88</tt>  <tt class="py-line">                        <tt class="py-string">"13.2.98, 3:39 with doctor abcdefghijklmnopqrstuvwxy"</tt> </tt>
+<a name="L89"></a><tt class="py-lineno">89</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertTrue</tt><tt class="py-op">(</tt><tt class="py-name">len</tt><tt class="py-op">(</tt><tt id="link-47" class="py-name"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-47', 'text', 'link-16');">text</a></tt><tt class="py-op">)</tt> <tt class="py-op">&lt;=</tt> <tt class="py-number">160</tt><tt class="py-op">)</tt> </tt>
+<a name="L90"></a><tt class="py-lineno">90</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertEquals</tt><tt class="py-op">(</tt><tt class="py-name">should_text</tt><tt class="py-op">,</tt> <tt id="link-48" class="py-name"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-48', 'text', 'link-16');">text</a></tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L91"></a><tt class="py-lineno">91</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="sendinel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu May 27 11:30:47 2010
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sendinel.backend.tests.output_test</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="sendinel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="sendinel-module.html">Package&nbsp;sendinel</a> ::
+        <a href="sendinel.backend-module.html">Package&nbsp;backend</a> ::
+        <a href="sendinel.backend.tests-module.html">Package&nbsp;tests</a> ::
+        Module&nbsp;output_test
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="sendinel.backend.tests.output_test-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="sendinel.backend.tests.output_test-module.html">Module sendinel.backend.tests.output_test</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">test</tt> <tt class="py-keyword">import</tt> <tt class="py-name">TestCase</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package sendinel=sendinel-module.html"><a title="sendinel" class="py-name" href="#" onclick="return doclink('link-0', 'sendinel', 'link-0');">sendinel</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package sendinel.backend=sendinel.backend-module.html"><a title="sendinel.backend" class="py-name" href="#" onclick="return doclink('link-1', 'backend', 'link-1');">backend</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module sendinel.backend.output=sendinel.backend.output-module.html"><a title="sendinel.backend.output" class="py-name" href="#" onclick="return doclink('link-2', 'output', 'link-2');">output</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class sendinel.backend.output.VoiceOutputData=sendinel.backend.output.VoiceOutputData-class.html"><a title="sendinel.backend.output.VoiceOutputData" class="py-name" href="#" onclick="return doclink('link-3', 'VoiceOutputData', 'link-3');">VoiceOutputData</a></tt><tt class="py-op">,</tt> <tt id="link-4" class="py-name" targets="Class sendinel.backend.output.SMSOutputData=sendinel.backend.output.SMSOutputData-class.html"><a title="sendinel.backend.output.SMSOutputData" class="py-name" href="#" onclick="return doclink('link-4', 'SMSOutputData', 'link-4');">SMSOutputData</a></tt><tt class="py-op">,</tt> \ </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line">                                    <tt id="link-5" class="py-name" targets="Class sendinel.backend.output.BluetoothOutputData=sendinel.backend.output.BluetoothOutputData-class.html"><a title="sendinel.backend.output.BluetoothOutputData" class="py-name" href="#" onclick="return doclink('link-5', 'BluetoothOutputData', 'link-5');">BluetoothOutputData</a></tt><tt class="py-op">,</tt> <tt id="link-6" class="py-name" targets="Class sendinel.backend.output.OutputData=sendinel.backend.output.OutputData-class.html"><a title="sendinel.backend.output.OutputData" class="py-name" href="#" onclick="return doclink('link-6', 'OutputData', 'link-6');">OutputData</a></tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-7" class="py-name"><a title="sendinel" class="py-name" href="#" onclick="return doclink('link-7', 'sendinel', 'link-0');">sendinel</a></tt><tt class="py-op">.</tt><tt id="link-8" class="py-name"><a title="sendinel.backend" class="py-name" href="#" onclick="return doclink('link-8', 'backend', 'link-1');">backend</a></tt> <tt class="py-keyword">import</tt> <tt id="link-9" class="py-name" targets="Module sendinel.backend.bluetooth=sendinel.backend.bluetooth-module.html"><a title="sendinel.backend.bluetooth" class="py-name" href="#" onclick="return doclink('link-9', 'bluetooth', 'link-9');">bluetooth</a></tt><tt class="py-op">,</tt> <tt id="link-10" class="py-name" targets="Module sendinel.backend.voicecall=sendinel.backend.voicecall-module.html"><a title="sendinel.backend.voicecall" class="py-name" href="#" onclick="return doclink('link-10', 'voicecall', 'link-10');">voicecall</a></tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"> </tt>
+<a name="OutputTest"></a><div id="OutputTest-def"><a name="L7"></a><tt class="py-lineno"> 7</tt> <a class="py-toggle" href="#" id="OutputTest-toggle" onclick="return toggle('OutputTest');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="sendinel.backend.tests.output_test.OutputTest-class.html">OutputTest</a><tt class="py-op">(</tt><tt class="py-base-class">TestCase</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="OutputTest-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="OutputTest-expanded"><a name="OutputTest.setUp"></a><div id="OutputTest.setUp-def"><a name="L8"></a><tt class="py-lineno"> 8</tt> <a class="py-toggle" href="#" id="OutputTest.setUp-toggle" onclick="return toggle('OutputTest.setUp');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.backend.tests.output_test.OutputTest-class.html#setUp">setUp</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="OutputTest.setUp-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="OutputTest.setUp-expanded"><a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line">         </tt>
+<a name="OutputTest.test_implementation_of_send"></a><div id="OutputTest.test_implementation_of_send-def"><a name="L11"></a><tt class="py-lineno">11</tt> <a class="py-toggle" href="#" id="OutputTest.test_implementation_of_send-toggle" onclick="return toggle('OutputTest.test_implementation_of_send');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.backend.tests.output_test.OutputTest-class.html#test_implementation_of_send">test_implementation_of_send</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="OutputTest.test_implementation_of_send-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="OutputTest.test_implementation_of_send-expanded"><a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line">        <tt class="py-name">outputData</tt> <tt class="py-op">=</tt> <tt id="link-11" class="py-name"><a title="sendinel.backend.output.OutputData" class="py-name" href="#" onclick="return doclink('link-11', 'OutputData', 'link-6');">OutputData</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertRaises</tt><tt class="py-op">(</tt><tt class="py-name">NotImplementedError</tt><tt class="py-op">,</tt> <tt class="py-name">outputData</tt><tt class="py-op">.</tt><tt id="link-12" class="py-name" targets="Method sendinel.backend.output.BluetoothOutputData.send()=sendinel.backend.output.BluetoothOutputData-class.html#send,Method sendinel.backend.output.OutputData.send()=sendinel.backend.output.OutputData-class.html#send,Method sendinel.backend.output.SMSOutputData.send()=sendinel.backend.output.SMSOutputData-class.html#send,Method sendinel.backend.output.VoiceOutputData.send()=sendinel.backend.output.VoiceOutputData-class.html#send"><a title="sendinel.backend.output.BluetoothOutputData.send
+sendinel.backend.output.OutputData.send
+sendinel.backend.output.SMSOutputData.send
+sendinel.backend.output.VoiceOutputData.send" class="py-name" href="#" onclick="return doclink('link-12', 'send', 'link-12');">send</a></tt><tt class="py-op">)</tt> </tt>
+</div><a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line">     </tt>
+<a name="OutputTest.test_send_bluetoothoutputobject"></a><div id="OutputTest.test_send_bluetoothoutputobject-def"><a name="L15"></a><tt class="py-lineno">15</tt> <a class="py-toggle" href="#" id="OutputTest.test_send_bluetoothoutputobject-toggle" onclick="return toggle('OutputTest.test_send_bluetoothoutputobject');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.backend.tests.output_test.OutputTest-class.html#test_send_bluetoothoutputobject">test_send_bluetoothoutputobject</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="OutputTest.test_send_bluetoothoutputobject-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="OutputTest.test_send_bluetoothoutputobject-expanded"><a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line">        <tt id="link-13" class="py-name" targets="Variable sendinel.backend.output.OutputData.data=sendinel.backend.output.OutputData-class.html#data"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-13', 'data', 'link-13');">data</a></tt> <tt class="py-op">=</tt> <tt class="py-string">"test"</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">        <tt class="py-name">mac</tt> <tt class="py-op">=</tt> <tt class="py-string">"1234"</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">        <tt id="link-14" class="py-name" targets="Variable sendinel.backend.output.BluetoothOutputData.server_address=sendinel.backend.output.BluetoothOutputData-class.html#server_address"><a title="sendinel.backend.output.BluetoothOutputData.server_address" class="py-name" href="#" onclick="return doclink('link-14', 'server_address', 'link-14');">server_address</a></tt> <tt class="py-op">=</tt> <tt class="py-string">"127"</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line">     </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">        <tt class="py-name">bluetoothoutput</tt> <tt class="py-op">=</tt> <tt id="link-15" class="py-name"><a title="sendinel.backend.output.BluetoothOutputData" class="py-name" href="#" onclick="return doclink('link-15', 'BluetoothOutputData', 'link-5');">BluetoothOutputData</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">        <tt class="py-name">bluetoothoutput</tt><tt class="py-op">.</tt><tt id="link-16" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-16', 'data', 'link-13');">data</a></tt> <tt class="py-op">=</tt> <tt id="link-17" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-17', 'data', 'link-13');">data</a></tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">        <tt class="py-name">bluetoothoutput</tt><tt class="py-op">.</tt><tt id="link-18" class="py-name" targets="Variable sendinel.backend.output.BluetoothOutputData.bluetooth_mac_address=sendinel.backend.output.BluetoothOutputData-class.html#bluetooth_mac_address"><a title="sendinel.backend.output.BluetoothOutputData.bluetooth_mac_address" class="py-name" href="#" onclick="return doclink('link-18', 'bluetooth_mac_address', 'link-18');">bluetooth_mac_address</a></tt> <tt class="py-op">=</tt> <tt class="py-name">mac</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">        <tt class="py-name">bluetoothoutput</tt><tt class="py-op">.</tt><tt id="link-19" class="py-name"><a title="sendinel.backend.output.BluetoothOutputData.server_address" class="py-name" href="#" onclick="return doclink('link-19', 'server_address', 'link-14');">server_address</a></tt> <tt class="py-op">=</tt> <tt id="link-20" class="py-name"><a title="sendinel.backend.output.BluetoothOutputData.server_address" class="py-name" href="#" onclick="return doclink('link-20', 'server_address', 'link-14');">server_address</a></tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">         </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">send_vcal1</tt><tt class="py-op">(</tt><tt class="py-param">server_address2</tt><tt class="py-op">,</tt> <tt class="py-param">mac2</tt><tt class="py-op">,</tt> <tt class="py-param">data2</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertEquals</tt><tt class="py-op">(</tt><tt class="py-name">server_address2</tt><tt class="py-op">,</tt> <tt id="link-21" class="py-name"><a title="sendinel.backend.output.BluetoothOutputData.server_address" class="py-name" href="#" onclick="return doclink('link-21', 'server_address', 'link-14');">server_address</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertEquals</tt><tt class="py-op">(</tt><tt class="py-name">mac2</tt><tt class="py-op">,</tt> <tt class="py-name">mac</tt><tt class="py-op">)</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertEquals</tt><tt class="py-op">(</tt><tt class="py-name">data2</tt><tt class="py-op">,</tt> <tt id="link-22" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-22', 'data', 'link-13');">data</a></tt><tt class="py-op">)</tt> </tt>
+</div><a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">               </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">        <tt class="py-name">send_vcal_old</tt> <tt class="py-op">=</tt> <tt id="link-23" class="py-name"><a title="sendinel.backend.bluetooth" class="py-name" href="#" onclick="return doclink('link-23', 'bluetooth', 'link-9');">bluetooth</a></tt><tt class="py-op">.</tt><tt id="link-24" class="py-name" targets="Function sendinel.backend.bluetooth.send_vcal()=sendinel.backend.bluetooth-module.html#send_vcal"><a title="sendinel.backend.bluetooth.send_vcal" class="py-name" href="#" onclick="return doclink('link-24', 'send_vcal', 'link-24');">send_vcal</a></tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">        <tt id="link-25" class="py-name"><a title="sendinel.backend.bluetooth" class="py-name" href="#" onclick="return doclink('link-25', 'bluetooth', 'link-9');">bluetooth</a></tt><tt class="py-op">.</tt><tt id="link-26" class="py-name"><a title="sendinel.backend.bluetooth.send_vcal" class="py-name" href="#" onclick="return doclink('link-26', 'send_vcal', 'link-24');">send_vcal</a></tt> <tt class="py-op">=</tt> <tt class="py-name">send_vcal1</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">        <tt class="py-name">bluetoothoutput</tt><tt class="py-op">.</tt><tt id="link-27" class="py-name"><a title="sendinel.backend.output.BluetoothOutputData.send
+sendinel.backend.output.OutputData.send
+sendinel.backend.output.SMSOutputData.send
+sendinel.backend.output.VoiceOutputData.send" class="py-name" href="#" onclick="return doclink('link-27', 'send', 'link-12');">send</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">        <tt id="link-28" class="py-name"><a title="sendinel.backend.bluetooth" class="py-name" href="#" onclick="return doclink('link-28', 'bluetooth', 'link-9');">bluetooth</a></tt><tt class="py-op">.</tt><tt id="link-29" class="py-name"><a title="sendinel.backend.bluetooth.send_vcal" class="py-name" href="#" onclick="return doclink('link-29', 'send_vcal', 'link-24');">send_vcal</a></tt> <tt class="py-op">=</tt> <tt class="py-name">send_vcal_old</tt> </tt>
+</div><a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"> </tt>
+<a name="OutputTest.test_send_voiceoutputobject"></a><div id="OutputTest.test_send_voiceoutputobject-def"><a name="L35"></a><tt class="py-lineno">35</tt> <a class="py-toggle" href="#" id="OutputTest.test_send_voiceoutputobject-toggle" onclick="return toggle('OutputTest.test_send_voiceoutputobject');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.backend.tests.output_test.OutputTest-class.html#test_send_voiceoutputobject">test_send_voiceoutputobject</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="OutputTest.test_send_voiceoutputobject-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="OutputTest.test_send_voiceoutputobject-expanded"><a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">        <tt id="link-30" class="py-name" targets="Variable sendinel.backend.models.Patient.phone_number=sendinel.backend.models.Patient-class.html#phone_number,Variable sendinel.backend.output.SMSOutputData.phone_number=sendinel.backend.output.SMSOutputData-class.html#phone_number,Variable sendinel.backend.output.VoiceOutputData.phone_number=sendinel.backend.output.VoiceOutputData-class.html#phone_number,Variable sendinel.groups.forms.RegisterPatientForGroupValidationForm.phone_number=sendinel.groups.forms.RegisterPatientForGroupValidationForm-class.html#phone_number,Variable sendinel.medicines.forms.RegisterPatientForMedicineForm.phone_number=sendinel.medicines.forms.RegisterPatientForMedicineForm-class.html#phone_number,Variable sendinel.notifications.forms.NotificationValidationForm.phone_number=sendinel.notifications.forms.NotificationValidationForm-class.html#phone_number"><a title="sendinel.backend.models.Patient.phone_number
+sendinel.backend.output.SMSOutputData.phone_number
+sendinel.backend.output.VoiceOutputData.phone_number
+sendinel.groups.forms.RegisterPatientForGroupValidationForm.phone_number
+sendinel.medicines.forms.RegisterPatientForMedicineForm.phone_number
+sendinel.notifications.forms.NotificationValidationForm.phone_number" class="py-name" href="#" onclick="return doclink('link-30', 'phone_number', 'link-30');">phone_number</a></tt> <tt class="py-op">=</tt> <tt class="py-string">"1234"</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">        <tt id="link-31" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-31', 'data', 'link-13');">data</a></tt> <tt class="py-op">=</tt> <tt class="py-string">"test"</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">        <tt class="py-name">voicecalldata</tt> <tt class="py-op">=</tt> <tt id="link-32" class="py-name"><a title="sendinel.backend.output.VoiceOutputData" class="py-name" href="#" onclick="return doclink('link-32', 'VoiceOutputData', 'link-3');">VoiceOutputData</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">        <tt class="py-name">voicecalldata</tt><tt class="py-op">.</tt><tt id="link-33" class="py-name"><a title="sendinel.backend.models.Patient.phone_number
+sendinel.backend.output.SMSOutputData.phone_number
+sendinel.backend.output.VoiceOutputData.phone_number
+sendinel.groups.forms.RegisterPatientForGroupValidationForm.phone_number
+sendinel.medicines.forms.RegisterPatientForMedicineForm.phone_number
+sendinel.notifications.forms.NotificationValidationForm.phone_number" class="py-name" href="#" onclick="return doclink('link-33', 'phone_number', 'link-30');">phone_number</a></tt> <tt class="py-op">=</tt> <tt id="link-34" class="py-name"><a title="sendinel.backend.models.Patient.phone_number
+sendinel.backend.output.SMSOutputData.phone_number
+sendinel.backend.output.VoiceOutputData.phone_number
+sendinel.groups.forms.RegisterPatientForGroupValidationForm.phone_number
+sendinel.medicines.forms.RegisterPatientForMedicineForm.phone_number
+sendinel.notifications.forms.NotificationValidationForm.phone_number" class="py-name" href="#" onclick="return doclink('link-34', 'phone_number', 'link-30');">phone_number</a></tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">        <tt class="py-name">voicecalldata</tt><tt class="py-op">.</tt><tt id="link-35" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-35', 'data', 'link-13');">data</a></tt> <tt class="py-op">=</tt> <tt id="link-36" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-36', 'data', 'link-13');">data</a></tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">         </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">conduct_call1</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">number</tt><tt class="py-op">,</tt> <tt class="py-param">text</tt><tt class="py-op">,</tt> <tt class="py-param">context</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">            <tt class="py-comment">#use class variables because of contextbinding to VoiceOutputData</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"><tt class="py-comment"></tt>            <tt id="link-37" class="py-name" targets="Class sendinel.backend.tests.output_test.OutputTest=sendinel.backend.tests.output_test.OutputTest-class.html"><a title="sendinel.backend.tests.output_test.OutputTest" class="py-name" href="#" onclick="return doclink('link-37', 'OutputTest', 'link-37');">OutputTest</a></tt><tt class="py-op">.</tt><tt class="py-name">phone_number_value</tt> <tt class="py-op">=</tt> <tt id="link-38" class="py-name" targets="Variable sendinel.backend.models.AuthenticationCall.number=sendinel.backend.models.AuthenticationCall-class.html#number"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-38', 'number', 'link-38');">number</a></tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">            <tt id="link-39" class="py-name"><a title="sendinel.backend.tests.output_test.OutputTest" class="py-name" href="#" onclick="return doclink('link-39', 'OutputTest', 'link-37');">OutputTest</a></tt><tt class="py-op">.</tt><tt class="py-name">text_value</tt> <tt class="py-op">=</tt> <tt id="link-40" class="py-name" targets="Variable sendinel.infoservices.forms.InfoMessageValidationForm.text=sendinel.infoservices.forms.InfoMessageValidationForm-class.html#text,Variable sendinel.infoservices.models.InfoMessage.text=sendinel.infoservices.models.InfoMessage-class.html#text,Variable sendinel.medicines.forms.MedicineMessageValidationForm.text=sendinel.medicines.forms.MedicineMessageValidationForm-class.html#text"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-40', 'text', 'link-40');">text</a></tt> </tt>
+</div><a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">               </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">        <tt class="py-name">conduct_call_old</tt> <tt class="py-op">=</tt> <tt id="link-41" class="py-name"><a title="sendinel.backend.voicecall" class="py-name" href="#" onclick="return doclink('link-41', 'voicecall', 'link-10');">voicecall</a></tt><tt class="py-op">.</tt><tt id="link-42" class="py-name" targets="Class sendinel.backend.voicecall.Voicecall=sendinel.backend.voicecall.Voicecall-class.html"><a title="sendinel.backend.voicecall.Voicecall" class="py-name" href="#" onclick="return doclink('link-42', 'Voicecall', 'link-42');">Voicecall</a></tt><tt class="py-op">.</tt><tt id="link-43" class="py-name" targets="Method sendinel.backend.voicecall.Voicecall.conduct_call()=sendinel.backend.voicecall.Voicecall-class.html#conduct_call"><a title="sendinel.backend.voicecall.Voicecall.conduct_call" class="py-name" href="#" onclick="return doclink('link-43', 'conduct_call', 'link-43');">conduct_call</a></tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">        <tt id="link-44" class="py-name"><a title="sendinel.backend.voicecall" class="py-name" href="#" onclick="return doclink('link-44', 'voicecall', 'link-10');">voicecall</a></tt><tt class="py-op">.</tt><tt id="link-45" class="py-name"><a title="sendinel.backend.voicecall.Voicecall" class="py-name" href="#" onclick="return doclink('link-45', 'Voicecall', 'link-42');">Voicecall</a></tt><tt class="py-op">.</tt><tt id="link-46" class="py-name"><a title="sendinel.backend.voicecall.Voicecall.conduct_call" class="py-name" href="#" onclick="return doclink('link-46', 'conduct_call', 'link-43');">conduct_call</a></tt> <tt class="py-op">=</tt> <tt class="py-name">conduct_call1</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">        <tt class="py-name">voicecalldata</tt><tt class="py-op">.</tt><tt id="link-47" class="py-name"><a title="sendinel.backend.output.BluetoothOutputData.send
+sendinel.backend.output.OutputData.send
+sendinel.backend.output.SMSOutputData.send
+sendinel.backend.output.VoiceOutputData.send" class="py-name" href="#" onclick="return doclink('link-47', 'send', 'link-12');">send</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">        <tt id="link-48" class="py-name"><a title="sendinel.backend.voicecall" class="py-name" href="#" onclick="return doclink('link-48', 'voicecall', 'link-10');">voicecall</a></tt><tt class="py-op">.</tt><tt id="link-49" class="py-name"><a title="sendinel.backend.voicecall.Voicecall" class="py-name" href="#" onclick="return doclink('link-49', 'Voicecall', 'link-42');">Voicecall</a></tt><tt class="py-op">.</tt><tt id="link-50" class="py-name"><a title="sendinel.backend.voicecall.Voicecall.conduct_call" class="py-name" href="#" onclick="return doclink('link-50', 'conduct_call', 'link-43');">conduct_call</a></tt> <tt class="py-op">=</tt> <tt class="py-name">conduct_call_old</tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line">         </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertEquals</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">text_value</tt><tt class="py-op">,</tt> <tt id="link-51" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-51', 'data', 'link-13');">data</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertEquals</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">phone_number_value</tt><tt class="py-op">,</tt> <tt id="link-52" class="py-name"><a title="sendinel.backend.models.Patient.phone_number
+sendinel.backend.output.SMSOutputData.phone_number
+sendinel.backend.output.VoiceOutputData.phone_number
+sendinel.groups.forms.RegisterPatientForGroupValidationForm.phone_number
+sendinel.medicines.forms.RegisterPatientForMedicineForm.phone_number
+sendinel.notifications.forms.NotificationValidationForm.phone_number" class="py-name" href="#" onclick="return doclink('link-52', 'phone_number', 'link-30');">phone_number</a></tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="sendinel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu May 27 11:30:46 2010
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

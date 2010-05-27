@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sendinel.asterisk.log_call</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="sendinel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="sendinel-module.html">Package&nbsp;sendinel</a> ::
+        <a href="sendinel.asterisk-module.html">Package&nbsp;asterisk</a> ::
+        Module&nbsp;log_call
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="sendinel.asterisk.log_call-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="sendinel.asterisk.log_call-module.html">Module sendinel.asterisk.log_call</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment">#!/usr/bin/python</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-keyword">import</tt> <tt class="py-name">sys</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment"># adapt paths for call from asterisk</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-keyword">from</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">path</tt> <tt class="py-keyword">import</tt> <tt class="py-name">abspath</tt><tt class="py-op">,</tt> <tt class="py-name">dirname</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt id="link-0" class="py-name" targets="Variable sendinel.asterisk.log_call.PROJECT_PATH=sendinel.asterisk.log_call-module.html#PROJECT_PATH,Variable sendinel.backend.scheduler.PROJECT_PATH=sendinel.backend.scheduler-module.html#PROJECT_PATH,Variable sendinel.settings.PROJECT_PATH=sendinel.settings-module.html#PROJECT_PATH"><a title="sendinel.asterisk.log_call.PROJECT_PATH
+sendinel.backend.scheduler.PROJECT_PATH
+sendinel.settings.PROJECT_PATH" class="py-name" href="#" onclick="return doclink('link-0', 'PROJECT_PATH', 'link-0');">PROJECT_PATH</a></tt> <tt class="py-op">=</tt> <tt class="py-name">dirname</tt><tt class="py-op">(</tt><tt class="py-name">abspath</tt><tt class="py-op">(</tt><tt class="py-name">__file__</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">"/../../"</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-name">sys</tt><tt class="py-op">.</tt><tt class="py-name">path</tt><tt class="py-op">.</tt><tt class="py-name">insert</tt><tt class="py-op">(</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt id="link-1" class="py-name"><a title="sendinel.asterisk.log_call.PROJECT_PATH
+sendinel.backend.scheduler.PROJECT_PATH
+sendinel.settings.PROJECT_PATH" class="py-name" href="#" onclick="return doclink('link-1', 'PROJECT_PATH', 'link-0');">PROJECT_PATH</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">core</tt><tt class="py-op">.</tt><tt class="py-name">management</tt> <tt class="py-keyword">import</tt> <tt class="py-name">setup_environ</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-2" class="py-name" targets="Package sendinel=sendinel-module.html"><a title="sendinel" class="py-name" href="#" onclick="return doclink('link-2', 'sendinel', 'link-2');">sendinel</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Module sendinel.settings=sendinel.settings-module.html"><a title="sendinel.settings" class="py-name" href="#" onclick="return doclink('link-3', 'settings', 'link-3');">settings</a></tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-name">setup_environ</tt><tt class="py-op">(</tt><tt id="link-4" class="py-name"><a title="sendinel.settings" class="py-name" href="#" onclick="return doclink('link-4', 'settings', 'link-3');">settings</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-5" class="py-name"><a title="sendinel" class="py-name" href="#" onclick="return doclink('link-5', 'sendinel', 'link-2');">sendinel</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Package sendinel.backend=sendinel.backend-module.html"><a title="sendinel.backend" class="py-name" href="#" onclick="return doclink('link-6', 'backend', 'link-6');">backend</a></tt><tt class="py-op">.</tt><tt id="link-7" class="py-name" targets="Module sendinel.backend.models=sendinel.backend.models-module.html,Module sendinel.groups.models=sendinel.groups.models-module.html,Module sendinel.infoservices.models=sendinel.infoservices.models-module.html,Module sendinel.medicines.models=sendinel.medicines.models-module.html,Module sendinel.notifications.models=sendinel.notifications.models-module.html,Module sendinel.web.models=sendinel.web.models-module.html"><a title="sendinel.backend.models
+sendinel.groups.models
+sendinel.infoservices.models
+sendinel.medicines.models
+sendinel.notifications.models
+sendinel.web.models" class="py-name" href="#" onclick="return doclink('link-7', 'models', 'link-7');">models</a></tt> <tt class="py-keyword">import</tt> <tt id="link-8" class="py-name" targets="Class sendinel.backend.models.AuthenticationCall=sendinel.backend.models.AuthenticationCall-class.html"><a title="sendinel.backend.models.AuthenticationCall" class="py-name" href="#" onclick="return doclink('link-8', 'AuthenticationCall', 'link-8');">AuthenticationCall</a></tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"> </tt>
+<a name="log_call"></a><div id="log_call-def"><a name="L15"></a><tt class="py-lineno">15</tt> <a class="py-toggle" href="#" id="log_call-toggle" onclick="return toggle('log_call');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.asterisk.log_call-module.html#log_call">log_call</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="log_call-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="log_call-expanded"><a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-docstring">    Save calls from asterisk in the database.</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-docstring">    This function reads data from stdin and should be called by asterisk</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-docstring">    using the Asterisk Gateway Interface (AGI)</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">    <tt class="py-comment"># TODO evaluate wether this should be called via XMLRPC to avoid </tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-comment"></tt>    <tt class="py-comment">#      permission problems</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-comment"></tt>     </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">    <tt class="py-comment"># read all data from stdin - should be less than 25 lines</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-comment"></tt>    <tt class="py-keyword">while</tt> <tt class="py-name">True</tt><tt class="py-op">:</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">        <tt class="py-name">line</tt> <tt class="py-op">=</tt> <tt class="py-name">sys</tt><tt class="py-op">.</tt><tt class="py-name">stdin</tt><tt class="py-op">.</tt><tt class="py-name">readline</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">line</tt><tt class="py-op">:</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">            <tt class="py-keyword">break</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">        <tt class="py-op">(</tt><tt class="py-name">key</tt><tt class="py-op">,</tt> <tt class="py-name">value</tt><tt class="py-op">)</tt> <tt class="py-op">=</tt> <tt class="py-name">line</tt><tt class="py-op">.</tt><tt class="py-name">split</tt><tt class="py-op">(</tt><tt class="py-string">":"</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">key</tt> <tt class="py-op">==</tt> <tt class="py-string">"agi_callerid"</tt><tt class="py-op">:</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">            <tt id="link-9" class="py-name" targets="Variable sendinel.backend.models.AuthenticationCall.number=sendinel.backend.models.AuthenticationCall-class.html#number"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-9', 'number', 'link-9');">number</a></tt> <tt class="py-op">=</tt> <tt class="py-name">value</tt><tt class="py-op">.</tt><tt class="py-name">strip</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">            <tt id="link-10" class="py-name"><a title="sendinel.backend.models.AuthenticationCall" class="py-name" href="#" onclick="return doclink('link-10', 'AuthenticationCall', 'link-8');">AuthenticationCall</a></tt><tt class="py-op">(</tt><tt id="link-11" class="py-name"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-11', 'number', 'link-9');">number</a></tt> <tt class="py-op">=</tt> <tt id="link-12" class="py-name"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-12', 'number', 'link-9');">number</a></tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">save</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">            <tt class="py-keyword">break</tt> </tt>
+</div><a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"><tt class="py-keyword">if</tt> <tt class="py-name">__name__</tt> <tt class="py-op">==</tt> <tt class="py-string">"__main__"</tt><tt class="py-op">:</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">    <tt id="link-13" class="py-name" targets="Module sendinel.asterisk.log_call=sendinel.asterisk.log_call-module.html,Function sendinel.asterisk.log_call.log_call()=sendinel.asterisk.log_call-module.html#log_call"><a title="sendinel.asterisk.log_call
+sendinel.asterisk.log_call.log_call" class="py-name" href="#" onclick="return doclink('link-13', 'log_call', 'link-13');">log_call</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="sendinel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu May 27 11:30:46 2010
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

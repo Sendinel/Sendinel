@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sendinel.infoservices.models</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="sendinel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="sendinel-module.html">Package&nbsp;sendinel</a> ::
+        <a href="sendinel.infoservices-module.html">Package&nbsp;infoservices</a> ::
+        Module&nbsp;models
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="sendinel.infoservices.models-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="sendinel.infoservices.models-module.html">Module sendinel.infoservices.models</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">string</tt> <tt class="py-keyword">import</tt> <tt class="py-name">Template</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">db</tt> <tt class="py-keyword">import</tt> <tt id="link-0" class="py-name" targets="Module sendinel.backend.models=sendinel.backend.models-module.html,Module sendinel.groups.models=sendinel.groups.models-module.html,Module sendinel.infoservices.models=sendinel.infoservices.models-module.html,Module sendinel.medicines.models=sendinel.medicines.models-module.html,Module sendinel.notifications.models=sendinel.notifications.models-module.html,Module sendinel.web.models=sendinel.web.models-module.html"><a title="sendinel.backend.models
+sendinel.groups.models
+sendinel.infoservices.models
+sendinel.medicines.models
+sendinel.notifications.models
+sendinel.web.models" class="py-name" href="#" onclick="return doclink('link-0', 'models', 'link-0');">models</a></tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Module sendinel.infoservices.utils=sendinel.infoservices.utils-module.html,Module sendinel.utils=sendinel.utils-module.html,Module sendinel.web.utils=sendinel.web.utils-module.html"><a title="sendinel.infoservices.utils
+sendinel.utils
+sendinel.web.utils" class="py-name" href="#" onclick="return doclink('link-1', 'utils', 'link-1');">utils</a></tt><tt class="py-op">.</tt><tt class="py-name">translation</tt> <tt class="py-keyword">import</tt> <tt class="py-name">ugettext_lazy</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-2" class="py-name" targets="Package sendinel=sendinel-module.html"><a title="sendinel" class="py-name" href="#" onclick="return doclink('link-2', 'sendinel', 'link-2');">sendinel</a></tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Package sendinel.backend=sendinel.backend-module.html"><a title="sendinel.backend" class="py-name" href="#" onclick="return doclink('link-3', 'backend', 'link-3');">backend</a></tt> <tt class="py-keyword">import</tt> <tt id="link-4" class="py-name" targets="Module sendinel.backend.texthelper=sendinel.backend.texthelper-module.html"><a title="sendinel.backend.texthelper" class="py-name" href="#" onclick="return doclink('link-4', 'texthelper', 'link-4');">texthelper</a></tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-5" class="py-name"><a title="sendinel" class="py-name" href="#" onclick="return doclink('link-5', 'sendinel', 'link-2');">sendinel</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name"><a title="sendinel.backend" class="py-name" href="#" onclick="return doclink('link-6', 'backend', 'link-3');">backend</a></tt><tt class="py-op">.</tt><tt id="link-7" class="py-name"><a title="sendinel.backend.models
+sendinel.groups.models
+sendinel.infoservices.models
+sendinel.medicines.models
+sendinel.notifications.models
+sendinel.web.models" class="py-name" href="#" onclick="return doclink('link-7', 'models', 'link-0');">models</a></tt> <tt class="py-keyword">import</tt> <tt id="link-8" class="py-name" targets="Class sendinel.backend.models.Patient=sendinel.backend.models.Patient-class.html"><a title="sendinel.backend.models.Patient" class="py-name" href="#" onclick="return doclink('link-8', 'Patient', 'link-8');">Patient</a></tt><tt class="py-op">,</tt> \ </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line">                                    <tt id="link-9" class="py-name" targets="Class sendinel.backend.models.Sendable=sendinel.backend.models.Sendable-class.html"><a title="sendinel.backend.models.Sendable" class="py-name" href="#" onclick="return doclink('link-9', 'Sendable', 'link-9');">Sendable</a></tt><tt class="py-op">,</tt> \ </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line">                                    <tt id="link-10" class="py-name" targets="Class sendinel.backend.models.WayOfCommunication=sendinel.backend.models.WayOfCommunication-class.html"><a title="sendinel.backend.models.WayOfCommunication" class="py-name" href="#" onclick="return doclink('link-10', 'WayOfCommunication', 'link-10');">WayOfCommunication</a></tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-11" class="py-name"><a title="sendinel" class="py-name" href="#" onclick="return doclink('link-11', 'sendinel', 'link-2');">sendinel</a></tt><tt class="py-op">.</tt><tt id="link-12" class="py-name"><a title="sendinel.backend" class="py-name" href="#" onclick="return doclink('link-12', 'backend', 'link-3');">backend</a></tt><tt class="py-op">.</tt><tt id="link-13" class="py-name" targets="Module sendinel.backend.output=sendinel.backend.output-module.html"><a title="sendinel.backend.output" class="py-name" href="#" onclick="return doclink('link-13', 'output', 'link-13');">output</a></tt> <tt class="py-keyword">import</tt> <tt id="link-14" class="py-name" targets="Class sendinel.backend.output.SMSOutputData=sendinel.backend.output.SMSOutputData-class.html"><a title="sendinel.backend.output.SMSOutputData" class="py-name" href="#" onclick="return doclink('link-14', 'SMSOutputData', 'link-14');">SMSOutputData</a></tt><tt class="py-op">,</tt> \ </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line">                                    <tt id="link-15" class="py-name" targets="Class sendinel.backend.output.VoiceOutputData=sendinel.backend.output.VoiceOutputData-class.html"><a title="sendinel.backend.output.VoiceOutputData" class="py-name" href="#" onclick="return doclink('link-15', 'VoiceOutputData', 'link-15');">VoiceOutputData</a></tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"> </tt>
+<a name="InfoService"></a><div id="InfoService-def"><a name="L14"></a><tt class="py-lineno"> 14</tt> <a class="py-toggle" href="#" id="InfoService-toggle" onclick="return toggle('InfoService');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="sendinel.infoservices.models.InfoService-class.html">InfoService</a><tt class="py-op">(</tt><tt class="py-base-class">models</tt><tt class="py-op">.</tt><tt class="py-base-class">Model</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="InfoService-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="InfoService-expanded"><a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-docstring">    Represent a user group.</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-docstring">    Existing types are 'information' and 'medicine' </tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-docstring">    whereas information-groups send regular messages to their </tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-docstring">    subscribers, medicine deletes the group after sending a message</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line">     </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line">    <tt id="link-16" class="py-name" targets="Variable sendinel.infoservices.models.InfoService.TYPES=sendinel.infoservices.models.InfoService-class.html#TYPES"><a title="sendinel.infoservices.models.InfoService.TYPES" class="py-name" href="#" onclick="return doclink('link-16', 'TYPES', 'link-16');">TYPES</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line">        <tt class="py-op">(</tt><tt class="py-string">'information'</tt><tt class="py-op">,</tt> <tt class="py-name">ugettext_lazy</tt><tt class="py-op">(</tt><tt class="py-string">"Information Group"</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line">        <tt class="py-op">(</tt><tt class="py-string">'medicine'</tt><tt class="py-op">,</tt> <tt class="py-name">ugettext_lazy</tt><tt class="py-op">(</tt><tt class="py-string">'Waiting List for Medicine'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line">    <tt class="py-op">)</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line">    <tt id="link-17" class="py-name" targets="Variable sendinel.infoservices.models.InfoService.TYPE_TEXTS=sendinel.infoservices.models.InfoService-class.html#TYPE_TEXTS"><a title="sendinel.infoservices.models.InfoService.TYPE_TEXTS" class="py-name" href="#" onclick="return doclink('link-17', 'TYPE_TEXTS', 'link-17');">TYPE_TEXTS</a></tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line">        <tt class="py-string">'information'</tt><tt class="py-op">:</tt> <tt class="py-op">{</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line">            <tt class="py-string">'title'</tt><tt class="py-op">:</tt> <tt class="py-name">ugettext_lazy</tt><tt class="py-op">(</tt><tt class="py-string">'Information Groups'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line">            <tt class="py-string">'name'</tt><tt class="py-op">:</tt> <tt class="py-name">ugettext_lazy</tt><tt class="py-op">(</tt><tt class="py-string">'information group'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line">            <tt class="py-string">'members_button'</tt><tt class="py-op">:</tt> <tt class="py-name">ugettext_lazy</tt><tt class="py-op">(</tt><tt class="py-string">'Group members'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line">            <tt class="py-string">'remove_button'</tt><tt class="py-op">:</tt> <tt class="py-name">ugettext_lazy</tt><tt class="py-op">(</tt><tt class="py-string">'Remove group'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line">            <tt class="py-string">'remove_patient_button'</tt><tt class="py-op">:</tt> <tt class="py-name">ugettext_lazy</tt><tt class="py-op">(</tt><tt class="py-string">'Remove patient from group'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line">            <tt class="py-string">'form_field_description'</tt><tt class="py-op">:</tt> <tt class="py-name">ugettext_lazy</tt><tt class="py-op">(</tt><tt class="py-string">'Inform patients about:'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line">            <tt class="py-string">'table_head'</tt><tt class="py-op">:</tt> <tt class="py-name">ugettext_lazy</tt><tt class="py-op">(</tt><tt class="py-string">'Information'</tt><tt class="py-op">)</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line">        <tt class="py-op">}</tt><tt class="py-op">,</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line">        <tt class="py-string">'medicine'</tt><tt class="py-op">:</tt> <tt class="py-op">{</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line">            <tt class="py-string">'title'</tt><tt class="py-op">:</tt> <tt class="py-name">ugettext_lazy</tt><tt class="py-op">(</tt><tt class="py-string">'Waiting Lists for Medicine'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line">            <tt class="py-string">'name'</tt><tt class="py-op">:</tt> <tt class="py-name">ugettext_lazy</tt><tt class="py-op">(</tt><tt class="py-string">'waiting list for medicine'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line">            <tt class="py-string">'members_button'</tt><tt class="py-op">:</tt> <tt class="py-name">ugettext_lazy</tt><tt class="py-op">(</tt><tt class="py-string">'List members'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line">            <tt class="py-string">'remove_button'</tt><tt class="py-op">:</tt> <tt class="py-name">ugettext_lazy</tt><tt class="py-op">(</tt><tt class="py-string">'Remove list'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line">            <tt class="py-string">'remove_patient_button'</tt><tt class="py-op">:</tt> <tt class="py-name">ugettext_lazy</tt><tt class="py-op">(</tt><tt class="py-string">'Remove patient from list'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line">            <tt class="py-string">'form_field_description'</tt><tt class="py-op">:</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line">            <tt class="py-name">ugettext_lazy</tt><tt class="py-op">(</tt><tt class="py-string">'The patients are waiting for the following medicine:'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line">            <tt class="py-string">'table_head'</tt><tt class="py-op">:</tt> <tt class="py-name">ugettext_lazy</tt><tt class="py-op">(</tt><tt class="py-string">'Medicine'</tt><tt class="py-op">)</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line">        <tt class="py-op">}</tt><tt class="py-op">,</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line">    <tt class="py-op">}</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line">     </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line">     </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line">    <tt id="link-18" class="py-name" targets="Variable sendinel.infoservices.models.InfoService.members=sendinel.infoservices.models.InfoService-class.html#members"><a title="sendinel.infoservices.models.InfoService.members" class="py-name" href="#" onclick="return doclink('link-18', 'members', 'link-18');">members</a></tt> <tt class="py-op">=</tt> <tt id="link-19" class="py-name"><a title="sendinel.backend.models
+sendinel.groups.models
+sendinel.infoservices.models
+sendinel.medicines.models
+sendinel.notifications.models
+sendinel.web.models" class="py-name" href="#" onclick="return doclink('link-19', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">ManyToManyField</tt><tt class="py-op">(</tt><tt id="link-20" class="py-name"><a title="sendinel.backend.models.Patient" class="py-name" href="#" onclick="return doclink('link-20', 'Patient', 'link-8');">Patient</a></tt><tt class="py-op">,</tt> <tt class="py-name">through</tt> <tt class="py-op">=</tt> <tt class="py-string">"Subscription"</tt><tt class="py-op">)</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line">    <tt id="link-21" class="py-name" targets="Variable sendinel.backend.models.Hospital.name=sendinel.backend.models.Hospital-class.html#name,Variable sendinel.backend.models.User.name=sendinel.backend.models.User-class.html#name,Variable sendinel.backend.models.WayOfCommunication.name=sendinel.backend.models.WayOfCommunication-class.html#name,Variable sendinel.infoservices.forms.InfoServiceValidationForm.name=sendinel.infoservices.forms.InfoServiceValidationForm-class.html#name,Variable sendinel.infoservices.models.InfoService.name=sendinel.infoservices.models.InfoService-class.html#name,Variable sendinel.notifications.models.NotificationType.name=sendinel.notifications.models.NotificationType-class.html#name"><a title="sendinel.backend.models.Hospital.name
+sendinel.backend.models.User.name
+sendinel.backend.models.WayOfCommunication.name
+sendinel.infoservices.forms.InfoServiceValidationForm.name
+sendinel.infoservices.models.InfoService.name
+sendinel.notifications.models.NotificationType.name" class="py-name" href="#" onclick="return doclink('link-21', 'name', 'link-21');">name</a></tt> <tt class="py-op">=</tt> <tt id="link-22" class="py-name"><a title="sendinel.backend.models
+sendinel.groups.models
+sendinel.infoservices.models
+sendinel.medicines.models
+sendinel.notifications.models
+sendinel.web.models" class="py-name" href="#" onclick="return doclink('link-22', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">CharField</tt><tt class="py-op">(</tt><tt class="py-name">max_length</tt> <tt class="py-op">=</tt> <tt class="py-number">255</tt><tt class="py-op">,</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line">                            <tt class="py-name">default</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt><tt class="py-op">,</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line">                            <tt class="py-name">unique</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt><tt class="py-op">,</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line">                            <tt class="py-name">blank</tt> <tt class="py-op">=</tt> <tt class="py-name">False</tt><tt class="py-op">,</tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line">                            <tt class="py-name">null</tt> <tt class="py-op">=</tt> <tt class="py-name">False</tt><tt class="py-op">)</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line">    <tt id="link-23" class="py-name" targets="Variable sendinel.infoservices.models.InfoService.type=sendinel.infoservices.models.InfoService-class.html#type"><a title="sendinel.infoservices.models.InfoService.type" class="py-name" href="#" onclick="return doclink('link-23', 'type', 'link-23');">type</a></tt> <tt class="py-op">=</tt> <tt id="link-24" class="py-name"><a title="sendinel.backend.models
+sendinel.groups.models
+sendinel.infoservices.models
+sendinel.medicines.models
+sendinel.notifications.models
+sendinel.web.models" class="py-name" href="#" onclick="return doclink('link-24', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">CharField</tt><tt class="py-op">(</tt><tt class="py-name">max_length</tt> <tt class="py-op">=</tt> <tt class="py-number">255</tt><tt class="py-op">,</tt>  </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line">                            <tt class="py-name">choices</tt> <tt class="py-op">=</tt> <tt id="link-25" class="py-name"><a title="sendinel.infoservices.models.InfoService.TYPES" class="py-name" href="#" onclick="return doclink('link-25', 'TYPES', 'link-16');">TYPES</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line">                            <tt class="py-name">default</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt><tt class="py-op">,</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line">                            <tt class="py-name">blank</tt> <tt class="py-op">=</tt> <tt class="py-name">False</tt><tt class="py-op">,</tt>  </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line">                            <tt class="py-name">null</tt> <tt class="py-op">=</tt> <tt class="py-name">False</tt><tt class="py-op">)</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line">                             </tt>
+<a name="InfoService.__unicode__"></a><div id="InfoService.__unicode__-def"><a name="L61"></a><tt class="py-lineno"> 61</tt> <a class="py-toggle" href="#" id="InfoService.__unicode__-toggle" onclick="return toggle('InfoService.__unicode__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.infoservices.models.InfoService-class.html#__unicode__">__unicode__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="InfoService.__unicode__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="InfoService.__unicode__-expanded"><a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-26" class="py-name"><a title="sendinel.backend.models.Hospital.name
+sendinel.backend.models.User.name
+sendinel.backend.models.WayOfCommunication.name
+sendinel.infoservices.forms.InfoServiceValidationForm.name
+sendinel.infoservices.models.InfoService.name
+sendinel.notifications.models.NotificationType.name" class="py-name" href="#" onclick="return doclink('link-26', 'name', 'link-21');">name</a></tt> </tt>
+</div><a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line">     </tt>
+<a name="InfoService.member_count"></a><div id="InfoService.member_count-def"><a name="L64"></a><tt class="py-lineno"> 64</tt> <a class="py-toggle" href="#" id="InfoService.member_count-toggle" onclick="return toggle('InfoService.member_count');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.infoservices.models.InfoService-class.html#member_count">member_count</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="InfoService.member_count-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="InfoService.member_count-expanded"><a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-27" class="py-name"><a title="sendinel.infoservices.models.InfoService.members" class="py-name" href="#" onclick="return doclink('link-27', 'members', 'link-18');">members</a></tt><tt class="py-op">.</tt><tt class="py-name">all</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">count</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">     </tt>
+<a name="InfoService.texts"></a><div id="InfoService.texts-def"><a name="L67"></a><tt class="py-lineno"> 67</tt> <a class="py-toggle" href="#" id="InfoService.texts-toggle" onclick="return toggle('InfoService.texts');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.infoservices.models.InfoService-class.html#texts">texts</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="InfoService.texts-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="InfoService.texts-expanded"><a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"><tt class="py-docstring">        Returns the text blocks associated with the group's type.</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-28" class="py-name"><a title="sendinel.infoservices.models.InfoService.TYPE_TEXTS" class="py-name" href="#" onclick="return doclink('link-28', 'TYPE_TEXTS', 'link-17');">TYPE_TEXTS</a></tt><tt class="py-op">[</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-29" class="py-name"><a title="sendinel.infoservices.models.InfoService.type" class="py-name" href="#" onclick="return doclink('link-29', 'type', 'link-23');">type</a></tt><tt class="py-op">]</tt> </tt>
+</div></div><a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line"> </tt>
+<a name="InfoMessage"></a><div id="InfoMessage-def"><a name="L74"></a><tt class="py-lineno"> 74</tt> <a class="py-toggle" href="#" id="InfoMessage-toggle" onclick="return toggle('InfoMessage');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="sendinel.infoservices.models.InfoMessage-class.html">InfoMessage</a><tt class="py-op">(</tt><tt class="py-base-class">Sendable</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="InfoMessage-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="InfoMessage-expanded"><a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line"><tt class="py-docstring">    Define a InfoMessage.</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line"> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">    <tt id="link-30" class="py-name" targets="Variable sendinel.infoservices.models.InfoMessage.template=sendinel.infoservices.models.InfoMessage-class.html#template,Method sendinel.notifications.models.Notification.template()=sendinel.notifications.models.Notification-class.html#template,Variable sendinel.notifications.models.NotificationType.template=sendinel.notifications.models.NotificationType-class.html#template"><a title="sendinel.infoservices.models.InfoMessage.template
+sendinel.notifications.models.Notification.template
+sendinel.notifications.models.NotificationType.template" class="py-name" href="#" onclick="return doclink('link-30', 'template', 'link-30');">template</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Template</tt><tt class="py-op">(</tt><tt class="py-string">"$text"</tt><tt class="py-op">)</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">    <tt id="link-31" class="py-name" targets="Variable sendinel.infoservices.forms.InfoMessageValidationForm.text=sendinel.infoservices.forms.InfoMessageValidationForm-class.html#text,Variable sendinel.infoservices.models.InfoMessage.text=sendinel.infoservices.models.InfoMessage-class.html#text,Variable sendinel.medicines.forms.MedicineMessageValidationForm.text=sendinel.medicines.forms.MedicineMessageValidationForm-class.html#text"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-31', 'text', 'link-31');">text</a></tt> <tt class="py-op">=</tt> <tt id="link-32" class="py-name"><a title="sendinel.backend.models
+sendinel.groups.models
+sendinel.infoservices.models
+sendinel.medicines.models
+sendinel.notifications.models
+sendinel.web.models" class="py-name" href="#" onclick="return doclink('link-32', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">TextField</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">     </tt>
+<a name="InfoMessage.__unicode__"></a><div id="InfoMessage.__unicode__-def"><a name="L82"></a><tt class="py-lineno"> 82</tt> <a class="py-toggle" href="#" id="InfoMessage.__unicode__-toggle" onclick="return toggle('InfoMessage.__unicode__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.infoservices.models.InfoMessage-class.html#__unicode__">__unicode__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="InfoMessage.__unicode__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="InfoMessage.__unicode__-expanded"><a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-string">"InfoMessage to %s: '%s' via %s"</tt> <tt class="py-op">%</tt> \ </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">                                        <tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-33" class="py-name" targets="Variable sendinel.backend.models.Sendable.recipient=sendinel.backend.models.Sendable-class.html#recipient"><a title="sendinel.backend.models.Sendable.recipient" class="py-name" href="#" onclick="return doclink('link-33', 'recipient', 'link-33');">recipient</a></tt><tt class="py-op">.</tt><tt id="link-34" class="py-name" targets="Variable sendinel.backend.models.Patient.phone_number=sendinel.backend.models.Patient-class.html#phone_number,Variable sendinel.backend.output.SMSOutputData.phone_number=sendinel.backend.output.SMSOutputData-class.html#phone_number,Variable sendinel.backend.output.VoiceOutputData.phone_number=sendinel.backend.output.VoiceOutputData-class.html#phone_number,Variable sendinel.groups.forms.RegisterPatientForGroupValidationForm.phone_number=sendinel.groups.forms.RegisterPatientForGroupValidationForm-class.html#phone_number,Variable sendinel.medicines.forms.RegisterPatientForMedicineForm.phone_number=sendinel.medicines.forms.RegisterPatientForMedicineForm-class.html#phone_number,Variable sendinel.notifications.forms.NotificationValidationForm.phone_number=sendinel.notifications.forms.NotificationValidationForm-class.html#phone_number"><a title="sendinel.backend.models.Patient.phone_number
+sendinel.backend.output.SMSOutputData.phone_number
+sendinel.backend.output.VoiceOutputData.phone_number
+sendinel.groups.forms.RegisterPatientForGroupValidationForm.phone_number
+sendinel.medicines.forms.RegisterPatientForMedicineForm.phone_number
+sendinel.notifications.forms.NotificationValidationForm.phone_number" class="py-name" href="#" onclick="return doclink('link-34', 'phone_number', 'link-34');">phone_number</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">                                         <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-35" class="py-name"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-35', 'text', 'link-31');">text</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">                                         <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-36" class="py-name" targets="Variable sendinel.backend.models.Sendable.way_of_communication=sendinel.backend.models.Sendable-class.html#way_of_communication,Variable sendinel.groups.forms.RegisterPatientForGroupValidationForm.way_of_communication=sendinel.groups.forms.RegisterPatientForGroupValidationForm-class.html#way_of_communication,Variable sendinel.infoservices.models.Subscription.way_of_communication=sendinel.infoservices.models.Subscription-class.html#way_of_communication,Variable sendinel.medicines.forms.RegisterPatientForMedicineForm.way_of_communication=sendinel.medicines.forms.RegisterPatientForMedicineForm-class.html#way_of_communication,Variable sendinel.notifications.forms.NotificationValidationForm.way_of_communication=sendinel.notifications.forms.NotificationValidationForm-class.html#way_of_communication,Variable sendinel.notifications.forms.NotificationValidationFormBluetooth.way_of_communication=sendinel.notifications.forms.NotificationValidationFormBluetooth-class.html#way_of_communication"><a title="sendinel.backend.models.Sendable.way_of_communication
+sendinel.groups.forms.RegisterPatientForGroupValidationForm.way_of_communication
+sendinel.infoservices.models.Subscription.way_of_communication
+sendinel.medicines.forms.RegisterPatientForMedicineForm.way_of_communication
+sendinel.notifications.forms.NotificationValidationForm.way_of_communication
+sendinel.notifications.forms.NotificationValidationFormBluetooth.way_of_communication" class="py-name" href="#" onclick="return doclink('link-36', 'way_of_communication', 'link-36');">way_of_communication</a></tt><tt class="py-op">)</tt> </tt>
+</div><a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">     </tt>
+<a name="InfoMessage.get_data_for_sms"></a><div id="InfoMessage.get_data_for_sms-def"><a name="L88"></a><tt class="py-lineno"> 88</tt> <a class="py-toggle" href="#" id="InfoMessage.get_data_for_sms-toggle" onclick="return toggle('InfoMessage.get_data_for_sms');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.infoservices.models.InfoMessage-class.html#get_data_for_sms">get_data_for_sms</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="InfoMessage.get_data_for_sms-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="InfoMessage.get_data_for_sms-expanded"><a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line"><tt class="py-docstring">        Prepare OutputData for sms.</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"><tt class="py-docstring">        Generate the message for an InfoMessage.</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line"><tt class="py-docstring">        Return SMSOutputData for sending.</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line">         </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">        <tt id="link-37" class="py-name" targets="Variable sendinel.backend.output.OutputData.data=sendinel.backend.output.OutputData-class.html#data"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-37', 'data', 'link-37');">data</a></tt> <tt class="py-op">=</tt> <tt id="link-38" class="py-name"><a title="sendinel.backend.output.SMSOutputData" class="py-name" href="#" onclick="return doclink('link-38', 'SMSOutputData', 'link-14');">SMSOutputData</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt>            </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">        <tt id="link-39" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-39', 'data', 'link-37');">data</a></tt><tt class="py-op">.</tt><tt id="link-40" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-40', 'data', 'link-37');">data</a></tt> <tt class="py-op">=</tt> <tt id="link-41" class="py-name"><a title="sendinel.backend.texthelper" class="py-name" href="#" onclick="return doclink('link-41', 'texthelper', 'link-4');">texthelper</a></tt><tt class="py-op">.</tt><tt id="link-42" class="py-name" targets="Function sendinel.backend.texthelper.generate_text()=sendinel.backend.texthelper-module.html#generate_text"><a title="sendinel.backend.texthelper.generate_text" class="py-name" href="#" onclick="return doclink('link-42', 'generate_text', 'link-42');">generate_text</a></tt><tt class="py-op">(</tt><tt class="py-op">{</tt><tt class="py-string">'text'</tt><tt class="py-op">:</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-43" class="py-name"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-43', 'text', 'link-31');">text</a></tt><tt class="py-op">}</tt><tt class="py-op">,</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">                                             <tt id="link-44" class="py-name" targets="Class sendinel.infoservices.models.InfoMessage=sendinel.infoservices.models.InfoMessage-class.html"><a title="sendinel.infoservices.models.InfoMessage" class="py-name" href="#" onclick="return doclink('link-44', 'InfoMessage', 'link-44');">InfoMessage</a></tt><tt class="py-op">.</tt><tt id="link-45" class="py-name"><a title="sendinel.infoservices.models.InfoMessage.template
+sendinel.notifications.models.Notification.template
+sendinel.notifications.models.NotificationType.template" class="py-name" href="#" onclick="return doclink('link-45', 'template', 'link-30');">template</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">        <tt id="link-46" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-46', 'data', 'link-37');">data</a></tt><tt class="py-op">.</tt><tt id="link-47" class="py-name"><a title="sendinel.backend.models.Patient.phone_number
+sendinel.backend.output.SMSOutputData.phone_number
+sendinel.backend.output.VoiceOutputData.phone_number
+sendinel.groups.forms.RegisterPatientForGroupValidationForm.phone_number
+sendinel.medicines.forms.RegisterPatientForMedicineForm.phone_number
+sendinel.notifications.forms.NotificationValidationForm.phone_number" class="py-name" href="#" onclick="return doclink('link-47', 'phone_number', 'link-34');">phone_number</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-48" class="py-name"><a title="sendinel.backend.models.Sendable.recipient" class="py-name" href="#" onclick="return doclink('link-48', 'recipient', 'link-33');">recipient</a></tt><tt class="py-op">.</tt><tt id="link-49" class="py-name"><a title="sendinel.backend.models.Patient.phone_number
+sendinel.backend.output.SMSOutputData.phone_number
+sendinel.backend.output.VoiceOutputData.phone_number
+sendinel.groups.forms.RegisterPatientForGroupValidationForm.phone_number
+sendinel.medicines.forms.RegisterPatientForMedicineForm.phone_number
+sendinel.notifications.forms.NotificationValidationForm.phone_number" class="py-name" href="#" onclick="return doclink('link-49', 'phone_number', 'link-34');">phone_number</a></tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">                 </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt id="link-50" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-50', 'data', 'link-37');">data</a></tt> </tt>
+</div><a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line">         </tt>
+<a name="InfoMessage.get_data_for_voice"></a><div id="InfoMessage.get_data_for_voice-def"><a name="L102"></a><tt class="py-lineno">102</tt> <a class="py-toggle" href="#" id="InfoMessage.get_data_for_voice-toggle" onclick="return toggle('InfoMessage.get_data_for_voice');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.infoservices.models.InfoMessage-class.html#get_data_for_voice">get_data_for_voice</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="InfoMessage.get_data_for_voice-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="InfoMessage.get_data_for_voice-expanded"><a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line"><tt class="py-docstring">        Prepare OutputData for voicecall.</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line"><tt class="py-docstring">        Generate the message for an InfoMessage.</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line"><tt class="py-docstring">        Return VoiceOutputData for sending.</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line">         </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">        <tt id="link-51" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-51', 'data', 'link-37');">data</a></tt> <tt class="py-op">=</tt> <tt id="link-52" class="py-name"><a title="sendinel.backend.output.VoiceOutputData" class="py-name" href="#" onclick="return doclink('link-52', 'VoiceOutputData', 'link-15');">VoiceOutputData</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line">        <tt id="link-53" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-53', 'data', 'link-37');">data</a></tt><tt class="py-op">.</tt><tt id="link-54" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-54', 'data', 'link-37');">data</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-55" class="py-name"><a title="sendinel.infoservices.forms.InfoMessageValidationForm.text
+sendinel.infoservices.models.InfoMessage.text
+sendinel.medicines.forms.MedicineMessageValidationForm.text" class="py-name" href="#" onclick="return doclink('link-55', 'text', 'link-31');">text</a></tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line">        <tt id="link-56" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-56', 'data', 'link-37');">data</a></tt><tt class="py-op">.</tt><tt id="link-57" class="py-name"><a title="sendinel.backend.models.Patient.phone_number
+sendinel.backend.output.SMSOutputData.phone_number
+sendinel.backend.output.VoiceOutputData.phone_number
+sendinel.groups.forms.RegisterPatientForGroupValidationForm.phone_number
+sendinel.medicines.forms.RegisterPatientForMedicineForm.phone_number
+sendinel.notifications.forms.NotificationValidationForm.phone_number" class="py-name" href="#" onclick="return doclink('link-57', 'phone_number', 'link-34');">phone_number</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-58" class="py-name"><a title="sendinel.backend.models.Sendable.recipient" class="py-name" href="#" onclick="return doclink('link-58', 'recipient', 'link-33');">recipient</a></tt><tt class="py-op">.</tt><tt id="link-59" class="py-name"><a title="sendinel.backend.models.Patient.phone_number
+sendinel.backend.output.SMSOutputData.phone_number
+sendinel.backend.output.VoiceOutputData.phone_number
+sendinel.groups.forms.RegisterPatientForGroupValidationForm.phone_number
+sendinel.medicines.forms.RegisterPatientForMedicineForm.phone_number
+sendinel.notifications.forms.NotificationValidationForm.phone_number" class="py-name" href="#" onclick="return doclink('link-59', 'phone_number', 'link-34');">phone_number</a></tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line">             </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt id="link-60" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-60', 'data', 'link-37');">data</a></tt> </tt>
+</div></div><a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line"> </tt>
+<a name="Subscription"></a><div id="Subscription-def"><a name="L116"></a><tt class="py-lineno">116</tt> <a class="py-toggle" href="#" id="Subscription-toggle" onclick="return toggle('Subscription');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="sendinel.infoservices.models.Subscription-class.html">Subscription</a><tt class="py-op">(</tt><tt class="py-base-class">models</tt><tt class="py-op">.</tt><tt class="py-base-class">Model</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Subscription-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="Subscription-expanded"><a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line"><tt class="py-docstring">    Represents a patient's subscription to an infoservice</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line">    <tt id="link-61" class="py-name" targets="Variable sendinel.infoservices.models.Subscription.patient=sendinel.infoservices.models.Subscription-class.html#patient"><a title="sendinel.infoservices.models.Subscription.patient" class="py-name" href="#" onclick="return doclink('link-61', 'patient', 'link-61');">patient</a></tt> <tt class="py-op">=</tt> <tt id="link-62" class="py-name"><a title="sendinel.backend.models
+sendinel.groups.models
+sendinel.infoservices.models
+sendinel.medicines.models
+sendinel.notifications.models
+sendinel.web.models" class="py-name" href="#" onclick="return doclink('link-62', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">ForeignKey</tt><tt class="py-op">(</tt><tt id="link-63" class="py-name"><a title="sendinel.backend.models.Patient" class="py-name" href="#" onclick="return doclink('link-63', 'Patient', 'link-8');">Patient</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line">    <tt id="link-64" class="py-name" targets="Variable sendinel.infoservices.models.Subscription.infoservice=sendinel.infoservices.models.Subscription-class.html#infoservice"><a title="sendinel.infoservices.models.Subscription.infoservice" class="py-name" href="#" onclick="return doclink('link-64', 'infoservice', 'link-64');">infoservice</a></tt> <tt class="py-op">=</tt> <tt id="link-65" class="py-name"><a title="sendinel.backend.models
+sendinel.groups.models
+sendinel.infoservices.models
+sendinel.medicines.models
+sendinel.notifications.models
+sendinel.web.models" class="py-name" href="#" onclick="return doclink('link-65', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">ForeignKey</tt><tt class="py-op">(</tt><tt id="link-66" class="py-name" targets="Class sendinel.infoservices.models.InfoService=sendinel.infoservices.models.InfoService-class.html"><a title="sendinel.infoservices.models.InfoService" class="py-name" href="#" onclick="return doclink('link-66', 'InfoService', 'link-66');">InfoService</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line">    <tt id="link-67" class="py-name"><a title="sendinel.backend.models.Sendable.way_of_communication
+sendinel.groups.forms.RegisterPatientForGroupValidationForm.way_of_communication
+sendinel.infoservices.models.Subscription.way_of_communication
+sendinel.medicines.forms.RegisterPatientForMedicineForm.way_of_communication
+sendinel.notifications.forms.NotificationValidationForm.way_of_communication
+sendinel.notifications.forms.NotificationValidationFormBluetooth.way_of_communication" class="py-name" href="#" onclick="return doclink('link-67', 'way_of_communication', 'link-36');">way_of_communication</a></tt> <tt class="py-op">=</tt> <tt id="link-68" class="py-name"><a title="sendinel.backend.models
+sendinel.groups.models
+sendinel.infoservices.models
+sendinel.medicines.models
+sendinel.notifications.models
+sendinel.web.models" class="py-name" href="#" onclick="return doclink('link-68', 'models', 'link-0');">models</a></tt><tt class="py-op">.</tt><tt class="py-name">ForeignKey</tt><tt class="py-op">(</tt><tt id="link-69" class="py-name"><a title="sendinel.backend.models.WayOfCommunication" class="py-name" href="#" onclick="return doclink('link-69', 'WayOfCommunication', 'link-10');">WayOfCommunication</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line"> </tt>
+<a name="Subscription.__unicode__"></a><div id="Subscription.__unicode__-def"><a name="L126"></a><tt class="py-lineno">126</tt> <a class="py-toggle" href="#" id="Subscription.__unicode__-toggle" onclick="return toggle('Subscription.__unicode__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.infoservices.models.Subscription-class.html#__unicode__">__unicode__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Subscription.__unicode__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Subscription.__unicode__-expanded"><a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-string">"%s %s"</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">unicode</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-70" class="py-name"><a title="sendinel.infoservices.models.Subscription.infoservice" class="py-name" href="#" onclick="return doclink('link-70', 'infoservice', 'link-64');">infoservice</a></tt><tt class="py-op">)</tt><tt class="py-op">,</tt> \ </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line">                          <tt class="py-name">unicode</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-71" class="py-name"><a title="sendinel.infoservices.models.Subscription.patient" class="py-name" href="#" onclick="return doclink('link-71', 'patient', 'link-61');">patient</a></tt><tt class="py-op">.</tt><tt id="link-72" class="py-name"><a title="sendinel.backend.models.Patient.phone_number
+sendinel.backend.output.SMSOutputData.phone_number
+sendinel.backend.output.VoiceOutputData.phone_number
+sendinel.groups.forms.RegisterPatientForGroupValidationForm.phone_number
+sendinel.medicines.forms.RegisterPatientForMedicineForm.phone_number
+sendinel.notifications.forms.NotificationValidationForm.phone_number" class="py-name" href="#" onclick="return doclink('link-72', 'phone_number', 'link-34');">phone_number</a></tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="sendinel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu May 27 11:30:46 2010
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

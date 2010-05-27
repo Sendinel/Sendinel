@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sendinel.web.tests.auth_test</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="sendinel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="sendinel-module.html">Package&nbsp;sendinel</a> ::
+        <a href="sendinel.web-module.html">Package&nbsp;web</a> ::
+        <a href="sendinel.web.tests-module.html">Package&nbsp;tests</a> ::
+        Module&nbsp;auth_test
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="sendinel.web.tests.auth_test-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="sendinel.web.tests.auth_test-module.html">Module sendinel.web.tests.auth_test</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">datetime</tt> <tt class="py-keyword">import</tt> <tt class="py-name">datetime</tt><tt class="py-op">,</tt> <tt class="py-name">timedelta</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">core</tt><tt class="py-op">.</tt><tt class="py-name">urlresolvers</tt> <tt class="py-keyword">import</tt> <tt class="py-name">reverse</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">test</tt> <tt class="py-keyword">import</tt> <tt class="py-name">TestCase</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package sendinel=sendinel-module.html"><a title="sendinel" class="py-name" href="#" onclick="return doclink('link-0', 'sendinel', 'link-0');">sendinel</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package sendinel.backend=sendinel.backend-module.html"><a title="sendinel.backend" class="py-name" href="#" onclick="return doclink('link-1', 'backend', 'link-1');">backend</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module sendinel.backend.models=sendinel.backend.models-module.html,Module sendinel.groups.models=sendinel.groups.models-module.html,Module sendinel.infoservices.models=sendinel.infoservices.models-module.html,Module sendinel.medicines.models=sendinel.medicines.models-module.html,Module sendinel.notifications.models=sendinel.notifications.models-module.html,Module sendinel.web.models=sendinel.web.models-module.html"><a title="sendinel.backend.models
+sendinel.groups.models
+sendinel.infoservices.models
+sendinel.medicines.models
+sendinel.notifications.models
+sendinel.web.models" class="py-name" href="#" onclick="return doclink('link-2', 'models', 'link-2');">models</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class sendinel.backend.models.AuthenticationCall=sendinel.backend.models.AuthenticationCall-class.html"><a title="sendinel.backend.models.AuthenticationCall" class="py-name" href="#" onclick="return doclink('link-3', 'AuthenticationCall', 'link-3');">AuthenticationCall</a></tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-4" class="py-name"><a title="sendinel" class="py-name" href="#" onclick="return doclink('link-4', 'sendinel', 'link-0');">sendinel</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name"><a title="sendinel.backend" class="py-name" href="#" onclick="return doclink('link-5', 'backend', 'link-1');">backend</a></tt> <tt class="py-keyword">import</tt> <tt id="link-6" class="py-name" targets="Module sendinel.backend.authhelper=sendinel.backend.authhelper-module.html"><a title="sendinel.backend.authhelper" class="py-name" href="#" onclick="return doclink('link-6', 'authhelper', 'link-6');">authhelper</a></tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-7" class="py-name"><a title="sendinel" class="py-name" href="#" onclick="return doclink('link-7', 'sendinel', 'link-0');">sendinel</a></tt><tt class="py-op">.</tt><tt id="link-8" class="py-name" targets="Package sendinel.notifications=sendinel.notifications-module.html"><a title="sendinel.notifications" class="py-name" href="#" onclick="return doclink('link-8', 'notifications', 'link-8');">notifications</a></tt><tt class="py-op">.</tt><tt id="link-9" class="py-name"><a title="sendinel.backend.models
+sendinel.groups.models
+sendinel.infoservices.models
+sendinel.medicines.models
+sendinel.notifications.models
+sendinel.web.models" class="py-name" href="#" onclick="return doclink('link-9', 'models', 'link-2');">models</a></tt> <tt class="py-keyword">import</tt> <tt id="link-10" class="py-name" targets="Class sendinel.notifications.models.NotificationType=sendinel.notifications.models.NotificationType-class.html"><a title="sendinel.notifications.models.NotificationType" class="py-name" href="#" onclick="return doclink('link-10', 'NotificationType', 'link-10');">NotificationType</a></tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-11" class="py-name"><a title="sendinel" class="py-name" href="#" onclick="return doclink('link-11', 'sendinel', 'link-0');">sendinel</a></tt><tt class="py-op">.</tt><tt id="link-12" class="py-name"><a title="sendinel.notifications" class="py-name" href="#" onclick="return doclink('link-12', 'notifications', 'link-8');">notifications</a></tt> <tt class="py-keyword">import</tt> <tt id="link-13" class="py-name" targets="Module sendinel.groups.views=sendinel.groups.views-module.html,Module sendinel.medicines.views=sendinel.medicines.views-module.html,Module sendinel.notifications.views=sendinel.notifications.views-module.html,Module sendinel.web.views=sendinel.web.views-module.html"><a title="sendinel.groups.views
+sendinel.medicines.views
+sendinel.notifications.views
+sendinel.web.views" class="py-name" href="#" onclick="return doclink('link-13', 'views', 'link-13');">views</a></tt> <tt class="py-keyword">as</tt> <tt class="py-name">notification_views</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-14" class="py-name"><a title="sendinel" class="py-name" href="#" onclick="return doclink('link-14', 'sendinel', 'link-0');">sendinel</a></tt><tt class="py-op">.</tt><tt id="link-15" class="py-name" targets="Package sendinel.web=sendinel.web-module.html"><a title="sendinel.web" class="py-name" href="#" onclick="return doclink('link-15', 'web', 'link-15');">web</a></tt> <tt class="py-keyword">import</tt> <tt id="link-16" class="py-name"><a title="sendinel.groups.views
+sendinel.medicines.views
+sendinel.notifications.views
+sendinel.web.views" class="py-name" href="#" onclick="return doclink('link-16', 'views', 'link-13');">views</a></tt> <tt class="py-keyword">as</tt> <tt class="py-name">web_views</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"> </tt>
+<a name="AuthenticateViewTests"></a><div id="AuthenticateViewTests-def"><a name="L12"></a><tt class="py-lineno"> 12</tt> <a class="py-toggle" href="#" id="AuthenticateViewTests-toggle" onclick="return toggle('AuthenticateViewTests');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="sendinel.web.tests.auth_test.AuthenticateViewTests-class.html">AuthenticateViewTests</a><tt class="py-op">(</tt><tt class="py-base-class">TestCase</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AuthenticateViewTests-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="AuthenticateViewTests-expanded"><a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line">    <tt id="link-17" class="py-name" targets="Variable sendinel.backend.tests.models_test.HospitalTest.fixtures=sendinel.backend.tests.models_test.HospitalTest-class.html#fixtures,Variable sendinel.backend.tests.scheduler_test.SchedulerTest.fixtures=sendinel.backend.tests.scheduler_test.SchedulerTest-class.html#fixtures,Variable sendinel.backend.tests.vcal_test.VcalTest.fixtures=sendinel.backend.tests.vcal_test.VcalTest-class.html#fixtures,Variable sendinel.backend.tests.way_of_communication_test.WayOfCommunicationTest.fixtures=sendinel.backend.tests.way_of_communication_test.WayOfCommunicationTest-class.html#fixtures,Variable sendinel.groups.tests.group_test.GroupTest.fixtures=sendinel.groups.tests.group_test.GroupTest-class.html#fixtures,Variable sendinel.groups.tests.group_test.WebInfoServiceTest.fixtures=sendinel.groups.tests.group_test.WebInfoServiceTest-class.html#fixtures,Variable sendinel.infoservices.tests.models_test.InfoMessageTest.fixtures=sendinel.infoservices.tests.models_test.InfoMessageTest-class.html#fixtures,Variable sendinel.infoservices.tests.models_test.SubscriptionTest.fixtures=sendinel.infoservices.tests.models_test.SubscriptionTest-class.html#fixtures,Variable sendinel.medicines.tests.medicine_test.MedicineTest.fixtures=sendinel.medicines.tests.medicine_test.MedicineTest-class.html#fixtures,Variable sendinel.notifications.tests.models_test.NotificationTest.fixtures=sendinel.notifications.tests.models_test.NotificationTest-class.html#fixtures,Variable sendinel.notifications.tests.notifications_test.NotificationViewTest.fixtures=sendinel.notifications.tests.notifications_test.NotificationViewTest-class.html#fixtures,Variable sendinel.web.tests.auth_test.AuthenticateViewTests.fixtures=sendinel.web.tests.auth_test.AuthenticateViewTests-class.html#fixtures,Variable sendinel.web.tests.bluetooth_test.BluetoothViewTest.fixtures=sendinel.web.tests.bluetooth_test.BluetoothViewTest-class.html#fixtures,Variable sendinel.web.tests.i18n_test.InternationalizationTest.fixtures=sendinel.web.tests.i18n_test.InternationalizationTest-class.html#fixtures,Variable sendinel.web.tests.utils_test.UtilsTemplateTests.fixtures=sendinel.web.tests.utils_test.UtilsTemplateTests-class.html#fixtures"><a title="sendinel.backend.tests.models_test.HospitalTest.fixtures
+sendinel.backend.tests.scheduler_test.SchedulerTest.fixtures
+sendinel.backend.tests.vcal_test.VcalTest.fixtures
+sendinel.backend.tests.way_of_communication_test.WayOfCommunicationTest.fixtures
+sendinel.groups.tests.group_test.GroupTest.fixtures
+sendinel.groups.tests.group_test.WebInfoServiceTest.fixtures
+sendinel.infoservices.tests.models_test.InfoMessageTest.fixtures
+sendinel.infoservices.tests.models_test.SubscriptionTest.fixtures
+sendinel.medicines.tests.medicine_test.MedicineTest.fixtures
+sendinel.notifications.tests.models_test.NotificationTest.fixtures
+sendinel.notifications.tests.notifications_test.NotificationViewTest.fixtures
+sendinel.web.tests.auth_test.AuthenticateViewTests.fixtures
+sendinel.web.tests.bluetooth_test.BluetoothViewTest.fixtures
+sendinel.web.tests.i18n_test.InternationalizationTest.fixtures
+sendinel.web.tests.utils_test.UtilsTemplateTests.fixtures" class="py-name" href="#" onclick="return doclink('link-17', 'fixtures', 'link-17');">fixtures</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">'backend_test'</tt><tt class="py-op">]</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line">    <tt id="link-18" class="py-name" targets="Module sendinel.groups.urls=sendinel.groups.urls-module.html,Module sendinel.infoservices.urls=sendinel.infoservices.urls-module.html,Module sendinel.medicines.urls=sendinel.medicines.urls-module.html,Variable sendinel.notifications.tests.notifications_test.NotificationViewTest.urls=sendinel.notifications.tests.notifications_test.NotificationViewTest-class.html#urls,Module sendinel.notifications.urls=sendinel.notifications.urls-module.html,Module sendinel.urls=sendinel.urls-module.html,Variable sendinel.web.tests.auth_test.AuthenticateViewTests.urls=sendinel.web.tests.auth_test.AuthenticateViewTests-class.html#urls,Variable sendinel.web.tests.i18n_test.InternationalizationTest.urls=sendinel.web.tests.i18n_test.InternationalizationTest-class.html#urls,Variable sendinel.web.tests.utils_test.UtilsTemplateTests.urls=sendinel.web.tests.utils_test.UtilsTemplateTests-class.html#urls,Module sendinel.web.urls=sendinel.web.urls-module.html"><a title="sendinel.groups.urls
+sendinel.infoservices.urls
+sendinel.medicines.urls
+sendinel.notifications.tests.notifications_test.NotificationViewTest.urls
+sendinel.notifications.urls
+sendinel.urls
+sendinel.web.tests.auth_test.AuthenticateViewTests.urls
+sendinel.web.tests.i18n_test.InternationalizationTest.urls
+sendinel.web.tests.utils_test.UtilsTemplateTests.urls
+sendinel.web.urls" class="py-name" href="#" onclick="return doclink('link-18', 'urls', 'link-18');">urls</a></tt> <tt class="py-op">=</tt> <tt class="py-string">"urls"</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"> </tt>
+<a name="AuthenticateViewTests.test_authenticate_phonenumber_messages"></a><div id="AuthenticateViewTests.test_authenticate_phonenumber_messages-def"><a name="L16"></a><tt class="py-lineno"> 16</tt> <a class="py-toggle" href="#" id="AuthenticateViewTests.test_authenticate_phonenumber_messages-toggle" onclick="return toggle('AuthenticateViewTests.test_authenticate_phonenumber_messages');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.web.tests.auth_test.AuthenticateViewTests-class.html#test_authenticate_phonenumber_messages">test_authenticate_phonenumber_messages</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AuthenticateViewTests.test_authenticate_phonenumber_messages-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AuthenticateViewTests.test_authenticate_phonenumber_messages-expanded"><a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line">        <tt class="py-comment"># TODO test</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-comment"></tt>        <tt class="py-comment"># infoservice = Infoservice(name="tesstinfoservice")</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-comment"></tt>        <tt class="py-comment"># infoservice.save()</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-comment"></tt>        <tt class="py-comment"># info_text = "You want to register for" + str(infoservice)</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-comment"></tt>        <tt class="py-comment"># self.client.post(reverse('web_authenticate_phonenumber') +"?next=" + </tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt class="py-comment"></tt>                                 <tt class="py-comment"># reverse('groups_register', \</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-comment"></tt>                                          <tt class="py-comment"># kwargs={'id': infoservice.id}), \</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"><tt class="py-comment"></tt>                                <tt class="py-comment"># {'infoservice_text' : info_text})</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-comment"></tt>        <tt class="py-comment"># self.assertContains(response, </tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-comment"></tt>        <tt class="py-comment"># infoservice.delete()</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-comment"></tt>        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line">         </tt>
+<a name="AuthenticateViewTests.test_authenticate_phonenumber"></a><div id="AuthenticateViewTests.test_authenticate_phonenumber-def"><a name="L29"></a><tt class="py-lineno"> 29</tt> <a class="py-toggle" href="#" id="AuthenticateViewTests.test_authenticate_phonenumber-toggle" onclick="return toggle('AuthenticateViewTests.test_authenticate_phonenumber');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.web.tests.auth_test.AuthenticateViewTests-class.html#test_authenticate_phonenumber">test_authenticate_phonenumber</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="AuthenticateViewTests.test_authenticate_phonenumber-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="AuthenticateViewTests.test_authenticate_phonenumber-expanded"><a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line">         </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line">        <tt id="link-19" class="py-name" targets="Variable sendinel.notifications.models.Notification.notification_type=sendinel.notifications.models.Notification-class.html#notification_type"><a title="sendinel.notifications.models.Notification.notification_type" class="py-name" href="#" onclick="return doclink('link-19', 'notification_type', 'link-19');">notification_type</a></tt> <tt class="py-op">=</tt> <tt id="link-20" class="py-name"><a title="sendinel.notifications.models.NotificationType" class="py-name" href="#" onclick="return doclink('link-20', 'NotificationType', 'link-10');">NotificationType</a></tt><tt class="py-op">.</tt><tt class="py-name">objects</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-name">pk</tt><tt class="py-op">=</tt><tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-21" class="py-name" targets="Variable sendinel.groups.tests.group_test.GroupTest.client=sendinel.groups.tests.group_test.GroupTest-class.html#client,Variable sendinel.web.tests.bluetooth_test.BluetoothViewTest.client=sendinel.web.tests.bluetooth_test.BluetoothViewTest-class.html#client"><a title="sendinel.groups.tests.group_test.GroupTest.client
+sendinel.web.tests.bluetooth_test.BluetoothViewTest.client" class="py-name" href="#" onclick="return doclink('link-21', 'client', 'link-21');">client</a></tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-name">reverse</tt><tt class="py-op">(</tt><tt class="py-string">'notifications_create'</tt><tt class="py-op">,</tt> \ </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line">                <tt class="py-name">kwargs</tt><tt class="py-op">=</tt><tt class="py-op">{</tt><tt class="py-string">"notification_type_name"</tt><tt class="py-op">:</tt> <tt id="link-22" class="py-name"><a title="sendinel.notifications.models.Notification.notification_type" class="py-name" href="#" onclick="return doclink('link-22', 'notification_type', 'link-19');">notification_type</a></tt><tt class="py-op">.</tt><tt id="link-23" class="py-name" targets="Variable sendinel.backend.models.Hospital.name=sendinel.backend.models.Hospital-class.html#name,Variable sendinel.backend.models.User.name=sendinel.backend.models.User-class.html#name,Variable sendinel.backend.models.WayOfCommunication.name=sendinel.backend.models.WayOfCommunication-class.html#name,Variable sendinel.infoservices.forms.InfoServiceValidationForm.name=sendinel.infoservices.forms.InfoServiceValidationForm-class.html#name,Variable sendinel.infoservices.models.InfoService.name=sendinel.infoservices.models.InfoService-class.html#name,Variable sendinel.notifications.models.NotificationType.name=sendinel.notifications.models.NotificationType-class.html#name"><a title="sendinel.backend.models.Hospital.name
+sendinel.backend.models.User.name
+sendinel.backend.models.WayOfCommunication.name
+sendinel.infoservices.forms.InfoServiceValidationForm.name
+sendinel.infoservices.models.InfoService.name
+sendinel.notifications.models.NotificationType.name" class="py-name" href="#" onclick="return doclink('link-23', 'name', 'link-23');">name</a></tt> <tt class="py-op">}</tt><tt class="py-op">)</tt><tt class="py-op">)</tt>  </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line">        <tt id="link-24" class="py-name" targets="Variable sendinel.backend.output.OutputData.data=sendinel.backend.output.OutputData-class.html#data"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-24', 'data', 'link-24');">data</a></tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-string">'date'</tt><tt class="py-op">:</tt> <tt class="py-string">'2012-08-12'</tt><tt class="py-op">,</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line">                <tt class="py-string">'phone_number'</tt><tt class="py-op">:</tt> <tt class="py-string">'01733685224'</tt><tt class="py-op">,</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line">                <tt class="py-string">'way_of_communication'</tt><tt class="py-op">:</tt> <tt class="py-number">1</tt><tt class="py-op">}</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-25" class="py-name"><a title="sendinel.groups.tests.group_test.GroupTest.client
+sendinel.web.tests.bluetooth_test.BluetoothViewTest.client" class="py-name" href="#" onclick="return doclink('link-25', 'client', 'link-21');">client</a></tt><tt class="py-op">.</tt><tt class="py-name">post</tt><tt class="py-op">(</tt><tt class="py-name">reverse</tt><tt class="py-op">(</tt><tt class="py-string">'notifications_create'</tt><tt class="py-op">,</tt> \ </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line">                <tt class="py-name">kwargs</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-string">"notification_type_name"</tt><tt class="py-op">:</tt> <tt id="link-26" class="py-name"><a title="sendinel.notifications.models.Notification.notification_type" class="py-name" href="#" onclick="return doclink('link-26', 'notification_type', 'link-19');">notification_type</a></tt><tt class="py-op">.</tt><tt id="link-27" class="py-name"><a title="sendinel.backend.models.Hospital.name
+sendinel.backend.models.User.name
+sendinel.backend.models.WayOfCommunication.name
+sendinel.infoservices.forms.InfoServiceValidationForm.name
+sendinel.infoservices.models.InfoService.name
+sendinel.notifications.models.NotificationType.name" class="py-name" href="#" onclick="return doclink('link-27', 'name', 'link-23');">name</a></tt> <tt class="py-op">}</tt><tt class="py-op">)</tt><tt class="py-op">,</tt>\ </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line">                          <tt id="link-28" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-28', 'data', 'link-24');">data</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line">      </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line">        <tt class="py-name">response</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-29" class="py-name"><a title="sendinel.groups.tests.group_test.GroupTest.client
+sendinel.web.tests.bluetooth_test.BluetoothViewTest.client" class="py-name" href="#" onclick="return doclink('link-29', 'client', 'link-21');">client</a></tt><tt class="py-op">.</tt><tt class="py-name">post</tt><tt class="py-op">(</tt><tt class="py-name">reverse</tt><tt class="py-op">(</tt><tt class="py-string">"web_authenticate_phonenumber"</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">failUnlessEqual</tt><tt class="py-op">(</tt><tt class="py-name">response</tt><tt class="py-op">.</tt><tt class="py-name">status_code</tt><tt class="py-op">,</tt> <tt class="py-number">200</tt><tt class="py-op">)</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertEquals</tt><tt class="py-op">(</tt><tt class="py-name">response</tt><tt class="py-op">.</tt><tt id="link-30" class="py-name" targets="Variable sendinel.infoservices.models.InfoMessage.template=sendinel.infoservices.models.InfoMessage-class.html#template,Method sendinel.notifications.models.Notification.template()=sendinel.notifications.models.Notification-class.html#template,Variable sendinel.notifications.models.NotificationType.template=sendinel.notifications.models.NotificationType-class.html#template"><a title="sendinel.infoservices.models.InfoMessage.template
+sendinel.notifications.models.Notification.template
+sendinel.notifications.models.NotificationType.template" class="py-name" href="#" onclick="return doclink('link-30', 'template', 'link-30');">template</a></tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt id="link-31" class="py-name"><a title="sendinel.backend.models.Hospital.name
+sendinel.backend.models.User.name
+sendinel.backend.models.WayOfCommunication.name
+sendinel.infoservices.forms.InfoServiceValidationForm.name
+sendinel.infoservices.models.InfoService.name
+sendinel.notifications.models.NotificationType.name" class="py-name" href="#" onclick="return doclink('link-31', 'name', 'link-23');">name</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line">                          <tt class="py-string">"web/authenticate_phonenumber_call.html"</tt><tt class="py-op">)</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertContains</tt><tt class="py-op">(</tt><tt class="py-name">response</tt><tt class="py-op">,</tt> <tt class="py-string">"auth.js"</tt><tt class="py-op">)</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertContains</tt><tt class="py-op">(</tt><tt class="py-name">response</tt><tt class="py-op">,</tt> <tt class="py-string">"&lt;noscript&gt;"</tt><tt class="py-op">)</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line">         </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line">        <tt class="py-name">session_data</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-32" class="py-name"><a title="sendinel.groups.tests.group_test.GroupTest.client
+sendinel.web.tests.bluetooth_test.BluetoothViewTest.client" class="py-name" href="#" onclick="return doclink('link-32', 'client', 'link-21');">client</a></tt><tt class="py-op">.</tt><tt class="py-name">session</tt><tt class="py-op">[</tt><tt class="py-string">'authenticate_phonenumber'</tt><tt class="py-op">]</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertEquals</tt><tt class="py-op">(</tt><tt class="py-name">session_data</tt><tt class="py-op">[</tt><tt class="py-string">'number'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-string">"01733685224"</tt><tt class="py-op">)</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertTrue</tt><tt class="py-op">(</tt><tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt class="py-name">session_data</tt><tt class="py-op">[</tt><tt class="py-string">'start_time'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">datetime</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line">        <tt class="py-comment"># TODO check delete_timed_out_authentication_calls gets called</tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line"><tt class="py-comment"></tt>         </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertTemplateUsed</tt><tt class="py-op">(</tt><tt class="py-name">response</tt><tt class="py-op">,</tt><tt class="py-string">'web/authenticate_phonenumber_call.html'</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line">     </tt>
+<a name="AuthenticateViewTests.test_check_call_received"></a><div id="AuthenticateViewTests.test_check_call_received-def"><a name="L57"></a><tt class="py-lineno"> 57</tt> <a class="py-toggle" href="#" id="AuthenticateViewTests.test_check_call_received-toggle" onclick="return toggle('AuthenticateViewTests.test_check_call_received');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.web.tests.auth_test.AuthenticateViewTests-class.html#test_check_call_received">test_check_call_received</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt>         </tt>
+</div><a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line">        <tt class="py-comment"># settings up the environment</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"><tt class="py-comment"></tt>        <tt id="link-33" class="py-name"><a title="sendinel.notifications.models.Notification.notification_type" class="py-name" href="#" onclick="return doclink('link-33', 'notification_type', 'link-19');">notification_type</a></tt> <tt class="py-op">=</tt> <tt id="link-34" class="py-name"><a title="sendinel.notifications.models.NotificationType" class="py-name" href="#" onclick="return doclink('link-34', 'NotificationType', 'link-10');">NotificationType</a></tt><tt class="py-op">.</tt><tt class="py-name">objects</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-name">pk</tt><tt class="py-op">=</tt><tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line">        <tt class="py-name">original_value</tt> <tt class="py-op">=</tt> <tt id="link-35" class="py-name"><a title="sendinel.backend.authhelper" class="py-name" href="#" onclick="return doclink('link-35', 'authhelper', 'link-6');">authhelper</a></tt><tt class="py-op">.</tt><tt id="link-36" class="py-name" targets="Variable sendinel.settings.AUTHENTICATION_ENABLED=sendinel.settings-module.html#AUTHENTICATION_ENABLED"><a title="sendinel.settings.AUTHENTICATION_ENABLED" class="py-name" href="#" onclick="return doclink('link-36', 'AUTHENTICATION_ENABLED', 'link-36');">AUTHENTICATION_ENABLED</a></tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">        <tt id="link-37" class="py-name"><a title="sendinel.backend.authhelper" class="py-name" href="#" onclick="return doclink('link-37', 'authhelper', 'link-6');">authhelper</a></tt><tt class="py-op">.</tt><tt id="link-38" class="py-name"><a title="sendinel.settings.AUTHENTICATION_ENABLED" class="py-name" href="#" onclick="return doclink('link-38', 'AUTHENTICATION_ENABLED', 'link-36');">AUTHENTICATION_ENABLED</a></tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">         </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-39" class="py-name"><a title="sendinel.groups.tests.group_test.GroupTest.client
+sendinel.web.tests.bluetooth_test.BluetoothViewTest.client" class="py-name" href="#" onclick="return doclink('link-39', 'client', 'link-21');">client</a></tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-name">reverse</tt><tt class="py-op">(</tt><tt class="py-string">'notifications_create'</tt><tt class="py-op">,</tt> \ </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line">                <tt class="py-name">kwargs</tt><tt class="py-op">=</tt><tt class="py-op">{</tt><tt class="py-string">"notification_type_name"</tt><tt class="py-op">:</tt> <tt id="link-40" class="py-name"><a title="sendinel.notifications.models.Notification.notification_type" class="py-name" href="#" onclick="return doclink('link-40', 'notification_type', 'link-19');">notification_type</a></tt><tt class="py-op">.</tt><tt id="link-41" class="py-name"><a title="sendinel.backend.models.Hospital.name
+sendinel.backend.models.User.name
+sendinel.backend.models.WayOfCommunication.name
+sendinel.infoservices.forms.InfoServiceValidationForm.name
+sendinel.infoservices.models.InfoService.name
+sendinel.notifications.models.NotificationType.name" class="py-name" href="#" onclick="return doclink('link-41', 'name', 'link-23');">name</a></tt> <tt class="py-op">}</tt><tt class="py-op">)</tt><tt class="py-op">)</tt>  </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line">        <tt id="link-42" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-42', 'data', 'link-24');">data</a></tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-string">'date'</tt><tt class="py-op">:</tt> <tt class="py-string">'2012-08-12'</tt><tt class="py-op">,</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">                <tt class="py-string">'phone_number'</tt><tt class="py-op">:</tt> <tt class="py-string">'0123456789012'</tt><tt class="py-op">,</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line">                <tt class="py-string">'way_of_communication'</tt><tt class="py-op">:</tt> <tt class="py-number">1</tt><tt class="py-op">}</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-43" class="py-name"><a title="sendinel.groups.tests.group_test.GroupTest.client
+sendinel.web.tests.bluetooth_test.BluetoothViewTest.client" class="py-name" href="#" onclick="return doclink('link-43', 'client', 'link-21');">client</a></tt><tt class="py-op">.</tt><tt class="py-name">post</tt><tt class="py-op">(</tt><tt class="py-name">reverse</tt><tt class="py-op">(</tt><tt class="py-string">'notifications_create'</tt><tt class="py-op">,</tt> \ </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line">                <tt class="py-name">kwargs</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-string">"notification_type_name"</tt><tt class="py-op">:</tt> <tt id="link-44" class="py-name"><a title="sendinel.notifications.models.Notification.notification_type" class="py-name" href="#" onclick="return doclink('link-44', 'notification_type', 'link-19');">notification_type</a></tt><tt class="py-op">.</tt><tt id="link-45" class="py-name"><a title="sendinel.backend.models.Hospital.name
+sendinel.backend.models.User.name
+sendinel.backend.models.WayOfCommunication.name
+sendinel.infoservices.forms.InfoServiceValidationForm.name
+sendinel.infoservices.models.InfoService.name
+sendinel.notifications.models.NotificationType.name" class="py-name" href="#" onclick="return doclink('link-45', 'name', 'link-23');">name</a></tt> <tt class="py-op">}</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt id="link-46" class="py-name"><a title="sendinel.backend.output.OutputData.data" class="py-name" href="#" onclick="return doclink('link-46', 'data', 'link-24');">data</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line">                 </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">        <tt class="py-comment"># make sure there are no AuthenticationCall objects in the db</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"><tt class="py-comment"></tt>        <tt id="link-47" class="py-name"><a title="sendinel.backend.models.AuthenticationCall" class="py-name" href="#" onclick="return doclink('link-47', 'AuthenticationCall', 'link-3');">AuthenticationCall</a></tt><tt class="py-op">.</tt><tt class="py-name">objects</tt><tt class="py-op">.</tt><tt class="py-name">all</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">delete</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">                 </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-48" class="py-name"><a title="sendinel.groups.tests.group_test.GroupTest.client
+sendinel.web.tests.bluetooth_test.BluetoothViewTest.client" class="py-name" href="#" onclick="return doclink('link-48', 'client', 'link-21');">client</a></tt><tt class="py-op">.</tt><tt class="py-name">post</tt><tt class="py-op">(</tt><tt class="py-string">"/web/authenticate_phonenumber/"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">            <tt class="py-op">{</tt><tt class="py-string">'number'</tt><tt class="py-op">:</tt><tt class="py-string">'01234 / 56789012'</tt><tt class="py-op">}</tt><tt class="py-op">)</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">     </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">        <tt class="py-name">response</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-49" class="py-name"><a title="sendinel.groups.tests.group_test.GroupTest.client
+sendinel.web.tests.bluetooth_test.BluetoothViewTest.client" class="py-name" href="#" onclick="return doclink('link-49', 'client', 'link-21');">client</a></tt><tt class="py-op">.</tt><tt class="py-name">post</tt><tt class="py-op">(</tt><tt class="py-string">"/web/check_call_received/"</tt><tt class="py-op">)</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">     </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">failUnlessEqual</tt><tt class="py-op">(</tt><tt class="py-name">response</tt><tt class="py-op">.</tt><tt class="py-name">status_code</tt><tt class="py-op">,</tt> <tt class="py-number">200</tt><tt class="py-op">)</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertContains</tt><tt class="py-op">(</tt><tt class="py-name">response</tt><tt class="py-op">,</tt> <tt class="py-string">"waiting"</tt><tt class="py-op">)</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">     </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line">        <tt id="link-50" class="py-name"><a title="sendinel.backend.models.AuthenticationCall" class="py-name" href="#" onclick="return doclink('link-50', 'AuthenticationCall', 'link-3');">AuthenticationCall</a></tt><tt class="py-op">(</tt><tt id="link-51" class="py-name" targets="Variable sendinel.backend.models.AuthenticationCall.number=sendinel.backend.models.AuthenticationCall-class.html#number"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-51', 'number', 'link-51');">number</a></tt> <tt class="py-op">=</tt> <tt class="py-string">"0123456789012"</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">save</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">     </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">        <tt class="py-name">response</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-52" class="py-name"><a title="sendinel.groups.tests.group_test.GroupTest.client
+sendinel.web.tests.bluetooth_test.BluetoothViewTest.client" class="py-name" href="#" onclick="return doclink('link-52', 'client', 'link-21');">client</a></tt><tt class="py-op">.</tt><tt class="py-name">post</tt><tt class="py-op">(</tt><tt class="py-string">"/web/check_call_received/"</tt><tt class="py-op">)</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">         </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">failUnlessEqual</tt><tt class="py-op">(</tt><tt class="py-name">response</tt><tt class="py-op">.</tt><tt class="py-name">status_code</tt><tt class="py-op">,</tt> <tt class="py-number">200</tt><tt class="py-op">)</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertContains</tt><tt class="py-op">(</tt><tt class="py-name">response</tt><tt class="py-op">,</tt> <tt class="py-string">"received"</tt><tt class="py-op">)</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">     </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">        <tt class="py-comment"># make sure timeout is over</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line"><tt class="py-comment"></tt>        <tt class="py-name">real_timeout</tt> <tt class="py-op">=</tt> <tt class="py-name">web_views</tt><tt class="py-op">.</tt><tt id="link-53" class="py-name" targets="Variable sendinel.settings.AUTHENTICATION_CALL_TIMEOUT=sendinel.settings-module.html#AUTHENTICATION_CALL_TIMEOUT"><a title="sendinel.settings.AUTHENTICATION_CALL_TIMEOUT" class="py-name" href="#" onclick="return doclink('link-53', 'AUTHENTICATION_CALL_TIMEOUT', 'link-53');">AUTHENTICATION_CALL_TIMEOUT</a></tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line">        <tt class="py-name">web_views</tt><tt class="py-op">.</tt><tt id="link-54" class="py-name"><a title="sendinel.settings.AUTHENTICATION_CALL_TIMEOUT" class="py-name" href="#" onclick="return doclink('link-54', 'AUTHENTICATION_CALL_TIMEOUT', 'link-53');">AUTHENTICATION_CALL_TIMEOUT</a></tt> <tt class="py-op">=</tt> <tt class="py-name">timedelta</tt><tt class="py-op">(</tt><tt class="py-name">minutes</tt> <tt class="py-op">=</tt> <tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">     </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line">        <tt class="py-name">response</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-55" class="py-name"><a title="sendinel.groups.tests.group_test.GroupTest.client
+sendinel.web.tests.bluetooth_test.BluetoothViewTest.client" class="py-name" href="#" onclick="return doclink('link-55', 'client', 'link-21');">client</a></tt><tt class="py-op">.</tt><tt class="py-name">post</tt><tt class="py-op">(</tt><tt class="py-string">"/web/check_call_received/"</tt><tt class="py-op">)</tt>   </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line">     </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">failUnlessEqual</tt><tt class="py-op">(</tt><tt class="py-name">response</tt><tt class="py-op">.</tt><tt class="py-name">status_code</tt><tt class="py-op">,</tt> <tt class="py-number">200</tt><tt class="py-op">)</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">assertContains</tt><tt class="py-op">(</tt><tt class="py-name">response</tt><tt class="py-op">,</tt> <tt class="py-string">"failed"</tt><tt class="py-op">)</tt>       </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">     </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">        <tt class="py-name">web_views</tt><tt class="py-op">.</tt><tt id="link-56" class="py-name"><a title="sendinel.settings.AUTHENTICATION_CALL_TIMEOUT" class="py-name" href="#" onclick="return doclink('link-56', 'AUTHENTICATION_CALL_TIMEOUT', 'link-53');">AUTHENTICATION_CALL_TIMEOUT</a></tt> <tt class="py-op">=</tt> <tt class="py-name">real_timeout</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">         </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">        <tt id="link-57" class="py-name"><a title="sendinel.backend.authhelper" class="py-name" href="#" onclick="return doclink('link-57', 'authhelper', 'link-6');">authhelper</a></tt><tt class="py-op">.</tt><tt id="link-58" class="py-name"><a title="sendinel.settings.AUTHENTICATION_ENABLED" class="py-name" href="#" onclick="return doclink('link-58', 'AUTHENTICATION_ENABLED', 'link-36');">AUTHENTICATION_ENABLED</a></tt> <tt class="py-op">=</tt> <tt class="py-name">original_value</tt> </tt>
+</div></div><a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="sendinel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu May 27 11:30:47 2010
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

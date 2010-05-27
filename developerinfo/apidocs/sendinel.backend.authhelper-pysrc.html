@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sendinel.backend.authhelper</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="sendinel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="sendinel-module.html">Package&nbsp;sendinel</a> ::
+        <a href="sendinel.backend-module.html">Package&nbsp;backend</a> ::
+        Module&nbsp;authhelper
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="sendinel.backend.authhelper-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="sendinel.backend.authhelper-module.html">Module sendinel.backend.authhelper</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">re</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">datetime</tt> <tt class="py-keyword">import</tt> <tt class="py-name">datetime</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">core</tt><tt class="py-op">.</tt><tt class="py-name">urlresolvers</tt> <tt class="py-keyword">import</tt> <tt class="py-name">reverse</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">core</tt><tt class="py-op">.</tt><tt class="py-name">exceptions</tt> <tt class="py-keyword">import</tt> <tt class="py-name">ValidationError</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt class="py-name">http</tt> <tt class="py-keyword">import</tt> <tt class="py-name">HttpResponseRedirect</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">django</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Module sendinel.infoservices.utils=sendinel.infoservices.utils-module.html,Module sendinel.utils=sendinel.utils-module.html,Module sendinel.web.utils=sendinel.web.utils-module.html"><a title="sendinel.infoservices.utils
+sendinel.utils
+sendinel.web.utils" class="py-name" href="#" onclick="return doclink('link-0', 'utils', 'link-0');">utils</a></tt><tt class="py-op">.</tt><tt class="py-name">translation</tt> <tt class="py-keyword">import</tt> <tt class="py-name">ugettext</tt> <tt class="py-keyword">as</tt> <tt id="link-1" class="py-name" targets="Function sendinel.settings._()=sendinel.settings-module.html#_"><a title="sendinel.settings._" class="py-name" href="#" onclick="return doclink('link-1', '_', 'link-1');">_</a></tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-2" class="py-name" targets="Package sendinel=sendinel-module.html"><a title="sendinel" class="py-name" href="#" onclick="return doclink('link-2', 'sendinel', 'link-2');">sendinel</a></tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Package sendinel.backend=sendinel.backend-module.html"><a title="sendinel.backend" class="py-name" href="#" onclick="return doclink('link-3', 'backend', 'link-3');">backend</a></tt><tt class="py-op">.</tt><tt id="link-4" class="py-name" targets="Module sendinel.backend.models=sendinel.backend.models-module.html,Module sendinel.groups.models=sendinel.groups.models-module.html,Module sendinel.infoservices.models=sendinel.infoservices.models-module.html,Module sendinel.medicines.models=sendinel.medicines.models-module.html,Module sendinel.notifications.models=sendinel.notifications.models-module.html,Module sendinel.web.models=sendinel.web.models-module.html"><a title="sendinel.backend.models
+sendinel.groups.models
+sendinel.infoservices.models
+sendinel.medicines.models
+sendinel.notifications.models
+sendinel.web.models" class="py-name" href="#" onclick="return doclink('link-4', 'models', 'link-4');">models</a></tt> <tt class="py-keyword">import</tt> <tt id="link-5" class="py-name" targets="Class sendinel.backend.models.AuthenticationCall=sendinel.backend.models.AuthenticationCall-class.html"><a title="sendinel.backend.models.AuthenticationCall" class="py-name" href="#" onclick="return doclink('link-5', 'AuthenticationCall', 'link-5');">AuthenticationCall</a></tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-6" class="py-name"><a title="sendinel" class="py-name" href="#" onclick="return doclink('link-6', 'sendinel', 'link-2');">sendinel</a></tt><tt class="py-op">.</tt><tt id="link-7" class="py-name" targets="Module sendinel.settings=sendinel.settings-module.html"><a title="sendinel.settings" class="py-name" href="#" onclick="return doclink('link-7', 'settings', 'link-7');">settings</a></tt> <tt class="py-keyword">import</tt> <tt id="link-8" class="py-name" targets="Variable sendinel.settings.AUTHENTICATION_ENABLED=sendinel.settings-module.html#AUTHENTICATION_ENABLED"><a title="sendinel.settings.AUTHENTICATION_ENABLED" class="py-name" href="#" onclick="return doclink('link-8', 'AUTHENTICATION_ENABLED', 'link-8');">AUTHENTICATION_ENABLED</a></tt><tt class="py-op">,</tt> \ </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line">                              <tt id="link-9" class="py-name" targets="Variable sendinel.settings.AUTHENTICATION_CALL_TIMEOUT=sendinel.settings-module.html#AUTHENTICATION_CALL_TIMEOUT"><a title="sendinel.settings.AUTHENTICATION_CALL_TIMEOUT" class="py-name" href="#" onclick="return doclink('link-9', 'AUTHENTICATION_CALL_TIMEOUT', 'link-9');">AUTHENTICATION_CALL_TIMEOUT</a></tt><tt class="py-op">,</tt> \ </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line">                              <tt id="link-10" class="py-name" targets="Variable sendinel.settings.COUNTRY_CODE_PHONE=sendinel.settings-module.html#COUNTRY_CODE_PHONE"><a title="sendinel.settings.COUNTRY_CODE_PHONE" class="py-name" href="#" onclick="return doclink('link-10', 'COUNTRY_CODE_PHONE', 'link-10');">COUNTRY_CODE_PHONE</a></tt><tt class="py-op">,</tt> \ </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line">                              <tt id="link-11" class="py-name" targets="Variable sendinel.settings.START_MOBILE_PHONE=sendinel.settings-module.html#START_MOBILE_PHONE"><a title="sendinel.settings.START_MOBILE_PHONE" class="py-name" href="#" onclick="return doclink('link-11', 'START_MOBILE_PHONE', 'link-11');">START_MOBILE_PHONE</a></tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"> </tt>
+<a name="format_and_validate_phonenumber"></a><div id="format_and_validate_phonenumber-def"><a name="L15"></a><tt class="py-lineno">15</tt> <a class="py-toggle" href="#" id="format_and_validate_phonenumber-toggle" onclick="return toggle('format_and_validate_phonenumber');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.backend.authhelper-module.html#format_and_validate_phonenumber">format_and_validate_phonenumber</a><tt class="py-op">(</tt><tt class="py-param">number</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="format_and_validate_phonenumber-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="format_and_validate_phonenumber-expanded"><a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-docstring">    Replaces all number specific characters like</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-docstring">    "+", "-" and "/" and checks that there are no</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-docstring">    letters included. Checks also if the number is </tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring">    the number of a mobile phone.</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-docstring">    </tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-docstring">    @param  number:     The phone number that will be checked</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-docstring">    @type   number:     string</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-docstring">    </tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-docstring">    @raise  ValueError</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">    </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt id="link-12" class="py-name" targets="Variable sendinel.backend.models.AuthenticationCall.number=sendinel.backend.models.AuthenticationCall-class.html#number"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-12', 'number', 'link-12');">number</a></tt><tt class="py-op">.</tt><tt class="py-name">startswith</tt><tt class="py-op">(</tt><tt class="py-string">'+'</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">        <tt id="link-13" class="py-name"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-13', 'number', 'link-12');">number</a></tt> <tt class="py-op">=</tt> <tt id="link-14" class="py-name"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-14', 'number', 'link-12');">number</a></tt><tt class="py-op">.</tt><tt class="py-name">replace</tt><tt class="py-op">(</tt><tt class="py-string">'+'</tt><tt class="py-op">,</tt> <tt class="py-string">'00'</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">     </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">    <tt class="py-name">regex</tt> <tt class="py-op">=</tt> <tt class="py-name">re</tt><tt class="py-op">.</tt><tt class="py-name">compile</tt><tt class="py-op">(</tt><tt class="py-string">'(\/|\+|-| )'</tt><tt class="py-op">)</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">    <tt id="link-15" class="py-name"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-15', 'number', 'link-12');">number</a></tt> <tt class="py-op">=</tt> <tt class="py-name">regex</tt><tt class="py-op">.</tt><tt class="py-name">sub</tt><tt class="py-op">(</tt><tt class="py-string">''</tt><tt class="py-op">,</tt> <tt id="link-16" class="py-name"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-16', 'number', 'link-12');">number</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">     </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt id="link-17" class="py-name"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-17', 'number', 'link-12');">number</a></tt><tt class="py-op">.</tt><tt class="py-name">startswith</tt><tt class="py-op">(</tt><tt id="link-18" class="py-name"><a title="sendinel.settings.COUNTRY_CODE_PHONE" class="py-name" href="#" onclick="return doclink('link-18', 'COUNTRY_CODE_PHONE', 'link-10');">COUNTRY_CODE_PHONE</a></tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">        <tt id="link-19" class="py-name"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-19', 'number', 'link-12');">number</a></tt> <tt class="py-op">=</tt> <tt id="link-20" class="py-name"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-20', 'number', 'link-12');">number</a></tt><tt class="py-op">.</tt><tt class="py-name">replace</tt><tt class="py-op">(</tt><tt id="link-21" class="py-name"><a title="sendinel.settings.COUNTRY_CODE_PHONE" class="py-name" href="#" onclick="return doclink('link-21', 'COUNTRY_CODE_PHONE', 'link-10');">COUNTRY_CODE_PHONE</a></tt><tt class="py-op">,</tt> <tt class="py-string">'0'</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">    <tt class="py-comment"># if the conversion to int does not fail then</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"><tt class="py-comment"></tt>    <tt class="py-comment"># there are only numbers included in the string</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line"><tt class="py-comment"></tt>    <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">        <tt class="py-name">int</tt><tt class="py-op">(</tt><tt id="link-22" class="py-name"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-22', 'number', 'link-12');">number</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">    <tt class="py-keyword">except</tt> <tt class="py-name">ValueError</tt><tt class="py-op">:</tt> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">ValidationError</tt><tt class="py-op">(</tt><tt id="link-23" class="py-name"><a title="sendinel.settings._" class="py-name" href="#" onclick="return doclink('link-23', '_', 'link-1');">_</a></tt><tt class="py-op">(</tt><tt class="py-string">'Please enter numbers only.'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">     </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt id="link-24" class="py-name"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-24', 'number', 'link-12');">number</a></tt><tt class="py-op">.</tt><tt class="py-name">startswith</tt><tt class="py-op">(</tt><tt id="link-25" class="py-name"><a title="sendinel.settings.START_MOBILE_PHONE" class="py-name" href="#" onclick="return doclink('link-25', 'START_MOBILE_PHONE', 'link-11');">START_MOBILE_PHONE</a></tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt id="link-26" class="py-name"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-26', 'number', 'link-12');">number</a></tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">ValidationError</tt><tt class="py-op">(</tt><tt id="link-27" class="py-name"><a title="sendinel.settings._" class="py-name" href="#" onclick="return doclink('link-27', '_', 'link-1');">_</a></tt><tt class="py-op">(</tt><tt class="py-string">'Please enter a cell phone number.'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line"> </tt>
+<a name="check_and_delete_authentication_call"></a><div id="check_and_delete_authentication_call-def"><a name="L49"></a><tt class="py-lineno">49</tt> <a class="py-toggle" href="#" id="check_and_delete_authentication_call-toggle" onclick="return toggle('check_and_delete_authentication_call');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.backend.authhelper-module.html#check_and_delete_authentication_call">check_and_delete_authentication_call</a><tt class="py-op">(</tt><tt class="py-param">number</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="check_and_delete_authentication_call-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="check_and_delete_authentication_call-expanded"><a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line"><tt class="py-docstring">    Try to find an AuthenticationCall for the given phone numner.</tt> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line"><tt class="py-docstring">    The last seven digits are compared to identify the call.</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line">     </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line">    <tt id="link-28" class="py-name"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-28', 'number', 'link-12');">number</a></tt> <tt class="py-op">=</tt> <tt id="link-29" class="py-name" targets="Function sendinel.backend.authhelper.format_and_validate_phonenumber()=sendinel.backend.authhelper-module.html#format_and_validate_phonenumber"><a title="sendinel.backend.authhelper.format_and_validate_phonenumber" class="py-name" href="#" onclick="return doclink('link-29', 'format_and_validate_phonenumber', 'link-29');">format_and_validate_phonenumber</a></tt><tt class="py-op">(</tt><tt id="link-30" class="py-name"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-30', 'number', 'link-12');">number</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line">     </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line">    <tt class="py-name">last_seven_digits</tt> <tt class="py-op">=</tt> <tt id="link-31" class="py-name"><a title="sendinel.backend.models.AuthenticationCall.number" class="py-name" href="#" onclick="return doclink('link-31', 'number', 'link-12');">number</a></tt><tt class="py-op">[</tt><tt class="py-op">-</tt><tt class="py-number">7</tt><tt class="py-op">:</tt><tt class="py-op">]</tt> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line">    <tt class="py-name">calls</tt> <tt class="py-op">=</tt> <tt id="link-32" class="py-name"><a title="sendinel.backend.models.AuthenticationCall" class="py-name" href="#" onclick="return doclink('link-32', 'AuthenticationCall', 'link-5');">AuthenticationCall</a></tt><tt class="py-op">.</tt><tt class="py-name">objects</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt> \ </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line">                                    <tt class="py-name">number__endswith</tt> <tt class="py-op">=</tt> <tt class="py-name">last_seven_digits</tt><tt class="py-op">)</tt> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line">     </tt>
+<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">calls</tt><tt class="py-op">.</tt><tt class="py-name">count</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">==</tt> <tt class="py-number">1</tt><tt class="py-op">:</tt> </tt>
+<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line">        <tt class="py-name">calls</tt><tt class="py-op">.</tt><tt class="py-name">delete</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">True</tt> </tt>
+<a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line">     </tt>
+<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">False</tt> </tt>
+</div><a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line">     </tt>
+<a name="delete_timed_out_authentication_calls"></a><div id="delete_timed_out_authentication_calls-def"><a name="L67"></a><tt class="py-lineno">67</tt> <a class="py-toggle" href="#" id="delete_timed_out_authentication_calls-toggle" onclick="return toggle('delete_timed_out_authentication_calls');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.backend.authhelper-module.html#delete_timed_out_authentication_calls">delete_timed_out_authentication_calls</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="delete_timed_out_authentication_calls-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="delete_timed_out_authentication_calls-expanded"><a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line"><tt class="py-docstring">    Find and delete all timed out authentication calls.</tt> </tt>
+<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line"><tt class="py-docstring">    This can be configured through settings.</tt> </tt>
+<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line">     </tt>
+<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line">    <tt class="py-name">timeout</tt> <tt class="py-op">=</tt> <tt class="py-name">datetime</tt><tt class="py-op">.</tt><tt id="link-33" class="py-name" targets="Method sendinel.backend.tests.vcal_test.VcalTest.FakeDatetime.now()=sendinel.backend.tests.vcal_test.VcalTest.FakeDatetime-class.html#now"><a title="sendinel.backend.tests.vcal_test.VcalTest.FakeDatetime.now" class="py-name" href="#" onclick="return doclink('link-33', 'now', 'link-33');">now</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">-</tt> <tt id="link-34" class="py-name"><a title="sendinel.settings.AUTHENTICATION_CALL_TIMEOUT" class="py-name" href="#" onclick="return doclink('link-34', 'AUTHENTICATION_CALL_TIMEOUT', 'link-9');">AUTHENTICATION_CALL_TIMEOUT</a></tt> </tt>
+<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line">    <tt id="link-35" class="py-name"><a title="sendinel.backend.models.AuthenticationCall" class="py-name" href="#" onclick="return doclink('link-35', 'AuthenticationCall', 'link-5');">AuthenticationCall</a></tt><tt class="py-op">.</tt><tt class="py-name">objects</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt><tt class="py-name">time__lt</tt> <tt class="py-op">=</tt> <tt class="py-name">timeout</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">delete</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line">     </tt>
+<a name="redirect_to_authentication_or"></a><div id="redirect_to_authentication_or-def"><a name="L76"></a><tt class="py-lineno">76</tt> <a class="py-toggle" href="#" id="redirect_to_authentication_or-toggle" onclick="return toggle('redirect_to_authentication_or');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="sendinel.backend.authhelper-module.html#redirect_to_authentication_or">redirect_to_authentication_or</a><tt class="py-op">(</tt><tt class="py-param">url</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="redirect_to_authentication_or-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="redirect_to_authentication_or-expanded"><a name="L77"></a><tt class="py-lineno">77</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt id="link-36" class="py-name"><a title="sendinel.settings.AUTHENTICATION_ENABLED" class="py-name" href="#" onclick="return doclink('link-36', 'AUTHENTICATION_ENABLED', 'link-8');">AUTHENTICATION_ENABLED</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L78"></a><tt class="py-lineno">78</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">HttpResponseRedirect</tt><tt class="py-op">(</tt> </tt>
+<a name="L79"></a><tt class="py-lineno">79</tt>  <tt class="py-line">            <tt class="py-name">reverse</tt><tt class="py-op">(</tt><tt class="py-string">'web_authenticate_phonenumber'</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">"?next="</tt> <tt class="py-op">+</tt> <tt class="py-name">url</tt><tt class="py-op">)</tt> </tt>
+<a name="L80"></a><tt class="py-lineno">80</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">HttpResponseRedirect</tt><tt class="py-op">(</tt><tt class="py-name">url</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L81"></a><tt class="py-lineno">81</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="sendinel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu May 27 11:30:47 2010
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
