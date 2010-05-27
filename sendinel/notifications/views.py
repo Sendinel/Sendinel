@@ -114,7 +114,7 @@ def save_notification(request):
         message = _("The patient will be informed immediately.")
     else:
         message = _("Please tell the patient that he/she will be reminded"\
-                            " one day before the notification.")
+                            " one day before the appointemnt.")
     success = True
     
     return render_to_response('web/status_message.html', 

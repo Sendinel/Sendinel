@@ -8,19 +8,6 @@ from sendinel import settings
 from sendinel.backend.models import Hospital
 
 
-class SendableTest(TestCase):
-    fixtures = ['backend_test']
-
-    def setUp(self):
-        # TODO see below
-        # self.sendable = InfoMessage()
-        # self.sendable.way_of_communication.name = "sms"
-        # self.sendable.text = "Test Text"
-        pass
-
-    def test_sendable_get_data_for_sending(self):
-        #TODO write test for get_data_for_sending()
-        pass
 
 class HospitalTest(TestCase):
     fixtures = ['backend_test']

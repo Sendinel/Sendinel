@@ -67,19 +67,29 @@ class GroupTest(TestCase):
         self.assertContains(response, field_title)
         
         response = self.client.post(reverse("infoservices_create",
-                                    kwargs={'infoservice_type': infoservice_type}), 
-                                    {"name" : "This is a name for a group"})
+                                kwargs={'infoservice_type': infoservice_type}), 
+                                {"name" : "This is a name for a group"})
         
         self.assertEquals(response.status_code, 200)
         self.assertContains(response, "This is a name for a group")
         self.assertContains(response, title)
         
         response = self.client.get(reverse("infoservices_index",
-                                    kwargs={'infoservice_type': infoservice_type}))
+                                kwargs={'infoservice_type': infoservice_type}))
                                     
         self.assertContains(response, "This is a name for a group")
         self.assertContains(response, title)
-           
+        
+        # test unique validation - try to create second infoservice with same name
+        
+        response = self.client.post(reverse("infoservices_create",
+                                kwargs={'infoservice_type': infoservice_type}), 
+                                {"name" : "This is a name for a group"})
+        self.assertEquals(response.status_code, 200)
+
+        self.assertContains(response, "errorlist")
+
+
     def test_create_information_group(self):
         self.create_infoservice('information', 
                      'information group', 
