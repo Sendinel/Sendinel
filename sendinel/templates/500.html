@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Sorry, an error occured.</h1>
-    <h2>Please inform the clinic staff</h2>
-    <a href="{% url sendinel.web.views.index %}" class="selectable">Back to Mainpage</a>
+    {% blocktrans %}
+        <h1>Sorry, an error occured.</h1>
+        <h2>Please inform the clinic staff</h2>
+    {% endblocktrans %}
+    <a href="{% url sendinel.web.views.index %}" class="selectable">{% trans "Back to Mainpage" %}</a>
 {% endblock %}

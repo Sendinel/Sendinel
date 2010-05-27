@@ -29,7 +29,7 @@
                     <td class="centered">{{ subscription.way_of_communication }}</td>
                     <td><input 
                             type="button" 
-                            onclick="Sendinel.Utils.confirmForm($('#form_{{ subscription.id }}')[0], 'Please confirm')" 
+                            onclick="Sendinel.Utils.confirmForm($('#form_{{ subscription.id }}')[0], '{% trans "Please confirm" %}')" 
                             value='{{ infoservice_textblocks.remove_patient_button }}' /></td>
                 </tr>
             </form>

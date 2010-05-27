@@ -121,14 +121,17 @@ def date_to_text(weekday, day, month, hour, minutes):
                 58: "fifty-eigth",
                 59: "fifty-nine"}
     
-    text = {"date" : days[weekday] + ", " + order[day] + " of " + months[month],
+    text = {"date" : days[weekday] + ", " + \
+                     order[day] + " of " + \
+                     months[month],
             "time" : numbers[hour] + " " + numbers[minutes]}
     
     return  text 
 
 def generate_text(contents, template, is_sms = True):
     """
-    creates an sms text from a given template that is not longer than 160 characters
+    creates an sms text from a given template that is not 
+    longer than 160 characters
     """
     
     max_chars = 160 - len(SMS_SALUTATION)
@@ -139,7 +142,8 @@ def generate_text(contents, template, is_sms = True):
     if is_sms:
         if len(sms) > max_chars:
             template_length = len(sms)-get_content_length(contents)
-            new_contents = reduce_contents(contents, max_chars - template_length)       
+            new_contents = reduce_contents(contents, 
+                                           max_chars - template_length)       
             sms = SMS_SALUTATION + template.substitute(new_contents)
         else:
             sms = SMS_SALUTATION + sms
@@ -157,8 +161,8 @@ def get_content_length(contents):
 
 def replace_dollar_signs(contents):
     """ 
-    dollar signs are represented in a way, that they continue to be $, even after
-    the substitution of the template
+    dollar signs are represented in a way, that they continue to be $, 
+    even after the substitution of the template
     """
     
     for value in contents.itervalues():

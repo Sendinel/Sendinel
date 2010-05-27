@@ -8,7 +8,6 @@
 <meta name="author" content="sendinel" />
 <meta name="description" content=" " />
 <link rel="stylesheet" href="{{ MEDIA_URL }}/css/jquery-ui.css" type="text/css" />
-<link rel="stylesheet" href="{{ MEDIA_URL }}/css/datetimepicker.css" type="text/css" />
 <script src="{{MEDIA_URL}}/js/jquery.js" type="text/javascript"></script>
 <script src="{{MEDIA_URL}}/js/jquery-ui.js" type="text/javascript"></script>
 <script src="{% url django.views.i18n.javascript_catalog %}" type="text/javascript" charset="utf-8"></script>
@@ -30,9 +29,9 @@
 	<div id="page">
 		<div id="header" class="background-grey centered">
             <div id="sendinel-logo" class="link float-left" onclick="Sendinel.Utils.goto_url('{% url web_index %}')"></div>
+            <div class="infotext float-left"></div>
             <div id="hpi-logo" class="link float-right" onclick="Sendinel.Utils.goto_url('http://www.hpi-web.de')"><br />Please note that this is a demo only system<br />- it won't send messages.</div>
-        </div>
-        
+        </div>        
         <div id="content">
             {% block content %}
             {% endblock %}

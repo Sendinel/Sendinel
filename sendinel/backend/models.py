@@ -95,6 +95,13 @@ def get_woc(woc_name):
     """
     return WayOfCommunication.objects.get(name = woc_name)        
 
+def get_woc_by_id(woc_id):
+    """
+    Return the WayOfCommunication-Object where the name equals the 
+    given woc_name
+    """
+    return WayOfCommunication.objects.get(pk = woc_id) 
+
 class Sendable(models.Model):
     """
     Define an interface for a Sendable object.

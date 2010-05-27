@@ -1,18 +1,20 @@
 from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
+from django.utils import simplejson
 from django.utils.translation import ugettext as _
 
 from sendinel.backend.models import Hospital
 from sendinel.backend.authhelper import redirect_to_authentication_or
+from sendinel.infoservices.forms import InfoServiceValidationForm 
 from sendinel.infoservices.models import InfoService
-from sendinel.groups.forms import MedicineMessageValidationForm, \
-                                  RegisterPatientForMedicineForm
 from sendinel.infoservices.utils import create_messages_for_infoservice, \
                                         set_session_variables_for_register, \
                                         subscription_save
 from sendinel.logger import logger, log_request
+from sendinel.medicines.forms import MedicineMessageValidationForm, \
+                                     RegisterPatientForMedicineForm
 from sendinel.settings import AUTH_NUMBER, MEDICINE_MESSAGE_TEMPLATE
 from sendinel.web.utils import fill_authentication_session_variable, \
                                get_ways_of_communication
@@ -21,13 +23,16 @@ from sendinel.web.utils import fill_authentication_session_variable, \
 
 @log_request
 def register_save(request, medicine_id):
-
+    '''
+        Save the subscription of the patient to the medicine waiting list.
+        Display the success message.
+    '''
     subscription = subscription_save(request, medicine_id)
     
     backurl = reverse('medicines_register')        
     nexturl = reverse('web_index')
     title = _("Registration successful")
-    message = _("The patient will receive a messages once the medicine "
+    message = _("The patient will receive a message once the medicine "
                 " \"%s\" is available in the clinic again.") \
                 % subscription.infoservice.name
     new_button_label = _("Register another patient")
@@ -41,7 +46,7 @@ def register_save(request, medicine_id):
 def register(request):
     '''
     Register a patient to the waitinglist of a medicine, i.e.
-    a new subscription if the infoservice is created.
+    a new subscription of the infoservice is created.
     '''
     ajax_url= reverse('web_check_call_received')
     medicines = InfoService.objects.all().filter(type='medicine')
@@ -50,10 +55,13 @@ def register(request):
     
     if request.method == "POST":
         set_session_variables_for_register(request)
-        request.session['medicine'] = request.POST.get('medicine', '')
         
+        infoservice = None
+        form = None
+
         form = RegisterPatientForMedicineForm(request.POST)
-        
+        request.session['medicine'] = request.POST.get('medicine', '')
+                
         if form.is_valid():
             number = fill_authentication_session_variable(request) 
             auth_number = AUTH_NUMBER
@@ -72,7 +80,23 @@ def register(request):
                               locals(),
                               context_instance = RequestContext(request))
 
-                              
+def create_medicine(request):
+    data = {'name': request.POST['name'],
+            'type': 'medicine'}
+    form = InfoServiceValidationForm(data)
+    
+    response = {}
+    if form.is_valid():
+        form.save()
+        infoservice = form.instance
+        response['id'] = infoservice.id
+        response['name'] = infoservice.name
+    else:
+        response['errors'] = form.errors
+    
+    return HttpResponse(content = simplejson.dumps(response),
+                        content_type = "application/json")
+
 @log_request
 def send_message(request):
     '''
@@ -93,8 +117,9 @@ def send_message(request):
             backurl = reverse('medicines_send_message')
             nexturl = reverse('web_index')
             title = _("Message created")
-            message = _("All patients who were waiting for the medicine " +
-                        "\"%s\" will be informed") % medicine.name
+            message = _("All patients who were waiting for the medicine "
+                        "\"%s\" will be informed. The waiting list"
+                        " will also be removed.") % medicine.name
             new_button_label = _("Send another message")
             success = True
 
@@ -102,7 +127,10 @@ def send_message(request):
                           locals(),
                           context_instance = RequestContext(request))
                                       
-    medicines = InfoService.objects.all().filter(type='medicine')
+    medicines = []
+    for medicine in InfoService.objects.all().filter(type='medicine'):
+        if medicine.members.count() > 0:
+            medicines.append(medicine)
     
     current_hospital = Hospital.get_current_hospital()
     template_text = MEDICINE_MESSAGE_TEMPLATE

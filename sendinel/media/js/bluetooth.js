@@ -1,3 +1,5 @@
+var old_devices_list = [];
+
 var Bluetooth = {
 
     check_for_devices: function() {
@@ -11,15 +13,15 @@ var Bluetooth = {
                     var deviceList = $("#bluetooth_devices")[0];
                     
                     deviceList.innerHTML = "";
-                    
+                                        
                     $(json.devices).each(function(index, device) {                
                         var deviceHTML = 
-                        "<li>"+
-                            "<a href='" + next + "?device_mac=" + device.mac + "' class='selectable'>" + 
-                                device.name + 
-                            "</a>"+
-                        "</li>";
-                        
+                        "<a href='" + next + "?device_mac=" + device.mac + "'>" + 
+                            "<div class='menu-item menu-item-name menu-hover background-grey rounded-corners'>"+
+                                    device.name + 
+                            "</div>"+
+                        "</a>";
+                    
                         $(deviceList).append($(deviceHTML));                        
                     });
                 }
@@ -60,7 +62,7 @@ var Bluetooth = {
                 $("#auth_spinner").hide();
                 var next = $("#next").val();
                 statusText.addClass("status success rounded-corners centered");
-                statusText.text(gettext("Thank you! The appointment has been send to your mobile phone."));   
+                statusText.text(gettext("Thank you! The appointment reminder has been send to your mobile phone."));   
                 
                 nextButton.show();
                 
@@ -70,7 +72,7 @@ var Bluetooth = {
             error: function() {
                 var stat = $("#spinner");
                 
-                stat[0].innerHTML = gettext("Failed to send appointment");
+                stat[0].innerHTML = gettext("Failed to send appointment reminder");
                 stat.addClass("errorlist");
                 
                 window.setTimeout("Bluetooth.redirect_to_next()", 20000);

@@ -6,13 +6,13 @@ def create_vcal_string(start_date, location, content, uid):
     """
         Create valid content of an vcal file.
     
-        @param  start_date:  Start Date of the appointment
+        @param  start_date:  Start Date of the notification
         @type   start_date:  Datetime
         
-        @param  location:   Location for the appointment
+        @param  location:   Location for the notification
         @type   location:   String
         
-        @param  content:    Subject of the appointment
+        @param  content:    Subject of the notification
         @type   content:    String
         
         @param  uid:        UID for the vcal entry
@@ -53,7 +53,7 @@ END:VCALENDAR""" % {\
     
 def get_uid():
     """
-        Calculate a unique UID for a vcal by using appointment id and a time.
+        Calculate a unique UID for a vcal by using notification id and a time.
     """
     
     date_time = datetime.now().strftime("%Y%m%dT%H%M%S")
