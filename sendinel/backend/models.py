@@ -78,15 +78,15 @@ def get_enabled_wocs():
     """
     Return all Ways of Communication that are enabled
     """
-    return WayOfCommunication.objects.all().filter(enabled = True)
+    return WayOfCommunication.objects.filter(enabled = True)
     
 def get_immediate_wocs():
     """
     Return all Ways of Communication that are enabled
     and can be send immediately
     """
-    return WayOfCommunication.objects.all().filter(enabled = True, \
-                                                   can_send_immediately = True)                                                    
+    return WayOfCommunication.objects.filter(enabled = True, \
+                                             can_send_immediately = True)                                                    
 
 def get_woc(woc_name):
     """
